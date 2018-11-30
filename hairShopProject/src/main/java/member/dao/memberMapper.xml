@@ -119,6 +119,68 @@
 
 <!-- 디자이너 관리 -->
 
+
+   <!-- 디자이너 정보 -->
+   <select id="getDesignerInfo" parameterType="String" resultType="designer">
+      select * from designerinfo where hairshopid=#{hairshopId }
+   </select>
+   
+   <!-- 디자이너의 예약 수-->
+   <select id="getDesignerReserve" parameterType="String" resultType="String">
+      select count(*) from reservation where designerid=#{designerId }
+   </select>
+   
+   <!-- 디자이너 삭제-->
+   <select id="designerDelete" parameterType="String">
+      delete designerinfo where seq=#{seq }
+   </select>
+   
+   <!-- 디자이너 삭제-->
+   <select id="designerCheckedDelete" parameterType="int">
+      delete designerinfo where seq in 
+      <foreach collection="list" item="data" open="(" close=")" separator=",">
+         #{data}
+      </foreach>
+   </select>
+   
+   <!-- 디자이너 추가-->
+   <insert id="designerAdd" parameterType="designer">
+      insert into designerinfo(seq, designerid, hairshopid, designername, positioncode, position, dayoff) values(seq_designerinfo.nextval, #{designerid }, #{hairshopid }, #{designername }, #{positioncode }, #{position }, #{dayoff })
+   </insert>
+   
+   <!-- 디자이너 수정-->
+   <update id="designerModify" parameterType="designer">
+      update designerinfo set designerid=#{designerid}, designername=#{designername }, designerimage=#{designerimage }, positioncode=#{positioncode }, position=#{position }, dayoff=#{dayoff } where seq=#{seq }
+   </update>
+   
+<!-- =================== 마이페이지(개인) ========================== -->
+
+	<!-- 개인회원 정보수정 -->
+	<update id="updateInfo" parameterType="member">
+		update memberInfo set name=#{name}, pwd=#{pwd}, tel1=#{tel1}, tel2=#{tel2}, tel3=#{tel3}, zipcode=#{zipcode}, addr1=#{addr1}, addr2=#{addr2} where email=#{email}
+	</update>
+	
+	<!-- 회원탈퇴 -->
+	<delete id="userDelete" parameterType="Map">
+		delete memberInfo where email=#{email} and pwd=#{pwd}
+	</delete>
+	
+	<!-- 이용내역 select -->
+	<select id="getUsageDetailsInfo" parameterType="String" resultType="Map">
+		select m.name, r.* from memberInfo m inner join reservation r on m.hairshopid = r.hairshopid where bookeremail=#{email}
+	</select>
+	
+	<!-- 예약현황 select -->
+	<select id="getReservationList" parameterType="String" resultType="Map">
+		select m.name, r.* from memberInfo m inner join reservation r on m.hairshopid = r.hairshopid where bookeremail=#{email} and didordidnot=0
+	</select>
+	
+	<!-- 예약 취소 -->
+	<delete id="reservationCancel" parameterType="String">
+		<![CDATA[delete reservation where bookeremail=#{email} and didORdidNOT=0 and sysdate < stattime]]>
+	</delete>
+	
+
 	<!-- 디자이너 정보 -->
 	<select id="getDesignerInfo" parameterType="String" resultType="designer">
 		select * from designerinfo where hairshopid=#{hairshopId }
@@ -151,4 +213,5 @@
 	<update id="designerModify" parameterType="designer">
 		update designerinfo set designerid=#{designerid}, designername=#{designername }, designerimage=#{designerimage }, positioncode=#{positioncode }, position=#{position }, dayoff=#{dayoff } where seq=#{seq }
 	</update>
+
 </mapper>

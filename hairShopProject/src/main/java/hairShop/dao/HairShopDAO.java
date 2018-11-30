@@ -11,4 +11,7 @@ public interface HairShopDAO {
 	public List<Map<String, Object>> getServiceList(Map<String, String> map);
 	public List<Map<String, Object>> getDesignerInfo(String hairShopId);
 	public int confirmedReservation(Map<String, String> map);
+	
+	//리뷰작성
+	public void hairShopReviewWrite(Map<String, String> map);
 }

@@ -11,7 +11,7 @@ $(document).ready(function() {
 			dataType : 'text',
 			success : function(data) {
 				if(data=="0") {
-					alert("0")
+					location.href="/hairShopProject/managementPage/memberPage.do"
 				}else {
 					location.href="/hairShopProject/managementPage/companyPage.do";
 				}

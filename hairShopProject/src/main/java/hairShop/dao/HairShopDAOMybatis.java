@@ -49,4 +49,10 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	public int confirmedReservation(Map<String, String> map) {
 		return sqlSession.insert("hairShopSQL.confirmedReservation", map);
 	}
+	
+	//리뷰작성
+	@Override
+	public void hairShopReviewWrite(Map<String, String> map) {
+		sqlSession.insert("hairShopSQL.hairShopReviewWrite", map);
+	}
 }
