@@ -1,98 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberSQL">
-   <resultMap type="member" id="memberResult">
-      <result property="email" column="EMAIL" />
-      <result property="pwd" column="PWD" />
-      <result property="name" column="NAME" />
-      <result property="tel1" column="TEL1" />
-      <result property="tel2" column="TEL2" />
-      <result property="tel3" column="TEL3" />
-      <result property="zipcode" column="ZIPCODE" />
-      <result property="addr1" column="ADDR1" />
-      <result property="addr2" column="ADDR2" />
-      <result property="type" column="TYPE" />
-      <result property="hairshopimage1" column="HAIRSHOPIMAGE1" />
-      <result property="hairshopimage2" column="HAIRSHOPIMAGE2" />
-      <result property="hairshopimage3" column="HAIRSHOPIMAGE3" />
-      <result property="license1" column="LICENSE1" />
-      <result property="license2" column="LICENSE2" />
-      <result property="license3" column="LICENSE3" />
-      <result property="hairshopid" column="HAIRSHOPID" />
-      <result property="latitud" column="LATITUD" />
-      <result property="longitude" column="LONGITUDE" />
-      <result property="hairshopcontent" column="HAIRSHOPCONTENT" />
-      <result property="opentime" column="OPENTIME" />
-      <result property="closetime" column="CLOSETIME" />
-      <result property="dayoff" column="DAYOFF" />
-      <result property="approval_status" column="APPROVAL_STATUS" />
-      <result property="approval_key" column="APPROVAL_KEY" />
-      <result property="logtime" column="LOGTIME" />
-   </resultMap>
-   
-   <resultMap type="designer" id="designerDTO">
-      <result property="seq " column="SEQ" />
-      <result property="designerid " column="DESIGNERID" />
-      <result property="hairshopid " column="HAIRSHOPID" />
-      <result property="designername " column="DESIGNERNAME" />
-      <result property="designerimage " column="DESIGNERIMAGE" />
-      <result property="positioncode " column="POSITIONCODE" />
-      <result property="position " column="POSITION" />
-      <result property="dayoff  " column="DAYOFF" />
-   </resultMap>
-   
-   <!-- 로그인 -->
-   <select id="login" parameterType="java.util.Map" resultType="member">
-      select * from memberinfo where email=#{email } and pwd=#{pwd } and approval_status='true'
-   </select>
-   
-   <!-- 회원가입 -->
-   <insert id="write" parameterType="member">
-      insert into memberinfo(email,name,pwd,tel1,tel2,tel3,type,approval_status,approval_key) values(#{email},#{name},#{pwd},#{tel1},#{tel2},#{tel3},#{type},'false',#{approval_key})
-   </insert>
-   
-   <!-- 이메일 체크 -->
-   <select id="checkEmail" parameterType="String" resultMap="memberResult">
-      select * from memberinfo where email=#{email}
-   </select>
-   
-   <!-- 비밀번호 변경 -->
-   <update id="updatePwd" parameterType="member">
-      update memberinfo set pwd=#{pwd} where email=#{email}
-   </update>
-   
-   <!-- 이메일 인증 -->
-   <update id="approval_member" parameterType="member">
-      update memberinfo set approval_status = 'true' where email = #{email} and approval_key = #{approval_key}
-   </update>
-   
-   <select id="searchId" parameterType="member" resultType="java.lang.String">
-      select email from memberinfo where tel1=#{tel1} and tel2=#{tel2} and tel3=#{tel3}
-   </select>
-   
-   <!-- 개인, 사업자 구분 -->
-   <select id="getMemberType" parameterType="String" resultType="String">
-      select type from memberinfo where email=#{email }
-   </select>
-   
+	<resultMap type="member" id="memberResult">
+		<result property="email" column="EMAIL" />
+		<result property="pwd" column="PWD" />
+		<result property="name" column="NAME" />
+		<result property="tel1" column="TEL1" />
+		<result property="tel2" column="TEL2" />
+		<result property="tel3" column="TEL3" />
+		<result property="zipcode" column="ZIPCODE" />
+		<result property="addr1" column="ADDR1" />
+		<result property="addr2" column="ADDR2" />
+		<result property="type" column="TYPE" />
+		<result property="hairshopimage1" column="HAIRSHOPIMAGE1" />
+		<result property="hairshopimage2" column="HAIRSHOPIMAGE2" />
+		<result property="hairshopimage3" column="HAIRSHOPIMAGE3" />
+		<result property="license1" column="LICENSE1" />
+		<result property="license2" column="LICENSE2" />
+		<result property="license3" column="LICENSE3" />
+		<result property="hairshopid" column="HAIRSHOPID" />
+		<result property="latitud" column="LATITUD" />
+		<result property="longitude" column="LONGITUDE" />
+		<result property="hairshopcontent" column="HAIRSHOPCONTENT" />
+		<result property="opentime" column="OPENTIME" />
+		<result property="closetime" column="CLOSETIME" />
+		<result property="dayoff" column="DAYOFF" />
+		<result property="approval_status" column="APPROVAL_STATUS" />
+		<result property="approval_key" column="APPROVAL_KEY" />
+		<result property="logtime" column="LOGTIME" />
+	</resultMap>
+	
+	<resultMap type="designer" id="designerDTO">
+		<result property="seq" column="SEQ" />
+		<result property="designerid" column="DESIGNERID" />
+		<result property="hairshopid" column="HAIRSHOPID" />
+		<result property="designername" column="DESIGNERNAME" />
+		<result property="designerimage" column="DESIGNERIMAGE" />
+		<result property="positioncode" column="POSITIONCODE" />
+		<result property="position" column="POSITION" />
+		<result property="dayoff" column="DAYOFF" />
+	</resultMap>
+	
+	<resultMap type="reservation" id="reservationDTO">
+		<result property="bookeremail" column="BOOKEREMAIL" />
+		<result property="bookername" column="BOOKERNAME" />
+		<result property="bookertel1" column="BOOKERTEL1" />
+		<result property="bookertel2" column="BOOKERTEL2" />
+		<result property="bookertel3" column="BOOKERTEL3" />
+		<result property="requests" column="REQUESTS" />
+		<result property="hairshopid" column="HAIRSHOPID" />
+		<result property="designerid" column="DESIGNERID" />
+		<result property="designername" column="DESIGNERNAME" />
+		<result property="service" column="SERVICE" />
+		<result property="description" column="DESCRIPTION" />
+		<result property="price" column="PRICE" />
+		<result property="timerequired" column="TIMEREQUIRED" />
+		<result property="starttime" column="STARTTIME" />
+		<result property="endtime" column="ENDTIME" />
+		<result property="theday" column="THEDAY" />
+		<result property="didordidnot" column="DIDORDIDNOT" />
+	</resultMap>
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="java.util.Map" resultType="member">
+		select * from memberinfo where email=#{email } and pwd=#{pwd } and approval_status='true'
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="write" parameterType="member">
+		insert into memberinfo(email,name,pwd,tel1,tel2,tel3,type,approval_status,approval_key) values(#{email},#{name},#{pwd},#{tel1},#{tel2},#{tel3},#{type},'false',#{approval_key})
+	</insert>
+	
+	<!-- 이메일 체크 -->
+	<select id="checkEmail" parameterType="String" resultMap="memberResult">
+		select * from memberinfo where email=#{email}
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePwd" parameterType="member">
+		update memberinfo set pwd=#{pwd} where email=#{email}
+	</update>
+	
+	<!-- 이메일 인증 -->
+	<update id="approval_member" parameterType="member">
+		update memberinfo set approval_status = 'true' where email = #{email} and approval_key = #{approval_key}
+	</update>
+	
+	<select id="searchId" parameterType="member" resultType="java.lang.String">
+		select email from memberinfo where tel1=#{tel1} and tel2=#{tel2} and tel3=#{tel3}
+	</select>
+	
+	<!-- 개인, 사업자 구분 -->
+	<select id="getMemberType" parameterType="String" resultType="String">
+		select type from memberinfo where email=#{email }
+	</select>
+	
 <!-- 예약 현황 -->
 
-   <!-- 예약 현황 조회 -->
-   <select id="getTotalReservation" parameterType="String" resultType="String">
-      select count(*) from reservation where hairshopid=#{hairshopId }
-   </select>
-   
-   <!-- 총 예약 금액 조회 -->
-   <select id="getTotalReservePrice" parameterType="String" resultType="String">
-      select price from reservation where hairshopid=#{hairshopId }
-   </select>
-   
-   <!-- 헤어샵 정보 조회 -->
-   <select id="getMemberInfo" parameterType="String" resultType="member">
-      select * from memberInfo where hairshopid=#{hairshopId }
-   </select>
+	<!-- 예약 현황 조회 -->
+	<select id="getTotalReservation" parameterType="String" resultType="String">
+		select count(*) from reservation where hairshopid=#{hairshopId }
+	</select>
+	
+	<!-- 총 예약 금액 조회 -->
+	<select id="getTotalReservePrice" parameterType="String" resultType="String">
+		select price from reservation where hairshopid=#{hairshopId }
+	</select>
+	
+	<!-- 헤어샵 정보 조회 -->
+	<select id="getMemberInfo" parameterType="String" resultType="member">
+		select * from memberInfo where hairshopid=#{hairshopId }
+	</select>
+	
+	<!-- 한명의 예약 정보 조회 -->
+	<select id="getReservation" parameterType="String" resultType="reservation">
+		select * from reservation where designername=#{designername }
+	</select>
 
 <!-- 디자이너 관리 -->
+
 
    <!-- 디자이너 정보 -->
    <select id="getDesignerInfo" parameterType="String" resultType="designer">
@@ -154,4 +180,38 @@
 		<![CDATA[delete reservation where bookeremail=#{email} and didORdidNOT=0 and sysdate < stattime]]>
 	</delete>
 	
+
+	<!-- 디자이너 정보 -->
+	<select id="getDesignerInfo" parameterType="String" resultType="designer">
+		select * from designerinfo where hairshopid=#{hairshopId }
+	</select>
+	
+	<!-- 디자이너의 예약 수-->
+	<select id="getDesignerReserve" parameterType="String" resultType="String">
+		select count(*) from reservation where designerid=#{designerId }
+	</select>
+	
+	<!-- 디자이너 삭제-->
+	<select id="designerDelete" parameterType="String">
+		delete designerinfo where seq=#{seq }
+	</select>
+	
+	<!-- 디자이너 삭제-->
+	<select id="designerCheckedDelete" parameterType="int">
+		delete designerinfo where seq in 
+		<foreach collection="list" item="data" open="(" close=")" separator=",">
+			#{data}
+		</foreach>
+	</select>
+	
+	<!-- 디자이너 추가-->
+	<insert id="designerAdd" parameterType="designer">
+		insert into designerinfo(seq, designerid, hairshopid, designername, positioncode, position, dayoff) values(seq_designerinfo.nextval, #{designerid }, #{hairshopid }, #{designername }, #{positioncode }, #{position }, #{dayoff })
+	</insert>
+	
+	<!-- 디자이너 수정-->
+	<update id="designerModify" parameterType="designer">
+		update designerinfo set designerid=#{designerid}, designername=#{designername }, designerimage=#{designerimage }, positioncode=#{positioncode }, position=#{position }, dayoff=#{dayoff } where seq=#{seq }
+	</update>
+
 </mapper>

@@ -1,10 +1,12 @@
 package member.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import hairShop.bean.ReservationDTO;
 import member.bean.DesignerDTO;
 import member.bean.MemberDTO;
 import member.bean.PostDTO;
@@ -33,6 +35,7 @@ public interface MemberDAO {
 	public void designerModify(DesignerDTO designerDTO);
 	public List<String> getTotalReservePrice(String hairshopId);
 	public List<MemberDTO> getMemberInfo(String hairshopId);
+
 	
 	//마이페이지(개인)
 	public void updateInfo(MemberDTO memberDTO);
@@ -40,4 +43,7 @@ public interface MemberDAO {
 	public List<Map<String, Object>> getUsageDetailsInfo(String email);
 	public List<Map<String, Object>> getReservationList(String email);
 	public void reservationCancel(String email);
+
+	public List<ReservationDTO> getReservation(String designername);
+
 }

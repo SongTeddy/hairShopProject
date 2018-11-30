@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import hairShop.bean.ReservationDTO;
 import member.bean.DesignerDTO;
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
@@ -33,6 +34,8 @@ public class ManageController {
 	private MemberDTO memberDTO;
 	@Autowired
 	private DesignerDTO designerDTO;
+	@Autowired
+	private ReservationDTO reservationDTO;
 
 // 페이지 이동
 	
@@ -81,7 +84,6 @@ public class ManageController {
 	
 	@RequestMapping(value="getTotalReservation", method=RequestMethod.POST)
 	public @ResponseBody String getTotalReservation(@RequestParam String hairshopId) {
-		System.out.println(hairshopId);
 		return memberDAO.getTotalReservation(hairshopId);
 	}
 	
@@ -122,15 +124,6 @@ public class ManageController {
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
 		
-		/*// 오늘 기준 월요일 구하기
- 		c.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
- 		System.out.println(sdf.format(c.getTime()));
- 		
- 		// 오늘 기준 일요일 구하기
- 		c.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
- 		c.add(c.DATE,7);
- 		System.out.println(sdf.format(c.getTime()));*/
-		
 		return mav;
 	}
 	
@@ -141,6 +134,68 @@ public class ManageController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
+	
+	// 디자이너 예약 얻기
+	@RequestMapping(value="getReserveTime", method=RequestMethod.POST)
+	public ModelAndView getReserveTime(@RequestParam String designername,
+									   @RequestParam int cnt) {
+		
+		// DB
+		List<ReservationDTO> list = memberDAO.getReservation(designername); // 한명의 예약 정보 리스트
+		
+		// 리스트 생성
+		List<String> requiredTimeList = new ArrayList<String>(); // 요구시간 리스트
+		List<String> bookerNameList = new ArrayList<String>(); // 예약자가 담긴 리스트 생성
+		List<String> serviceList = new ArrayList<String>(); // 예약자가 담긴 리스트 생성
+		
+		for(ReservationDTO reservationDTO : list) {
+			requiredTimeList.add(Integer.toString(reservationDTO.getTimerequired()));
+			bookerNameList.add(reservationDTO.getBookername());
+			serviceList.add(reservationDTO.getService());
+		}
+		
+		// 시작시간 리스트, td클래스 리스르 생성
+		List<String> startList = new ArrayList<String>(); // list의 객체들을 String으로 변환 한 리스트
+		List<String> tdClassList = new ArrayList<String>(); // td의 클래스들이 담긴 리스트
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd");
+		
+		for(int i=0; i<list.size(); i++) {
+			startList.add(sdf.format(list.get(i).getStarttime())); // 각 예약날의 시:분을 리스트에 추가 
+		}
+		
+		for(int i=0; i<list.size(); i++) { // 예약이 더이상 없으면 break;
+			Calendar c = Calendar.getInstance(); // 한 예약이 끝나면 캘린더 오늘날짜로 초기화
+			
+			// String으로 하면 01처럼 앞에 0이 붙어서 비교가 힘들어서 int로 형변환
+			int ReserveDay = Integer.parseInt(sdf2.format(list.get(i).getStarttime()));// 예약날의 일
+			
+			while(true) {
+				
+				// 오늘의 일과 예약날의 일이 같아지면 break
+				if(ReserveDay==c.get(c.DATE)) { // 아래에 두면 한달을 더 돌아버림
+					break;
+				}
+				cnt++;
+				
+				c.add(Calendar.DATE, 1);
+			}
+			tdClassList.add(Integer.toString(cnt)); // cnt가 시작시간이 표시 될 td의 클래스가 됌
+			
+			cnt=1;
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("startList", startList);
+		mav.addObject("tdClassList", tdClassList);
+		mav.addObject("requiredTimeList", requiredTimeList);
+		mav.addObject("bookerNameList", bookerNameList);
+		mav.addObject("serviceList", serviceList);
 		mav.setViewName("jsonView");
 		
 		return mav;

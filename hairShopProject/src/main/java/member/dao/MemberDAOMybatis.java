@@ -1,6 +1,7 @@
 package member.dao;
 
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import hairShop.bean.ReservationDTO;
 import member.bean.DesignerDTO;
 import member.bean.MemberDTO;
 import member.bean.PostDTO;
@@ -75,7 +77,7 @@ public class MemberDAOMybatis implements MemberDAO {
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.gmail.com";
 		String hostSMTPid = "ljh2861@gmail.com";
-		String hostSMTPpwd = "junghee89";
+		String hostSMTPpwd = "wjdgmldi!0824";
 
 		// 보내는 사람 EMail, 제목, 내용
 		String fromEmail = "ljh2861@gmail.com";
@@ -208,6 +210,12 @@ public class MemberDAOMybatis implements MemberDAO {
 		return sqlSession.selectList("memberSQL.getTotalReservePrice", hairshopId);
 	}
 	
+	// 한명의 예약 정보 조회
+	@Override
+	public List<ReservationDTO> getReservation(String designername) {
+		return sqlSession.selectList("memberSQL.getReservation", designername);
+	}
+	
 // 디자이너 관리
 	
 	// 디자이너 정보 조회
@@ -239,12 +247,14 @@ public class MemberDAOMybatis implements MemberDAO {
 	public void designerAdd(DesignerDTO designerDTO) {
 		sqlSession.insert("memberSQL.designerAdd", designerDTO);
 	}
-
+	
+	// 디자이너 정보 수정
 	@Override
 	public void designerModify(DesignerDTO designerDTO) {
 		sqlSession.update("memberSQL.designerModify", designerDTO);
 	}
-
+	
+	// 멤버 정보 조회
 	@Override
 	public List<MemberDTO> getMemberInfo(String hairshopId) {
 		return sqlSession.selectList("memberSQL.getMemberInfo", hairshopId);
