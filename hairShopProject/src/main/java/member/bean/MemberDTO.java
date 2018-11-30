@@ -26,8 +26,8 @@ public class MemberDTO {
 	private int license2;
 	private int license3;
 	private String hairshopid;
-	private int latitud;
-	private int longitude;
+	private double latitud;
+	private double longitude;
 	private String hairshopcontent;
 	private String opentime;
 	private String closetime;

@@ -36,4 +36,5 @@ public interface MemberDAO {
 	public List<String> getTotalReservePrice(String hairshopId);
 	public List<MemberDTO> getMemberInfo(String hairshopId);
 	public List<ReservationDTO> getReservation(String designername);
+	public List<String> getHairShopDesigner(String hairshopId);
 }

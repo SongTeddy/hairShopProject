@@ -8,13 +8,13 @@
     
 <div class="designerMenu">
 	<font size="6pt" style="color: #363636;">디자이너 관리</font><br>
-	<hr style="color: black;
+	<hr align="left" style="color: black;
 				  margin-top: 10px;
 		    	  margin-bottom: 0px;
 		    	  width: 205px;
 		    	  border-top: 2px solid #5A5A5A;"><br>
 	
-	<table id="designerTable" frame="hsides" rules="rows" align="center">
+	<table id="designerTable"  frame="hsides" rules="rows" align="center">
 	
 		<tr bgcolor="#484848" style="padding: 5px; border-top: 2px solid #909090; border-bottom: 2px solid #909090; font-weight: bold;">
 			<td width="90px">
