@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -120,12 +122,16 @@ public class HairShopController {
    }
    
    @RequestMapping(value="/hairShop/reserve.do", method=RequestMethod.POST)
-   public ModelAndView reserve(@RequestParam Map<String, String> map) {
+   public ModelAndView reserve(@RequestParam Map<String, String> map, HttpSession session) {
 	   System.out.println("선택한 디자이너" + map.get("chosenDesignerId"));
+	   String memEmail = (String)session.getAttribute("memEmail");
+	   Map<String, Object> telMap = hairShopDAO.getTel(memEmail);
 	   ModelAndView mav = new ModelAndView();
 	   mav.setViewName("/main/index");
 	   mav.addObject("display", "/hairShop/reserve.jsp");
 	   mav.addObject("map", map);
+	   mav.addObject("telMap", telMap);
+	   
 	   return mav;
    }
    @RequestMapping(value="/hairShop/confirmedReservation.do", method=RequestMethod.POST)

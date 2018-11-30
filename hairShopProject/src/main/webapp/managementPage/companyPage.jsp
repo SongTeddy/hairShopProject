@@ -7,7 +7,7 @@
 	<div class="myPage_menu">
 		<a href="/hairShopProject/managementPage/companyPage.do">예약 현황</a><br><br>
 		<a href="/hairShopProject/managementPage/designerMenu.do">디자이너 관리</a><br><br>
-		<a href="#">헤어샵 정보</a><br><br>
+		<a href="#">헤어샵 정보 등록 | 수정</a><br><br>
 	</div>
 	
 	<div class="myPage_body">

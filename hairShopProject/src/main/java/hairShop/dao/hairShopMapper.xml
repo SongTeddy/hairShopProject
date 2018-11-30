@@ -38,6 +38,9 @@
 	select * from reservation where designerid=#{DESIGNERID } and theday=#{THEDAY }
 </select>
 
+<select id="getTel"  parameterType="String" resultType="java.util.Map">
+	select tel1, tel2, tel3 from MEMBERINFO where email = #{memEmail }
+</select>
 
 <insert id="confirmedReservation" parameterType="java.util.Map">
 	insert into reservation

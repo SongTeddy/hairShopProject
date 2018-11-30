@@ -1,3 +1,4 @@
+
 package hairShop.dao;
 
 import java.util.List;
@@ -48,5 +49,10 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	@Override
 	public int confirmedReservation(Map<String, String> map) {
 		return sqlSession.insert("hairShopSQL.confirmedReservation", map);
+	}
+
+	@Override
+	public Map<String, Object> getTel(String memEmail) {
+		return sqlSession.selectOne("hairShopSQL.getTel", memEmail);
 	}
 }
