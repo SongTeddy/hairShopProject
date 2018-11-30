@@ -164,8 +164,8 @@
 	    // 정상적으로 검색이 완료됐으면 
 	     if (status === daum.maps.services.Status.OK) {
 	    	 
-	    	 latitud = result[0].y;
-	    	 longitude = result[0].x;
+	    	 latitud = result[0].y; //위도
+	    	 longitude = result[0].x; //경도
 	     }
 	});
 
