@@ -75,7 +75,7 @@ public class MemberDAOMybatis implements MemberDAO {
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.gmail.com";
 		String hostSMTPid = "ljh2861@gmail.com";
-		String hostSMTPpwd = "wjdgmldi!0824";
+		String hostSMTPpwd = "junghee89";
 
 		// 보내는 사람 EMail, 제목, 내용
 		String fromEmail = "ljh2861@gmail.com";

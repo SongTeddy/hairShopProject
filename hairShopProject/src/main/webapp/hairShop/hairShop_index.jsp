@@ -1087,6 +1087,7 @@ button.selectedBtn {
 			if(chosenService!="") {
 				getDesignerSchedule();
 			}
+			document.getElementById('reserveBtn').remove();
 		}); 
 	});
 	
