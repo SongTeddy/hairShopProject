@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
 <link rel="stylesheet" href="/hairShopProject/managementPage/css/totalReservation.css">
 
@@ -82,7 +83,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	/* 헤어샵의 오픈,클로징 타임으로 tr태그 생성 */
+	/* 헤어샵의 오픈,클로징 타임으로 시간 하나의 tr태그 생성 */
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/managementPage/getMemberInfo.do',
@@ -103,9 +104,44 @@ $(document).ready(function() {
 						minute='00';
 					}
 						
-					$('<tr/>').append($('<td/>', {
+					$('<tr/>', {
+						// 시간의 시와 분을 합친 숫자로 클래스를 지정해줌
+						class : Number(hour)+Number(minute)
+						
+					}).append($('<td/>', {
 						text : hour+' : '+minute,
 						style : 'height: 25px;'
+						
+						// 각각의 td를 제어하기 위해 class를 부여함
+						// td의 부모인 tr의 클래스를 이용해 각 td 제어
+					})).append($('<td/>', {
+						class : '1',
+						style : 'height: 25px;'
+						
+					})).append($('<td/>', {
+						class : '2',
+						style : 'height: 25px;'
+						
+					})).append($('<td/>', {
+						class : '3',
+						style : 'height: 25px;'
+						
+					})).append($('<td/>', {
+						class : '4',
+						style : 'height: 25px;'
+						
+					})).append($('<td/>', {
+						class : '5',
+						style : 'height: 25px;'
+						
+					})).append($('<td/>', {
+						class : '6',
+						style : 'height: 25px;'
+						
+					})).append($('<td/>', {
+						class : '7',
+						style : 'height: 25px;'
+						
 					})).appendTo($('#designerTable'));
 					
 					minute = Number(minute); // 분이 문자열 00이면 30이 더해질 수 있게 int형변환
@@ -126,6 +162,72 @@ $(document).ready(function() {
 					}
 				}
 			});
+		}
+	});
+	
+	var cnt = 1;
+	$.ajax({
+		type : 'POST',
+		url : '/hairShopProject/managementPage/getReserveTime.do',
+		data : {'designername':'도비', 'cnt':cnt},
+		dataType : 'json',
+		success : function(data) {
+			// td클래스를 가진 배열 생성
+			var tdClassAr = new Array();
+			$.each(data.tdClassList, function(index, items) {
+				tdClassAr[index] = items;
+			});
+			
+			// 요구시간을 가진 배열 생성
+			var requiredTimeAr = new Array();
+			$.each(data.requiredTimeList, function(index, items) {
+				requiredTimeAr[index] = items;
+			});
+			
+			// 요구시간을 가진 배열 생성
+			var bookerNameAr = new Array();
+			$.each(data.bookerNameList, function(index, items) {
+				bookerNameAr[index] = items;
+			});
+			
+			// 시술명을 가진 배열 생성
+			var serviceAr = new Array();
+			$.each(data.serviceList, function(index, items) {
+				serviceAr[index] = items;
+			});
+			
+			// each문이 연달아 일어나다 보니 생략이 되는 경우가 생겨 약간의 딜레이를 줌
+			setTimeout(function() {
+				$.each(data.startList, function(index, items) {
+					// ex) 11:30
+					// startTime[0]=11
+					// startTime[1]=30
+					var startTime = items.split(':');
+					
+					// 시작시간의 시와 분을 합쳐서 추가할 tr의 클래스와 동일하게 만들어 저장
+					var trClass = Number(startTime[0])+Number(startTime[1]);
+					
+					$('.'+trClass+' .'+tdClassAr[index]).append($('<div/>', {
+						style : 'height: 100%;'+
+								'background-color: #DBDBDB;'
+						
+						}).append($('<div/>', {
+							text : '예약자 : '+bookerNameAr[index],
+							style : 'height: 10px;'+
+									'color: #000000;'+
+									'text-align: center;'+
+									'padding-top: 30px;'
+									
+						})).append($('<div/>', {
+							text : '시술명 : '+serviceAr[index],
+							style : 'height: 10px;'+
+									'color: #000000;'+
+									'text-align: center;'+
+									'padding-top: 30px;'
+					}))).attr('rowspan', Number(requiredTimeAr[index])/30+1);
+					
+				});
+			}, 500);
 		}
 	});
 });
