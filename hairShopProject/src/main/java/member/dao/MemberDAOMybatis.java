@@ -249,4 +249,9 @@ public class MemberDAOMybatis implements MemberDAO {
 	public List<MemberDTO> getMemberInfo(String hairshopId) {
 		return sqlSession.selectList("memberSQL.getMemberInfo", hairshopId);
 	}
+
+	@Override
+	public Map<String, String> getHomepageLink(String memEmail) {
+		return sqlSession.selectOne("memberSQL.getHomepageLink", memEmail);
+	}
 }

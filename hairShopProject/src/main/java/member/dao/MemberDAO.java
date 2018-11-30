@@ -33,4 +33,6 @@ public interface MemberDAO {
 	public void designerModify(DesignerDTO designerDTO);
 	public List<String> getTotalReservePrice(String hairshopId);
 	public List<MemberDTO> getMemberInfo(String hairshopId);
+	public Map<String, String> getHomepageLink(String memEmail);
+	
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -200,5 +201,30 @@ public class ManageController {
 			designerDTO.setPositioncode(4);
 		
 		memberDAO.designerModify(designerDTO);
+	}
+	
+	
+	// 헤어샵 정보 등록 페이지
+	@RequestMapping(value="hairShopInfoInput", method=RequestMethod.GET)
+	public ModelAndView hairShopInfoInput(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		if(session.getAttribute("memEmail")!=null) {
+			mav.addObject("display", "/managementPage/companyPage.jsp");
+			mav.addObject("myPageBody", "/managementPage/hairShopInfoInput.jsp");
+		}else {
+			mav.addObject("display", "/main/body.jsp");
+		}
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
+	@RequestMapping(value="getHomepageLink", method=RequestMethod.POST)
+	public ModelAndView getHomepageLink(HttpSession session) {
+		Map<String, String> map = memberDAO.getHomepageLink((String)session.getAttribute("memEmail"));
+		System.out.println("hairShopId"  + "   " + map.get("HAIRSHOPID") + "   " + map.get("NAME"));
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("map", map);
+		mav.setViewName("jsonView");
+		return mav;
 	}
 }
