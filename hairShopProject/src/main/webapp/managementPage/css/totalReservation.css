@@ -1,0 +1,55 @@
+/* �삁�빟 �쁽�솴  */
+.totalReservation {
+	color : #636363;
+	font-weight: bold;
+	font-size: 15px;
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+.total {
+	position: relative;
+	
+}
+
+.totalReserve,
+.totalPrice {
+	font-size: 18px;
+	padding-top: 5px;
+}
+
+.backslash {
+	background: url('http://cdn.zetawiki.com/png/backslash.png');
+	background-size: 100% 100%;
+	background-color: white;
+	border: 1px solid #909090;
+	color: #636363;
+	text-align: left;
+}
+
+.backslash div {
+	text-align: right;
+	padding: 5px 7px 0px 0px;
+}
+
+.topTr {
+	border-top: 2px solid #909090;
+	border-bottom: 2px solid #909090;
+	font-weight: bold;
+}
+
+.year {
+	position: relative;
+	left: 500px;
+	font-size: 30px;
+	margin-bottom: 10px;
+}
+
+#designerTable td:not(.backslash) {
+	text-align: center;
+	color : #242424;
+	border: 1px solid #909090;
+	vertical-align: middle;
+	height: 40px;
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: bold;
+}
