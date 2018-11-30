@@ -16,12 +16,19 @@
 	<context:component-scan base-package="member.bean" />
 	<context:component-scan base-package="member.dao"/>
 	<context:component-scan base-package="com.conf" />
+	<context:component-scan base-package="board.bean" />
 	
 	<!-- mybatis / SqlSessionFactory -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/> 
 		<property name="configLocation" value="classpath:spring/mybatis-config.xml"></property>
- 		<property name="mapperLocations" value="classpath:*/dao/*Mapper.xml" />
+ 		<property name="mapperLocations" >
+ 			<list>
+ 				<value>classpath*:hairShop/dao/hairShopMapper.xml</value>
+ 				<value>classpath*:member/dao/memberMapper.xml</value>
+ 				<value>classpath*:board/dao/boardMapper.xml</value>
+ 			</list>
+ 		</property>
 	</bean>
 	
 	<!-- mybatis / SqlSession -->

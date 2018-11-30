@@ -16,12 +16,15 @@
 	<bean id="memberController" class="member.controller.MemberController"></bean>
 	<bean id="manageController" class="member.controller.ManageController"></bean>
 	<bean id="loginController" class="member.controller.LoginController"></bean>
+	<bean id="boardController" class="board.controller.BoardController"></bean>
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	        <property name="suffix" value=".jsp"/>
 	</bean>
 	
 	<context:component-scan base-package="hairShop.dao"/>
+	<context:component-scan base-package="board.dao"/>
+	<context:component-scan base-package="member.dao"/>
 	
 	<!-- json -->
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">

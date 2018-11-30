@@ -2,6 +2,25 @@
 	pageEncoding="UTF-8"%>
 
 <style type="text/css">
+/* 리뷰 css */
+/* 리뷰 관련 css */
+.info_area{
+	line-height: 25px;
+	font-family: 함초롬돋움; 
+	font-size: 17px;
+	font-weight: bold;
+}
+.reviewcontent_area{
+	line-height: 25px;
+	font-family: 함초롬돋움; 
+	font-size: 17px;
+}
+.star_name_logtime_area{
+	line-height: 25px;
+	font-family: 함초롬돋움; 
+	font-size: 17px;
+}
+
 button.disable {
 	cursor: not-allowed;
 	background-color: gray;
@@ -669,45 +688,10 @@ button.selectedBtn {
 						<h2>Review</h2>
 						<p>미용실 별점 및 리뷰</p>
 					</div>
-				</div>
-				<div class="row">
-					<table>
-						<tr>
-							<td>
-								<div class="testimonial-img">
-									<img class="photo"
-										src="/hairShopProject/main/assets/images/clients/혜미.PNG"
-										alt="clients">
-									<div class="name1">디자이너</div>
-									<div class="name">혜미</div>
-								</div>
-								<!--/.testimonial-img-->
-							</td>
-							<td>
-								<div class="testimonial-description">
-									<div class="testimonial-info">
-										<div class="testimonial-person">
-											<div class="beautysalon">헤어앤타쿠미</div>
-											<div class="testimonial-person-star">
-												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i>
-											</div>
-										</div>
-										<!--/.testimonial-person-->
-									</div>
-									<!--/.testimonial-info-->
-									<div class="testimonial-comment">
-										<p style="font-size: 13pt;">
-											헤어앤타쿠미의 디자이너 혜미<br>
-										</p>
-									</div>
-									<!--/.testimonial-comment-->
-								</div>
-								<!--/.testimonial-description-->
-							</td>
-						</tr>
-					</table>
+					 <div id="review_area" align="center">
+					 	<ul id="reviewList"></ul>
+					 </div>
+					 <input type="button" value="리뷰쓰기" id="reviewWriteBtn">
 				</div>
 			</div>
 			<div class="tab-pane  fade" id="tabBody4" role="tabpanel"
@@ -1121,4 +1105,95 @@ button.selectedBtn {
            }
         }, 100);
      }
+	</script>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		//리뷰
+		$('#review').on('click',function(){
+			var dataList;
+			var listIndex;
+			var i = 0;
+			var j;
+			var dataListSize;
+			$.ajax({
+				type : 'POST',
+				url : '/hairShopProject/hairShop/reviewList.do',
+				dataType : 'json',
+				success : function(data){
+					//alert(JSON.stringify(data));
+					dataList = data.list;
+					dataListSize = dataList.length;
+					$('#reviewListTable tr:eq(0)').remove();
+					$.each(data.list,function(index,items){
+						var email = items.email.split("@");
+						var name = email[0];
+						$('<li/>').append($('<div/>',{
+							class : 'info_area',
+							align : 'left',
+							html : "["+items.service+"]"+items.reviewsubject+"&emsp;"+items.position+"&nbsp;"+items.designername//[서비스] + 리뷰제목 + 디자이너직책 + 디자이너이름 
+						})).append($('<div/>',{
+							colspan : 3,
+							align : 'left',
+							class : 'reviewcontent_area',
+							text : items.reviewcontent//리뷰내용
+						})).append($('<div/>',{
+							class : 'star_name_logtime_area',
+							align : 'left', 
+							html : '<img style = "width : 13px; height : 13px; margin-top : -3px;" src = "/hairShopProject/hairShop/img/review/img_star.png" />' +
+									'x'+items.designerstar+"&emsp;"+ name+"&emsp;"+ items.logtime
+						})).append($('<hr>')).appendTo($('#reviewList'));
+						
+						if((index%10) == 9){
+							$('<input/>',{
+								type : 'button',
+								id : 'nextView',
+								value : '더보기'
+							}).appendTo($('#reviewList'));
+							listIndex = index;
+							return false;
+						}
+						
+						
+					});//$.each
+					i = i+10;
+					//alert(i);
+					//alert(listIndex);
+					$('#nextView').on('click',function(){
+						//alert(i);
+						$('#nextView').hide();
+						for(j = i; j<i+10; j++){
+							//alert(dataListSize)//전체사이즈
+							if(j >= dataListSize) return false;
+							var email = dataList[j].email.split("@");
+							var name = email[0];
+							$('<li/>').append($('<div/>',{
+								class : 'info_area',
+								align : 'left',
+								html : "["+dataList[j].service+"]"+dataList[j].reviewsubject+"&emsp;"+dataList[j].position+"&nbsp;"+dataList[j].designername//[서비스] + 리뷰제목 + 디자이너직책 + 디자이너이름 
+							})).append($('<div/>',{
+								colspan : 3,
+								align : 'left',
+								class : 'reviewcontent_area',
+								text : dataList[j].reviewcontent//리뷰내용
+							})).append($('<div/>',{
+								class : 'star_name_logtime_area',
+								align : 'left', 
+								html : '<img style = "width : 13px; height : 13px; margin-top : -3px;" src = "/hairShopProject/hairShop/img/review/img_star.png" />' +
+										'x'+dataList[j].designerstar+"&emsp;"+ name+"&emsp;"+ dataList[j].logtime
+							})).append($('<hr>')).appendTo($('#reviewList'));
+						}
+						$('#nextView').show();
+					});
+					
+					//alert(listIndex + 1);
+					//alert(dataList.length);//리뷰리스트 개수
+					
+				},
+				error : function(data){
+					alert("error");
+				}
+			});
+		});
+	});
 	</script>

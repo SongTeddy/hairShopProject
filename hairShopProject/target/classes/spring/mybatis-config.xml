@@ -6,6 +6,12 @@
 		<typeAlias type="member.bean.MemberDTO" alias="member"/>
 		<typeAlias type="member.bean.DesignerDTO" alias="designer"/>
 		<typeAlias type="hairShop.bean.HairShopDTO" alias="hairShop"/>
+
+		<typeAlias type="hairShop.bean.HairShopDesignerDTO" alias="hairShopDesigner"/>
+		<typeAlias type="hairShop.bean.HairShopReviewDTO" alias="hairShopReview"/>
+		<typeAlias type="board.bean.BoardDTO" alias="board"/>
+
 		<typeAlias type="hairShop.bean.ReservationDTO" alias="reservation"/>
+
 	</typeAliases>
 </configuration>

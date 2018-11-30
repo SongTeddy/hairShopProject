@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import hairShop.bean.HairShopReviewDTO;
+
 @Transactional
 @Component
 public class HairShopDAOMybatis implements HairShopDAO {
@@ -48,5 +50,10 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	@Override
 	public int confirmedReservation(Map<String, String> map) {
 		return sqlSession.insert("hairShopSQL.confirmedReservation", map);
+	}
+
+	@Override
+	public List<HairShopReviewDTO> hairShopReviewList() {
+		return sqlSession.selectList("hairShopSQL.hairShopReviewList");
 	}
 }

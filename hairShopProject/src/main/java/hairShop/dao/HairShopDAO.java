@@ -3,6 +3,8 @@ package hairShop.dao;
 import java.util.List;
 import java.util.Map;
 
+import hairShop.bean.HairShopReviewDTO;
+
 public interface HairShopDAO {
 	public List<Map<String, Object>> getSearchList(Map<String, String> map);
 	public Map<String, Object> getHairShopInfo(String hairShopId);
@@ -11,4 +13,5 @@ public interface HairShopDAO {
 	public List<Map<String, Object>> getServiceList(Map<String, String> map);
 	public List<Map<String, Object>> getDesignerInfo(String hairShopId);
 	public int confirmedReservation(Map<String, String> map);
+	public List<HairShopReviewDTO> hairShopReviewList();
 }
