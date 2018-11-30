@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hairShopSQL">
+<select id="getSearchList" parameterType="java.util.Map" resultType="java.util.Map">
+	select hairshopid, hairshopimage1, name, addr1, addr2, latitud, longitude, tel1, tel2, tel3, 
+	hairshopcontent, opentime, closetime, dayoff,
+	min(serviceinfo.PRICE) as minprice, max(serviceinfo.PRICE) as maxprice
+	from MEMBERINFO 
+	join SERVICEINFO using(hairshopid) 
+	where service=#{service } 
+	and dayoff like '%${day }%'
+	group by hairshopid, hairshopimage1, name, addr1, addr2, latitud, longitude, tel1, tel2, tel3, 
+	hairshopcontent,opentime, closetime, dayoff
+</select>
+
+<select id="getHairShopInfo" parameterType="String" resultType="java.util.Map">
+	select * from memberinfo where hairshopid=#{value }
+</select>
+
+<select id="getDesignerInfo"  parameterType="String" resultType="java.util.Map">
+	select * from designerinfo where hairshopid = #{hairShopId } order by positioncode asc
+</select>
+
+
+<select id="getServiceList" parameterType="java.util.Map" resultType="java.util.Map">
+	select * from SERVICEINFO where hairshopid=#{hairShopId } and service=#{pickedService }
+</select>
+
+
+<select id="getDesignerSchedule" parameterType="java.util.Map" resultType="java.util.Map">
+	select *
+	from DESIGNERSCHEDULE join DESIGNERINFO using(designerid)
+	where DESIGNERSCHEDULE.hairshopid=#{hairShopId } 
+	and DESIGNERSCHEDULE.theday=to_char(to_date(#{selectedDay }, 'mm dd yyyy'), 'yyyy-mm-dd') order by DESIGNERINFO.positioncode asc, DESIGNERINFO.designername asc
+</select>
+
+<select id="timeBtnCheck" parameterType="java.util.Map" resultType="java.util.Map">
+	select * from reservation where designerid=#{DESIGNERID } and theday=#{THEDAY }
+</select>
+
+
+<insert id="confirmedReservation" parameterType="java.util.Map">
+	insert into reservation
+	values(
+	    #{bookerEmail }, #{bookerName }, 
+	    #{bookerTel1 }, #{bookerTel2 }, #{bookerTel3 }, #{requests },
+	    #{hairShopId }, #{designerId }, #{designerName },
+	    #{service }, #{description },
+	    #{price }, #{timeRequired },
+	    to_date(#{theDay }||' '||#{startTime }, 'yyyy-mm-dd hh24:mi'), 
+	    to_date(#{theDay }||' '||#{startTime }, 'yyyy-mm-dd hh24:mi') + ${timeRequired }/24/60, 
+	    #{theDay }, 0, sysdate
+	)
+</insert>
+
+
+
+
+
+
+</mapper>

@@ -1,0 +1,259 @@
+/* 鍮꾨�踰덊샇 李얘린瑜� �겢由��뻽�쓣 �븣 踰꾪듉 Div */
+.loginContainer.findMember .findMemberDiv {
+  top: 20px;
+  right: 0;
+  width: 100%;
+  z-index: 11;
+  min-width: 100%;
+  height: 500px;
+  border-radius: 5px;
+  padding: 60px 0 40px;
+  overflow: hidden;
+}
+
+.loginContainer.findMember .findMemberDiv .findMemberTitle, /* �긽�떒湲��옄("鍮꾨�踰덊샇 李얘린") */
+.loginContainer.findMember .findMemberDiv .input-container, /* �젙蹂� Input遺�遺� */
+.loginContainer.findMember .findMemberDiv .button-container,
+.loginContainer.findMember .findMemberDiv .idValid-container,
+.loginContainer.findMember .findMemberDiv .pwdValid-container { /* NEXT踰꾪듉 */
+  left: 0;
+  opacity: 0.9;
+  visibility: visible;
+  transition: .3s ease;
+}
+
+/* 媛� 遺�遺꾩씠 �쑉�뒗 �떆媛� */
+.loginContainer.findMember .findMemberDiv .findMemberTitle {
+  transition-delay: .3s;
+}
+.loginContainer.findMember .findMemberDiv .input-container,
+.loginContainer.findMember .findMemberDiv .idValid-container,
+.loginContainer.findMember .findMemberDiv .pwdValid-container {
+  transition-delay: .4s;
+}
+.loginContainer.findMember .findMemberDiv .button-container {
+  transition-delay: .7s;
+}
+
+.findMemberDiv .findMemberTitle,
+.findMemberDiv .input-container,
+.findMemberDiv .button-container,
+.findMemberDiv .idValid-container,
+.findMemberDiv .pwdValid-container {
+  left: 100px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* 鍮꾨�踰덊샇 李얘린 �닃���쓣 �븣 踰꾪듉 蹂��솕 */
+.loginContainer.findMember .findMemberDiv .findMemberToggle {
+  position: absolute;
+  top: 40px;
+  right: 100px;
+  box-shadow: none;
+  -webkit-transform: scale(10);
+  transform: scale(10);
+  transition: -webkit-transform .3s ease;
+  transition: transform .3s ease;
+  transition: transform .3s ease, -webkit-transform .3s ease;
+}
+
+.loginContainer.findMember .findMemberDiv .findMemberToggle:before {
+  content: '';
+}
+
+/* 鍮꾨�踰덊샇 李얘린 �쟾泥� */
+.findMemberDiv {
+  position: absolute;
+  top: 130px;
+  right: -40px;
+  z-index: 10;
+  width: 90px;
+  height: 90px;
+  background: #ed2553;
+  border-radius: 100%;
+  box-shadow: none;
+  padding: 0;
+  transition: .3s ease;
+}
+
+/* 鍮꾨�踰덊샇 李얘린 踰꾪듉 */
+.findMemberDiv .findMemberToggle {
+  position: absolute;
+  background: #ed2553; /* 踰꾪듉, 李얘린 �뤌 諛곌꼍�깋 */ 
+  width: 90px;
+  height: 90px;
+  border-radius: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  color: #ffffff; /* �뀓�뒪�듃 �깋源� */
+  font-size: 40px;
+  line-height: 90px; /* �뀓�뒪�듃 �쐞移� */
+  text-align: center;
+  cursor: pointer;
+}
+
+/* 踰꾪듉 �뀓�뒪�듃 */
+.findMemberDiv .findMemberToggle:before {
+  content: '\f002';
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 60px;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+}
+
+/* input �쐞移� 議곗젙 */
+.findMemberDiv .input-container {
+  position: relative;
+  margin: 0px 30px 60px 30px;
+}
+
+/* �긽�떒 title, close踰꾪듉 */
+.findMemberDiv .findMemberTitle{
+  font-size : 30px;
+  position: relative;
+  border-left: 5px solid #ffffff;
+  color: #ffffff;
+  margin: 0 0 35px;
+  padding: 10px 0 10px 50px;
+  font-weight: bold;
+}
+
+.findMemberDiv .findMemberTitle .close {
+  cursor: pointer;
+  position: absolute;
+  top: -5px;
+  right: 60px;
+  display: inline;
+  color: #ffffff;
+  font-size: 58px;
+  font-weight: 400;
+}
+
+.findMemberDiv .findMemberTitle .close:before {
+  content: '\00d7';
+}
+
+/* Input, label �꽕�젙 */
+.findMemberDiv .input-container input {
+  outline: none;
+  z-index: 1;
+  position: relative;
+  background: none;
+  width: 100%;
+  height: 60px;
+  left: 0px;
+  border: 0;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.findMemberDiv .input-container label { /* �씪踰� �씠�룞 �쟾 �깋�긽 */
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 60px;
+  transition: 0.2s ease; /* label 湲��옄媛� �삱�씪媛��뒗 �냽�룄 */
+}
+
+.findMemberDiv .input-container input:focus ~ label {
+  color: #ffffff;
+  -webkit-transform: translate(-12%, -50%) scale(0.75);
+          transform: translate(-12%, -50%) scale(0.75);  
+          /* scale(湲��뵪�겕湲�) 
+          	 translate(x異�, y異�)*/
+}
+
+.findMemberDiv .input-container input:valid ~ label {
+  color: #ffffff;
+  -webkit-transform: translate(-12%, -50%) scale(0.75);
+          transform: translate(-12%, -50%) scale(0.75);
+}
+
+.findMemberDiv .input-container input:focus ~ .bar:before,
+.findMemberDiv .input-container input:focus ~ .bar:after {
+	width: 50%;
+}
+
+.findMemberDiv .input-container input:valid ~ label {
+  color: #ffffff;
+}
+
+/* Input �븘�옒 �꽑 */
+.findMemberDiv .input-container .bar::before,
+.findMemberDiv .input-container .bar::after {
+	content: "";
+}
+
+/* focus �쟾 */
+.findMemberDiv .input-container .bar {
+  position: absolute;
+  top: 58px;
+  left: 10;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 1px;
+}
+
+/* focus �썑 */
+.findMemberDiv .input-container .bar:before, .findMemberDiv .input-container .bar:after {
+  content: '';
+  position: absolute;
+  background: #ffffff;
+  width: 0;
+  height: 2px;
+  transition: .2s ease;
+}
+
+.findMemberDiv .input-container .bar:before {
+  left: 50%;
+}
+
+.findMemberDiv .input-container .bar:after {
+  right: 50%;
+}
+
+/* NEXT 踰꾪듉 */
+.findMemberDiv .button-container button {
+  width: 350px;
+  height: 70px;
+  font-size: 25px;
+  align: center;
+  background: #ffffff;
+  border-color: #ffffff;
+  font-weight: bold;
+}
+
+.findMemberDiv .button-container button span {
+  color: #ed2553;
+}
+
+.findMemberDiv .button-container button:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transition: .2s ease;
+}
+
+.findMemberDiv .button-container button:findMember:before, .findMemberDiv .button-container button:focus:before {
+  display: none;
+}
+
+/* valid Div */
+.idValid-container {
+	position: relative;
+	top: -30px;
+ 	margin: 0px 20px 20px 30px;
+}
+
+.pwdValid-container {
+	position: relative;
+	top: -45px;
+ 	margin: 0px 20px 3px 30px;
+}
