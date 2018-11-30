@@ -4,11 +4,12 @@
 
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
 <link rel="stylesheet" href="/hairShopProject/managementPage/css/totalReservation.css">
+<link rel="stylesheet" href="/hairShopProject/managementPage/css/dropkick.css">
 
 <input type="hidden" id="hairshopId" value="${hairshopId }">
 
 <font size="6pt" style="color: #363636;">예약 현황</font><br>
-<hr style="color: black;
+<hr align="left" style="color: black;
 			  margin-top: 10px;
 	    	  margin-bottom: 0px;
 	    	  width: 145px;
@@ -20,10 +21,17 @@
 		<div class="totalPrice">매출 Total : </div>
 	</div><br>
 	
-	<div class="year"></div>
+	<div class="schedule_top">
+		<div class="selecDesigner" style="float: left">
+			<select id="designerSelect" name="selectDesigner" style="width: 70px;">
+        	</select>
+		</div>
+		
+		<div class="year" style="float: left"></div>
+	</div>
 	
-	<div class="designer_reserve">
-		<table id="designerTable" frame="hsides" rules="rows" align="center">
+	<div class="designer_reserve" style="clear: both;">
+		<table id="designerTable" align="left" frame="hsides" rules="rows" align="center">
 	
 			<tr class="topTr" bgcolor="#484848">
 				<td class="backslash" width="100px">
@@ -34,11 +42,133 @@
 	</div>
 </div>
 
+<div class="white_content" id="open">
+    <div>
+        <div align="center">예약 정보입니다 <a href="#close">X</a></div><br>
+        <div>예약자 명 : </div>
+        <div>예약자 이름 : </div>
+        <div>예약자 번호 : </div>
+        <div>예약자 요청사항 : </div><br>
+        <div>시술명 : </div>
+        <div>금액 : </div>
+    </div>
+</div>
+
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="/hairShopProject/managementPage/js/totalReservation.js"></script>
+<script src="/hairShopProject/managementPage/js/dropkick.js"></script>
 <script>
+// 일정표에 예약들을 표시해주는 함수
+function showDesignerSchedule() {
+	$('.1, .2, .3, .4, .5, .6, .7').empty().removeAttr('rowspan');
+	var selectedDesigner = $("#designerSelect option:selected").val();
+	
+	var cnt = 1;
+	$.ajax({
+		type : 'POST',
+		url : '/hairShopProject/managementPage/getReserveTime.do',
+		data : {'designername':selectedDesigner, 'cnt':cnt},
+		dataType : 'json',
+		success : function(data) {
+			// td클래스를 가진 배열 생성
+			var tdClassAr = new Array();
+			$.each(data.tdClassList, function(index, items) {
+				tdClassAr[index] = items;
+			});
+			
+			// 요구시간을 가진 배열 생성
+			var requiredTimeAr = new Array();
+			$.each(data.requiredTimeList, function(index, items) {
+				requiredTimeAr[index] = items;
+			});
+			
+			// 요구시간을 가진 배열 생성
+			var bookerNameAr = new Array();
+			$.each(data.bookerNameList, function(index, items) {
+				bookerNameAr[index] = items;
+			});
+			
+			// 시술명을 가진 배열 생성
+			var serviceAr = new Array();
+			$.each(data.serviceList, function(index, items) {
+				serviceAr[index] = items;
+			});
+			
+			// 사양이 안 좋은 컴퓨터에서는 each문이 연달아 일어나다 보니 생략이 되는 경우가 생겨 약간의 딜레이를 줌
+			setTimeout(function() {
+				$.each(data.startList, function(index, items) {
+					// ex) 11:30
+					// startTime[0]=11
+					// startTime[1]=30
+					var startTime = items.split(':');
+					
+					// 시작시간의 시와 분을 합쳐서 추가할 tr의 클래스와 동일하게 만들어 저장
+					var trClass = Number(startTime[0])+Number(startTime[1]);
+					
+					$('.'+trClass+' .'+tdClassAr[index]).append($('<div/>', {
+						text : 이용자 명 : 
+						id : 'reserveInfoOpen',
+						style : 'position: absolute;'+
+								'margin-top: -12px;'+
+								'height: '+String((25*Number(requiredTimeAr[index])/30)+24)+'px;'+
+								'width: 119px;'+
+								'background-color: #B1B1B1;'+
+								'cursor: pointer;'+
+								'text-align : center'
+						
+						})/* .append($('<div/>', {
+							text : '예약자 : '+bookerNameAr[index],
+							style : 'height: 10px;'+
+									'color: #000000;'+
+									'text-align: center;'+
+									'padding-top: 0px;'
+									
+						})).append($('<div/>', {
+							text : '시술명 : '+serviceAr[index],
+							style : 'height: 10px;'+
+									'color: #000000;'+
+									'text-align: center;'+
+									'padding-top: 0px;'
+					})) */);
+					
+				});
+			}, 0);
+			
+			// 종료시간 td 표시
+			/* $.each(data.endList, function(index, items) {
+				// ex) 11:30
+				// startTime[0]=11
+				// startTime[1]=30
+				var endTime = items.split(':');
+				//alert('endtime = '+endTime);
+				// 시작시간의 시와 분을 합쳐서 추가할 tr의 클래스와 동일하게 만들어 저장
+				var trClass = Number(endTime[0])+Number(endTime[1]);
+				
+				$('.'+trClass+' .'+tdClassAr[index]).append($('<div/>', {
+					text : '끝',
+					id : 'reserveInfoOpen',
+					style : 'height: 100%;'+
+							'background-color: #B1B1B1;'+
+							'cursor: pointer;'+
+							'text-align : center'
+					
+					}));
+				
+			}); */
+		}
+	});
+}
+
 $(document).ready(function() {
-	/* 총 예약 수 */
+	$('#designerTable').on('click', '#reserveInfoOpen', function() {
+		$(location).attr('href', '#open');
+	});
+	
+	$('#designerSelect').change(function() {
+		showDesignerSchedule();
+	});
+
+	// 총 예약 수
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/managementPage/getTotalReservation.do',
@@ -49,7 +179,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	/* 총 예약 금액 */
+	// 총 예약 금액
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/managementPage/getTotalReservePrice.do',
@@ -60,7 +190,32 @@ $(document).ready(function() {
 		}
 	});
 	
-	/* 현재부터 7일치 년,월,일 구하기  */
+	// select 태그에 디자이너 입력
+	$.ajax({
+		type : 'POST',
+		url : '/hairShopProject/managementPage/getHairShopDesigner.do',
+		data : {'hairshopId':$('#hairshopId').val()},
+		dataType : 'json',
+		success : function(data) {
+			// 디자이너 이름들이 저장된 배열 생성
+			var designerName = new Array();
+			
+			$.each(data.list, function(index, items) {
+				designerName[index] = items;
+				
+				// select에 option태그 추가
+				$('#designerSelect').append($('<option/>', {
+					value : designerName[index],
+					text : designerName[index]
+				}));
+			});
+			
+			// 일정표에 예약 정보 표시
+			showDesignerSchedule();
+		}
+	});
+	
+	// 현재부터 7일치 년,월,일 구하기
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/managementPage/reserveCalender.do',
@@ -83,7 +238,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	/* 헤어샵의 오픈,클로징 타임으로 시간 하나의 tr태그 생성 */
+	// 헤어샵의 오픈,클로징 타임으로 시간 하나의 tr태그 생성
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/managementPage/getMemberInfo.do',
@@ -162,72 +317,6 @@ $(document).ready(function() {
 					}
 				}
 			});
-		}
-	});
-	
-	var cnt = 1;
-	$.ajax({
-		type : 'POST',
-		url : '/hairShopProject/managementPage/getReserveTime.do',
-		data : {'designername':'도비', 'cnt':cnt},
-		dataType : 'json',
-		success : function(data) {
-			// td클래스를 가진 배열 생성
-			var tdClassAr = new Array();
-			$.each(data.tdClassList, function(index, items) {
-				tdClassAr[index] = items;
-			});
-			
-			// 요구시간을 가진 배열 생성
-			var requiredTimeAr = new Array();
-			$.each(data.requiredTimeList, function(index, items) {
-				requiredTimeAr[index] = items;
-			});
-			
-			// 요구시간을 가진 배열 생성
-			var bookerNameAr = new Array();
-			$.each(data.bookerNameList, function(index, items) {
-				bookerNameAr[index] = items;
-			});
-			
-			// 시술명을 가진 배열 생성
-			var serviceAr = new Array();
-			$.each(data.serviceList, function(index, items) {
-				serviceAr[index] = items;
-			});
-			
-			// each문이 연달아 일어나다 보니 생략이 되는 경우가 생겨 약간의 딜레이를 줌
-			setTimeout(function() {
-				$.each(data.startList, function(index, items) {
-					// ex) 11:30
-					// startTime[0]=11
-					// startTime[1]=30
-					var startTime = items.split(':');
-					
-					// 시작시간의 시와 분을 합쳐서 추가할 tr의 클래스와 동일하게 만들어 저장
-					var trClass = Number(startTime[0])+Number(startTime[1]);
-					
-					$('.'+trClass+' .'+tdClassAr[index]).append($('<div/>', {
-						style : 'height: 100%;'+
-								'background-color: #DBDBDB;'
-						
-						}).append($('<div/>', {
-							text : '예약자 : '+bookerNameAr[index],
-							style : 'height: 10px;'+
-									'color: #000000;'+
-									'text-align: center;'+
-									'padding-top: 30px;'
-									
-						})).append($('<div/>', {
-							text : '시술명 : '+serviceAr[index],
-							style : 'height: 10px;'+
-									'color: #000000;'+
-									'text-align: center;'+
-									'padding-top: 30px;'
-					}))).attr('rowspan', Number(requiredTimeAr[index])/30+1);
-					
-				});
-			}, 500);
 		}
 	});
 });

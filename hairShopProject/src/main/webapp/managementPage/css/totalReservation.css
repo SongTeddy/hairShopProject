@@ -39,7 +39,7 @@
 
 .year {
 	position: relative;
-	left: 500px;
+	left: 400px;
 	font-size: 30px;
 	margin-bottom: 10px;
 }
@@ -52,4 +52,36 @@
 	height: 40px;
 	font-family: 'Nanum Gothic', sans-serif;
 	font-weight: bold;
+}
+
+/* И№До */
+.white_content {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+.white_content:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.white_content > div {
+	position: absolute;
+	top: 30%;
+	left: 43%;
+	width: 300px;
+	height: 200px;
+	color : #000000;
+	font-weight: bold;
+	padding: 16px;
+	border: 0px;
+	background-color: white;
+	overflow: auto;	
 }

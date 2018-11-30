@@ -27,7 +27,7 @@ public class ReservationDTO {
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private Date starttime;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-	private Date date;
+	private Date endtime;
     private String theday;
     private int didordidnot;
 }

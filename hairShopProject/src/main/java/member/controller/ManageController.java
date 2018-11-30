@@ -42,9 +42,10 @@ public class ManageController {
 		return memberDAO.getMemberType(memEmail);
 	}
 	
-	// 사업자 페이지 이동
+	// 사업자 페이지 이동 = 예약현황 메뉴
 	@RequestMapping(value="companyPage", method=RequestMethod.GET)
 	public ModelAndView companyPage(HttpSession session) {
+		
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -98,6 +99,18 @@ public class ManageController {
 		return String.format("%,d", totalPrice);
 	}
 	
+	// 헤어샵의 디자이너 이름 구하기
+	@RequestMapping(value="getHairShopDesigner", method=RequestMethod.POST)
+	public ModelAndView getHairShopDesigner(@RequestParam String hairshopId) {
+		List<String> list = memberDAO.getHairShopDesigner(hairshopId);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
+	
 	// 오늘 년, 월, 일 구하기
 	@RequestMapping(value="reserveCalender", method=RequestMethod.POST)
 	public ModelAndView reserveCalender() {
@@ -146,8 +159,8 @@ public class ManageController {
 		
 		// 리스트 생성
 		List<String> requiredTimeList = new ArrayList<String>(); // 요구시간 리스트
-		List<String> bookerNameList = new ArrayList<String>(); // 예약자가 담긴 리스트 생성
-		List<String> serviceList = new ArrayList<String>(); // 예약자가 담긴 리스트 생성
+		List<String> bookerNameList = new ArrayList<String>(); // 예약자 이름 리스트
+		List<String> serviceList = new ArrayList<String>(); // 시술명 리스트
 		
 		for(ReservationDTO reservationDTO : list) {
 			requiredTimeList.add(Integer.toString(reservationDTO.getTimerequired()));
@@ -156,7 +169,8 @@ public class ManageController {
 		}
 		
 		// 시작시간 리스트, td클래스 리스르 생성
-		List<String> startList = new ArrayList<String>(); // list의 객체들을 String으로 변환 한 리스트
+		List<String> startList = new ArrayList<String>(); // 시작시간 리스트
+		List<String> endList = new ArrayList<String>(); // 종료시간 리스트
 		List<String> tdClassList = new ArrayList<String>(); // td의 클래스들이 담긴 리스트
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -164,6 +178,7 @@ public class ManageController {
 		
 		for(int i=0; i<list.size(); i++) {
 			startList.add(sdf.format(list.get(i).getStarttime())); // 각 예약날의 시:분을 리스트에 추가 
+			endList.add(sdf.format(list.get(i).getEndtime())); // 각 예약날의 시:분을 리스트에 추가
 		}
 		
 		for(int i=0; i<list.size(); i++) { // 예약이 더이상 없으면 break;
@@ -189,6 +204,7 @@ public class ManageController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("startList", startList);
+		mav.addObject("endList", startList);
 		mav.addObject("tdClassList", tdClassList);
 		mav.addObject("requiredTimeList", requiredTimeList);
 		mav.addObject("bookerNameList", bookerNameList);
