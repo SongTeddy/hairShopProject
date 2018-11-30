@@ -121,6 +121,24 @@
 							<option value="011">011</option>
 							<option value="010">016</option>
 							<option value="010">019</option>
+							<option value="010">02</option>
+							<option value="010">031</option>
+							<option value="010">031</option>
+							<option value="010">033</option>
+							<option value="010">041</option>
+							<option value="010">042</option>
+							<option value="010">043</option>
+							<option value="010">044</option>
+							<option value="010">051</option>
+							<option value="010">052</option>
+							<option value="010">053</option>
+							<option value="010">054</option>
+							<option value="010">055</option>
+							<option value="010">061</option>
+							<option value="010">062</option>
+							<option value="010">063</option>
+							<option value="010">064</option>
+							<option value="010">070</option>
 						</select>&emsp;
 						<span style="color:white; font-weight:bold;">-</span>
 						<input type="${type}" class="tel2" style="width:92px; height:27px; color:white; text-align:center; font-size:15pt;" required="required"/><span style="color:white; font-weight:bold;">-</span>
