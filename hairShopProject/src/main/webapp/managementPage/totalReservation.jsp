@@ -112,7 +112,7 @@ $(document).ready(function() {
 						text : hour+' : '+minute,
 						style : 'height: 25px;'
 						
-						// 각각의 td를 제어하기 위해 class를 부여함
+						// 각각의 td를 제어하기 위해 class를 부여함zz
 						// td의 부모인 tr의 클래스를 이용해 각 td 제어
 					})).append($('<td/>', {
 						class : '1',
