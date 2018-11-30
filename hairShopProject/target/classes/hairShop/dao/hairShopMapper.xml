@@ -53,9 +53,8 @@
 	)
 </insert>
 
-
-
-
-
-
+	<!-- 리뷰 글쓰기 -->
+	<insert id="hairShopReviewWrite" parameterType="java.util.Map" >
+		insert into review(seq,email,position,designername,service,reviewsubject,reviewcontent,hairShopStar,designerStar) values(seq_review.nextval,#{email},#{position},#{designername},#{service},#{reviewsubject},#{reviewcontent},#{hairShopStar},#{designerStar})
+	</insert>
 </mapper>

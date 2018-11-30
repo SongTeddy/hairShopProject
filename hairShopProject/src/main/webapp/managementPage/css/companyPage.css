@@ -2,7 +2,7 @@
 	float: left;
 	width: 230px;
 	height: 600px;
-	margin: 30px 30px 60px 200px;
+	margin: 30px 30px 40px 200px;
 	padding-top: 20px;
 	border: 1px solid black;
 	text-align: center;	
@@ -10,7 +10,7 @@
 
 .myPage_body {
 	float: left;
-	width: 1200px;
+	width: 1300px;
 	height: auto;
 	min-height: 600px;
 	margin: 30px 0px 60px 0px;

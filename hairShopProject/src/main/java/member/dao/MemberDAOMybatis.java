@@ -44,7 +44,7 @@ public class MemberDAOMybatis implements MemberDAO {
 		return sqlSession.update("memberSQL.updatePwd", memberDTO);
 	}
 	
-	//회원 가입 인증 status를 true로 바꿔 로그인 가능으로 DB에 저장
+	//회원 가입 인증 status를 true로 바꿔 로그인 가능 상태로 DB에 저장
 	@Override
 	public int approval_member(MemberDTO memberDTO) throws Exception{
 		return sqlSession.update("memberSQL.approval_member", memberDTO);
@@ -181,7 +181,7 @@ public class MemberDAOMybatis implements MemberDAO {
 		return email;
 	}
 	
-// 마이페이지 ----------------------------------------------------------------------------------
+// 마이페이지(사업자) ----------------------------------------------------------------------------------
 
 	// 마이페이지 구분
 	@Override
@@ -248,5 +248,37 @@ public class MemberDAOMybatis implements MemberDAO {
 	@Override
 	public List<MemberDTO> getMemberInfo(String hairshopId) {
 		return sqlSession.selectList("memberSQL.getMemberInfo", hairshopId);
+	}
+
+// 마이페이지(개인)=================================================================================
+	
+	//개인회원 정보 수정
+	@Override
+	public void updateInfo(MemberDTO memberDTO) {
+		sqlSession.selectOne("memberSQL.updateInfo", memberDTO);
+	}
+	
+	//회원탈퇴
+	@Override
+	public void userDelete(Map<String,String> map) {
+		sqlSession.delete("memberSQL.userDelete", map);
+	}
+	
+	//이용내역 정보
+	@Override
+	public List<Map<String, Object>> getUsageDetailsInfo(String email) {
+		return sqlSession.selectList("memberSQL.getUsageDetailsInfo", email);
+	}
+	
+	//예약현황 리스트
+	@Override
+	public List<Map<String, Object>> getReservationList(String email) {
+		return sqlSession.selectList("memberSQL.getReservationList", email);
+	}
+	
+	//예약취소
+	@Override
+	public void reservationCancel(String email) {
+		sqlSession.delete("memberSQL.reservationCancel", email);
 	}
 }

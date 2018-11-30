@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import hairShop.dao.HairShopDAO;
 
 @Controller
@@ -144,6 +147,24 @@ public class HairShopController {
 		   mav.addObject("display", "/hairShop/failedReservation.jsp");		   		   
 	   }
 	   mav.addObject("map", map);
+	   return mav;
+   }
+   
+   //리뷰 작성
+   @RequestMapping(value="/hairShop/reviewWrite.do",method=RequestMethod.POST)
+   public ModelAndView reviewWrite(@RequestParam Map<String,String> map, HttpSession session) {
+	  // String email = (String) session.getAttribute("memEmail");
+	   System.out.println(map);
+	   //System.out.println("이메일="+map.get("email"));
+	   //System.out.println("서비스="+map.get("service"));
+
+	
+	   hairShopDAO.hairShopReviewWrite(map);
+	   
+	   
+	   ModelAndView mav = new ModelAndView();
+	   mav.addObject("display","/hairShop/hairShop_index.jsp");
+	   mav.setViewName("/main/index");
 	   return mav;
    }
 }

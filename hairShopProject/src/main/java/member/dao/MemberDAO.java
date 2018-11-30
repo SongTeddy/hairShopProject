@@ -23,7 +23,7 @@ public interface MemberDAO {
 	public String getMemberType(String email);
 	public String getCompanyType(String email);
 	
-	// 마이페이지
+	// 마이페이지(관리자)
 	public String getTotalReservation(String email);
 	public List<DesignerDTO> getDesignerInfo(String hairshopId);
 	public String getDesignerReserve(String string);
@@ -33,4 +33,11 @@ public interface MemberDAO {
 	public void designerModify(DesignerDTO designerDTO);
 	public List<String> getTotalReservePrice(String hairshopId);
 	public List<MemberDTO> getMemberInfo(String hairshopId);
+	
+	//마이페이지(개인)
+	public void updateInfo(MemberDTO memberDTO);
+	public void userDelete(Map<String,String> map);
+	public List<Map<String, Object>> getUsageDetailsInfo(String email);
+	public List<Map<String, Object>> getReservationList(String email);
+	public void reservationCancel(String email);
 }
