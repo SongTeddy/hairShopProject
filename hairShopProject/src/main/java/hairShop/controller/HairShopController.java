@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import hairShop.bean.HairShopReviewDTO;
 import hairShop.dao.HairShopDAO;
 
 @Controller
 public class HairShopController {
    @Autowired
    HairShopDAO hairShopDAO;
+   @Autowired
+   HairShopReviewDTO hairShopReviewDTO;
+   
    
    @RequestMapping(value="/hairShop/hairShop_index.do", method=RequestMethod.GET)
    public ModelAndView input(@RequestParam String hairShopId) {  //사용자가 만든 콜백 메소드 
@@ -144,6 +148,18 @@ public class HairShopController {
 		   mav.addObject("display", "/hairShop/failedReservation.jsp");		   		   
 	   }
 	   mav.addObject("map", map);
+	   return mav;
+   }
+   
+   @RequestMapping(value="/hairShop/reviewList.do",method=RequestMethod.POST)
+   public ModelAndView reviewList() {
+	   
+	   List<HairShopReviewDTO> list = hairShopDAO.hairShopReviewList();
+	   
+	   
+	   ModelAndView mav = new ModelAndView();
+	   mav.addObject("list", list);
+	   mav.setViewName("jsonView");
 	   return mav;
    }
 }

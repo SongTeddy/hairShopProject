@@ -70,13 +70,13 @@
 				style="cursor: default; position: relative; top: 0px; left: 0px; width: 1300px; height: 400px; overflow: hidden;">
 				<div>
 				<!-- 슬라이드 추가시 img 만 추가하면 됩니다.-->
-					<img data-u="image" src="/hairShopProject/main/assets/images/welcome-hero/banner.jpg" />
+					<img data-u="image" src="/hairShopProject/main/assets/images/welcome-hero/banner.png" />
 				</div>
 				<div>
-					<img data-u="image" src="/hairShopProject/main/assets/img/002.jpg" />
+					<img data-u="image" src="/hairShopProject/main/assets/images/welcome-hero/hairShop1.png" />
 				</div>
 				<div>
-					<img data-u="image" src="/hairShopProject/main/assets/img/003.jpg" />
+					<img data-u="image" src="/hairShopProject/main/assets/images/welcome-hero/hairShop2.png" />
 				</div>
 			</div>
 			<!-- Bullet Navigator -->
