@@ -140,8 +140,6 @@
                         <dt data-role="instructions" id="phone-00000014-instr-acc" data-is-empty="1" data-i18n-text="control_instructions_47855857"></dt></div>
                         <div data-role="input-column" data-colspan="11">
                             <div data-role="input-row" data-is-first-row="1" data-is-last-row="1" style="v">
-                            
-                            
                             <select id="tel1" data-role="i123-input" style="width: 70px; vertical-align: middle;" aria-labelledby="phone-00000014-acc phone-00000014-format-acc phone-00000014-error-acc phone-00000014-instr-acc" data-size="full">
 	                            <option>010</option>
 	                            <option>011</option>
@@ -149,8 +147,8 @@
 	                            <option>019</option>
 	                            <option>018</option>
                             </select>
-                            - <input id="tel2" type="number" name="phone" style="margin-left: 0px; vertical-align: middle; width: 70px;" min="1" max="15" data-role="i123-input" aria-labelledby="phone-00000014-acc phone-00000014-format-acc phone-00000014-error-acc phone-00000014-instr-acc" data-size="full">
-                            - <input id="tel3" type="number" name="phone" style="margin-left: 0px;width: 70px;vertical-align: middle;" min="1" max="15" data-role="i123-input" aria-labelledby="phone-00000014-acc phone-00000014-format-acc phone-00000014-error-acc phone-00000014-instr-acc" data-size="full">
+                            - <input id="tel2" type="number" value="${telMap.TEL2 }" name="phone" style="margin-left: 0px; vertical-align: middle; width: 70px;" min="1" max="15" data-role="i123-input" aria-labelledby="phone-00000014-acc phone-00000014-format-acc phone-00000014-error-acc phone-00000014-instr-acc" data-size="full">
+                            - <input id="tel3" type="number" value="${telMap.TEL3 }" name="phone" style="margin-left: 0px;width: 70px;vertical-align: middle;" min="1" max="15" data-role="i123-input" aria-labelledby="phone-00000014-acc phone-00000014-format-acc phone-00000014-error-acc phone-00000014-instr-acc" data-size="full">
                             </div>
                             <label data-role="error" id="phone-00000014-error-acc" data-is-empty="1"></label>
                             <p style="font-size: 8pt;" >예약에 변동이 있을 경우 매장에서 연락을  <br/> 드릴 수 있으니 <span style="color: red;">정확하게 작성해주세요.</span></p>
@@ -177,7 +175,7 @@
                 <div data-role="container" data-type="virtual-form-table-row" data-hash="00000011" data-type-id="0" data-colspan="20" data-num-children="1">
                     <div data-role="control" data-type="name" data-hash="00000012" data-type-id="12" data-colspan="20" data-label-is-bold="1" aria-labelledby="name-00000012-acc name-00000012-error-acc name-00000012-instr-acc" data-is-required="1" data-renderer-type="lln" data-label-width="5" data-id="47855856">
                         <div data-role="label-column" data-colspan="7">
-                        <label>날짜 / 시간</label>
+                        <label>날짜 | 시간</label>
                         <dt data-role="instructions" id="name-00000012-instr-acc" data-is-empty="1" data-i18n-text="control_instructions_47855856"></dt></div>
                         <div data-role="input-column" data-colspan="11">
                             <div data-role="input-row" data-is-first-row="1" data-is-last-row="1" data-fill-colspan="8" align="right">
@@ -190,7 +188,7 @@
                 <div data-role="container" data-type="virtual-form-table-row" data-hash="00000011" data-type-id="0" data-colspan="20" data-num-children="1">
                     <div data-role="control" data-type="name" data-hash="00000012" data-type-id="12" data-colspan="20" data-label-is-bold="1" aria-labelledby="name-00000012-acc name-00000012-error-acc name-00000012-instr-acc" data-is-required="1" data-renderer-type="lln" data-label-width="5" data-id="47855856">
                         <div data-role="label-column" data-colspan="7">
-                        <label>업체 / 담당자</label>
+                        <label>업체 | 담당자</label>
                         <dt data-role="instructions" id="name-00000012-instr-acc" data-is-empty="1" data-i18n-text="control_instructions_47855856"></dt>
                         </div>
                         <div data-role="input-column" data-colspan="11">
@@ -269,11 +267,14 @@
 	var price = ${map.chosenServicePrice };
 	document.getElementById("chosenServicePriceSpan").innerText = price.toLocaleString() + '원';
 	
+	
+	$('#tel1').val("${telMap.TEL1}");	
+	
 // 	'bookeremail' : '${memEmail }', 'bookername' : '${memName }', 나중에 로그인했을 땐 요렇게 바꿔줘야 함!!!
 	$('#confirmedBtn').on('click', function(){
 		if($('#temsCheck').is(":checked")){
 			alert($('#temsCheck').is(":checked"));
-			var params = {'bookerEmail' : '로그인해야해요 이메일아이디', 'bookerName' : '로그인해야해요 이름', 
+			var params = {'bookerEmail' : '${memEmail }', 'bookerName' : '${memName }', 
 					'bookerTel1' : $('#tel1').val(), 'bookerTel2' : $('#tel2').val(), 'bookerTel3' : $('#tel3').val(),
 					'requests' : $('#requests').val(), 'hairShopId': '${map.hairShopId }', 
 					'designerId' : '${map.chosenDesignerId }', 'designerName' : '${map.chosenDesigner}', 

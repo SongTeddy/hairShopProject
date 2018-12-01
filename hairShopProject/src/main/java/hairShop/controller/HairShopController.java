@@ -51,17 +51,14 @@ public class HairShopController {
       return mav;
    }
    
+   
    @RequestMapping(value="/hairShop/getSearchList.do")
-   public ModelAndView getSearchList(@RequestParam String service,
-                             @RequestParam String day) {
+   public ModelAndView getSearchList(@RequestParam Map<String, Object> map) {
       ModelAndView mav = new ModelAndView();
-      System.out.println("요일" + day);
-      System.out.println(service);
-      Map<String, String> map = new HashMap<String, String>();
-      map.put("service", service);
-      map.put("day", day);
+      System.out.println(map.get("latitud")+ " latitud 잘 들어오낭~");
       List<Map<String, Object>> list = hairShopDAO.getSearchList(map);
-      System.out.println(list.get(0).get("MINPRICE"));
+//    System.out.println(list.get(0).get("MINPRICE"));
+//    System.out.println(list.get(0).get("DISTANCE"));
       mav.addObject("listSize", list.size());
       mav.addObject("list", list);
       mav.setViewName("jsonView");

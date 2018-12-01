@@ -17,7 +17,7 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	private SqlSession sqlSession;
    
 	@Override
-	public List<Map<String, Object>> getSearchList(Map<String, String> map) {
+	public List<Map<String, Object>> getSearchList(Map<String, Object> map) {
 		System.out.println("search DAO 들어왔어용!");
 		return sqlSession.selectList("hairShopSQL.getSearchList", map);
 	}
@@ -55,5 +55,10 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	@Override
 	public List<HairShopReviewDTO> hairShopReviewList() {
 		return sqlSession.selectList("hairShopSQL.hairShopReviewList");
+	}
+
+	@Override
+	public Map<String, Object> getTel(String memEmail) {
+		return sqlSession.selectOne("hairShopSQL.getTel", memEmail);
 	}
 }
