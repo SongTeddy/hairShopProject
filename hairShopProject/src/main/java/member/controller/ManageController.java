@@ -3,8 +3,10 @@ package member.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import java.util.Date;
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -276,6 +278,7 @@ public class ManageController {
 		memberDAO.designerModify(designerDTO);
 	}
 	
+
 //====================마이페이지 개인유저===============================
 	
 	// 유저 페이지
@@ -399,4 +402,42 @@ public class ManageController {
 		
 		return "success";
 	}
+
+	// 헤어샵 정보 등록 페이지
+	@RequestMapping(value="hairShopInfoInput", method=RequestMethod.GET)
+	public ModelAndView hairShopInfoInput(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		if(session.getAttribute("memEmail")!=null) {
+			Map<String, String> map = memberDAO.getHomepageLink((String)session.getAttribute("memEmail"));
+			mav.addObject("hairShopName", map.get("NAME"));
+			mav.addObject("hairShopId", map.get("HAIRSHOPID"));
+			mav.addObject("display", "/managementPage/companyPage.jsp");
+			mav.addObject("myPageBody", "/managementPage/hairShopInfoInput.jsp");
+		}else {
+			mav.addObject("display", "/main/body.jsp");
+		}
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
+	@RequestMapping(value="getHomepageLink", method=RequestMethod.POST)
+	public ModelAndView getHomepageLink(HttpSession session) {
+		Map<String, String> map = memberDAO.getHomepageLink((String)session.getAttribute("memEmail"));
+		System.out.println("hairShopId"  + "   " + map.get("HAIRSHOPID") + "   " + map.get("NAME"));
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("map", map);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	@RequestMapping(value="checkId.do")
+	public @ResponseBody String checkId(@RequestParam String hairShopId) {
+		System.out.println("아이디 찾으려구용" + hairShopId);
+		if(memberDAO.isExistId(hairShopId))
+			return "exist";
+		else
+			return "not_exist";
+	}
+	
+
 }

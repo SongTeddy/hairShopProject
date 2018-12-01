@@ -77,7 +77,7 @@ public class MemberDAOMybatis implements MemberDAO {
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.gmail.com";
 		String hostSMTPid = "ljh2861@gmail.com";
-		String hostSMTPpwd = "wjdgmldi!0824";
+		String hostSMTPpwd = "junghee89";
 
 		// 보내는 사람 EMail, 제목, 내용
 		String fromEmail = "ljh2861@gmail.com";
@@ -265,6 +265,7 @@ public class MemberDAOMybatis implements MemberDAO {
 		return sqlSession.selectList("memberSQL.getHairShopDesigner", hairshopId);
 	}
 	
+
 // 마이페이지(개인)=================================================================================
 	
 	//개인회원 정보 수정
@@ -302,4 +303,19 @@ public class MemberDAOMybatis implements MemberDAO {
 	public Map<String, String> checkReservationList(Map<String, String> map) {
 		return sqlSession.selectOne("memberSQL.checkReservationList", map);
 	}
+	
+	@Override
+	public Map<String, String> getHomepageLink(String memEmail) {
+		return sqlSession.selectOne("memberSQL.getHomepageLink", memEmail);
+	}
+
+	@Override
+	public boolean isExistId(String hairShopId) {
+		System.out.println(hairShopId + "여긴 DAO");
+		if(sqlSession.selectOne("memberSQL.isExistId", hairShopId) != null)
+			return true;
+		else		
+			return false;
+	}
+
 }

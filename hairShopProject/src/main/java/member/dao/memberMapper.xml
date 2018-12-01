@@ -157,6 +157,7 @@
 		update designerinfo set designerid=#{designerid}, designername=#{designername }, designerimage=#{designerimage }, positioncode=#{positioncode }, position=#{position }, dayoff=#{dayoff } where seq=#{seq }
 	</update>
 	
+
 <!-- =================== 마이페이지(개인) ========================== -->
 
 	<!-- 개인회원 정보수정 -->
@@ -188,4 +189,15 @@
 	<select id="checkReservationList" parameterType="Map" resultType="Map">
 		select d.designerimage, d.positioncode, r.* from reservation r inner join designerinfo d on d.designerid = r.designerid where bookeremail=#{email} and didordidnot=1 and theday=#{theday}
 	</select>
+
+	
+	<!-- 헤어샵 홈페이지 링크 띄우기 -->
+   <select id="getHomepageLink" parameterType="String" resultType="java.util.Map">
+      select name, hairshopid from memberinfo where email=#{memEmail }
+   </select>
+   
+   <select id="isExistId" parameterType="java.lang.String" resultType="java.util.Map">
+	  select * from memberinfo where hairshopid=#{hairShopId } 
+   </select>	
+
 </mapper>
