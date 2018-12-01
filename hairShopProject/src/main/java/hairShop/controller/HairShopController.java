@@ -10,20 +10,25 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import hairShop.bean.HairShopReviewDTO;
 import hairShop.dao.HairShopDAO;
+import member.dao.MemberDAO;
 
 @Controller
 public class HairShopController {
    @Autowired
-   HairShopDAO hairShopDAO;
+   private HairShopDAO hairShopDAO;
    @Autowired
-   HairShopReviewDTO hairShopReviewDTO;
+   private MemberDAO memberDAO;
+   @Autowired
+   private HairShopReviewDTO hairShopReviewDTO;
    
    
    @RequestMapping(value="/hairShop/hairShop_index.do", method=RequestMethod.GET)
@@ -165,5 +170,25 @@ public class HairShopController {
 	   mav.addObject("list", list);
 	   mav.setViewName("jsonView");
 	   return mav;
+   }
+   //리뷰 작성
+   @RequestMapping(value="/hairShop/reviewWrite.do",method=RequestMethod.POST)
+   public @ResponseBody String reviewWrite(@RequestParam Map<String,String> map, HttpSession session, Model model) {
+	  String reviewSubject = map.get("designerSubject");
+	  String reviewContent = map.get("designerContent");
+	  String starScope = map.get("starScope");
+	   
+	  map = memberDAO.checkReservationList(map);
+	  map.put("reviewSubject", reviewSubject);
+	  map.put("reviewContent", reviewContent);
+	  map.put("starScope", starScope);
+	  
+	  hairShopDAO.hairShopReviewWrite(map);
+	  
+	  model.addAttribute("display","/hairShop/hairShop_index.jsp");
+	  model.addAttribute("memberPage","/managementPage/usageDetailsInformationForm.jsp");
+	  model.addAttribute("memEmail", map.get("BOOKEREMAIL"));
+	  
+	  return "success";
    }
 }

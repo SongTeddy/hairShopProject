@@ -15,4 +15,6 @@ public interface HairShopDAO {
 	public int confirmedReservation(Map<String, String> map);
 	public Map<String, Object> getTel(String memEmail);
 	public List<HairShopReviewDTO> hairShopReviewList();
+	//리뷰작성
+	public void hairShopReviewWrite(Map<String, String> map);
 }

@@ -265,7 +265,44 @@ public class MemberDAOMybatis implements MemberDAO {
 		return sqlSession.selectList("memberSQL.getHairShopDesigner", hairshopId);
 	}
 	
+
+// 마이페이지(개인)=================================================================================
 	
+	//개인회원 정보 수정
+	@Override
+	public void updateInfo(MemberDTO memberDTO) {
+		sqlSession.selectOne("memberSQL.updateInfo", memberDTO);
+	}
+	
+	//회원탈퇴
+	@Override
+	public void userDelete(Map<String,String> map) {
+		sqlSession.delete("memberSQL.userDelete", map);
+	}
+	
+	//이용내역 정보
+	@Override
+	public List<Map<String, Object>> getUsageDetailsInfo(String email) {
+		return sqlSession.selectList("memberSQL.getUsageDetailsInfo", email);
+	}
+	
+	//예약현황 리스트
+	@Override
+	public List<Map<String, Object>> getReservationList(String email) {
+		return sqlSession.selectList("memberSQL.getReservationList", email);
+	}
+	
+	//예약취소
+	@Override
+	public void reservationCancel(String email) {
+		sqlSession.delete("memberSQL.reservationCancel", email);
+	}
+	
+	//리뷰 글을 쓸때 필요한 데이터 받아오기
+	@Override
+	public Map<String, String> checkReservationList(Map<String, String> map) {
+		return sqlSession.selectOne("memberSQL.checkReservationList", map);
+	}
 	
 	@Override
 	public Map<String, String> getHomepageLink(String memEmail) {
@@ -280,5 +317,5 @@ public class MemberDAOMybatis implements MemberDAO {
 		else		
 			return false;
 	}
-	
+
 }
