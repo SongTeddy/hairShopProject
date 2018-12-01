@@ -56,4 +56,10 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	public List<HairShopReviewDTO> hairShopReviewList() {
 		return sqlSession.selectList("hairShopSQL.hairShopReviewList");
 	}
+	
+	//리뷰작성
+	@Override
+	public void hairShopReviewWrite(Map<String, String> map) {
+		sqlSession.insert("hairShopSQL.hairShopReviewWrite", map);
+	}
 }

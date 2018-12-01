@@ -4,12 +4,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -271,5 +274,129 @@ public class ManageController {
 			designerDTO.setPositioncode(4);
 		
 		memberDAO.designerModify(designerDTO);
+	}
+	
+//====================마이페이지 개인유저===============================
+	
+	// 유저 페이지
+	@RequestMapping(value="memberPage", method=RequestMethod.GET)
+	public ModelAndView memberPage(Model model) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.setViewName("/main/index");
+		
+		return mav;
+	}
+	
+	//memberPage에서 email을 받아와 회원정보수정 테이블에 불러온 데이터 출력
+	@RequestMapping(value="modifyForm", method=RequestMethod.POST)
+	public ModelAndView modifyForm(@RequestParam String memEmail) throws Exception {
+		MemberDTO memberDTO = memberDAO.isCheckEmail(memEmail);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("memberPage", "/managementPage/modifyForm.jsp");
+		mav.addObject("memberDTO", memberDTO);
+		mav.addObject("memEmail",memEmail);
+		mav.setViewName("/main/index");
+		
+		return mav;
+	}
+	
+	// modifyForm에서 넘어온 데이터로 업데이트
+	@RequestMapping(value="modify", method=RequestMethod.POST)
+	public @ResponseBody String modify(@ModelAttribute MemberDTO memberDTO, Model model) {
+		memberDAO.updateInfo(memberDTO);
+		model.addAttribute("memEmail", memberDTO.getEmail());
+		return "success";
+	}
+	// 이용내역안내 폼 불러내기
+	@RequestMapping(value="usageDetailsInformationForm", method=RequestMethod.POST)
+	public ModelAndView usageDetailsInformationForm(@RequestParam String memEmail) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("memberPage", "/managementPage/usageDetailsInformationForm.jsp");
+		mav.addObject("memEmail", memEmail);
+		mav.setViewName("/main/index");
+		
+		return mav;
+	}
+	
+	// 이용내역을 DB에서 가져온다.
+	@RequestMapping(value="usageDetailsInformation", method=RequestMethod.POST)
+	public ModelAndView usageDetailsInformation(@RequestParam String email) {
+		List<Map<String,Object>> list = memberDAO.getUsageDetailsInfo(email);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("memberPage", "/managementPage/usageDetailsInformationForm.jsp");
+		mav.addObject("memEmail",email);
+		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
+	
+	//예약현황 폼 불러내기
+	@RequestMapping(value="reservationForm", method=RequestMethod.POST)
+	public ModelAndView reservationForm(@RequestParam String memEmail) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("memberPage", "/managementPage/reservationForm.jsp");
+		mav.addObject("memEmail", memEmail);
+		mav.setViewName("/main/index");
+		
+		return mav;
+	}
+	
+	// 예약현황을 DB에서 가져온다.
+	@RequestMapping(value="reservation", method=RequestMethod.POST)
+	public ModelAndView reservation(@RequestParam String email) {
+		List<Map<String,Object>> list = memberDAO.getReservationList(email);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("memberPage", "/managementPage/reservationForm.jsp");
+		mav.addObject("memEmail", email);
+		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
+	
+	// 예약 취소
+	@RequestMapping(value="reservationCancel", method=RequestMethod.POST)
+	public @ResponseBody String reservationCancel(@RequestParam String email, Model model) {
+		memberDAO.reservationCancel(email);
+		model.addAttribute("memEmail",email);
+		return "success";
+	}
+	
+	// 회원탈퇴폼 불러내기
+	@RequestMapping(value="deleteForm", method=RequestMethod.GET)
+	public ModelAndView deleteForm(@RequestParam String memEmail) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("memberPage", "/managementPage/deleteForm.jsp");
+		mav.addObject("memEmail", memEmail);
+		mav.setViewName("/main/index");
+		
+		return mav;
+	}
+	
+	//회원탈퇴
+	@RequestMapping(value="delete", method=RequestMethod.POST)
+	public @ResponseBody String delete(String email, String pwd, Model model) {
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("email", email);
+		map.put("pwd", pwd);
+		
+		memberDAO.userDelete(map);
+		
+		model.addAttribute("memEmail", email);
+		
+		return "success";
 	}
 }

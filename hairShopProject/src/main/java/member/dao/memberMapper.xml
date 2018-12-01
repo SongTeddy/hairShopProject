@@ -156,4 +156,36 @@
 	<update id="designerModify" parameterType="designer">
 		update designerinfo set designerid=#{designerid}, designername=#{designername }, designerimage=#{designerimage }, positioncode=#{positioncode }, position=#{position }, dayoff=#{dayoff } where seq=#{seq }
 	</update>
+	
+<!-- =================== 마이페이지(개인) ========================== -->
+
+	<!-- 개인회원 정보수정 -->
+	<update id="updateInfo" parameterType="member">
+		update memberInfo set name=#{name}, pwd=#{pwd}, tel1=#{tel1}, tel2=#{tel2}, tel3=#{tel3}, zipcode=#{zipcode}, addr1=#{addr1}, addr2=#{addr2} where email=#{email}
+	</update>
+	
+	<!-- 회원탈퇴 -->
+	<delete id="userDelete" parameterType="Map">
+		delete memberInfo where email=#{email} and pwd=#{pwd}
+	</delete>
+	
+	<!-- 이용내역 select -->
+	<select id="getUsageDetailsInfo" parameterType="String" resultType="Map">
+		select m.name, r.* from memberInfo m inner join reservation r on m.hairshopid = r.hairshopid where bookeremail=#{email}
+	</select>
+	
+	<!-- 예약현황 select -->
+	<select id="getReservationList" parameterType="String" resultType="Map">
+		select m.name, r.* from memberInfo m inner join reservation r on m.hairshopid = r.hairshopid where bookeremail=#{email} and didordidnot=0
+	</select>
+	
+	<!-- 예약 취소 -->
+	<delete id="reservationCancel" parameterType="String">
+		<![CDATA[delete reservation where bookeremail=#{email} and didORdidNOT=0 and sysdate < stattime]]>
+	</delete>
+	
+	<!-- 리뷰글 쓸때 필요한 데이터 받기 -->	
+	<select id="checkReservationList" parameterType="Map" resultType="Map">
+		select d.designerimage, d.positioncode, r.* from reservation r inner join designerinfo d on d.designerid = r.designerid where bookeremail=#{email} and didordidnot=1 and theday=#{theday}
+	</select>
 </mapper>
