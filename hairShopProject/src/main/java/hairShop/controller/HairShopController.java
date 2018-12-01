@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,7 +69,12 @@ public class HairShopController {
    }
    
    @RequestMapping(value="/hairShop/getHairShopInfo.do", method=RequestMethod.POST)
-   public ModelAndView getHairShopInfo(@RequestParam String hairShopId) {
+   public ModelAndView getHairShopInfo(@RequestParam String hairShopId, HttpSession session) {
+	   if(session.getAttribute("memEmail")!= null) {
+		   String email = (String)session.getAttribute("memEmail");
+		   System.out.println("getHairShopInfo 세션"+email);
+	   }
+	   
 	   ModelAndView mav = new ModelAndView();
 	   System.out.println("ajax hairShopId"+hairShopId);
 	   Map<String, Object> map = hairShopDAO.getHairShopInfo(hairShopId);
