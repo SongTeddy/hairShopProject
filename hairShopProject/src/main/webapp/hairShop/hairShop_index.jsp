@@ -854,18 +854,70 @@ button.selectedBtn {
 <script type="text/javascript">
 	$(document).ready(function() {
 		/* 좋아요 js */
-		$('button#heartBtn').click(function(){
-		  if($(this).hasClass('btn_unlike')){
-		    $(this).removeClass('btn_unlike');
-		    $('.ani_heart_m').removeClass('hi');
-		    $('.ani_heart_m').addClass('bye');
-		  }
-		  else{
-		    $(this).addClass('btn_unlike');
-		    $('.ani_heart_m').addClass('hi');
-		    $('.ani_heart_m').removeClass('bye');
-		  }
-		});
+		let memEmail = "<%=session.getAttribute("memEmail") %>";
+		if(memEmail != "null") {
+			$.ajax({
+				type : 'POST',
+				url : '/hairShopProject/hairShop/getHeartBtn.do',
+				data : {'memEmail' : memEmail, 'hairShopId' : '${hairShopId }'},			
+				dataType : 'json',
+				success : function(data){
+					if(JSON.stringify(data.heartMap) != "null") {
+						$('#heartBtn').addClass('btn_unlike');
+						$('.ani_heart_m').addClass('hi');
+						$('.ani_heart_m').removeClass('bye');
+					}
+				}, error : function(){
+					alert("하트 버튼 에러");
+				}
+			});
+			$('button#heartBtn').click(function(){
+				if($(this).hasClass('btn_unlike')){  //좋아요  취소
+					$.ajax({
+						type : 'POST',
+						url : '/hairShopProject/hairShop/deleteHeart.do',
+						data : {'memEmail' : memEmail, 'hairShopId' : '${hairShopId }'},			
+						dataType : 'json',
+						success : function(data) {
+							alert("좋아요 취소");
+						}
+					});
+				    $(this).removeClass('btn_unlike');
+				    $('.ani_heart_m').removeClass('hi');
+				    $('.ani_heart_m').addClass('bye');
+				} else {                             //좋아요
+				  	$.ajax({
+				  		type : 'POST',
+						url : '/hairShopProject/hairShop/insertHeart.do',
+						data : {'memEmail' : memEmail, 'hairShopId' : '${hairShopId }'},			
+						dataType : 'json',
+						success : function(data) {
+							alert("좋아요");
+						}
+				  	});  
+					$(this).addClass('btn_unlike');
+					$('.ani_heart_m').addClass('hi');
+					$('.ani_heart_m').removeClass('bye');
+				}
+			});
+		} else {
+			$('button#heartBtn').click(function(){
+				if (confirm("로그인 후 이용 하실수 있습니다.\n로그인 하시겠습니까?") == true){    //확인
+					var maskHeight = $(document).height();
+					var maskWidth = $(window).width();
+					//마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
+					$('#myModal').css({
+						'width' : maskWidth,
+						'height' : maskHeight
+					});
+					//애니메이션 효과
+					$('#myModal').fadeIn(500);
+				}else{   //취소
+				    return;
+				}
+			});
+		}
+		
 		
 		var para = document.location.href.split("#tab");
 	      if(para.length>1) {

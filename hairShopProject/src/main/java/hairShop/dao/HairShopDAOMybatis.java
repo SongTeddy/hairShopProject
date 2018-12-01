@@ -62,11 +62,26 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	@Override
 	public void hairShopReviewWrite(Map<String, String> map) {
 		sqlSession.insert("hairShopSQL.hairShopReviewWrite", map);
-
+	}
 
 	@Override
 	public Map<String, Object> getTel(String memEmail) {
 		return sqlSession.selectOne("hairShopSQL.getTel", memEmail);
 
+	}
+	
+	@Override
+	public Map<String, Object> getHeartBtn(Map<String, String> map){
+		return sqlSession.selectOne("hairShopSQL.getHeartBtn",map);
+	}
+
+	@Override
+	public void insertHeart(Map<String, String> map) {
+		sqlSession.insert("hairShopSQL.insertHeart", map);
+	}
+
+	@Override
+	public void deleteHeart(Map<String, String> map) {
+		sqlSession.delete("hairShopSQL.deleteHeart", map);
 	}
 }

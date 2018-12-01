@@ -30,7 +30,6 @@ public class HairShopController {
    @Autowired
    private HairShopReviewDTO hairShopReviewDTO;
    
-   
    @RequestMapping(value="/hairShop/hairShop_index.do", method=RequestMethod.GET)
    public ModelAndView input(@RequestParam String hairShopId) {  //사용자가 만든 콜백 메소드 
       ModelAndView mav = new ModelAndView();
@@ -68,6 +67,34 @@ public class HairShopController {
       mav.addObject("list", list);
       mav.setViewName("jsonView");
       return mav;
+   }
+   
+   @RequestMapping(value="/hairShop/getHeartBtn.do")
+   public ModelAndView getHeartBtn(@RequestParam Map<String, String> map) {
+	   ModelAndView mav = new ModelAndView();
+	   System.out.println("하트버튼 "+map.get("hairShopId"));
+	   Map<String, Object> heartMap = hairShopDAO.getHeartBtn(map);
+	   mav.addObject("heartMap", heartMap);
+	   mav.setViewName("jsonView");
+	   return mav;
+   }
+   
+   @RequestMapping(value="/hairShop/insertHeart.do")
+   public ModelAndView insertHeart(@RequestParam Map<String, String> map) {
+	   ModelAndView mav = new ModelAndView();
+	   System.out.println("하트버튼 "+map.get("hairShopId"));
+	   hairShopDAO.insertHeart(map);
+	   mav.setViewName("jsonView");
+	   return mav;
+   }
+   
+   @RequestMapping(value="/hairShop/deleteHeart.do")
+   public ModelAndView deleteHeart(@RequestParam Map<String, String> map) {
+	   System.out.println("하트버튼 "+map.get("hairShopId"));
+	   ModelAndView mav = new ModelAndView();
+	   hairShopDAO.deleteHeart(map);
+	   mav.setViewName("jsonView");
+	   return mav;
    }
    
    @RequestMapping(value="/hairShop/getHairShopInfo.do", method=RequestMethod.POST)

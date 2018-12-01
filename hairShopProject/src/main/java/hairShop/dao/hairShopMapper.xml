@@ -82,4 +82,16 @@
 	insert into review(seq,email,hairshopid,designerid,positioncode,designername,designerimage,service,description,reviewsubject,reviewcontent,starscope) values(seq_review.nextval,#{BOOKEREMAIL},#{HAIRSHOPID},#{DESIGNERID},#{POSITIONCODE},#{DESIGNERNAME},#{DESIGNERIMAGE},#{SERVICE},#{DESCRIPTION},#{reviewSubject},#{reviewContent},#{starScope})
 </insert>
 
+<select id="getHeartBtn" parameterType="java.util.Map" resultType="java.util.Map">
+	select * from heart where email=#{memEmail } and hairshopid = #{hairShopId }	
+</select>
+
+<insert id="insertHeart" parameterType="java.util.Map" >
+	insert into heart values(#{memEmail}, #{hairShopId }, (select name from memberinfo where hairShopId = #{hairShopId }))
+</insert>
+
+<delete id="deleteHeart" parameterType="java.util.Map">
+	delete heart where email=#{memEmail } and hairshopid = #{hairShopId }
+</delete>
+
 </mapper>
