@@ -16,7 +16,7 @@
 		and dayoff like '%${day }%'
 		group by hairshopid, hairshopimage1, name, 
 		addr1, addr2, latitud, longitude, tel1, tel2, tel3, 
-		hairshopcontent,opentime, closetime, dayoff, 
+		hairshopcontent,opentime, closetime, dayoff,
 		DISTANCE_BETWEEN(#{latitud }, #{longitude }, latitud, longitude)
 	)
 	<![CDATA[
