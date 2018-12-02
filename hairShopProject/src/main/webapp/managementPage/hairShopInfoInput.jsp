@@ -13,6 +13,10 @@
 	text-align: left !important; 
 	width: 90%  !important;
 }
+.infoTableDiv{
+/* 	padding-top: 5%; */
+}
+
 .hairShopInfoTable{
 	width: 70%;
 	color: black;
@@ -33,34 +37,37 @@
 }
 </style>
 <body>
-<div align="center">
-<form>
+<div class="infoTableDiv" align="center">
+<form name="hairShopInfoUpdateForm" method="post" action="/hairShopProject/managementPage/hairShopInfoUpdate.do">
 	<table class="table table-striped hairShopInfoTable" id="">
-		<caption>${hairShopName }의 등록 정보</caption>
+		<caption>${map.NAME }의 등록 정보</caption>
 		<tr>
 			<td>상호명</td>
-			<td><input type="text" name="name" value="${hairShopName }" /></td>
+			<td><input type="text" name="name" value="${map.NAME }" size="24"/></td>
 		</tr>
 		<tr>
 			<td style="height: 70px;">사업자 등록 번호</td>
-			<td><input type="text" name="bizID" maxlength="10" />
-			<br/><span style="font-size: 8pt;" id="bizIDCheckDiv"></span>
-			
+			<td>
+				<input type="text" name="license1" maxlength="3" size="3" /> -
+				<input type="text" name="license2" maxlength="2" size="2" /> -
+				<input type="text" name="license3" maxlength="5" size="5" />
+				&nbsp;<input type="button" id="licenseCheckBtn" onclick="checkLicense()" value=" 확인 " />
+			<br/><span id="licenseCheckSpan"></span>
 			</td>
 		</tr>
 		<tr>
 			<td>사업지 주소</td>   <!-- 주소 등록시에, 경도 위도 데이터도 함께 insert -->
 			<td>
-				<input type="text" id="sample6_postcode" placeholder="우편번호" readonly="readonly" size="8">
-				&nbsp;<input type="button" onclick="findPostcode()" value="우편번호 찾기"><br/>
-				<input type="text" name="addr1" id="addr1" placeholder="주소" readonly="readonly" size="45"><br/>
-				<input type="text" name="addr2" id="addr2" placeholder="상세주소" size="30">
+				<input type="text" id="zipcode" name="zipcode" placeholder="우편번호" readonly="readonly" size="8" value="${map.ZIPCODE }">
+				&nbsp;<input type="button" onclick="findPostcode()" value=" 우편번호 찾기 "><br/>
+				<input type="text" name="addr1" id="addr1" placeholder="주소" readonly="readonly" size="45" value="${map.ADDR1 }" /><br/>
+				<input type="text" name="addr2" id="addr2" placeholder="상세주소" size="30" value="${map.ADDR2 }" />
 			</td>
 		</tr>
 		<tr>
 			<td>전화 번호</td>
-			<td><select class="tel1" style="height:25px;">
-					<option value="010">010</option>
+			<td><select name="tel1" style="height:25px;">
+					<option value="010" selected="selected" >010</option>
 					<option value="011">011</option>
 					<option value="010">016</option>
 					<option value="010">019</option>
@@ -83,25 +90,33 @@
 					<option value="010">064</option>
 					<option value="010">070</option>
 				</select> -
-				<input type="tel" name="tel2" size="4" maxlength="5"/> -
-				<input type="tel" name="tel3"size="4" maxlength="5"/>
+				<input type="tel" name="tel2" size="4" maxlength="5" value="${map.TEL2 }" /> -
+				<input type="tel" name="tel3" size="4" maxlength="5" value="${map.TEL3 }" />
 			</td>
 		</tr>
 		<tr>
 			<td>헤어샵 소개글</td>
-			<td><input type="text" name="hairShopContent" size="45" maxlength="30" placeholder="30자 이내로 작성해주세요."></td>
+			<td><input type="text" name="hairShopContent" size="45" maxlength="30" placeholder="30자 이내로 작성해주세요." value="${map.HAIRSHOPCONTENT }" /></td>
 		</tr>
 		<tr>
 			<td style="height: 70px;">헤어샵 아이디</td>
 			<td><input type="text" name="hairShopId" id="hairShopId">
-			&nbsp;<input type="button" onclick="checkId()" value="중복 확인" />
-			<input type="hidden" id="checkedId" value="" /><br/>
-			<span style="font-size: 8pt;" id="checkIdSpan"></span></td>
+			&nbsp;<input type="button" id="hairShopIdCheckBtn" onclick="checkId()" value=" 중복 확인 " />
+			<br/><span id="checkIdSpan"></span></td>
 		</tr>
 		<tr>
 			<td>영업 시간</td>
-			<td><input class="openTimePicker" size="5"/>
-			~ <input class="closeTimePicker" size="5" />
+			<td>
+			월 <input type="checkbox" id="2" value="2" />
+			&emsp;화 <input type="checkbox" id="3" value="3" />
+			&emsp;수 <input type="checkbox" id="4" value="4" />
+			&emsp;목 <input type="checkbox" id="5" value="5" />
+			&emsp;금 <input type="checkbox" id="6" value="6" />
+			&emsp;<span style="color: blue;">토</span> <input type="checkbox" id="7" value="7" />
+			&emsp;<span style="color: red;">일</span> <input type="checkbox" id="1" value="1" />
+			<br/>
+			<input class="openTimePicker" name="openTime" size="5" readonly="readonly" />
+			~ <input class="closeTimePicker" name="closeTime" size="5" readonly="readonly" />
 		</tr>
 		<tr>
 			<td style="height: 70px;"><span>헤어샵 이미지</span>
@@ -112,24 +127,26 @@
 			</td>
 		</tr> 
 	</table>
-	<input type="hidden" name="latitud" />
-	<input type="hidden" name="langitude" />
+	<input type="hidden" name="latitud" value="0"/>
+	<input type="hidden" name="longitude"  value="0"/>
+	<input type="hidden" name="dayoff" />
 	<div class="btnDiv">
-		<input type="button" class="btn" value="정보 수정">
+		<input type="button" class="btn btn-default" id="hairShopInfoUpdateBtn" value="정보 수정">
 		<input type="button" class="btn" value="취소">
 	</div>
 </form>
+
+<input type="hidden" id="checkedId" value="${map.HAIRSHOPID }" />
+<input type="hidden" id="checkedLicense1" />
+<input type="hidden" id="checkedLicense2" />
+<input type="hidden" id="checkedLicense3" />
+
 </div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1bdcc4d7ca1e01a2e5d822a148f1f8aa&libraries=services"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
 
-if('${hairShopId }' != ""){
-	$('input[name=hairShopId]').val('${hairShopId }');
-	$('input[name=hairShopId]').prop('readonly', true);
-	$('input[name=hairShopId]').attr('readonly', true);
-}
 $('.openTimePicker').timepicker({
     timeFormat: 'HH:mm',
     interval: 30,
@@ -154,12 +171,61 @@ $('.closeTimePicker').timepicker({
     scrollbar: true
 });
 
+// 데이터 들어있으면 뿌려주기
+if('${map.HAIRSHOPID }' != ""){
+	$('input[name=hairShopId]').val('${map.HAIRSHOPID }');
+	$('input[name=hairShopId]').prop('readonly', true);
+	$('input[name=hairShopId]').attr('readonly', true);
+	
+	$('#hairShopIdCheckBtn').attr('disabled', true);
+}
+if('${map.LICENSE1 }' != ""){
+	$('input[name=license1]').val('${map.LICENSE1 }');
+	$('#checkedLicense1').val('${map.LICENSE1 }');
+	$('input[name=license1]').prop('readonly', true);
+	$('input[name=license1]').attr('readonly', true);
+	
+	$('input[name=license2]').val('${map.LICENSE2 }');
+	$('#checkedLicense2').val('${map.LICENSE2 }');
+	$('input[name=license2]').prop('readonly', true);
+	$('input[name=license2]').attr('readonly', true);
+	
+	$('input[name=license3]').val('${map.LICENSE3 }');
+	$('#checkedLicense3').val('${map.LICENSE3 }');
+	$('input[name=license3]').prop('readonly', true);
+	$('input[name=license3]').attr('readonly', true);
+	
+	$('#licenseCheckBtn').attr('disabled', true);
+}
 
+if('${map.DAYOFF}' != ""){
+	var dayoff = '${map.DAYOFF}';
+	for(var i=1; i<8; i++){
+		if(dayoff.includes(i))
+			$('#'+i).prop("checked", true);			
+	}
+}else{
+	for(var i=1; i<8; i++){
+		$('#'+i).prop("checked", true);			
+	}
+}
+
+
+
+if('${map.TEL1}'!= "")
+	$('select[name=tel1]').val('${map.TEL1}');
+
+
+if('${map.OPENTIME }' != ""){
+	$('input[name=openTime]').val('${map.OPENTIME }');
+}
+if('${map.CLOSETIME }' != ""){
+	$('input[name=closeTime]').val('${map.CLOSETIME }');
+}
 $(document).ready(function(){
 	
 	var geocoder = new daum.maps.services.Geocoder();
 	survey($('input[name=addr1]'), function(){ 
-		alert(document.getElementById('addr1').value + 'changed');
 		// 주소-좌표 변환 객체를 생성합니다
 	
 		// 주소로 좌표를 검색합니다
@@ -170,25 +236,52 @@ $(document).ready(function(){
 		    	 var latitud = result[0].y; //위도
 		    	 var longitude = result[0].x; //경도
 		    	 alert(latitud + "  "+longitude);
-		    	 $('input[name=latitud]').val(latitud);
-		    	 $('input[name=longitude]').val(longitude);
+		    	 $('input[name=latitud]').val(latitud + "");
+		    	 $('input[name=longitude]').val(longitude + "");
+		    	 alert("인풋에 들어갔나요"+$('input[name=longitude]').val());
+		    	 alert("인풋에 들어갔나요"+$('input[name=latitud]').val());
 		     }else{
 		    	 alert("위도 경도 검색 실패!");
 		     }
 		});
 	});
 	
-	$('input[name=bizID]').on('change', function(){
-// 		alert(chkWorkNumb($('input[name="bizID"]').val()));
-		if(chkWorkNumb($('input[name="bizID"]').val()))
-			$('#bizIDCheckDiv').val("사업자 등록번호가 확인되었습니다.");
+	var checkedDay = "";
+	// 정보 수정 버튼 누르면, 유효성 검사 후 submit
+	$('#hairShopInfoUpdateBtn').on('click', function(){
+		for(var i=1; i<8; i++){
+			if($('#'+i).is(':checked'))
+				checkedDay = checkedDay + $('#'+i).val();
+		}
+		alert("붙었니" + checkedDay);
+		$('input[name=dayoff]').val(checkedDay);
+		checkedDay = "";
+		
+		if($('input[name=name]').val()=="") 
+			alert("상호명을 입력하세요.");
+		else if($('input[name=license1]').val() != $('#checkedLicense1').val() || $('input[name=license2]').val() != $('#checkedLicense2').val() || $('input[name=license3]').val() != $('#checkedLicense3').val())
+			alert("사업자 등록번호를 확인하세요.");
+		else if($('input[name=license1]').val() == "" || $('input[name=license2]').val() == "" || $('input[name=license3]').val() == "")
+			alert("사업자 등록번호를 확인하세요.");
+		else if($('input[name=addr1]').val() == "")
+			alert("주소를 등록하세요.");
+		else if($('input[name=hairShopId]').val() != $('#checkedId').val() || $('input[name=hairShopId]').val()=="")
+			alert("헤어샵 아이디를 중복 확인하세요.");
+		else if($('input[name=hairShopId]').val() == "")
+			alert("헤어샵 아이디를  등록하세요.");
+		else if($('input[name=dayoff]').val()== "")
+			alert("영업 시간을 등록해주세요.");
+		else {
+			alert("서밋하러 갑시다");
+			$('form[name=hairShopInfoUpdateForm]').submit();			
+		}
 	});
 });
 
 	function chkWorkNumb(strNumb) {
 		strNumb = replace(strNumb, "-");
 		if (strNumb.length != 10) {
-			alert("사업자등록번호가 잘못되었습니다.");
+			$('#licenseCheckSpan').text("사업자등록번호가 유효하지 않습니다.").css('color', 'red').css('font-weight', 'bold').css('font-size', '8pt');
 			return false;
 		}
 
@@ -206,7 +299,7 @@ $(document).ready(function(){
 		sumMod += parseInt(strNumb.substring(9, 10));
 
 		if (sumMod % 10 != 0) {
-			alert("사업자등록번호가 잘못되었습니다.");
+			$('#licenseCheckSpan').text("사업자등록번호가 유효하지 않습니다.").css('color', 'red').css('font-weight', 'bold').css('font-size', '8pt');
 			return false;
 		}
 		return true;
@@ -220,6 +313,32 @@ $(document).ready(function(){
 			}
 		}
 		return strTmp;
+	}
+	
+	
+	function checkLicense(){
+		if(chkWorkNumb($('input[name=license1]').val()+$('input[name=license2]').val()+$('input[name=license3]').val())){
+			$.ajax({
+				type : 'POST',
+				url : '/hairShopProject/managementPage/checkLicense.do',
+				data : {'license1' :  $('input[name=license1]').val(), 'license2' :  $('input[name=license2]').val(), 'license3' :  $('input[name=license3]').val()},
+				dataType : 'text',
+				success : function(data){
+					if(data.trim()=='exist'){
+						$('#licenseCheckSpan').text("이미 등록된 사업자 등록번호입니다.").css('color', 'red').css('font-weight', 'bold').css('font-size', '8pt');						
+					}else if(data.trim()=='not_exist'){
+						licenseChecker = 1;
+						$('#licenseCheckSpan').text("사업자 등록번호가 확인되었습니다.").css('color', 'blue').css('font-weight', 'bold').css('font-size', '8pt');	
+						$('#checkedLicense1').val($('input[name=license1]').val());
+						$('#checkedLicense2').val($('input[name=license2]').val());
+						$('#checkedLicense3').val($('input[name=license3]').val());
+					}
+				},
+				error : function(){
+					alert("사업자등록번호 중복 췤 실패!");
+				}
+			});
+		}
 	}
 	
 	function survey(selector, callback) {
@@ -266,7 +385,7 @@ $(document).ready(function(){
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
                 document.getElementById('addr1').value = fullAddr;
 
                 // 커서를 상세주소 필드로 이동한다.

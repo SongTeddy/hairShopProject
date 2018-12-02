@@ -1,6 +1,5 @@
 package member.dao;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import hairShop.bean.ReservationDTO;
 import member.bean.DesignerDTO;
 import member.bean.MemberDTO;
-import member.bean.PostDTO;
 
 public interface MemberDAO {
 	public void write(MemberDTO memberDTO) throws Exception;
@@ -40,4 +38,6 @@ public interface MemberDAO {
 	
 	public Map<String, String> getHomepageLink(String memEmail);
 	public boolean isExistId(String hairShopId);
+	public boolean isExistLicense(Map<String, String> map);
+	public int hairShopInfoUpdate(Map<String, Object> map);
 }

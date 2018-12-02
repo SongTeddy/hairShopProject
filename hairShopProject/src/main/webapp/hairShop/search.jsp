@@ -79,7 +79,7 @@ html, body{
                      <img class="serviceCategory" src="/hairShopProject/main/assets/images/welcome-hero/ic_service-category.png" style="cursor: pointer;"></img>
                      <input type="text" name="service" id="service" class="serviceCategory" placeholder="서비스 유형" autocomplete="off"/>
                      <div class="welcome-hero-form-icon">
-                   <div class="sub-menu serviceMenu">
+                   <div class="sub-menu serviceMenu" id="serviceMenu">
                      <table class="sub-menuTable">
                         <tr>
                            <td><img src="/hairShopProject/main/assets/images/welcome-hero/haircut.png" class="serviceIcon" width="70" /><br />
@@ -509,7 +509,8 @@ $(document).ready(function() {
 			$('.serviceMenu').css('visibility', 'hidden');
 		});
 	});
-   
+	
+	
 	$('.serviceOption').on('click', function(){
 		$('.serviceCategory').val($(this).text());
 		$('.serviceOption').removeClass('btn-info');
@@ -580,9 +581,31 @@ $(document).ready(function() {
 		} else if($('#service').val().trim()==""){
 			alert("서비스를 선택하세요.");
 		} else{
-			$('input[name=searchingForm]').submit();
+			$('form[name=searchingForm]').submit();
 		}
   	});
 });
 
+
+/* 
+var subMenu1 = document.getElementById('serviceMenu');
+// var subMenu2 = document.getElementsByClassName('sub-menu')[1];
+
+window.onclick = function(event) {
+	alert("찍어봥"+event.target+subMenu1);
+    if (event.target != subMenu1) {
+		alert("안쪽 찍어봥");
+    	$('.serviceMenu').fadeOut(300,function(){
+			$('.sub-menu').css('transition-delay', '0s, 0s, 0.3s');
+			$('.serviceMenu').css('visibility', 'hidden');
+		});
+    	$('.locationMenu').fadeOut(300,function(){
+			$('.sub-menu').css('transition-delay', '0s, 0s, 0.3s');
+			$('.serviceMenu').css('visibility', 'hidden');
+		});
+    }
+}
+ 
+*/
+ 
 </script>

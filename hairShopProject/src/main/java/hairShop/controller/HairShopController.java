@@ -75,6 +75,8 @@ public class HairShopController {
 	   ModelAndView mav = new ModelAndView();
 	   System.out.println("ajax hairShopId"+hairShopId);
 	   Map<String, Object> map = hairShopDAO.getHairShopInfo(hairShopId);
+	   System.out.println("위도 들어와야해 " + map.get("LATITUD"));
+	   System.out.println("경도 들어와라" + map.get("LONGITUDE"));
 	   List<Map<String, Object>> list = hairShopDAO.getDesignerInfo(hairShopId);
 	   System.out.println(map.size() +" list size = "+list.size());
 	   for (Iterator<String> iterator = map.keySet().iterator(); iterator.hasNext();) {

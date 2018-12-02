@@ -265,8 +265,6 @@ public class MemberDAOMybatis implements MemberDAO {
 		return sqlSession.selectList("memberSQL.getHairShopDesigner", hairshopId);
 	}
 	
-	
-	
 	@Override
 	public Map<String, String> getHomepageLink(String memEmail) {
 		return sqlSession.selectOne("memberSQL.getHomepageLink", memEmail);
@@ -274,11 +272,22 @@ public class MemberDAOMybatis implements MemberDAO {
 
 	@Override
 	public boolean isExistId(String hairShopId) {
-		System.out.println(hairShopId + "여긴 DAO");
 		if(sqlSession.selectOne("memberSQL.isExistId", hairShopId) != null)
 			return true;
 		else		
 			return false;
 	}
+
+	@Override
+	public boolean isExistLicense(Map<String, String> map) {
+		if(sqlSession.selectOne("memberSQL.isExistLicense", map) != null)
+			return true;
+		else
+			return false;
+	}
 	
+	@Override
+	public int hairShopInfoUpdate(Map<String, Object> map) {
+		return sqlSession.update("memberSQL.hairShopInfoUpdate", map);
+	}
 }

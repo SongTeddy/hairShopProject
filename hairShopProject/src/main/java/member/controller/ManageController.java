@@ -279,8 +279,7 @@ public class ManageController {
 		ModelAndView mav = new ModelAndView();
 		if(session.getAttribute("memEmail")!=null) {
 			Map<String, String> map = memberDAO.getHomepageLink((String)session.getAttribute("memEmail"));
-			mav.addObject("hairShopName", map.get("NAME"));
-			mav.addObject("hairShopId", map.get("HAIRSHOPID"));
+			mav.addObject("map", map);
 			mav.addObject("display", "/managementPage/companyPage.jsp");
 			mav.addObject("myPageBody", "/managementPage/hairShopInfoInput.jsp");
 		}else {
@@ -309,4 +308,25 @@ public class ManageController {
 			return "not_exist";
 	}
 	
+	@RequestMapping(value="checkLicense.do")
+	public @ResponseBody String checkLicense(@RequestParam Map<String, String> map) {
+		System.out.println("라이센스 찾으려구용" + map);
+		if(memberDAO.isExistLicense(map))
+			return "exist";
+		else
+			return "not_exist";
+	}
+	
+	
+	@RequestMapping(value="hairShopInfoUpdate.do", method=RequestMethod.POST)
+	public ModelAndView hairShopInfoUpdate(@RequestParam Map<String, Object> map, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		System.out.println("데이오프 어케들어오니" + map.get("dayoff"));
+		map.put("memEmail", session.getAttribute("memEmail"));
+		int su = memberDAO.hairShopInfoUpdate(map);
+		mav.addObject("display", "/managementPage/companyPage.jsp");
+		mav.addObject("myPageBody", "/managementPage/hairShopInfoUpdate.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
 }
