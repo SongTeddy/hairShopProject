@@ -44,12 +44,12 @@
 				
 				<form>
 					<div class="input-container">
-						<input type="text" id="loginEmail" required="required" /> <label for="${label}">Username</label>
+						<input type="text" id="loginEmail" required="required" autocomplete="off" /> <label for="${label}">Username</label>
 						<div class="bar"></div>
 					</div>
 					
 					<div class="input-container">
-						<input type="text" id="loginPwd" required="required" /> <label for="${label}">Password</label>
+						<input type="password" id="loginPwd" required="required" autocomplete="off" /> <label for="${label}">Password</label>
 						<div class="bar"></div>
 					</div>
 					
@@ -77,7 +77,7 @@
 				
 				<form class="signUpForm">
 					<div class="input-container">
-						<input type="${type}" class="email" required="required" style="width:273px;" /> <label >Email</label>
+						<input type="${type}" class="email" required="required" style="width:273px;" autocomplete="off" /> <label >Email</label>
 						<input class="btn btn-primary emailCheck" type="button" value="Email Check" style="width:120px; height:30px; color:white; background:#098bf7;"/>
 						<div class="bar"></div>
 					</div>
@@ -87,7 +87,7 @@
 					</div>
 					
 					<div class="input-container">
-						<input type="${type}" class="name" required="required" /> <label >Name</label>
+						<input type="${type}" class="name" required="required" autocomplete="off" /> <label >Name</label>
 						<div class="bar"></div>
 					</div>
 					

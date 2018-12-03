@@ -37,4 +37,9 @@ public interface MemberDAO {
 	public List<MemberDTO> getMemberInfo(String hairshopId);
 	public List<ReservationDTO> getReservation(String designername);
 	public List<String> getHairShopDesigner(String hairshopId);
+  
+  public Map<String, String> getHomepageLink(String memEmail);
+	public boolean isExistId(String hairShopId);
+	public boolean isExistLicense(Map<String, String> map);
+	public int hairShopInfoUpdate(Map<String, Object> map);
 }

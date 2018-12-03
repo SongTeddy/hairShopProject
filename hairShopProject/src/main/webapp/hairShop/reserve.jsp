@@ -231,10 +231,12 @@
                data-num-children="1" style="text-align: center;">
                    <div data-role="control" data-type="terms-of-service" data-hash="0000001a" data-type-id="22" data-colspan="13" data-label-is-hidden="1" data-is-required="1" data-renderer-type="lln" data-label-width="5" data-id="47855859">
                        <div data-role="input-column" data-colspan="8">
+                      <span>고객님의 헤어 상태에 따라 선택한 시술이 불가능하거나 추가 비용이 발생할 수 있습니다. 시술 예약시간 1시간 전까지 취소시 100%  환불이 가능하며, 이후 취소하거나 미방문할 경우, 10%의 패널티가 부과되어 90% 환불됩니다.</span>
                            <div data-role="input-row" data-is-first-row="1" data-is-last-row="1" data-fill-colspan="0">
                            <label data-role="tos-label" id="tos-checkbox-0000001a-acc" data-size="full">
                            <input type="checkbox" data-role="i123-input" data-index="0" id="tos_600656_586990_1543311775166">
                            <label id="temsCheck" data-role="checkbox" for="tos_600656_586990_1543311775166" role="checkbox" aria-checked="false" tabindex="0"></label>
+                           
                            <span id="temsBtn" style="color: #01c2e4;">이용약관</span><span>에 동의 합니다.</span>
                            </label>
                            </div>
@@ -270,8 +272,8 @@
 	
 	$('#tel1').val("${telMap.TEL1}");	
 	
-// 	'bookeremail' : '${memEmail }', 'bookername' : '${memName }', 나중에 로그인했을 땐 요렇게 바꿔줘야 함!!!
 	$('#confirmedBtn').on('click', function(){
+
 		/* if($('#temsCheck').is(":checked")){
 			alert($('#temsCheck').is(":checked")); */
 			var params = {'bookerEmail' : '${memEmail }', 'bookerName' : '${memName }', 

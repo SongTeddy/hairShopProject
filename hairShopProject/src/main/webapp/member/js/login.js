@@ -12,7 +12,7 @@ $(document).ready(function(){
 				dataType : 'text',
 				success : function(data) {
 					if(data=='exist') {
-						location.reload(); 
+						$('nav').reload(); 
 					}else if(data=='non_exist') 
 						alert("아이디/비밀번호가 틀렸거나 이메일 인증을 하지 않았습니다.\n확인해주세요.");
 				}
