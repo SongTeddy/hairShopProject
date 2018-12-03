@@ -5,11 +5,8 @@ import java.util.Map;
 
 import member.bean.MemberDTO;
 
-public interface ManagementDAO {
-
-	public List<MemberDTO> getHairShopDesigner(String string);
-	
-	//개인유저 마이페이지
+public interface ManagementDAO {	
+	// 개인유저 페이지
 	public void userDelete(Map<String, String> map);
 	public void reservationCancel(String email);
 	public List<Map<String, Object>> getReservationList(String email);
@@ -20,5 +17,7 @@ public interface ManagementDAO {
 	public Map<String, String> getHomepageLink(String memEmail);
 	public boolean isExistId(String hairShopId);
 	public List<Map<String, String>> heartList(String memEmail);
-
+	
+	// 관리자 페이지
+	public List<MemberDTO> getMemberByType(String type);
 }

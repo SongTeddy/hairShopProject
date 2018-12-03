@@ -40,6 +40,10 @@
 			</tr>		
 		</table>
 	</div>
+	
+	<div class="changeWeek">
+		<button class="changeWeekBtn">NEXT</button>
+	</div>
 </div>
 
 <div class="white_content" id="open">
@@ -57,6 +61,10 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="/hairShopProject/managementPage/companyPage/js/totalReservation.js"></script>
 <script>
+
+var todayAr = new Array(); // 년, 월, 일 배열
+var dayOfWeekAr = new Array(); // 요일 배열
+
 var bookerNameAr = new Array(); // 예약자 이름 배열
 var bookerEmailAr = new Array(); // 예약자 이름 배열
 var bookerTelAr = new Array(); // 예약자 이름 배열
@@ -69,8 +77,9 @@ var requiredTimeAr = new Array(); // 요구시간 배열
 var startEndTimeAr = new Array(); // 시작~끝 시간 배열
 
 var tdClassAr = new Array(); // td클래스 배열
+var startDay = 0;
 
-//일정표에 예약들을 표시해주는 함수
+// 일정표에 예약들을 표시해주는 함수
 function showDesignerSchedule() {
 	$('.1, .2, .3, .4, .5, .6, .7').empty().removeAttr('rowspan');
 	var selectedDesigner = $("#designerSelect option:selected").val();
@@ -79,7 +88,7 @@ function showDesignerSchedule() {
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/companyPage/getReserveTime.do',
-		data : {'designername':selectedDesigner, 'cnt':cnt},
+		data : {'designername':selectedDesigner, 'cnt':cnt, 'startDay':startDay},
 		dataType : 'json',
 		success : function(data) {
 			// 예약자 이름 배열 초기화
@@ -136,9 +145,7 @@ function showDesignerSchedule() {
 			// 사양이 안 좋은 컴퓨터에서는 each문이 연달아 일어나다 보니 생략이 되는 경우가 생겨 약간의 딜레이를 줌
 			setTimeout(function() {
 				$.each(data.startList, function(index, items) {
-					// ex) 11:30
-					// startTime[0]=11
-					// startTime[1]=30
+					// ex) 11:30 = startTime[0]=11, startTime[1]=30
 					var startTime = items.split(':');
 					
 					// 시작시간의 시와 분을 합쳐서 추가할 tr의 클래스와 동일하게 만들어 저장
@@ -156,30 +163,31 @@ function showDesignerSchedule() {
 									'cursor: pointer;'+
 									'text-align : center'
 							
-							}).append($('<div/>', {
-								text : startEndTimeAr[index],
-								style : 'height: 17px;'+
-										'color: #000000;'+
-										'font-size: 14px;'+
-										'text-align: center;'+
-										'padding-top: 0%;'
-										
-							})).append($('<div/>', {
-								text : '예약자 : '+bookerNameAr[index],
-								style : 'height: 17px;'+
-										'color: #000000;'+
-										'font-size: 14px;'+
-										'text-align: center;'+
-										'padding-top: 0px;'
-										
-							})).append($('<div/>', {
-								text : '서비스 : '+serviceAr[index],
-								style : 'height: 17px;'+
-										'color: #000000;'+
-										'font-size: 14px;'+
-										'text-align: center;'+
-										'padding-top: 0px;'
-						})));
+								}).append($('<div/>', {
+									text : startEndTimeAr[index],
+									style : 'height: 17px;'+
+											'color: #000000;'+
+											'font-size: 14px;'+
+											'text-align: center;'+
+											'padding-top: 0%;'
+											
+								})).append($('<div/>', {
+									text : '예약자 : '+bookerNameAr[index],
+									style : 'height: 17px;'+
+											'color: #000000;'+
+											'font-size: 14px;'+
+											'text-align: center;'+
+											'padding-top: 0px;'
+											
+								})).append($('<div/>', {
+									text : '서비스 : '+serviceAr[index],
+									style : 'height: 17px;'+
+											'color: #000000;'+
+											'font-size: 14px;'+
+											'text-align: center;'+
+											'padding-top: 0px;'
+								}))
+							);
 					}else {
 						$('.'+trClass+' .'+tdClassAr[index]).append($('<div/>', {
 							id : 'reserveInfoOpen',
@@ -192,33 +200,69 @@ function showDesignerSchedule() {
 									'cursor: pointer;'+
 									'text-align : center'
 							
-							}).append($('<div/>', {
-								text : startEndTimeAr[index],
-								style : 'height: 35px;'+
-										'color: #000000;'+
-										'text-align: center;'+
-										'padding-top: 25%;'
-										
-							})).append($('<div/>', {
-								text : '예약자 : '+bookerNameAr[index],
-								style : 'height: 35px;'+
-										'color: #000000;'+
-										'text-align: center;'+
-										'padding-top: 20px;'
-										
-							})).append($('<div/>', {
-								text : '서비스 : '+serviceAr[index],
-								style : 'height: 35px;'+
-										'color: #000000;'+
-										'text-align: center;'+
-										'padding-top: 10px;'
-						})));
+								}).append($('<div/>', {
+									text : startEndTimeAr[index],
+									style : 'height: 35px;'+
+											'color: #000000;'+
+											'text-align: center;'+
+											'padding-top: 25%;'
+											
+								})).append($('<div/>', {
+									text : '예약자 : '+bookerNameAr[index],
+									style : 'height: 35px;'+
+											'color: #000000;'+
+											'text-align: center;'+
+											'padding-top: 20px;'
+											
+								})).append($('<div/>', {
+									text : '서비스 : '+serviceAr[index],
+									style : 'height: 35px;'+
+											'color: #000000;'+
+											'text-align: center;'+
+											'padding-top: 10px;'
+								}))
+							);
 					} // else
 				}); // each
-			}, 100); // setTimeout
+			}, 0); // setTimeout
 		} // success
 	}); // ajax
 } // showDesignerSchedule()
+
+// 현재부터~7일치 년, 월, 일, 요일 구하기
+function addReserveDate() {
+	$.ajax({
+		type : 'POST',
+		url : '/hairShopProject/companyPage/reserveCalender.do',
+		data : {'startDay':startDay},
+		dataType : 'json',
+		success : function(data) {
+			// 7일치 년,월,일 데이터 추가
+			$.each(data.list, function(index, items) {
+				todayAr[index] = items; // [0]=년, [1]=월, [2]=일 ... [18]=년, [19]=월, [20]=일
+			});
+			
+			// 요일 배열 초기화
+			$.each(data.dayOfWeekList, function(index, items) {
+				dayOfWeekAr[index] = items;
+			});
+			
+			// 년도 적용
+			$('.year').text(todayAr[0]);
+			
+			// 월, 일, 요일 적용
+			var j = 0; // 요일 배열 카운트
+			for(var i=1; i<=19; i+=3) { // 월 / 일 형식으로 최상단 tr에 td 추가 
+				$('.topTr').append($('<td/>', {
+					text : todayAr[i]+' / '+todayAr[i+1]+' ('+dayOfWeekAr[j]+')',
+					style : 'width: 120px; color: white;'
+				}));
+			
+				j++;
+			} // for
+		} // success
+	}); // ajax
+} // reserveDate()
 
 $(document).ready(function() {
 	// 예약정보 모달
@@ -284,29 +328,6 @@ $(document).ready(function() {
 			
 			// 일정표에 예약 정보 표시
 			showDesignerSchedule();
-		}
-	});
-	
-	// 현재부터 7일치 년,월,일 구하기
-	$.ajax({
-		type : 'POST',
-		url : '/hairShopProject/companyPage/reserveCalender.do',
-		dataType : 'json',
-		success : function(data) {
-			var today = new Array();
-			
-			$.each(data.list, function(index, items) {
-				today[index] = items; // [0]=년, [1]=월, [2]=일 ... [18]=년, [19]=월, [20]=일
-			});
-			
-			$('.year').text(today[0]);
-			
-			for(var i=1; i<=19; i+=3) { // 월 / 일 형식으로 최상단 tr에 td 추가 
-				$('.topTr').append($('<td/>', {
-					text : today[i]+' / '+today[i+1],
-					style : 'width: 120px; color: white;'
-				}));
-			}
 		}
 	});
 	
@@ -386,10 +407,37 @@ $(document).ready(function() {
 							minute -= 30;
 							hour += 1;
 						}
-					}
-				}
-			});
+					} // if ~ else
+				} // for
+			}); // each
+		} // success
+	}); // ajax
+	
+	addReserveDate()
+	
+	// 다음주 버튼
+	$('.changeWeekBtn').on('click', function() {
+		if($('.changeWeekBtn').text()=='NEXT') {
+			$('.changeWeekBtn').text('LAST');
+			
+			// topTr에 시간/요일 td를 제외한 모든 td를 제거 후 다음주 날짜로 다시 생성해줌
+			$('.topTr td:not(.backslash)').remove();
+			
+			startDay = 7; // 7일 후
+			showDesignerSchedule();
+			addReserveDate()
+			
+		}else {
+			$('.changeWeekBtn').text('NEXT');
+			
+			$('.topTr td:not(.backslash)').remove();
+			
+			startDay = 0; // 현재
+			showDesignerSchedule();
+			addReserveDate()
 		}
+		
+		
 	});
 });
 </script>

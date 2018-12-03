@@ -34,10 +34,6 @@
 			</td>
 			
 			<td width="150px" style="color: white;">
-				주소
-			</td>
-			
-			<td width="150px" style="color: white;">
 				가입일
 			</td>
 			
@@ -54,68 +50,51 @@
 $(document).ready(function() {
 	$.ajax({
 		type : 'POST',
-		url : '/hairShopProject/adminPage/getHairShopList.do',
+		url : '/hairShopProject/adminPage/getMemberList.do',
 		dataType : 'json',
 		success : function(data) {
 			//alert(JSON.stringify(data));
-			$.each(data.hairShopList, function(index, items) {
+			$.each(data.memberList, function(index, items) {
 				$('<tr/>', {
 					style : 'color: #515151;'
 					
 				}).append($('<td/>', {
 					height : '50px',
-					type : 'text',
 					style : 'font-size: 15px; text-align: center; border: none;',
-					value : items.hairshopid,
+					text : items.email,
 					id : items.seq,
-					class : 'designerimage',
-					readonly : 'readonly'  
+					class : 'memberEmail' 
 						
-				}))).append($('<td/>').append($('<input/>', {
+				})).append($('<td/>').append($('<input/>', {
 						type : 'text',
 						style : 'font-size: 15px; text-align: center; border: none;',
-						value : items.designerimage,
+						value : items.pwd,
 						id : items.seq,
-						class : 'designerimage',
+						class : 'memberPwd',
 						readonly : 'readonly'
 						
 				}))).append($('<td/>').append($('<input/>', {
 					type : 'text',
 					style : 'font-size: 15px; text-align: center; border: none;',
-					value : items.designername,
+					value : items.name,
 					id : items.seq,
-					class : 'designername',
+					class : 'memberName',
 					readonly : 'readonly'
 					
 				}))).append($('<td/>').append($('<input/>', {
 					type : 'text',
 					style : 'font-size: 15px; text-align: center; border: none;',
-					value : items.designerid,
+					value : items.tel1+'-'+items.tel2+'-'+items.tel3,
 					id : items.seq,
-					class : 'designerid',
+					class : 'memberTel',
 					readonly : 'readonly'
 					
 				}))).append($('<td/>').append($('<input/>', {
 					type : 'text',
 					style : 'font-size: 15px; text-align: center; border: none;',
-					value : items.position,
+					value : items.logtime,
 					id : items.seq,
-					class : 'position',
-					readonly : 'readonly'
-					
-				}))).append($('<td/>').append($('<input/>', {
-					type : 'text',
-					style : 'font-size: 15px; text-align: center; border: none;',
-					value : (items.dayoff)
-								.replace('1', '월 ')
-								.replace('2', '화 ')
-								.replace('3', '수 ')
-								.replace('4', '목 ')
-								.replace('5', '금 ')
-								.replace('6', '토 ')
-								.replace('7', '일 '),
-					id : items.seq,
-					class : 'dayoff',
+					class : 'memberLogtime',
 					readonly : 'readonly'
 					
 				}))).append($('<td/>', {
@@ -123,15 +102,15 @@ $(document).ready(function() {
 					}).append($('<input/>', {
 						type : 'button',
 						value : '수정',
-						id : 'designerModify',
+						id : 'memberModifyBtn',
 						class : items.seq
 						
 					})).append('<br>').append($('<input/>', {
 					type : 'button',
 					value : '삭제',
-					class : 'designerDelete'
+					class : 'memberDeleteBtn'
 					
-				}))).appendTo($('#designerTable'));
+				}))).appendTo($('#memberListTable'));
 			});
 		}
 	});
