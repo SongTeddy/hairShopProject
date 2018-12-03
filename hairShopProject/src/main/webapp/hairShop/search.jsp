@@ -199,7 +199,7 @@ html, body{
       <div style="padding: 0px 30px;">
          <div style="width: 40%; float: left;"><strong>총 <span id="listSize"></span>개</strong></div>
          <div style="text-align: right; width: 50%;  float: right;">
-            <input name="sortOption" type="radio" value="0" checked />추천순&emsp; 
+            <input name="sortOption" type="radio" value="0" />추천순&emsp; 
             <input name="sortOption" type="radio" value="1" />거리순
          </div>
       </div>
@@ -233,6 +233,8 @@ var overlays = [];
 var markers = [];
 var contents = [];
 var map;
+	
+	$("input:radio[name ='sortOption']:input[value='${sortOption }']").attr("checked", true);
 
 	/* 현재위치 띄우기 */
 	var mapContainer = document.getElementById('map'), // 지도의 중심좌표
@@ -273,7 +275,11 @@ $(document).ready(function() {
 	
 	
 	$('input[name=sortOption]').on('click', function(){
-		location.href= "/hairShopProject/hairShop/search.do?sortOption=" + $('input[name=sortOption]:checked').val()
+		alert("sort 옵션 선택" + $('input[name=sortOption]:checked').val());
+		var params = {'service' : '${service }', 'date' : '${date }', 'day' : '${day }', 'latitud' : '${latitud }', 'longitude': '${longitude }', 'sortOption': $('input[name=sortOption]:checked').val()};
+		var path = "/hairShopProject/hairShop/search.do";
+		var method = 'post';
+		post_to_url(path, params, method);
 	});	
 	
 	/*ajax end  */
@@ -595,6 +601,27 @@ function getSearchList(){
 		}
 	});
 }
+
+
+
+
+function post_to_url(path, params, method) {
+    method = method || "post";
+    var searchOptionForm = document.createElement("form");
+    searchOptionForm.setAttribute("method", method);
+    searchOptionForm.setAttribute("action", path);
+    for (var key in params) {
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", key);
+        hiddenField.setAttribute("value", params[key]);
+        searchOptionForm.appendChild(hiddenField);
+    }
+    document.body.appendChild(searchOptionForm);
+    searchOptionForm.submit();
+    return false;
+}
+
 
 
 /* 

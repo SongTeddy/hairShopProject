@@ -36,11 +36,12 @@ public class HairShopController {
 
 	@RequestMapping(value = "/hairShop/search.do")
 	public ModelAndView search(@RequestParam String service, @RequestParam String date, @RequestParam String day,
-			@RequestParam String latitud, @RequestParam String longitude, @RequestParam( required=false, defaultValue="0")String sortOption) {
+			@RequestParam String latitud, @RequestParam String longitude, @RequestParam(required=false, defaultValue="0")String sortOption) {
 		ModelAndView mav = new ModelAndView();
 		System.out.println(latitud);
 		mav.addObject("service", service);
 		mav.addObject("day", day);
+		mav.addObject("date", date);
 		mav.addObject("latitud", latitud);
 		mav.addObject("longitude", longitude);
 		mav.addObject("sortOption", sortOption);
