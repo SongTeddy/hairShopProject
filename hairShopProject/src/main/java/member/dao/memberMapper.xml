@@ -156,8 +156,8 @@
 	<update id="designerModify" parameterType="designer">
 		update designerinfo set designerid=#{designerid}, designername=#{designername }, designerimage=#{designerimage }, positioncode=#{positioncode }, position=#{position }, dayoff=#{dayoff } where seq=#{seq }
 	</update>
-	
-	
+
+  
 	<!-- 헤어샵 홈페이지 링크 띄우기 -->
    <select id="getHomepageLink" parameterType="String" resultType="java.util.Map">
       select * from memberinfo where email=#{memEmail }
@@ -187,4 +187,5 @@
 		dayoff=#{dayoff }
 		where email=#{memEmail }
 	</update>
-</mapper>
+  
+  </mapper>

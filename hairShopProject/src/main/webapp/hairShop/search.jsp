@@ -273,7 +273,6 @@ var map;
 	getSearchList();
 $(document).ready(function() {
 	
-	
 	$('input[name=sortOption]').on('click', function(){
 		alert("sort 옵션 선택" + $('input[name=sortOption]:checked').val());
 		var params = {'service' : '${service }', 'date' : '${date }', 'day' : '${day }', 'latitud' : '${latitud }', 'longitude': '${longitude }', 'sortOption': $('input[name=sortOption]:checked').val()};
@@ -281,6 +280,7 @@ $(document).ready(function() {
 		var method = 'post';
 		post_to_url(path, params, method);
 	});	
+
 	
 	/*ajax end  */
 	/* scroll function start */
@@ -311,7 +311,7 @@ $(document).ready(function() {
 				}).append($('<span/>',{
 					
 				}).append($('<a/>',{
-					href:"#",
+					href: "javascript:moveTo('"+listSearch[j].HAIRSHOPID+"');",
 					html: listSearch[j].NAME
 				})).append($('<span/>',{
 					class:"explore-rating",
@@ -478,8 +478,6 @@ $(document).ready(function() {
 		}
   	});
 });
-
-
 function getSearchList(){
 	alert($('input[name=sortOption]:checked').val());
 	$.ajax({
@@ -602,9 +600,6 @@ function getSearchList(){
 	});
 }
 
-
-
-
 function post_to_url(path, params, method) {
     method = method || "post";
     var searchOptionForm = document.createElement("form");
@@ -645,4 +640,7 @@ window.onclick = function(event) {
  
 */
  
+function moveTo(hairShopId) {
+	window.location.href = '/hairShopProject/hairShop/hairShop_index.do?hairShopId='+hairShopId;
+}
 </script>

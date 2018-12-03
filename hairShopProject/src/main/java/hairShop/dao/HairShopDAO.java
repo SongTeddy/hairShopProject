@@ -16,4 +16,12 @@ public interface HairShopDAO {
 	public int confirmedReservation(Map<String, String> map);
 	public Map<String, Object> getTel(String memEmail);
 	public List<HairShopReviewDTO> hairShopReviewList();
+	//리뷰작성
+	public void hairShopReviewWrite(Map<String, String> map);
+	
+	//좋아요 버튼
+	public Map<String, Object> getHeartBtn(Map<String, String> map);
+	public void insertHeart(Map<String, String> map);
+	public void deleteHeart(Map<String, String> map);
+	public List<Map<String, Object>> getSearchHairShopList(String hairShopName);
 }

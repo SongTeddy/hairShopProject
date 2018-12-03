@@ -945,10 +945,9 @@ nav.navbar.bootsnav .navbar-toggle i{color: #ff545a;}
 /* 로그인 Div */
 .logoutBtn {
 	position: relative;
-	top: -52px;
-	left: 90px;
 	background: #F3F3F3;
 	border: 1px solid #CFCFCF;
+	top: 34px;
 	padding: 4px;
 	transition: 0.2s ease;
 }

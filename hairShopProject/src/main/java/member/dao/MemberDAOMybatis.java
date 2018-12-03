@@ -154,7 +154,7 @@ public class MemberDAOMybatis implements MemberDAO {
 		Map<String , String> map = new HashMap<String, String>();
 		map.put("email", email);
 		map.put("pwd", pwd);
-
+		
 		return sqlSession.selectOne("memberSQL.login", map);
 	}
 	
@@ -264,7 +264,7 @@ public class MemberDAOMybatis implements MemberDAO {
 	public List<String> getHairShopDesigner(String hairshopId) {
 		return sqlSession.selectList("memberSQL.getHairShopDesigner", hairshopId);
 	}
-	
+  
 	@Override
 	public Map<String, String> getHomepageLink(String memEmail) {
 		return sqlSession.selectOne("memberSQL.getHomepageLink", memEmail);
@@ -289,5 +289,5 @@ public class MemberDAOMybatis implements MemberDAO {
 	@Override
 	public int hairShopInfoUpdate(Map<String, Object> map) {
 		return sqlSession.update("memberSQL.hairShopInfoUpdate", map);
-	}
+	}  
 }

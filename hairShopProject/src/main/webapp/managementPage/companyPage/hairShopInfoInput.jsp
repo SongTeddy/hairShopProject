@@ -210,8 +210,6 @@ if('${map.DAYOFF}' != ""){
 	}
 }
 
-
-
 if('${map.TEL1}'!= "")
 	$('select[name=tel1]').val('${map.TEL1}');
 
@@ -222,10 +220,13 @@ if('${map.OPENTIME }' != ""){
 if('${map.CLOSETIME }' != ""){
 	$('input[name=closeTime]').val('${map.CLOSETIME }');
 }
+
 $(document).ready(function(){
 	
 	var geocoder = new daum.maps.services.Geocoder();
 	survey($('input[name=addr1]'), function(){ 
+
+		alert(document.getElementById('addr1').value + 'changed');
 		// 주소-좌표 변환 객체를 생성합니다
 	
 		// 주소로 좌표를 검색합니다
@@ -315,7 +316,6 @@ $(document).ready(function(){
 		return strTmp;
 	}
 	
-	
 	function checkLicense(){
 		if(chkWorkNumb($('input[name=license1]').val()+$('input[name=license2]').val()+$('input[name=license3]').val())){
 			$.ajax({
@@ -340,7 +340,7 @@ $(document).ready(function(){
 			});
 		}
 	}
-	
+
 	function survey(selector, callback) {
 		var input = $(selector);
 		var oldvalue = input.val();

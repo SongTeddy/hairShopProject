@@ -15,7 +15,7 @@ import hairShop.bean.HairShopReviewDTO;
 public class HairShopDAOMybatis implements HairShopDAO {
 	@Autowired
 	private SqlSession sqlSession;
-   
+  
 	@Override
 	public List<Map<String, Object>> getSearchListOrderByDistance(Map<String, Object> map) {
 		System.out.println("search DAO 들어왔어용! 거리순으로 검색");
@@ -30,7 +30,6 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	@Override
 	public Map<String, Object> getHairShopInfo(String hairShopId) {
 		System.out.println("DAO mybatis"+hairShopId);
-		
 		return sqlSession.selectOne("hairShopSQL.getHairShopInfo", hairShopId);
 	}
 	@Override
@@ -58,12 +57,39 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	}
 
 	@Override
+	public Map<String, Object> getTel(String memEmail) {
+		return sqlSession.selectOne("hairShopSQL.getTel", memEmail);
+	}
+  
+	@Override
 	public List<HairShopReviewDTO> hairShopReviewList() {
 		return sqlSession.selectList("hairShopSQL.hairShopReviewList");
 	}
+	
+	//리뷰작성
+	@Override
+	public void hairShopReviewWrite(Map<String, String> map) {
+		sqlSession.insert("hairShopSQL.hairShopReviewWrite", map);
+	}
+
+	
+	@Override
+	public Map<String, Object> getHeartBtn(Map<String, String> map){
+		return sqlSession.selectOne("hairShopSQL.getHeartBtn",map);
+	}
 
 	@Override
-	public Map<String, Object> getTel(String memEmail) {
-		return sqlSession.selectOne("hairShopSQL.getTel", memEmail);
+	public void insertHeart(Map<String, String> map) {
+		sqlSession.insert("hairShopSQL.insertHeart", map);
+	}
+
+	@Override
+	public void deleteHeart(Map<String, String> map) {
+		sqlSession.delete("hairShopSQL.deleteHeart", map);
+	}
+
+	@Override
+	public List<Map<String, Object>> getSearchHairShopList(String hairShopName) {
+		return sqlSession.selectList("hairShopSQL.getSearchHairShopList", hairShopName);
 	}
 }

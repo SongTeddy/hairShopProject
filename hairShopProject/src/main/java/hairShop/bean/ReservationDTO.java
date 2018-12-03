@@ -30,4 +30,5 @@ public class ReservationDTO {
 	private Date endtime;
     private String theday;
     private int didordidnot;
+    private Date logtime;
 }
