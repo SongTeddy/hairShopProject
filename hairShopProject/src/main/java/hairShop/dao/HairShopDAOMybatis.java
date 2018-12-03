@@ -17,9 +17,14 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	private SqlSession sqlSession;
    
 	@Override
-	public List<Map<String, Object>> getSearchList(Map<String, Object> map) {
-		System.out.println("search DAO 들어왔어용!");
-		return sqlSession.selectList("hairShopSQL.getSearchList", map);
+	public List<Map<String, Object>> getSearchListOrderByDistance(Map<String, Object> map) {
+		System.out.println("search DAO 들어왔어용! 거리순으로 검색");
+		return sqlSession.selectList("hairShopSQL.getSearchListOrderByDistance", map);
+	}
+	@Override
+	public List<Map<String, Object>> getSearchListOrderByStar(Map<String, Object> map) {
+		System.out.println("search DAO 들어왔어용! 별점으로 검색");
+		return sqlSession.selectList("hairShopSQL.getSearchListOrderByStar", map);
 	}
 
 	@Override

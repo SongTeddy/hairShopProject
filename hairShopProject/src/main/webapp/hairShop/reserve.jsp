@@ -270,7 +270,6 @@
 	
 	$('#tel1').val("${telMap.TEL1}");	
 	
-// 	'bookeremail' : '${memEmail }', 'bookername' : '${memName }', 나중에 로그인했을 땐 요렇게 바꿔줘야 함!!!
 	$('#confirmedBtn').on('click', function(){
 		if($('#temsCheck').is(":checked")){
 			alert($('#temsCheck').is(":checked"));
