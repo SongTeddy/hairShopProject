@@ -19,8 +19,8 @@ public class ManagementDAOMybatis implements ManagementDAO {
 // 마이페이지(관리자)=================================================================================
 	
 	@Override
-	public List<MemberDTO> getHairShopDesigner(String type) {
-		return sqlSession.selectList("managementSQL.getHairShopDesigner", type);
+	public List<MemberDTO> getMemberByType(String type) {
+		return sqlSession.selectList("managementSQL.getMemberByType", type);
 	}
 	
 // 마이페이지(개인)=================================================================================

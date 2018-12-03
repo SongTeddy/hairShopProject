@@ -30,6 +30,8 @@ public class AdminPageController {
 	private ReservationDTO reservationDTO;
 	@Autowired
 	private ManagementDAO managementDAO;
+
+/////////////////////////// 메뉴이동 ///////////////////////////
 	
 	// 회원 관리 메뉴 이동
 	@RequestMapping(value="memberManagement", method=RequestMethod.GET)
@@ -46,12 +48,27 @@ public class AdminPageController {
 		
 		return mav;
 	}
+
+/////////////////////////// 회원 관리 ///////////////////////////
+	
+	// 개인회원 조회
+	@RequestMapping(value="getMemberList", method=RequestMethod.POST)
+	public ModelAndView getMemberList() {
+		List<MemberDTO> memberList = managementDAO.getMemberByType("0");
 		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("memberList", memberList);
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
+
+///////////////////////// 헤어샵 관리 ///////////////////////////
 	
 	// 헤어샵 리스트 조회
 	@RequestMapping(value="getHairShopList", method=RequestMethod.POST)
 	public ModelAndView getHairShopList() {
-		List<MemberDTO> hairShopList = managementDAO.getHairShopDesigner("1");
+		List<MemberDTO> hairShopList = managementDAO.getMemberByType("1");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("hairShopList", hairShopList);

@@ -90,25 +90,31 @@ public class CompanyPageController {
 	
 	// 오늘 년, 월, 일 구하기
 	@RequestMapping(value="reserveCalender", method=RequestMethod.POST)
-	public ModelAndView reserveCalender() {
+	public ModelAndView reserveCalender(@RequestParam int startDay) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DATE, startDay);
 		
+		// 리스트 생성
 		List<String> list = new ArrayList<String>();
+		List<String> dayOfWeekList = new ArrayList<String>();
+		
+		String[] weekDay = { "일", "월", "화", "수", "목", "금", "토" }; // 요일을 구하기 위한 배열
+		
+		// 리스트에 데이터 추가
 		for(int i=0; i<7; i++) {
-			String year = Integer.toString(c.get(c.YEAR));
-			String month = Integer.toString(c.get(c.MONTH)+1);
-			String date = Integer.toString(c.get(c.DATE));
+			list.add(Integer.toString(c.get(c.YEAR)));
+			list.add(Integer.toString(c.get(c.MONTH)+1));
+			list.add(Integer.toString(c.get(c.DATE)));
 			
-			list.add(year);
-			list.add(month);
-			list.add(date);
+			dayOfWeekList.add(weekDay[c.get(c.DAY_OF_WEEK)-1]);
 			
 			c.add(Calendar.DATE, 1); // 하루 증가
 		} // 년,월,일을 7일치 추가해줌
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
+		mav.addObject("dayOfWeekList", dayOfWeekList);
 		mav.setViewName("jsonView");
 		
 		return mav;
@@ -129,7 +135,8 @@ public class CompanyPageController {
 	// 디자이너 예약 얻기
 	@RequestMapping(value="getReserveTime", method=RequestMethod.POST)
 	public ModelAndView getReserveTime(@RequestParam String designername,
-									   @RequestParam int cnt) {
+									   @RequestParam int cnt,
+									   @RequestParam int startDay) {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("dd");
@@ -172,6 +179,7 @@ public class CompanyPageController {
 		List<String> tdClassList = new ArrayList<String>();
 		for(int i=0; i<list.size(); i++) { // 예약이 더이상 없으면 break;
 			Calendar c = Calendar.getInstance(); // 한 예약이 끝나면 캘린더 오늘날짜로 초기화
+			c.add(Calendar.DATE, startDay);
 			
 			// String으로 하면 01처럼 앞에 0이 붙어서 비교가 힘들어서 int로 형변환
 			int ReserveDay = Integer.parseInt(sdf2.format(list.get(i).getStarttime()));// 예약날의 일
@@ -179,7 +187,7 @@ public class CompanyPageController {
 			while(true) {
 				
 				// 오늘의 일과 예약날의 일이 같아지면 break
-				if(ReserveDay==c.get(c.DATE)) { // 아래에 두면 한달을 더 돌아버림
+				if(ReserveDay==c.get(c.DATE)) { // 아래쪽에 두면 한달을 더 돌아버림
 					break;
 				}
 				cnt++;
