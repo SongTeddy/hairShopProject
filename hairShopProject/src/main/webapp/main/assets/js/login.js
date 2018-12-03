@@ -12,8 +12,10 @@ $(document).ready(function() {
 			success : function(data) {
 				if(data=="0") {
 					location.href="/hairShopProject/managementPage/memberPage.do";
-				}else {
+				}else if(data=="1") {
 					location.href="/hairShopProject/managementPage/companyPage.do";
+				}else if(data=="2") {
+					location.href="/hairShopProject/managementPage/adminPage.do";
 				}
 			}
 		});

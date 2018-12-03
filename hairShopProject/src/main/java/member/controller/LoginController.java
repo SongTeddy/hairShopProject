@@ -28,7 +28,6 @@ public class LoginController {
 						  	  				Model model,
 						  	  				HttpSession session) {
 		
-		
 		memberDTO = memberDAO.login(loginEmail,loginPwd);
 		
 		// 세션
