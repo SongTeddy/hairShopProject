@@ -68,6 +68,19 @@ public class HairShopController {
       mav.setViewName("jsonView");
       return mav;
    }
+   @RequestMapping(value="/hairShop/getSearchHairShopList.do")
+   public ModelAndView getSearchHairShopList(@RequestParam String hairShopName) {
+	   ModelAndView mav = new ModelAndView();
+	   System.out.println(hairShopName);
+	   List<Map<String, Object>> list = hairShopDAO.getSearchHairShopList(hairShopName);
+	   System.out.println(list.size());
+//    System.out.println(list.get(0).get("MINPRICE"));
+//    System.out.println(list.get(0).get("DISTANCE"));
+	   mav.addObject("listSize", list.size());
+	   mav.addObject("list", list);
+	   mav.setViewName("jsonView");
+	   return mav;
+   }
    
    @RequestMapping(value="/hairShop/getHeartBtn.do")
    public ModelAndView getHeartBtn(@RequestParam Map<String, String> map) {

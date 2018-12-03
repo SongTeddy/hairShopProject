@@ -84,4 +84,9 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	public void deleteHeart(Map<String, String> map) {
 		sqlSession.delete("hairShopSQL.deleteHeart", map);
 	}
+
+	@Override
+	public List<Map<String, Object>> getSearchHairShopList(String hairShopName) {
+		return sqlSession.selectList("hairShopSQL.getSearchHairShopList", hairShopName);
+	}
 }

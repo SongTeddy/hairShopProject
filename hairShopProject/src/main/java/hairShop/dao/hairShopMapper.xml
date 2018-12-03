@@ -87,11 +87,25 @@
 </select>
 
 <insert id="insertHeart" parameterType="java.util.Map" >
-	insert into heart values(#{memEmail}, #{hairShopId }, (select name from memberinfo where hairShopId = #{hairShopId }))
+	insert into heart select #{memEmail}, #{hairShopId }, (select name from memberinfo where hairShopId = #{hairShopId }) from dual where not exists (select 0 from heart where email=#{memEmail } and hairshopid=#{hairShopId })
 </insert>
 
 <delete id="deleteHeart" parameterType="java.util.Map">
 	delete heart where email=#{memEmail } and hairshopid = #{hairShopId }
 </delete>
 
+<select id="getSearchHairShopList" parameterType="String" resultType="java.util.Map">
+select * from
+(
+select nvl(avg(starscope),0) as avgstar, count(starscope) as reviewcnt, hairshopid, hairshopimage1, name, 
+addr1, addr2, latitud, longitude, tel1, tel2, tel3, 
+hairshopcontent, opentime, closetime, dayoff
+from review left full join memberinfo using(hairshopid)
+where memberinfo.name like '%${value }%' and memberinfo.type = 1
+group by hairshopid, hairshopimage1, name,
+addr1, addr2, latitud, longitude, tel1, tel2, tel3, 
+hairshopcontent, opentime, closetime, dayoff
+)
+order by avgstar
+</select>
 </mapper>

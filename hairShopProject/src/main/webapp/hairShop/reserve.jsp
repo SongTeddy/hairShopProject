@@ -272,8 +272,8 @@
 	
 // 	'bookeremail' : '${memEmail }', 'bookername' : '${memName }', 나중에 로그인했을 땐 요렇게 바꿔줘야 함!!!
 	$('#confirmedBtn').on('click', function(){
-		if($('#temsCheck').is(":checked")){
-			alert($('#temsCheck').is(":checked"));
+		/* if($('#temsCheck').is(":checked")){
+			alert($('#temsCheck').is(":checked")); */
 			var params = {'bookerEmail' : '${memEmail }', 'bookerName' : '${memName }', 
 					'bookerTel1' : $('#tel1').val(), 'bookerTel2' : $('#tel2').val(), 'bookerTel3' : $('#tel3').val(),
 					'requests' : $('#requests').val(), 'hairShopId': '${map.hairShopId }', 
@@ -287,11 +287,12 @@
 			var path = "/hairShopProject/hairShop/confirmedReservation.do";
 			var method = 'post';
 			post_to_url(path, params, method);
-		} if(!$('#temsCheck').is(":checked")) {
+// 		}
+		/* } if(!$('#temsCheck').is(":checked")) {
 			alert($('#temsCheck').is(":checked"));
 			document.getElementById("modalContents").innerText = "이용약관에 동의해주세요.";
 			document.getElementById('my_Terms_modal').style.display = "block";
-		}
+		} */
 	});
 
 	//Get the modal

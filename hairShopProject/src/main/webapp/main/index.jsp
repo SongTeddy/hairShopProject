@@ -113,22 +113,17 @@
 						id="navbar-menu">
 						<ul class="nav navbar-nav navbar-right" data-in="fadeInDown"
 							data-out="fadeOutUp">
-							<li class=" scroll active" style="padding-left: 100px;"><a href="#home">home</a></li>
-							<!-- <li class="scroll"><a href="#works">how it works</a></li> -->
-							<li class="scroll" style="padding-left: 100px;"><a href="#explore">explore</a></li>
-							<li class="scroll"style="padding-left: 100px;"><a href="#reviews">review</a></li>
-							<!-- <li class="scroll"><a href="#blog">blog</a></li> -->
-							<li class="scroll" style="padding-left: 100px;"><a href="#contact">contact</a></li>
-							<li class="scroll" style="padding-left: 100px;">
+							<li class=" scroll" style="padding-left: 35px;"><a href="javascript:void(0)" class="searchHairShopByName">미용실찾기</a></li>
+							<li class="scroll"style="padding-left: 165px;"><a href="javascript:void(0)">스타일찾기</a></li>
+							<li class="scroll" style="padding-left: 165px;"><a href="javascript:void(0)">이벤트</a></li>
+							<li class="scroll" style="padding-left: 165px;">
 								<input type="hidden" id="loginVal" value="${login }" />
 								<c:if test="${memEmail==null }">
-									<a id="loginA" href="#">sign in / register</a>
+									<a id="loginA" href="javascript:void(0)">sign in / register</a>
 								</c:if>
-								
 								<c:if test="${memEmail!=null }">
-									<a id="loggedinA" href="#">${memName } 님</a>
+									<a id="loggedinA" href="javascript:void(0)">${memName } 님</a>
 									<input type="hidden" id="memEmail" value="${memEmail }" />
-									
 									<button type="button" class="logoutBtn">
 										로그아웃
 									</button>
@@ -161,26 +156,15 @@
 	<!-- TOP Section end!!!!!! -->
 
 	<!--footer start-->
-	<footer id="footer" class="footer" style="clear: both;">
+	<footer id="footer" class="footer" style="clear: both; position:relative;">
 		<div class="container">
 			<div class="footer-menu">
 				<div class="row">
 					<div class="col-sm-3">
 						<div class="navbar-header">
-							<a class="navbar-brand" href="index.html">list<span>race</span></a>
+							<a class="navbar-brand" href="index.do">Hair<span>Shop</span></a>
 						</div>
 						<!--/.navbar-header-->
-					</div>
-					<div class="col-sm-9">
-						<ul class="footer-menu-item">
-							<li class="scroll"><a href="#works">how it works</a></li>
-							<li class="scroll"><a href="#explore">explore</a></li>
-							<li class="scroll"><a href="#reviews">review</a></li>
-							<li class="scroll"><a href="#blog">blog</a></li>
-							<li class="scroll"><a href="#contact">contact</a></li>
-							<li class=" scroll"><a href="#contact">my account</a></li>
-						</ul>
-						<!--/.nav -->
 					</div>
 				</div>
 			</div>
@@ -189,13 +173,13 @@
 					<div class="col-sm-5">
 						<p>
 							&copy;copyright. designed and developed by <a
-								href="https://www.themesine.com/">themesine</a>
+								href="index.do">우리동네 HairShop</a>
 						</p>
 						<!--/p-->
 					</div>
 					<div class="col-sm-7">
 						<div class="footer-social">
-							<span><i class="fa fa-phone"> +1 (222) 777 8888</i></span> <a
+							<span><i class="fa fa-phone"> +82 (10) 8564 1358</i></span> <a
 								href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
 								class="fa fa-twitter"></i></a> <a href="#"><i
 								class="fa fa-linkedin"></i></a> <a href="#"><i
@@ -299,6 +283,10 @@
 	
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
+			$(".searchHairShopByName").on('click',function(){
+				location.href="searchHairShop.do";
+			});
+			
 			$(".z-tabs").on('click','li',function(){
 				var classztab ="";
 				$('li.active').removeClass('active');

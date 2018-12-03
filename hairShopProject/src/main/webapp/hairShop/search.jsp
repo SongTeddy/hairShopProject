@@ -355,7 +355,7 @@ $(document).ready(function() {
 					}).append($('<span/>',{
 						
 					}).append($('<a/>',{
-						href:"#",
+						href: "javascript:moveTo('"+item.HAIRSHOPID+"');",
 						html: item.NAME
 					})).append($('<span/>',{
 						class:"explore-rating",
@@ -418,7 +418,7 @@ $(document).ready(function() {
 				}).append($('<span/>',{
 					
 				}).append($('<a/>',{
-					href:"#",
+					href: "javascript:moveTo('"+listSearch[j].HAIRSHOPID+"');",
 					html: listSearch[j].NAME
 				})).append($('<span/>',{
 					class:"explore-rating",
@@ -584,5 +584,7 @@ $(document).ready(function() {
 		}
   	});
 });
-
+function moveTo(hairShopId) {
+	window.location.href = '/hairShopProject/hairShop/hairShop_index.do?hairShopId='+hairShopId;
+}
 </script>

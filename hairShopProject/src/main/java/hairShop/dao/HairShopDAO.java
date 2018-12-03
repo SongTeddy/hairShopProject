@@ -22,4 +22,5 @@ public interface HairShopDAO {
 	public Map<String, Object> getHeartBtn(Map<String, String> map);
 	public void insertHeart(Map<String, String> map);
 	public void deleteHeart(Map<String, String> map);
+	public List<Map<String, Object>> getSearchHairShopList(String hairShopName);
 }

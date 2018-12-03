@@ -318,4 +318,9 @@ public class MemberDAOMybatis implements MemberDAO {
 			return false;
 	}
 
+	@Override
+	public List<Map<String, String>> heartList(String memEmail) {
+		return sqlSession.selectList("memberSQL.heartList", memEmail);
+	}
+
 }

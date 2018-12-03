@@ -43,8 +43,8 @@ public class ManageController {
 	
 	// 관리페이지 (개인, 사업자 구분)
 	@RequestMapping(value="managementPage", method=RequestMethod.POST)
-	public @ResponseBody String managementPages(@RequestParam String memEmail) {
-		return memberDAO.getMemberType(memEmail);
+	public @ResponseBody String managementPages(HttpSession session) {
+		return memberDAO.getMemberType((String)session.getAttribute("memEmail"));
 	}
 	
 	// 사업자 페이지 이동 = 예약현황 메뉴
@@ -283,7 +283,7 @@ public class ManageController {
 	
 	// 유저 페이지
 	@RequestMapping(value="memberPage", method=RequestMethod.GET)
-	public ModelAndView memberPage(Model model) {
+	public ModelAndView memberPage() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/memberPage.jsp");
 		mav.setViewName("/main/index");
@@ -291,17 +291,38 @@ public class ManageController {
 		return mav;
 	}
 	
+	// 하트 리스트
+	@RequestMapping(value="heartList", method=RequestMethod.GET)
+	public ModelAndView heartList(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("memberPage", "/managementPage/heartList.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	// 하트 리스트
+	@RequestMapping(value="getHeartList", method=RequestMethod.POST)
+	public ModelAndView getHeartList(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		List<Map<String,String>> heartList = memberDAO.heartList((String)session.getAttribute("memEmail"));
+		System.out.println(heartList.size());
+		
+		mav.addObject("heartList", heartList);
+		mav.addObject("heartListSize", heartList.size());
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
 	//memberPage에서 email을 받아와 회원정보수정 테이블에 불러온 데이터 출력
 	@RequestMapping(value="modifyForm", method=RequestMethod.POST)
-	public ModelAndView modifyForm(@RequestParam String memEmail) throws Exception {
-		MemberDTO memberDTO = memberDAO.isCheckEmail(memEmail);
+	public ModelAndView modifyForm(HttpSession session) {
+		MemberDTO memberDTO = memberDAO.isCheckEmail((String)session.getAttribute("memEmail"));
 		
 		ModelAndView mav = new ModelAndView();
-		
 		mav.addObject("display", "/managementPage/memberPage.jsp");
 		mav.addObject("memberPage", "/managementPage/modifyForm.jsp");
 		mav.addObject("memberDTO", memberDTO);
-		mav.addObject("memEmail",memEmail);
+		mav.addObject("memEmail",(String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
 		
 		return mav;
@@ -316,11 +337,11 @@ public class ManageController {
 	}
 	// 이용내역안내 폼 불러내기
 	@RequestMapping(value="usageDetailsInformationForm", method=RequestMethod.POST)
-	public ModelAndView usageDetailsInformationForm(@RequestParam String memEmail) {
+	public ModelAndView usageDetailsInformationForm(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/memberPage.jsp");
 		mav.addObject("memberPage", "/managementPage/usageDetailsInformationForm.jsp");
-		mav.addObject("memEmail", memEmail);
+		mav.addObject("memEmail", (String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
 		
 		return mav;
@@ -328,13 +349,13 @@ public class ManageController {
 	
 	// 이용내역을 DB에서 가져온다.
 	@RequestMapping(value="usageDetailsInformation", method=RequestMethod.POST)
-	public ModelAndView usageDetailsInformation(@RequestParam String email) {
-		List<Map<String,Object>> list = memberDAO.getUsageDetailsInfo(email);
+	public ModelAndView usageDetailsInformation(HttpSession session) {
+		List<Map<String,Object>> list = memberDAO.getUsageDetailsInfo((String)session.getAttribute("memEmail"));
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/memberPage.jsp");
 		mav.addObject("memberPage", "/managementPage/usageDetailsInformationForm.jsp");
-		mav.addObject("memEmail",email);
+		mav.addObject("memEmail",(String)session.getAttribute("memEmail"));
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
 		
@@ -343,11 +364,11 @@ public class ManageController {
 	
 	//예약현황 폼 불러내기
 	@RequestMapping(value="reservationForm", method=RequestMethod.POST)
-	public ModelAndView reservationForm(@RequestParam String memEmail) {
+	public ModelAndView reservationForm(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/memberPage.jsp");
 		mav.addObject("memberPage", "/managementPage/reservationForm.jsp");
-		mav.addObject("memEmail", memEmail);
+		mav.addObject("memEmail", (String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
 		
 		return mav;
@@ -355,13 +376,13 @@ public class ManageController {
 	
 	// 예약현황을 DB에서 가져온다.
 	@RequestMapping(value="reservation", method=RequestMethod.POST)
-	public ModelAndView reservation(@RequestParam String email) {
-		List<Map<String,Object>> list = memberDAO.getReservationList(email);
+	public ModelAndView reservation(HttpSession session) {
+		List<Map<String,Object>> list = memberDAO.getReservationList((String)session.getAttribute("memEmail"));
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/memberPage.jsp");
 		mav.addObject("memberPage", "/managementPage/reservationForm.jsp");
-		mav.addObject("memEmail", email);
+		mav.addObject("memEmail", (String)session.getAttribute("memEmail"));
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
 		

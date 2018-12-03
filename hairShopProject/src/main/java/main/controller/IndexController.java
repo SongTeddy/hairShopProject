@@ -14,4 +14,11 @@ public class IndexController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
+	@RequestMapping(value="/main/searchHairShop.do", method=RequestMethod.GET)
+	public ModelAndView searchHairShop() {  //사용자가 만든 콜백 메소드 
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/main/searchHairShop.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
 }

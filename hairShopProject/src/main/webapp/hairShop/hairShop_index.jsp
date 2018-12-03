@@ -708,7 +708,7 @@ button.selectedBtn {
 										</svg>
 								</button>
 								<div class="vcal-header__label" data-calendar-label="month">
-									2018 November</div>
+									2018 December</div>
 								<button class="vcal-btn" data-calendar-toggle="next">
 									<svg height="24" version="1.1" viewbox="0 0 24 24" width="24"
 										xmlns="http://www.w3.org/2000/svg">
@@ -854,7 +854,7 @@ button.selectedBtn {
 <script type="text/javascript">
 	$(document).ready(function() {
 		/* 좋아요 js */
-		let memEmail = "<%=session.getAttribute("memEmail") %>";
+		var memEmail = "<%=session.getAttribute("memEmail") %>";
 		if(memEmail != "null") {
 			$.ajax({
 				type : 'POST',
