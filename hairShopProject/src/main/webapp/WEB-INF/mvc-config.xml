@@ -11,32 +11,20 @@
             base-package="org.springframework.samples.web"/>  -->
 
     <mvc:annotation-driven />
-    
 	<bean id="indexController" class="main.controller.IndexController"></bean>
 	<bean id="hairShopController" class="hairShop.controller.HairShopController"></bean>
-	
 	<bean id="memberController" class="member.controller.MemberController"></bean>
+	<bean id="manageController" class="member.controller.ManageController"></bean>
 	<bean id="loginController" class="member.controller.LoginController"></bean>
-	
-	<bean id="manageController" class="management.controller.ManageController"></bean>
-	<bean id="companyPageController" class="management.controller.CompanyPageController"></bean>
-	<bean id="privatePageController" class="management.controller.PrivatePageController"></bean>
-	<bean id="adminPageController" class="management.controller.AdminPageController"></bean>
-	
-	<context:component-scan base-package="hairShop.bean" />
-	<context:component-scan base-package="hairShop.dao"/>
-	
-	<context:component-scan base-package="member.bean" />
-	<context:component-scan base-package="member.dao"/>
-	
-	<context:component-scan base-package="board.bean" />
-	<context:component-scan base-package="board.dao"/>
-	
-	<context:component-scan base-package="management.dao"/>
+	<bean id="boardController" class="board.controller.BoardController"></bean>
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	        <property name="suffix" value=".jsp"/>
 	</bean>
+	
+	<context:component-scan base-package="hairShop.dao"/>
+	<context:component-scan base-package="board.dao"/>
+	<context:component-scan base-package="member.dao"/>
 	
 	<!-- json -->
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
