@@ -984,9 +984,6 @@ button.selectedBtn {
 	        	hairShopMarker.setMap(map);
 	        	
 	        	$('#hairShopAddress').text(data.map.ADDR1 + " " + data.map.ADDR2);
-	        	
-	            
-	            
 	            
 	            $.each(data.list, function(index, items){
 					$('<div/>',{
@@ -1012,14 +1009,15 @@ button.selectedBtn {
 		// banner slide start!!
 		jssor_1_slider_init();
 		
-		
 		var pickedService = "";
 		
+		
+		//미용실 서비스 검색
 		$('table.reserve-hair').on('click','td.serviceCheck',function(){
 			$('td.serviceCheck').removeClass('check');
 			$(this).addClass('check');
 			pickedService = $(this).children(":last").text();
-			alert(pickedService);
+			//alert(pickedService);
 			$.ajax({
 				type : 'POST',
 				url : '/hairShopProject/hairShop/getServiceList.do',
@@ -1042,7 +1040,9 @@ button.selectedBtn {
 							class : 'td_o',
 							text : item.TIMEREQUIRED + '분 소요'
 						})).appendTo($('.serviceChoice'));
-					});	
+					});
+					$('table.reserveTable').empty();
+					$('#reserveBtn').remove();
 				},
 				error: function(){alert("서비스 리스트 못받아옴");}
 			});
@@ -1062,7 +1062,6 @@ button.selectedBtn {
  			alert(chosenService +  " " + chosenServicePrice + " " + chosenServiceRequiredTime);
 			$('.btn-primary').remove();			
 			getDesignerSchedule();
-
 		});
 		
 		function getDesignerSchedule(){
@@ -1074,7 +1073,6 @@ button.selectedBtn {
 				success : function(data){
 					$('table.reserveTable').empty();
 					$('#reserveBtn').remove();
-					
 					var jData;
 					var cData = "";
 					$.each(data.reservationList, function(index2, item2){
@@ -1093,10 +1091,17 @@ button.selectedBtn {
 					var btnLength;
 					$.each(data.list, function(index, item){
 						theday = item.THEDAY;
+						var reserveDay = theday.split('-');
+						var reserveMon = reserveDay[1];
+						var reserveDate = reserveDay[2];
+						var d = new Date();
+						var sysMon = d.getMonth()+1;
+						var sysDate = d.getDate();
+						
 						$('<tr/>'
 						).append($('<td/>',{
 						    class: 'designerName',
-						    style : 'width: 3%; padding: 10px;'
+						    style : 'width: 5%; padding: 10px;'
 						}).append($('<div/>',{
 						}).append($('<img/>',{
 							class : 'designerImages',
@@ -1106,20 +1111,36 @@ button.selectedBtn {
 						})))).append($('<td/>',{
 							id : item.DESIGNERID,
 							align : 'left',
-							style : 'vertical-align: top; width: 50%; padding-top: 10px; padding-bottom: 10px;'
+							style : 'vertical-align: middle; width: 50%; padding-top: 10px; padding-bottom: 10px;'
 						})).appendTo($('table.reserveTable'));
 
 						btnLength = (item.ENDTIME - item.STARTTIME)/1800000;
-						
-						for(var i=0; i<btnLength; i++){
-							var dateTime = new Date(item.STARTTIME + 30*60000*i);
-							var time = dateTime.getHours()+":"+(dateTime.getMinutes()===30?dateTime.getMinutes():(dateTime.getMinutes()+'0'));
-							$('<button/>', {
-								text : time,
-								class : 'btn btn-warning timeOptionBtn able',
-								id : item.DESIGNERID+i,
-								type : 'button',
-							}).appendTo('#'+item.DESIGNERID);
+						if(addZero(sysMon) == reserveMon && addZero(sysDate) == reserveDate) {
+							for(var i=0; i<btnLength; i++){
+								var dateTime = new Date(item.STARTTIME + 30*60000*i);
+								var time = addZero(dateTime.getHours())+":"+(dateTime.getMinutes()===30?dateTime.getMinutes():(dateTime.getMinutes()+'0'));
+								var reserveTime = Number(dateTime.getHours()*60) + Number(time.split(':')[1]);
+								var sysTime = Number(d.getHours()*60) + Number(addZero(d.getMinutes()));
+								if(reserveTime > sysTime) {
+									$('<button/>', {
+										text : time,
+										class : 'btn btn-warning timeOptionBtn able',
+										id : item.DESIGNERID+i,
+										type : 'button',
+									}).appendTo('#'+item.DESIGNERID);
+								}
+							}
+						} else {
+							for(var i=0; i<btnLength; i++){
+								var dateTime = new Date(item.STARTTIME + 30*60000*i);
+								var time = addZero(dateTime.getHours())+":"+(dateTime.getMinutes()===30?dateTime.getMinutes():(dateTime.getMinutes()+'0'));
+								$('<button/>', {
+									text : time,
+									class : 'btn btn-warning timeOptionBtn able',
+									id : item.DESIGNERID+i,
+									type : 'button',
+								}).appendTo('#'+item.DESIGNERID);
+							}
 						}
 						
 						var calT = new Array;
@@ -1163,19 +1184,11 @@ button.selectedBtn {
 							}
 						}
 					});	// ------- each 끝
-					$('.btn-primary').remove();
-					$('<button/>',{
-						align: 'center',
-						text : '예약하기',
-						class : 'btn-primary',
-						id : 'reserveBtn'
-					}).appendTo($('table.reserveTable'));
 				},
 				error : function(){
 					alert("못가져온대요~");
 				}
 			});
-			
 		}
 		var chosenDesignerId = "";
 		var chosenDesigner = "";
@@ -1201,15 +1214,27 @@ button.selectedBtn {
 			}
 		});
 		
+		//예약 버튼 만들기
+		$('table.reserveTable').on('click','.btn', function(){
+			if(document.getElementsByClassName("btn-success").length>0){
+				$('.btn-primary').remove();
+				$('<tr/>',{
+					
+				}).append($('<td/>',{
+					style : 'vertical-align : middle;',
+					colspan : '2'
+				}).append($('<button/>',{
+					style : 'width: 50%; border-radius: 2em; height: 50px;',
+					align: 'center',
+					text : '예약하기',
+					class : 'btn-primary',
+					id : 'reserveBtn'
+				}))).appendTo($('table.reserveTable'));
+			}
+		});
 		
 		$('body').on('click', '#reserveBtn', function(){
-			alert(chosenDesignerId);
-/* 			$.ajax({
-				type : 'POST',
-				url : '/hairShopProject/hairShop/reserve.do',
-				data : JSON.stringify()
-			});
-			 */
+			//alert(chosenDesignerId);
 			var params = {'chosenHairShopName' : chosenHairShopName, 'pickedService' : pickedService, 'chosenService' : chosenService, 'chosenServicePrice': chosenServicePrice, 'chosenServiceRequiredTime': chosenServiceRequiredTime, 'chosenTime' : chosenTime, 'theday': theday, 'whichDay' : $('#whichDay').val(), 'hairShopId' : '${hairShopId }', 'chosenDesignerId' : chosenDesignerId, 'chosenDesigner' : chosenDesigner };
 			var path = "/hairShopProject/hairShop/reserve.do";
 			var method = 'post';
@@ -1259,13 +1284,11 @@ button.selectedBtn {
 			$('.fancyTab a', this).height(highestBox);
 		});
 		  
-		
 		dateChecker('input[name=selectedDay]', function(){ 
 // 			alert("선택한 날짜가 바뀌었음!");
 			if(chosenService!="") {
 				getDesignerSchedule();
 			}
-			document.getElementById('reserveBtn').remove();
 		}); 
 	});
 	
@@ -1286,7 +1309,6 @@ button.selectedBtn {
 	    reserveForm.submit();
 	    return false;
 	}
-	
 	
 	// selectedDay의 값이 변경될 때마다 수행되는 콜백 메소드
     function dateChecker(selector, callback) {
@@ -1347,8 +1369,6 @@ button.selectedBtn {
 							listIndex = index;
 							return false;
 						}
-						
-						
 					});//$.each
 					i = i+10;
 					//alert(i);
@@ -1379,10 +1399,6 @@ button.selectedBtn {
 						}
 						$('#nextView').show();
 					});
-					
-					//alert(listIndex + 1);
-					//alert(dataList.length);//리뷰리스트 개수
-					
 				},
 				error : function(data){
 					alert("error");
@@ -1391,4 +1407,10 @@ button.selectedBtn {
 		});
 	});
 	
+	function addZero(i) {
+	    if (i < 10) {
+	        i = "0" + i;
+	    }
+	    return i;
+	}
 	</script>

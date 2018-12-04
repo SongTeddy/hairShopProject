@@ -36,7 +36,6 @@
 	order by DISTANCE asc, AVGSTAR desc
 </select>
 
-
 <select id="getSearchListOrderByStar" parameterType="java.util.Map" resultType="java.util.Map">
 	select 
         nvl(round(avg(starscope), 1), 0) as avgstar, count(starscope) as reviewcnt,
@@ -70,8 +69,6 @@
 		minprice, maxprice, DISTANCE 
 	order by AVGSTAR desc, DISTANCE asc
 </select>
-
-
 
 <select id="getHairShopInfo" parameterType="String" resultType="java.util.Map">
 	select * from memberinfo where hairshopid=#{value }
