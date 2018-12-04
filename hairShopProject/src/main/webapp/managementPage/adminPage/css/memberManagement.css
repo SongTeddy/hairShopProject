@@ -1,0 +1,70 @@
+.memberManagement {
+	color : #636363;
+	font-weight: bold;
+	font-size: 15px;
+	font-family: 'Nanum Gothic', sans-serif;
+	width: 1200px;
+	height: auto;
+}
+
+/* 토탈 */
+.memberTotal {
+	position: relative;
+	font-size: 18px;
+}
+
+/* 테이블 */
+#memberListTable td {
+	text-align: center;
+	color : #242424;
+	border: 1px solid #909090;
+	border-bottom: 1px solid grey;
+	vertical-align: middle;
+	height: 40px;
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: bold;
+}
+
+#memberListTable tr {
+	text-align: center;
+}
+
+#memberListTable tbody {
+	text-align: center;
+	color : black;
+	padding: 5px;
+	border-spacing: 1;
+	overflow: scroll;
+}
+
+#memberListTable input{
+	transition: .2s ease;
+}
+
+memberListTable input[type=button] {
+	font-size: 13px;
+}
+
+.memberManagement #memberListTable input[type=checkbox] {
+	width: 15px;
+	height: 15px;
+}
+
+/* 테이블 - 수정, 삭제 버튼 */
+.memberDeleteBtn {
+	opacity: .8;
+	transition: .15s ease;
+}
+.memberDeleteBtn:hover {
+	opacity: 1;
+	transition: .15s ease;
+}
+
+.memberModifyBtn {
+	opacity: .7;
+	transition: .15s ease;
+}
+.memberModifyBtn:hover {
+	opacity: 1;
+	transition: .15s ease;
+}

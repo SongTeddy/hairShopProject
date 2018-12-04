@@ -1,7 +1,6 @@
 package member.dao;
 
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,42 +17,41 @@ import org.springframework.transaction.annotation.Transactional;
 import hairShop.bean.ReservationDTO;
 import member.bean.DesignerDTO;
 import member.bean.MemberDTO;
-import member.bean.PostDTO;
 
 @Component
 @Transactional
 public class MemberDAOMybatis implements MemberDAO {
 	@Autowired
 	private SqlSession sqlSession;
-	
-	//회원가입
+
+	// 회원가입
 	@Override
 	public void write(MemberDTO memberDTO) throws Exception {
-		//회원가입 인증을 위한 랜덤키 생성
+		// 회원가입 인증을 위한 랜덤키 생성
 		memberDTO.setApproval_key(createKey());
-		
+
 		System.out.println(memberDTO);
-		//회원 정보를 DB에 저장
-		sqlSession.insert("memberSQL.write", memberDTO); 
-		
-		//회원가입 인증 메일 보내기
+		// 회원 정보를 DB에 저장
+		sqlSession.insert("memberSQL.write", memberDTO);
+
+		// 회원가입 인증 메일 보내기
 		sendMail(memberDTO, "join");
 	}
 
-	//password 찾기
+	// password 찾기
 	@Override
 	public int updatePwd(MemberDTO memberDTO) {
 		return sqlSession.update("memberSQL.updatePwd", memberDTO);
 	}
-	
-	//회원 가입 인증 status를 true로 바꿔 로그인 가능으로 DB에 저장
+
+	// 회원 가입 인증 status를 true로 바꿔 로그인 가능으로 DB에 저장
 	@Override
-	public int approval_member(MemberDTO memberDTO) throws Exception{
+	public int approval_member(MemberDTO memberDTO) throws Exception {
 		return sqlSession.update("memberSQL.approval_member", memberDTO);
 	}
-	
+
 	@Override
-	public void approvalMember(MemberDTO memberDTO, HttpServletResponse response) throws Exception{
+	public void approvalMember(MemberDTO memberDTO, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		if (approval_member(memberDTO) == 0) { // 이메일 인증에 실패하였을 경우
@@ -84,9 +82,9 @@ public class MemberDAOMybatis implements MemberDAO {
 		String fromName = "우리동네 미용실";
 		String subject = "";
 		String msg = "";
-		
+
 		System.out.println(div);
-		if(div.equals("join")) {
+		if (div.equals("join")) {
 			// 회원가입 메일 내용
 			subject = "우리동네 미용실 회원가입 인증 메일입니다.";
 			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
@@ -98,7 +96,7 @@ public class MemberDAOMybatis implements MemberDAO {
 			msg += "<input type='hidden' name='email' value='" + memberDTO.getEmail() + "'>";
 			msg += "<input type='hidden' name='approval_key' value='" + memberDTO.getApproval_key() + "'>";
 			msg += "<input type='submit' value='인증'></form><br/></div>";
-		}else if(div.equals("find_pw")) {
+		} else if (div.equals("find_pw")) {
 			subject = "우리동네 미용실 임시 비밀번호 입니다.";
 			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
 			msg += "<h3 style='color: blue;'>";
@@ -127,48 +125,48 @@ public class MemberDAOMybatis implements MemberDAO {
 			System.out.println("메일발송 실패 : " + e);
 		}
 	}
-	
-	//회원 가입 인증을 위한 인증키 생성
+
+	// 회원 가입 인증을 위한 인증키 생성
 	@Override
 	public String createKey() throws Exception {
 		String key = "";
 		Random random = new Random();
-		
-		for(int i=0; i<8; i++) {
+
+		for (int i = 0; i < 8; i++) {
 			key += random.nextInt(10);
 		}
 		return key;
 	}
 
-	//DB에서 이메일 체크
+	// DB에서 이메일 체크
 	@Override
-	public MemberDTO isCheckEmail(String email){
+	public MemberDTO isCheckEmail(String email) {
 		MemberDTO memberDTO = sqlSession.selectOne("memberSQL.checkEmail", email);
 
 		return memberDTO;
 	}
-	
+
 	// 로그인
 	@Override
 	public MemberDTO login(String email, String pwd) {
-		Map<String , String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<String, String>();
 		map.put("email", email);
 		map.put("pwd", pwd);
 
 		return sqlSession.selectOne("memberSQL.login", map);
 	}
-	
+
 	@Override
 	public void find_pw(HttpServletResponse response, MemberDTO memberDTO) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
-		
+
 		// 임시 비밀번호 생성
 		String pwd = "";
 		for (int i = 0; i < 12; i++) {
 			pwd += (char) ((Math.random() * 26) + 97);
 		}
 		memberDTO.setPwd(pwd);
-		System.out.println("mybatis set pwd = "+memberDTO.getPwd());
+		System.out.println("mybatis set pwd = " + memberDTO.getPwd());
 		// 비밀번호 변경
 		updatePwd(memberDTO);
 		// 비밀번호 변경 메일 발송
@@ -177,12 +175,12 @@ public class MemberDAOMybatis implements MemberDAO {
 
 	@Override
 	public String searchId(MemberDTO memberDTO) {
-		System.out.println(memberDTO.getTel1()+", "+memberDTO.getTel2()+", "+memberDTO.getTel3());
+		System.out.println(memberDTO.getTel1() + ", " + memberDTO.getTel2() + ", " + memberDTO.getTel3());
 		String email = sqlSession.selectOne("memberSQL.searchId", memberDTO);
-		
+
 		return email;
 	}
-	
+
 // 마이페이지 ----------------------------------------------------------------------------------
 
 	// 마이페이지 구분
@@ -190,70 +188,70 @@ public class MemberDAOMybatis implements MemberDAO {
 	public String getMemberType(String email) {
 		return sqlSession.selectOne("memberSQL.getMemberType", email);
 	}
-	
+
 	@Override
 	public String getCompanyType(String email) {
 		return sqlSession.selectOne("memberSQL.getCompanyType", email);
 	}
-	
+
 // 예약 현황
-	
+
 	// 예약 현황 조회
 	@Override
 	public String getTotalReservation(String hairshopid) {
 		return sqlSession.selectOne("memberSQL.getTotalReservation", hairshopid);
 	}
-	
+
 	// 총 예약 금액
 	@Override
 	public List<String> getTotalReservePrice(String hairshopId) {
 		return sqlSession.selectList("memberSQL.getTotalReservePrice", hairshopId);
 	}
-	
+
 	// 한명의 예약 정보 조회
 	@Override
 	public List<ReservationDTO> getReservation(String designername) {
 		return sqlSession.selectList("memberSQL.getReservation", designername);
 	}
-	
+
 // 디자이너 관리
-	
+
 	// 디자이너 정보 조회
 	@Override
 	public List<DesignerDTO> getDesignerInfo(String hairshopId) {
 		return sqlSession.selectList("memberSQL.getDesignerInfo", hairshopId);
 	}
-	
+
 	// 디자이너 아이디로 예약 조회
 	@Override
 	public String getDesignerReserve(String designerId) {
 		return sqlSession.selectOne("memberSQL.getDesignerReserve", designerId);
 	}
-	
+
 	// 디자이너 삭제
 	@Override
 	public void designerDelete(String seq) {
 		sqlSession.delete("memberSQL.designerDelete", seq);
 	}
-	
+
 	// 선택된 디자이너 삭제
 	@Override
 	public void designerCheckedDelete(List<Integer> list) {
 		sqlSession.delete("memberSQL.designerCheckedDelete", list);
 	}
-	
+
 	// 디자이너 추가
 	@Override
 	public void designerAdd(DesignerDTO designerDTO) {
 		sqlSession.insert("memberSQL.designerAdd", designerDTO);
 	}
-	
+
 	// 디자이너 정보 수정
 	@Override
 	public void designerModify(DesignerDTO designerDTO) {
 		sqlSession.update("memberSQL.designerModify", designerDTO);
 	}
-	
+
 	// 멤버 정보 조회
 	@Override
 	public List<MemberDTO> getMemberInfo(String hairshopId) {
@@ -264,46 +262,45 @@ public class MemberDAOMybatis implements MemberDAO {
 	public List<String> getHairShopDesigner(String hairshopId) {
 		return sqlSession.selectList("memberSQL.getHairShopDesigner", hairshopId);
 	}
-	
 
 // 마이페이지(개인)=================================================================================
-	
-	//개인회원 정보 수정
+
+	// 개인회원 정보 수정
 	@Override
 	public void updateInfo(MemberDTO memberDTO) {
 		sqlSession.selectOne("memberSQL.updateInfo", memberDTO);
 	}
-	
-	//회원탈퇴
+
+	// 회원탈퇴
 	@Override
-	public void userDelete(Map<String,String> map) {
+	public void userDelete(Map<String, String> map) {
 		sqlSession.delete("memberSQL.userDelete", map);
 	}
-	
-	//이용내역 정보
+
+	// 이용내역 정보
 	@Override
 	public List<Map<String, Object>> getUsageDetailsInfo(String email) {
 		return sqlSession.selectList("memberSQL.getUsageDetailsInfo", email);
 	}
-	
-	//예약현황 리스트
+
+	// 예약현황 리스트
 	@Override
 	public List<Map<String, Object>> getReservationList(String email) {
 		return sqlSession.selectList("memberSQL.getReservationList", email);
 	}
-	
-	//예약취소
+
+	// 예약취소
 	@Override
 	public void reservationCancel(String email) {
 		sqlSession.delete("memberSQL.reservationCancel", email);
 	}
-	
-	//리뷰 글을 쓸때 필요한 데이터 받아오기
+
+	// 리뷰 글을 쓸때 필요한 데이터 받아오기
 	@Override
 	public Map<String, String> checkReservationList(Map<String, String> map) {
 		return sqlSession.selectOne("memberSQL.checkReservationList", map);
 	}
-	
+
 	@Override
 	public Map<String, String> getHomepageLink(String memEmail) {
 		return sqlSession.selectOne("memberSQL.getHomepageLink", memEmail);
@@ -312,9 +309,9 @@ public class MemberDAOMybatis implements MemberDAO {
 	@Override
 	public boolean isExistId(String hairShopId) {
 		System.out.println(hairShopId + "여긴 DAO");
-		if(sqlSession.selectOne("memberSQL.isExistId", hairShopId) != null)
+		if (sqlSession.selectOne("memberSQL.isExistId", hairShopId) != null)
 			return true;
-		else		
+		else
 			return false;
 	}
 
@@ -327,5 +324,16 @@ public class MemberDAOMybatis implements MemberDAO {
 	public String changeUserInfo(String email) {
 		return sqlSession.selectOne("memberSQL.changeUserInfo", email);
 	}
+  @Override
+	public boolean isExistLicense(Map<String, String> map) {
+		if (sqlSession.selectOne("memberSQL.isExistLicense", map) != null)
+			return true;
+		else
+			return false;
+	}
 
+	@Override
+	public int hairShopInfoUpdate(Map<String, Object> map) {
+		return sqlSession.update("memberSQL.hairShopInfoUpdate", map);
+	}
 }

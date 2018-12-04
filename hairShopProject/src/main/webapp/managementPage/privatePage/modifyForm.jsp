@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!-- <link rel="stylesheet" href="/hairShopProject/managementPage/css/bootstrap.css">
+<link rel="stylesheet" href="/hairShopProject/managementPage/css/bootstrap.min.css"> -->
 <link rel="stylesheet" href="/hairShopProject/managementPage/privatePage/css/memberPage.css">
 
 <div id="modifyFormDiv" style="overflow-x:hidden; height: 100%; ">
+	<br/><br/>
 <h3 align="center">회원정보수정</h3><br><br>
 <form name="modifyForm" class="modifyForm" method="post" action="modify.do">
-<table class="modifyTable">
+<table class="modifyTable table table-striped">
 	<tr>
 		<td align="center">이메일</td>
 		<td>
@@ -60,5 +63,73 @@
 	</tr>
 </table>
 </form>
+<input type="hidden" class="modifyFormEmail" value="${sessionScope.memEmail }">
 </div>
-<script src="/hairShopProject/managementPage/privatePage/js/memberPage.js"></script>
+<!-- <script src="js/bootstrap.js"></script>
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="js/bootstrap.min.js"></script> -->
+<script>
+$(document).ready(function(){
+	$('table td:last').css("background","white").css("font-weight","initial");
+	
+	$('.modifyName, .modifyPwd, .modifyRePwd, .modifyTel1, .modifyTel2, .modifyTel3, #addr2').on('click',function(){
+		$('.checkNameDiv, .checkPwdDiv, .checkRePwdDiv, .checkTelDiv, .checkAddr2Div').empty();
+	});
+	
+	$('.checkRePwdDiv').keyup('change',function(){
+		if($('.modifyPwd').val() == $('.modifyRePwd').val())
+			$('.checkRePwdDiv').text('비밀번호가 동일합니다.').css('color','blue').css('font-size','9pt');
+		else
+			$('.checkRePwdDiv').text('비밀번호가 맞지 않습니다.').css('color','red').css('font-size','9pt');
+	});
+	
+	$('.modifyBtn').on('click',function(){
+		if($('.modifyName').val()=="") {
+			$('<span/>',{
+				style : 'color:red; font-weight:bold; font-size:9pt;',
+				text : '이름을 입력해 주세요.'
+			}).appendTo($('.checkModifyNameDiv'));
+		} else if($('.modifyPwd').val()=="") {
+			$('<span/>',{
+				style : 'color:red; font-weight:bold; font-size:9pt;',
+				text : '비밀번호를 입력해 주세요.'
+			}).appendTo($('.checkModifyPwdDiv'));
+		} else if($('.modifyRePwd').val()=="") {
+			$('<span/>',{
+				style : 'color:red; font-weight:bold; font-size:9pt;',
+				text : '비밀번호를 재입력해 주세요.'
+			}).appendTo($('.checkModifyRePwdDiv'));
+			
+		} else if($('.modifyRePwd').val()!=$('.modifyPwd').val()) {
+			$('<span/>',{
+				style : 'color:red; font-weight:bold; font-size:9pt;',
+				text : '비밀번호가 맞지 않습니다.'
+			}).appendTo($('.checkModifyRePwdDiv'));
+		} else if($('.modifyTel1').val()=="" || $('.modifyTel2').val()=="" || $('.modifyTel3').val()=="") {
+			$('<span/>',{
+				style : 'color:red; font-weight:bold; font-size:9pt;',
+				text : '나머지번호를 입력해 주세요.'
+			}).appendTo($('.checkModifyTelDiv'));
+		} else if($('#addr2').val()=="") {
+			$('<span/>',{
+				style : 'color:red; font-weight:bold; font-size:9pt;',
+				text : '상세주소를 입력해주세요.'
+			}).appendTo($('.checkAddr2Div'));
+		}else {
+			$.ajax({
+				type : 'POST',
+				url : '../managementPage/modify.do',
+				data :  {'email':$('.modifyEmail').val(), 'name':$('.modifyName').val(), 'pwd':$('.modifyPwd').val(), 'tel1':$('.modifyTel1').val(), 'tel2':$('.modifyTel2').val(), 'tel3':$('.modifyTel3').val(), 'zipcode':$('#zipcode').val(), 'addr1':$('#addr1').val(), 'addr2':$('#addr2').val()},
+				dataType : 'text',
+				success : function(data){
+					if(data=="success"){
+						alert("회원님의 정보를 수정하였습니다.");
+						location.href="../managementPage/memberPage.do";
+					}
+				}
+			});
+		}
+	});
+});
+</script>

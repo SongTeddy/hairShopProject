@@ -37,10 +37,13 @@ public class LoginController {
 
 		memberDTO = memberDAO.login(loginEmail,loginPwd);
 		
+
 		PrivateKey privateKey = (PrivateKey) session.getAttribute("rsaPrivateKey"); 
 		
 		session.removeAttribute("rsaPrivateKey");
-		
+
+		memberDTO = memberDAO.login(loginEmail,loginPwd);
+
 		// 세션
 		if(memberDTO!=null && privateKey!=null) {
 			String email = null;

@@ -1,0 +1,58 @@
+.hairShopManagement {
+	color : #636363;
+	font-weight: bold;
+	font-size: 15px;
+	font-family: 'Nanum Gothic', sans-serif;
+	width: 1200px;
+	height: auto;
+}
+
+.hairShopTotal {
+	position: relative;
+	font-size: 18px;	
+}
+
+.totalHairShop {
+	font-size: 18px;
+	padding-top: 5px;
+}
+
+.hairShopManagement {
+	width: 1200px;
+	height: auto;
+}
+
+#hairShopListTable {
+	border: 2px solid #EDEDED;
+	padding: 5px;
+}
+
+#hairShopListTable td {
+	text-align: center;
+	height: 40px;
+	width: 1000px;
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: bold;
+}
+
+#hairShopListTable tbody {
+	text-align: center;
+	color : black;
+	padding: 5px;
+	border: 1px solid black;
+	border-spacing: 1;
+	overflow: scroll;
+}
+
+#hairShopListTable input{
+	transition: .2s ease;
+}
+
+#hairShopListTable input[type=button] {
+	font-size: 13px;
+}
+
+.hairShopManagement #hairShopListTable input[type=checkbox] {
+	width: 15px;
+	height: 15px;
+}
