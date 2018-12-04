@@ -16,4 +16,5 @@ public interface HairShopDAO {
 	public int confirmedReservation(Map<String, String> map);
 	public Map<String, Object> getTel(String memEmail);
 	public List<HairShopReviewDTO> hairShopReviewList();
+	public List<Map<String, String>> noConflict(Map<String, String> map);
 }

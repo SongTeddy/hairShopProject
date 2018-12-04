@@ -65,4 +65,9 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	public Map<String, Object> getTel(String memEmail) {
 		return sqlSession.selectOne("hairShopSQL.getTel", memEmail);
 	}
+	@Override
+	public List<Map<String, String>> noConflict(Map<String, String> map) {
+		System.out.println("noConflict DAO 입니다.");
+		return sqlSession.selectList("hairShopSQL.noConflict");
+	}
 }

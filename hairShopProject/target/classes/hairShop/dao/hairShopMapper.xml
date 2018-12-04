@@ -99,6 +99,21 @@
 </select>
 
 
+<!-- reservation할 때 다른 곳에서 중복되는 시간에 예약하려고 하면, 그걸 막아야 하니까 만든 문장임 -->
+<select id="noConflict" parameterType="java.util.Map" resultType="java.util.Map">
+	<![CDATA[
+	select
+    case when (to_date(#{theDay }||' '||#{startTime }, 'yyyy-mm-dd hh24:mi')) >= starttime 
+    and to_date(#{theDay }||' '||#{startTime }, 'yyyy-mm-dd hh24:mi') <= endtime - 1/24/60)
+    then 'O'
+    else 'X'
+	end "alreadyReserved"
+	from reservation
+	where designerid=#{designerId }
+	and theday=#{theDay }
+	]]>
+</select>
+
 <insert id="confirmedReservation" parameterType="java.util.Map">
 	insert into reservation
 	values(

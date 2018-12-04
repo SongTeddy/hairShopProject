@@ -131,12 +131,14 @@ public class HairShopController {
 	}
 
 	@RequestMapping(value = "/hairShop/reserve.do", method = RequestMethod.POST)
-	public ModelAndView reserve(@RequestParam Map<String, String> map) {
+	public ModelAndView reserve(@RequestParam Map<String, String> map, HttpSession session) {
 		System.out.println("선택한 디자이너" + map.get("chosenDesignerId"));
+		Map<String, Object> telMap = hairShopDAO.getTel((String)session.getAttribute("memEmail"));
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/main/index");
 		mav.addObject("display", "/hairShop/reserve.jsp");
 		mav.addObject("map", map);
+		mav.addObject("telMap", telMap);
 		return mav;
 	}
 
@@ -148,13 +150,21 @@ public class HairShopController {
 			Object valueName = map.get(keyName);
 			System.out.println(keyName + " = " + valueName);
 		}
-		int done = hairShopDAO.confirmedReservation(map);
-		mav.setViewName("/main/index");
-		if (done == 1) {
-			mav.addObject("display", "/hairShop/confirmedReservation.jsp");
-		} else if (done == 0) {
-			mav.addObject("display", "/hairShop/failedReservation.jsp");
+		List<Map<String, String>> list = hairShopDAO.noConflict(map);
+		int count = 0;
+		for(Map<String, String> conflictCheck : list) {
+			if(conflictCheck.get("ALREADYRESERVED").equals("O")) {
+				count++;
+			}
 		}
+		if(count==0) {
+			int done = hairShopDAO.confirmedReservation(map);		
+			mav.addObject("done", done);
+			mav.addObject("display", "/hairShop/confirmedReservation.jsp");
+		}else {
+			mav.addObject("display", "/hairShop/failedReservation.jsp");			
+		}
+		mav.setViewName("/main/index");
 		mav.addObject("map", map);
 		return mav;
 	}
