@@ -62,11 +62,35 @@
 	</resultMap>
 
 <!-- =================== 마이페이지(관리자) ========================== -->
-
+	
+	<!-- /////////////////////// 헤어샵 관리 메뉴 /////////////////////// -->
+	
+	<!-- 헤어샵 이름 조회 -->
+	<select id="getHairShopName" resultType="String">
+		select distinct name from memberInfo where type='1'
+	</select>
+	
+	<!-- /////////////////////// 회원 관리 메뉴 /////////////////////// -->
+	
 	<!-- 타입에 의해 memberinfo 조회 -->
 	<select id="getMemberByType" parameterType="String" resultType="member">
 		select * from memberinfo where type=#{type }
 	</select>
+	
+	<!-- 개인회원 total 조회 -->
+	<select id="getMemberTotal" parameterType="String" resultType="String">
+		select count(*) from memberinfo where type=#{type }
+	</select>
+	
+	<!-- 개인회원 삭제 -->
+	<delete id="memberDelete" parameterType="String">
+		delete memberinfo where email=#{email }
+	</delete>
+	
+	<!-- 개인회원 비밀번호 수정 -->
+	<update id="memberPwdModify" parameterType="Map">
+		update memberinfo set pwd=#{modifyPwd } where email=#{email }
+	</update>
 	
 <!-- =================== 마이페이지(개인) ========================== -->
 

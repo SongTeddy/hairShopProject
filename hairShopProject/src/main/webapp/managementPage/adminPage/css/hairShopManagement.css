@@ -23,20 +23,16 @@
 }
 
 #hairShopListTable {
+	border: 2px solid #EDEDED;
+	padding: 5px;
 }
 
 #hairShopListTable td {
 	text-align: center;
-	color : #242424;
-	border: 1px solid #909090;
-	vertical-align: middle;
 	height: 40px;
+	width: 1000px;
 	font-family: 'Nanum Gothic', sans-serif;
 	font-weight: bold;
-}
-
-#hairShopListTable tr {
-	text-align: center;
 }
 
 #hairShopListTable tbody {

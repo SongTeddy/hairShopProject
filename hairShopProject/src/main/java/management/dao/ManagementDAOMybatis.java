@@ -1,5 +1,6 @@
 package management.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,9 +19,41 @@ public class ManagementDAOMybatis implements ManagementDAO {
 
 // 마이페이지(관리자)=================================================================================
 	
+	//------------------------------- 헤어샵 관리 메뉴 -------------------------------//
+	
+	// 헤어샵 이름 조회
+	@Override
+	public List<String> getHairShopName() {
+		return sqlSession.selectList("managementSQL.getHairShopName");
+	}
+	
+	//------------------------------- 회원 관리 메뉴 -------------------------------//
+	
+	// type에 의한 멤버 조회
 	@Override
 	public List<MemberDTO> getMemberByType(String type) {
 		return sqlSession.selectList("managementSQL.getMemberByType", type);
+	}
+	
+	@Override
+	public String getMemberTotal(String type) {
+		return sqlSession.selectOne("managementSQL.getMemberTotal", type);
+	}
+	
+	// 개인회원 삭제
+	@Override
+	public void memberDelete(String email) {
+		sqlSession.delete("managementSQL.memberDelete", email);
+	}
+	
+	// 개인회원 비밀번호 수정
+	@Override
+	public void memberPwdModify(String email, String modifyPwd) {
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("email", email);
+		map.put("modifyPwd", modifyPwd);
+		
+		sqlSession.update("managementSQL.memberPwdModify", map);	
 	}
 	
 // 마이페이지(개인)=================================================================================
