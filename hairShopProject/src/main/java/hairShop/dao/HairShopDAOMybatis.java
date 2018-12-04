@@ -30,7 +30,6 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	@Override
 	public Map<String, Object> getHairShopInfo(String hairShopId) {
 		System.out.println("DAO mybatis"+hairShopId);
-		
 		return sqlSession.selectOne("hairShopSQL.getHairShopInfo", hairShopId);
 	}
 	@Override

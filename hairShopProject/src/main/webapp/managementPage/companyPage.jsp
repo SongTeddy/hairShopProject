@@ -48,7 +48,7 @@ $(document).ready(function() {
 	
 	$.ajax({
 		type : 'POST',
-		url : '/hairShopProject/managementPage/getHomepageLink.do',
+		url : '/hairShopProject/managementPage/getHairShopInfo.do',
 		dataType: 'json',
 		success : function(data){
 			if(data.map.HAIRSHOPID != null)
