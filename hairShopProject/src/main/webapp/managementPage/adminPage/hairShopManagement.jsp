@@ -14,37 +14,7 @@
 <div class="hairShopManagement">
 	<div class="hairShopTotal">헤어샵 Total : </div><br>
 	
-	<table id="hairShopListTable"  frame="hsides" rules="rows" align="center">
-	
-		<tr bgcolor="#484848" style="padding: 5px; border-top: 2px solid #909090; border-bottom: 2px solid #909090; font-weight: bold;">			
-			<td width="150px" style="color: white;">
-				아이디
-			</td>
-			
-			<td width="150px" style="color: white;">
-				이메일
-			</td>
-			
-			<td width="150px" style="color: white;">
-				연락처
-			</td>
-			
-			<td width="150px" style="color: white;">
-				영업일
-			</td>
-			
-			<td width="150px" style="color: white;">
-				영업시간
-			</td>
-			
-			<td width="150px" style="color: white;">
-				가입일
-			</td>
-			
-			<td width="150px" style="color: white;">
-				관리
-			</td>
-		</tr>
+	<table id="hairShopListTable" align="center">
 	</table>
 </div>
 
@@ -52,88 +22,36 @@
 <script src="/hairShopProject/managementPage/adminPage/js/hairShopManagement.js"></script>
 <script>
 $(document).ready(function() {
+	// 헤어샵 이름 조회
 	$.ajax({
 		type : 'POST',
-		url : '/hairShopProject/adminPage/getHairShopList.do',
+		url : '/hairShopProject/adminPage/getHairShopName.do',
 		dataType : 'json',
 		success : function(data) {
 			//alert(JSON.stringify(data));
-			$.each(data.hairShopList, function(index, items) {
-				$('<tr/>', {
-					style : 'color: #515151;'
-					
-				}).append($('<td/>', {
-					height : '50px',
-					type : 'text',
-					style : 'font-size: 15px; text-align: center; border: none;',
-					value : items.hairshopid,
-					id : items.seq,
-					class : 'designerimage',
-					readonly : 'readonly'  
-						
-				}))).append($('<td/>').append($('<input/>', {
-						type : 'text',
-						style : 'font-size: 15px; text-align: center; border: none;',
-						value : items.designerimage,
-						id : items.seq,
-						class : 'designerimage',
-						readonly : 'readonly'
-						
-				}))).append($('<td/>').append($('<input/>', {
-					type : 'text',
-					style : 'font-size: 15px; text-align: center; border: none;',
-					value : items.designername,
-					id : items.seq,
-					class : 'designername',
-					readonly : 'readonly'
-					
-				}))).append($('<td/>').append($('<input/>', {
-					type : 'text',
-					style : 'font-size: 15px; text-align: center; border: none;',
-					value : items.designerid,
-					id : items.seq,
-					class : 'designerid',
-					readonly : 'readonly'
-					
-				}))).append($('<td/>').append($('<input/>', {
-					type : 'text',
-					style : 'font-size: 15px; text-align: center; border: none;',
-					value : items.position,
-					id : items.seq,
-					class : 'position',
-					readonly : 'readonly'
-					
-				}))).append($('<td/>').append($('<input/>', {
-					type : 'text',
-					style : 'font-size: 15px; text-align: center; border: none;',
-					value : (items.dayoff)
-								.replace('1', '월 ')
-								.replace('2', '화 ')
-								.replace('3', '수 ')
-								.replace('4', '목 ')
-								.replace('5', '금 ')
-								.replace('6', '토 ')
-								.replace('7', '일 '),
-					id : items.seq,
-					class : 'dayoff',
-					readonly : 'readonly'
-					
-				}))).append($('<td/>', {
-					
-					}).append($('<input/>', {
-						type : 'button',
-						value : '수정',
-						id : 'designerModify',
-						class : items.seq
-						
-					})).append('<br>').append($('<input/>', {
-					type : 'button',
-					value : '삭제',
-					class : 'designerDelete'
-					
-				}))).appendTo($('#designerTable'));
+			var hairShopNameAr = new Array();
+			
+			$.each(data.hairShopNameList, function(index, items) {
+				hairShopNameAr[index] = items;
 			});
-		}
-	});
+			
+			for(var i=0; i<hairShopNameAr.length; i++) {
+				$('<tr/>').append($('<td/>', {
+					style : 'color: white;'+
+							'font-weight: bold;'+
+							'border: 2px solid #EDEDED;'
+							
+					}).append($('<button/>', {
+						text : hairShopNameAr[i],
+						style : 'background: linear-gradient(to bottom, #5A5A5A, #363636);'+
+								'height: 100%;'+
+								'width: 100%;'+
+								'font-size: 17px;'+
+								'letter-spacing: 3px;'
+					
+				}))).appendTo($('#hairShopListTable'));
+			}
+		} // success
+	}); // ajax
 });
 </script>

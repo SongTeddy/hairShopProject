@@ -20,4 +20,8 @@ public interface ManagementDAO {
 	
 	// 관리자 페이지
 	public List<MemberDTO> getMemberByType(String type);
+	public void memberDelete(String email);
+	public void memberPwdModify(String email, String modifyPwd);
+	public String getMemberTotal(String string);
+	public List<String> getHairShopName();
 }

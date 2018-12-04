@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import hairShop.bean.ReservationDTO;
@@ -62,8 +63,39 @@ public class AdminPageController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value="getMemberTotal", method=RequestMethod.POST)
+	public @ResponseBody String getMemberTotal() {		
+		return managementDAO.getMemberTotal("0");
+	}
+	
+	// 개인회원 삭제
+	@RequestMapping(value="memberDelete", method=RequestMethod.POST)
+	public @ResponseBody void memberDelete(@RequestParam String email) {
+		managementDAO.memberDelete(email);
+	}
+	
+	// 개인회원 비밀번호 수정
+	@RequestMapping(value="memberPwdModify", method=RequestMethod.POST)
+	public @ResponseBody void memberPwdModify(@RequestParam String email,
+											  @RequestParam String modifyPwd) {
+		
+		managementDAO.memberPwdModify(email,modifyPwd);
+	}
 
 ///////////////////////// 헤어샵 관리 ///////////////////////////
+
+	// 헤어샵 이름 조회
+	@RequestMapping(value="getHairShopName", method=RequestMethod.POST)
+	public ModelAndView getHairShopName() {
+		List<String> hairShopNameList = managementDAO.getHairShopName();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("hairShopNameList", hairShopNameList);
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
 	
 	// 헤어샵 리스트 조회
 	@RequestMapping(value="getHairShopList", method=RequestMethod.POST)

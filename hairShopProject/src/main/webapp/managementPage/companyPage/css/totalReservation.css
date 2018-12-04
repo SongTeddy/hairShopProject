@@ -1,4 +1,4 @@
-/* ï¿½ì‚ï¿½ë¹Ÿ ï¿½ì½ï¿½ì†´  */
+/* ÃÑ ¿¹¾à ¼ö */
 .totalReservation {
 	color : #636363;
 	font-weight: bold;
@@ -17,6 +17,7 @@
 	padding-top: 5px;
 }
 
+/* ½Ã°£ / ¿äÀÏ */
 .backslash {
 	background: url('http://cdn.zetawiki.com/png/backslash.png');
 	background-size: 100% 100%;
@@ -31,6 +32,7 @@
 	padding: 5px 7px 0px 0px;
 }
 
+/* ÀÏÁ¤Ç¥ Å×ÀÌºí ÃÖ»ó´Ü tr */
 .topTr {
 	border-top: 2px solid #909090;
 	border-bottom: 2px solid #909090;
@@ -52,6 +54,33 @@
 	height: 40px;
 	font-family: 'Nanum Gothic', sans-serif;
 	font-weight: bold;
+}
+
+#reserveInfoOpen {
+	opacity: .9;
+	transition: .2s ease;
+}
+
+#reserveInfoOpen:hover {
+	opacity: 1;
+	transition: .2s ease;
+}
+
+/* ´ÙÀ½ÁÖ,Àú¹øÁÖ ¹öÆ° */
+.changeWeekBtn {
+	background-color : #484848;
+	width: 80px;
+	height: 40px;
+	color: #ffffff;
+	font-size: 20px;
+	margin-left: 5px;
+	opacity: .6;
+	transition: .08s ease-in;
+}
+
+.changeWeekBtn:hover {
+	opacity: .9;
+	transition: .08s ease;
 }
 
 /* ¸ğ´Ş */

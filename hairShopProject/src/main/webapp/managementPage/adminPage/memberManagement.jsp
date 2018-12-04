@@ -13,7 +13,7 @@
 		    	  
 <div class="memberManagement">
 	<div class="memberTotal">회원 Total : </div><br>
-	
+	<form class="memberListForm">
 	<table id="memberListTable" frame="hsides" rules="rows" align="center" style="clear: both;">
 	
 		<tr bgcolor="#484848" style="padding: 5px; border-top: 2px solid #909090; border-bottom: 2px solid #909090; font-weight: bold;">						
@@ -21,7 +21,7 @@
 				이메일
 			</td>
 			
-			<td width="150px" style="color: white;">
+			<td width="208px" style="color: white;">
 				비밀번호
 			</td>
 			
@@ -36,18 +36,26 @@
 			<td width="150px" style="color: white;">
 				가입일
 			</td>
-			
-			<td width="150px" style="color: white;">
-				관리
-			</td>
 		</tr>
 	</table>
+	</form>
 </div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="/hairShopProject/managementPage/adminPage/js/memberManagement.js"></script>
 <script>
 $(document).ready(function() {
+	// 개인회원 total 조회
+	$.ajax({
+		type : 'POST',
+		url : '/hairShopProject/adminPage/getMemberTotal.do',
+		dataType : 'text',
+		success : function(data) {
+			$('.memberTotal').append(data+'명');
+		}
+	});
+	
+	// 개인회원 리스트 테이블 작성
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/adminPage/getMemberList.do',
@@ -60,20 +68,42 @@ $(document).ready(function() {
 					
 				}).append($('<td/>', {
 					height : '50px',
-					style : 'font-size: 15px; text-align: center; border: none;',
+					style : 'font-size: 15px; text-align: center; width: 250px;',
 					text : items.email,
 					id : items.seq,
 					class : 'memberEmail' 
 						
-				})).append($('<td/>').append($('<input/>', {
-						type : 'text',
-						style : 'font-size: 15px; text-align: center; border: none;',
-						value : items.pwd,
-						id : items.seq,
-						class : 'memberPwd',
-						readonly : 'readonly'
+				})).append($('<td/>').append($('<div/>', {
+						style : 'float: left; height: 100%;'
 						
-				}))).append($('<td/>').append($('<input/>', {
+						}).append($('<input/>', {
+								type : 'text',
+								size : '20px',
+								style : 'float: left;'+
+										'font-size: 15px;'+
+										'text-align: center;'+
+										'border: none;'+
+										'height: 100%;',
+								value : items.pwd,
+								id : items.seq,
+								class : 'memberPwd',
+								readonly : 'readonly'
+						
+					}))).append($('<div/>', {
+						style : 'float: left; font-size: 20px;'+
+								'text-align: center;'+
+								'width: 40px;'+
+								'height: 100%;'+
+								'background-color: #D2D2D2;'+
+								'padding-top: 10px;'+
+								'cursor: pointer;',
+						id : items.email,
+						class : 'memberModifyBtn'
+						
+						}).append($('<i/>', {
+							class : 'fa fa-pencil'
+					
+				})))).append($('<td/>').append($('<input/>', {
 					type : 'text',
 					style : 'font-size: 15px; text-align: center; border: none;',
 					value : items.name,
@@ -98,17 +128,12 @@ $(document).ready(function() {
 					readonly : 'readonly'
 					
 				}))).append($('<td/>', {
+					style : 'border: 0px; font-size: 30px; color: #484848; padding-top: 4px;'
 					
-					}).append($('<input/>', {
-						type : 'button',
-						value : '수정',
-						id : 'memberModifyBtn',
-						class : items.seq
-						
-					})).append('<br>').append($('<input/>', {
-					type : 'button',
-					value : '삭제',
-					class : 'memberDeleteBtn'
+					}).append($('<i/>', {
+							style : 'width: 40px; height: 100%; cursor: pointer;',
+							class : 'fa fa-minus-circle memberDeleteBtn',
+							id : items.email
 					
 				}))).appendTo($('#memberListTable'));
 			});
