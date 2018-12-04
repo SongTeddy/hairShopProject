@@ -182,7 +182,7 @@
 	
 	<!-- 예약 취소 -->
 	<delete id="reservationCancel" parameterType="String">
-		<![CDATA[delete reservation where bookeremail=#{email} and didORdidNOT=0 and sysdate < stattime]]>
+		<![CDATA[delete reservation where bookeremail=#{email} and didORdidNOT=0 and sysdate < starttime]]>
 	</delete>
 	
 	<!-- 리뷰글 쓸때 필요한 데이터 받기 -->	
@@ -201,5 +201,9 @@
    </select>	
 	<select id="heartList" parameterType="java.lang.String" resultType="java.util.Map">
 		select * from heart join memberinfo using (hairshopid) where heart.email = #{memEmail }
+	</select>
+	
+	<select id="changeUserInfo" parameterType="String" resultType="String">
+		select name from memberInfo where email=#{email} and type=0
 	</select>
 </mapper>

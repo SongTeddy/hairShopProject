@@ -323,4 +323,9 @@ public class MemberDAOMybatis implements MemberDAO {
 		return sqlSession.selectList("memberSQL.heartList", memEmail);
 	}
 
+	@Override
+	public String changeUserInfo(String email) {
+		return sqlSession.selectOne("memberSQL.changeUserInfo", email);
+	}
+
 }

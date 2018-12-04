@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="/hairShopProject/managementPage/css/memberPage.css">
+<link rel="stylesheet" href="/hairShopProject/managementPage/privatePage/css/memberPage.css">
 <style type="text/css">
 .starR{
-	background: url("/hairShopProject/managementPage/img/star.png") no-repeat right 0;
+	background: url("/hairShopProject/managementPage/privatePage/img/star.png") no-repeat right 0;
 	background-size: auto 100%;
 	width: 30px;
 	height: 30px;

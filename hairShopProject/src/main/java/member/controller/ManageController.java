@@ -296,7 +296,7 @@ public class ManageController {
 	public ModelAndView heartList(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/heartList.jsp");
+		mav.addObject("memberPage", "/managementPage/privatePage/heartList.jsp");
 		mav.setViewName("/main/index");
 		return mav;
 	}
@@ -314,15 +314,14 @@ public class ManageController {
 	}
 	
 	//memberPage에서 email을 받아와 회원정보수정 테이블에 불러온 데이터 출력
-	@RequestMapping(value="modifyForm", method=RequestMethod.POST)
+	@RequestMapping(value="modifyForm", method=RequestMethod.GET)
 	public ModelAndView modifyForm(HttpSession session) {
 		MemberDTO memberDTO = memberDAO.isCheckEmail((String)session.getAttribute("memEmail"));
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/modifyForm.jsp");
+		mav.addObject("memberPage", "/managementPage/privatePage/modifyForm.jsp");
 		mav.addObject("memberDTO", memberDTO);
-		mav.addObject("memEmail",(String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
 		
 		return mav;
@@ -330,17 +329,23 @@ public class ManageController {
 	
 	// modifyForm에서 넘어온 데이터로 업데이트
 	@RequestMapping(value="modify", method=RequestMethod.POST)
-	public @ResponseBody String modify(@ModelAttribute MemberDTO memberDTO, Model model) {
+	public @ResponseBody String modify(@ModelAttribute MemberDTO memberDTO, Model model, HttpSession session) {
 		memberDAO.updateInfo(memberDTO);
+		
+		String name = memberDAO.changeUserInfo((String)session.getAttribute("memEmail"));
+		
+		session.setAttribute("memName", name);
+		
 		model.addAttribute("memEmail", memberDTO.getEmail());
+		
 		return "success";
 	}
 	// 이용내역안내 폼 불러내기
-	@RequestMapping(value="usageDetailsInformationForm", method=RequestMethod.POST)
+	@RequestMapping(value="usageDetailsInformationForm", method=RequestMethod.GET)
 	public ModelAndView usageDetailsInformationForm(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/usageDetailsInformationForm.jsp");
+		mav.addObject("memberPage", "/managementPage/privatePage/usageDetailsInformationForm.jsp");
 		mav.addObject("memEmail", (String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
 		
@@ -354,7 +359,7 @@ public class ManageController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/usageDetailsInformationForm.jsp");
+		mav.addObject("memberPage", "/managementPage/privatePage/usageDetailsInformationForm.jsp");
 		mav.addObject("memEmail",(String)session.getAttribute("memEmail"));
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
@@ -363,11 +368,11 @@ public class ManageController {
 	}
 	
 	//예약현황 폼 불러내기
-	@RequestMapping(value="reservationForm", method=RequestMethod.POST)
+	@RequestMapping(value="reservationForm", method=RequestMethod.GET)
 	public ModelAndView reservationForm(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/reservationForm.jsp");
+		mav.addObject("memberPage", "/managementPage/privatePage/reservationForm.jsp");
 		mav.addObject("memEmail", (String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
 		
@@ -381,7 +386,7 @@ public class ManageController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/reservationForm.jsp");
+		mav.addObject("memberPage", "/managementPage/privatePage/reservationForm.jsp");
 		mav.addObject("memEmail", (String)session.getAttribute("memEmail"));
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
@@ -413,12 +418,14 @@ public class ManageController {
 	
 	//회원탈퇴
 	@RequestMapping(value="delete", method=RequestMethod.POST)
-	public @ResponseBody String delete(String email, String pwd) {
+	public @ResponseBody String delete(String email, String pwd, HttpSession session) {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("email", email);
 		map.put("pwd", pwd);
 		
 		memberDAO.userDelete(map);
+		
+		session.invalidate();
 		
 		return "success";
 	}

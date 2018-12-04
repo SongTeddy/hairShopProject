@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="/hairShopProject/managementPage/css/memberPage.css">
+<link rel="stylesheet" href="/hairShopProject/managementPage/privatePage/css/memberPage.css">
 <h3>회원 탈퇴</h3><br><br>
 <div class="deleteForm" style="border: 1px solid black;">
 	<div class="delete">
@@ -14,4 +14,4 @@
 		</div>
 	</div>
 </div>
-<script src="js/memberPage.js"></script>
+<script src="/hairShopProject/managementPage/privatePage/js/memberPage.js"></script>

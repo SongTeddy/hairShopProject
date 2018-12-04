@@ -49,4 +49,5 @@ public interface MemberDAO {
 	public Map<String, String> getHomepageLink(String memEmail);
 	public boolean isExistId(String hairShopId);
 	public List<Map<String, String>> heartList(String memEmail);
+	public String changeUserInfo(String attribute);
 }
