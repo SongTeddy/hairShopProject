@@ -119,13 +119,13 @@ $(document).ready(function(){
 		}else {
 			$.ajax({
 				type : 'POST',
-				url : '../privatePage/modify.do',
+				url : '../managementPage/modify.do',
 				data :  {'email':$('.modifyEmail').val(), 'name':$('.modifyName').val(), 'pwd':$('.modifyPwd').val(), 'tel1':$('.modifyTel1').val(), 'tel2':$('.modifyTel2').val(), 'tel3':$('.modifyTel3').val(), 'zipcode':$('#zipcode').val(), 'addr1':$('#addr1').val(), 'addr2':$('#addr2').val()},
 				dataType : 'text',
 				success : function(data){
 					if(data=="success"){
 						alert("회원님의 정보를 수정하였습니다.");
-						location.href="../privatePage/memberPage.do";
+						location.href="../managementPage/memberPage.do";
 					}
 				}
 			});

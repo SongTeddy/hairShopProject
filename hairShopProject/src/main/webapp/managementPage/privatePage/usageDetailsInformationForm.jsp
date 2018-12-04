@@ -157,9 +157,6 @@ $(document).ready(function(){
 		}
 	});
 	
-	/* $('.usageDetailsInformationTable').on('click', '.serviceCheck',function(){
-		$('div#myInfoModal').css("display","block").css("background-color","rgba(0,0,0,0.1)");
-	}); */
 	$('.closeReviewModal').on('click',function(){
 		$('.infoModal').css("display","none");
 	});

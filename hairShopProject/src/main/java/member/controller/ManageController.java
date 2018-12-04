@@ -285,7 +285,9 @@ public class ManageController {
 	@RequestMapping(value="memberPage", method=RequestMethod.GET)
 	public ModelAndView memberPage() {
 		ModelAndView mav = new ModelAndView();
+
 		mav.addObject("display", "/hairShopProject/managementPage/privatePage/memberPage.jsp");
+
 		mav.setViewName("/main/index");
 		
 		return mav;
@@ -391,7 +393,9 @@ public class ManageController {
 	
 	// 예약 취소
 	@RequestMapping(value="reservationCancel", method=RequestMethod.POST)
-	public @ResponseBody String reservationCancel(@RequestParam String email, Model model) {
+	public @ResponseBody String reservationCancel(HttpSession session, Model model) {
+		String email = (String)session.getAttribute("memEmail");
+		
 		memberDAO.reservationCancel(email);
 		model.addAttribute("memEmail",email);
 		return "success";
@@ -409,13 +413,11 @@ public class ManageController {
 	
 	//회원탈퇴
 	@RequestMapping(value="delete", method=RequestMethod.POST)
-	public @ResponseBody String delete(String email, String pwd, Model model) {
+	public @ResponseBody String delete(String email, String pwd) {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("email", email);
 		map.put("pwd", pwd);
 		memberDAO.userDelete(map);
-		model.addAttribute("memEmail", email);
-		
 		return "success";
 	}
 

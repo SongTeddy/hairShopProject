@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="/hairShopProject/managementPage/privatePage/css/memberPage.css">
+<link rel="stylesheet" href="/hairShopProject/managementPage/css/memberPage.css">
 <h3>회원 탈퇴</h3><br><br>
 <div class="deleteForm" style="border: 1px solid black;">
 	<div class="delete">
@@ -10,7 +10,7 @@
 		</div><br><br><br>
 		<div class="btn-container">
 			<input type="button" class="deleteBtn" value="회원탈퇴"/>
-			<input type="button" value="취소" onclick="location.href='/hairShopProject/privatePage/memberPage.do'"/>
+			<input type="button" value="취소" onclick="location.href='../managementPage/memberPage.do'"/>
 		</div>
 	</div>
 </div>
