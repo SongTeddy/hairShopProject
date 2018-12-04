@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!-- <link rel="stylesheet" href="/hairShopProject/managementPage/css/bootstrap.css">
 <link rel="stylesheet" href="/hairShopProject/managementPage/css/bootstrap.min.css"> -->
-<link rel="stylesheet" href="/hairShopProject/managementPage/css/memberPage.css">
+<link rel="stylesheet" href="/hairShopProject/managementPage/privatePage/css/memberPage.css">
 
 <div id="modifyFormDiv" style="overflow-x:hidden; height: 100%; ">
 	<br/><br/>

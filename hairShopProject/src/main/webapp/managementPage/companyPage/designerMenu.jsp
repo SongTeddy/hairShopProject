@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
-<link rel="stylesheet" href="/hairShopProject/managementPage/css/designerMenu.css">
+<link rel="stylesheet" href="/hairShopProject/managementPage/companyPage/css/designerMenu.css">
 
 <input type="hidden" id="hairshopId" value="${hairshopId }">
     
@@ -97,12 +97,12 @@
 </div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="/hairShopProject/managementPage/js/designerMenu.js"></script>
+<script src="/hairShopProject/managementPage/companyPage/js/designerMenu.js"></script>
 <script>
 $(document).ready(function() {
 	$.ajax({
 		type : 'POST',
-		url : '/hairShopProject/managementPage/getDesignerInfo.do',
+		url : '/hairShopProject/companyPage/getDesignerInfo.do',
 		data: {'hairshopId':$('#hairshopId').val()},
 		dataType : 'json',
 		success : function(data) {

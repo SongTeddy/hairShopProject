@@ -117,15 +117,31 @@
 							<li class="scroll"style="padding-left: 165px;"><a href="javascript:void(0)">스타일찾기</a></li>
 							<li class="scroll" style="padding-left: 165px;"><a href="javascript:void(0)">이벤트</a></li>
 							<li class="scroll" style="padding-left: 165px;">
-								<input type="hidden" id="loginVal" value="${login }" />
+								<input type="hidden" id="typeVal" value="${memType }" />
+								<input type="hidden" id="memEmail" value="${memEmail }" />
+								
 								<c:if test="${memEmail==null }">
-									<a id="loginA" href="javascript:void(0)">sign in / register</a>
+									<a id="loginA" href="#">sign in / register</a>
 								</c:if>
+								
 								<c:if test="${memEmail!=null }">
-									<a id="loggedinA" href="javascript:void(0)">${memName } 님</a>
-									<input type="hidden" id="memEmail" value="${memEmail }" />
+									<c:if test="${memType==0 }">
+										<a id="loggedinA" href="#">${memName } 님</a>
+									</c:if>
+									
+									<c:if test="${memType==1 }">
+										<a id="loggedinA" href="#">${memName } 님</a>
+									</c:if>
+									
+									<c:if test="${memType==2 }">
+										<a id="loggedinA" href="#">관리자</a>
+									</c:if>
+								</c:if>
+							</li>
+							<li class="scroll" >
+								<c:if test="${memEmail!=null }">
 									<button type="button" class="logoutBtn">
-										로그아웃
+											로그아웃
 									</button>
 								</c:if>
 							</li>

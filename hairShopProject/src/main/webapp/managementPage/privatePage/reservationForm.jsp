@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="/hairShopProject/managementPage/css/memberPage.css">
+<link rel="stylesheet" href="/hairShopProject/managementPage/privatePage/css/memberPage.css">
 <form name="reservationForm" method="post">
 <div class="reservationForm">
 	<div class="reservationTitle">

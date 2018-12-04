@@ -285,7 +285,9 @@ public class ManageController {
 	@RequestMapping(value="memberPage", method=RequestMethod.GET)
 	public ModelAndView memberPage() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
+
+		mav.addObject("display", "/hairShopProject/managementPage/privatePage/memberPage.jsp");
+
 		mav.setViewName("/main/index");
 		
 		return mav;
@@ -295,8 +297,8 @@ public class ManageController {
 	@RequestMapping(value="heartList", method=RequestMethod.GET)
 	public ModelAndView heartList(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/heartList.jsp");
+		mav.addObject("display", "/hairShopProject/managementPage/privatePage/memberPage.jsp");
+		mav.addObject("memberPage", "/hairShopProject/managementPage/privatePage/heartList.jsp");
 		mav.setViewName("/main/index");
 		return mav;
 	}
@@ -319,8 +321,8 @@ public class ManageController {
 		MemberDTO memberDTO = memberDAO.isCheckEmail((String)session.getAttribute("memEmail"));
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/modifyForm.jsp");
+		mav.addObject("display", "/hairShopProject/managementPage/privatePage/memberPage.jsp");
+		mav.addObject("memberPage", "/hairShopProject/managementPage/privatePage/modifyForm.jsp");
 		mav.addObject("memberDTO", memberDTO);
 		mav.addObject("memEmail",(String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
@@ -339,8 +341,8 @@ public class ManageController {
 	@RequestMapping(value="usageDetailsInformationForm", method=RequestMethod.POST)
 	public ModelAndView usageDetailsInformationForm(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/usageDetailsInformationForm.jsp");
+		mav.addObject("display", "/hairShopProject/managementPage/privatePage/memberPage.jsp");
+		mav.addObject("memberPage", "/hairShopProject/managementPage/privatePage/usageDetailsInformationForm.jsp");
 		mav.addObject("memEmail", (String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
 		
@@ -353,8 +355,8 @@ public class ManageController {
 		List<Map<String,Object>> list = memberDAO.getUsageDetailsInfo((String)session.getAttribute("memEmail"));
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/usageDetailsInformationForm.jsp");
+		mav.addObject("display", "/hairShopProject/managementPage/privatePage/memberPage.jsp");
+		mav.addObject("memberPage", "/hairShopProject/managementPage/privatePage/usageDetailsInformationForm.jsp");
 		mav.addObject("memEmail",(String)session.getAttribute("memEmail"));
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
@@ -366,8 +368,8 @@ public class ManageController {
 	@RequestMapping(value="reservationForm", method=RequestMethod.POST)
 	public ModelAndView reservationForm(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/reservationForm.jsp");
+		mav.addObject("display", "/hairShopProject/managementPage/privatePage/memberPage.jsp");
+		mav.addObject("memberPage", "/hairShopProject/managementPage/privatePage/reservationForm.jsp");
 		mav.addObject("memEmail", (String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
 		
@@ -380,8 +382,8 @@ public class ManageController {
 		List<Map<String,Object>> list = memberDAO.getReservationList((String)session.getAttribute("memEmail"));
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/reservationForm.jsp");
+		mav.addObject("display", "/hairShopProject/managementPage/privatePage/memberPage.jsp");
+		mav.addObject("memberPage", "/hairShopProject/managementPage/privatePage/reservationForm.jsp");
 		mav.addObject("memEmail", (String)session.getAttribute("memEmail"));
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
@@ -403,11 +405,9 @@ public class ManageController {
 	@RequestMapping(value="deleteForm", method=RequestMethod.GET)
 	public ModelAndView deleteForm() {
 		ModelAndView mav = new ModelAndView();
-		
-		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/privatePage/deleteForm.jsp");
+		mav.addObject("display", "/hairShopProject/managementPage/privatePage/memberPage.jsp");
+		mav.addObject("memberPage", "/hairShopProject/managementPage/privatePage/deleteForm.jsp");
 		mav.setViewName("/main/index");
-		
 		return mav;
 	}
 	
@@ -417,28 +417,10 @@ public class ManageController {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("email", email);
 		map.put("pwd", pwd);
-		
 		memberDAO.userDelete(map);
-		
 		return "success";
 	}
 
-	// 헤어샵 정보 등록 페이지
-	@RequestMapping(value="hairShopInfoInput", method=RequestMethod.GET)
-	public ModelAndView hairShopInfoInput(HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-		if(session.getAttribute("memEmail")!=null) {
-			Map<String, String> map = memberDAO.getHomepageLink((String)session.getAttribute("memEmail"));
-			mav.addObject("hairShopName", map.get("NAME"));
-			mav.addObject("hairShopId", map.get("HAIRSHOPID"));
-			mav.addObject("display", "/managementPage/companyPage.jsp");
-			mav.addObject("myPageBody", "/managementPage/hairShopInfoInput.jsp");
-		}else {
-			mav.addObject("display", "/main/body.jsp");
-		}
-		mav.setViewName("/main/index");
-		return mav;
-	}
 	
 	@RequestMapping(value="getHomepageLink", method=RequestMethod.POST)
 	public ModelAndView getHomepageLink(HttpSession session) {
@@ -459,5 +441,40 @@ public class ManageController {
 			return "not_exist";
 	}
 	
-
+	// 헤어샵 정보 등록 페이지
+	@RequestMapping(value="hairShopInfoInput", method=RequestMethod.GET)
+	public ModelAndView hairShopInfoInput(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		if(session.getAttribute("memEmail")!=null) {
+			Map<String, String> map = memberDAO.getHomepageLink((String)session.getAttribute("memEmail"));
+			mav.addObject("map", map);
+			mav.addObject("display", "/managementPage/companyPage.jsp");
+			mav.addObject("myPageBody", "/managementPage/hairShopInfoInput.jsp");
+		}else {
+			mav.addObject("display", "/main/body.jsp");
+		}
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
+	@RequestMapping(value="checkLicense.do")
+	public @ResponseBody String checkLicense(@RequestParam Map<String, String> map) {
+		System.out.println("라이센스 찾으려구용" + map);
+		if(memberDAO.isExistLicense(map))
+			return "exist";
+		else
+			return "not_exist";
+	}
+	
+	@RequestMapping(value="hairShopInfoUpdate.do", method=RequestMethod.POST)
+	public ModelAndView hairShopInfoUpdate(@RequestParam Map<String, Object> map, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		System.out.println("데이오프 어케들어오니" + map.get("dayoff"));
+		map.put("memEmail", session.getAttribute("memEmail"));
+		int su = memberDAO.hairShopInfoUpdate(map);
+		mav.addObject("display", "/managementPage/companyPage.jsp");
+		mav.addObject("myPageBody", "/managementPage/hairShopInfoUpdate.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
 }

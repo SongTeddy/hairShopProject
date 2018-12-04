@@ -1,6 +1,5 @@
 package member.dao;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import hairShop.bean.ReservationDTO;
 import member.bean.DesignerDTO;
 import member.bean.MemberDTO;
-import member.bean.PostDTO;
 
 public interface MemberDAO {
 	public void write(MemberDTO memberDTO) throws Exception;
@@ -37,16 +35,16 @@ public interface MemberDAO {
 	public List<MemberDTO> getMemberInfo(String hairshopId);
 	public List<ReservationDTO> getReservation(String designername);
 	public List<String> getHairShopDesigner(String hairshopId);
-	
-	//개인유저 마이페이지
-	public void userDelete(Map<String, String> map);
+  
+	public Map<String, String> getHomepageLink(String memEmail);
+	public boolean isExistId(String hairShopId);
+	public boolean isExistLicense(Map<String, String> map);
+	public int hairShopInfoUpdate(Map<String, Object> map);
+	public List<Map<String, String>> heartList(String memEmail);
+	public Map<String, String> checkReservationList(Map<String, String> map);
 	public void reservationCancel(String email);
 	public List<Map<String, Object>> getReservationList(String email);
 	public List<Map<String, Object>> getUsageDetailsInfo(String email);
+	public void userDelete(Map<String, String> map);
 	public void updateInfo(MemberDTO memberDTO);
-	public Map<String, String> checkReservationList(Map<String, String> map);
-
-	public Map<String, String> getHomepageLink(String memEmail);
-	public boolean isExistId(String hairShopId);
-	public List<Map<String, String>> heartList(String memEmail);
 }

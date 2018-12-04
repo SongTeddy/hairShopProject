@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="managementSQL">
+	<resultMap type="member" id="memberResult">
+		<result property="email" column="EMAIL" />
+		<result property="pwd" column="PWD" />
+		<result property="name" column="NAME" />
+		<result property="tel1" column="TEL1" />
+		<result property="tel2" column="TEL2" />
+		<result property="tel3" column="TEL3" />
+		<result property="zipcode" column="ZIPCODE" />
+		<result property="addr1" column="ADDR1" />
+		<result property="addr2" column="ADDR2" />
+		<result property="type" column="TYPE" />
+		<result property="hairshopimage1" column="HAIRSHOPIMAGE1" />
+		<result property="hairshopimage2" column="HAIRSHOPIMAGE2" />
+		<result property="hairshopimage3" column="HAIRSHOPIMAGE3" />
+		<result property="license1" column="LICENSE1" />
+		<result property="license2" column="LICENSE2" />
+		<result property="license3" column="LICENSE3" />
+		<result property="hairshopid" column="HAIRSHOPID" />
+		<result property="latitud" column="LATITUD" />
+		<result property="longitude" column="LONGITUDE" />
+		<result property="hairshopcontent" column="HAIRSHOPCONTENT" />
+		<result property="opentime" column="OPENTIME" />
+		<result property="closetime" column="CLOSETIME" />
+		<result property="dayoff" column="DAYOFF" />
+		<result property="approval_status" column="APPROVAL_STATUS" />
+		<result property="approval_key" column="APPROVAL_KEY" />
+		<result property="logtime" column="LOGTIME" />
+	</resultMap>
+	
+	<resultMap type="designer" id="designerDTO">
+		<result property="seq" column="SEQ" />
+		<result property="designerid" column="DESIGNERID" />
+		<result property="hairshopid" column="HAIRSHOPID" />
+		<result property="designername" column="DESIGNERNAME" />
+		<result property="designerimage" column="DESIGNERIMAGE" />
+		<result property="positioncode" column="POSITIONCODE" />
+		<result property="position" column="POSITION" />
+		<result property="dayoff" column="DAYOFF" />
+	</resultMap>
+	
+	<resultMap type="reservation" id="reservationDTO">
+		<result property="bookeremail" column="BOOKEREMAIL" />
+		<result property="bookername" column="BOOKERNAME" />
+		<result property="bookertel1" column="BOOKERTEL1" />
+		<result property="bookertel2" column="BOOKERTEL2" />
+		<result property="bookertel3" column="BOOKERTEL3" />
+		<result property="requests" column="REQUESTS" />
+		<result property="hairshopid" column="HAIRSHOPID" />
+		<result property="designerid" column="DESIGNERID" />
+		<result property="designername" column="DESIGNERNAME" />
+		<result property="service" column="SERVICE" />
+		<result property="description" column="DESCRIPTION" />
+		<result property="price" column="PRICE" />
+		<result property="timerequired" column="TIMEREQUIRED" />
+		<result property="starttime" column="STARTTIME" />
+		<result property="endtime" column="ENDTIME" />
+		<result property="theday" column="THEDAY" />
+		<result property="didordidnot" column="DIDORDIDNOT" />
+	</resultMap>
+
+<!-- =================== 마이페이지(관리자) ========================== -->
+
+	<!-- 타입에 의해 memberinfo 조회 -->
+	<select id="getMemberByType" parameterType="String" resultType="member">
+		select * from memberinfo where type=#{type }
+	</select>
+	
+<!-- =================== 마이페이지(개인) ========================== -->
+
+	<!-- 개인회원 정보수정 -->
+	<update id="updateInfo" parameterType="member">
+		update memberInfo set name=#{name}, pwd=#{pwd}, tel1=#{tel1}, tel2=#{tel2}, tel3=#{tel3}, zipcode=#{zipcode}, addr1=#{addr1}, addr2=#{addr2} where email=#{email}
+	</update>
+	
+	<!-- 회원탈퇴 -->
+	<delete id="userDelete" parameterType="Map">
+		delete memberInfo where email=#{email} and pwd=#{pwd}
+	</delete>
+	
+	<!-- 이용내역 select -->
+	<select id="getUsageDetailsInfo" parameterType="String" resultType="Map">
+		select m.name, r.* from memberInfo m inner join reservation r on m.hairshopid = r.hairshopid where bookeremail=#{email}
+	</select>
+	
+	<!-- 예약현황 select -->
+	<select id="getReservationList" parameterType="String" resultType="Map">
+		select m.name, r.* from memberInfo m inner join reservation r on m.hairshopid = r.hairshopid where bookeremail=#{email} and didordidnot=0
+	</select>
+	
+	<!-- 예약 취소 -->
+	<delete id="reservationCancel" parameterType="String">
+		<![CDATA[delete reservation where bookeremail=#{email} and didORdidNOT=0 and sysdate < stattime]]>
+	</delete>
+	
+	<!-- 리뷰글 쓸때 필요한 데이터 받기 -->	
+	<select id="checkReservationList" parameterType="Map" resultType="Map">
+		select d.designerimage, d.positioncode, r.* from reservation r inner join designerinfo d on d.designerid = r.designerid where bookeremail=#{email} and didordidnot=1 and theday=#{theday}
+	</select>
+
+	
+	<!-- 헤어샵 홈페이지 링크 띄우기 -->
+   <select id="getHomepageLink" parameterType="String" resultType="java.util.Map">
+      select name, hairshopid from memberinfo where email=#{memEmail }
+   </select>
+   
+   <select id="isExistId" parameterType="java.lang.String" resultType="java.util.Map">
+	  select * from memberinfo where hairshopid=#{hairShopId } 
+   </select>	
+	<select id="heartList" parameterType="java.lang.String" resultType="java.util.Map">
+		select * from heart join memberinfo using (hairshopid) where heart.email = #{memEmail }
+	</select>
+</mapper>
