@@ -71,7 +71,6 @@ public class HairShopController {
 		return mav;
 	}
   
-  
   	@RequestMapping(value = "/hairShop/getHairShopInfo.do", method = RequestMethod.POST)
 	public ModelAndView getHairShopInfo(@RequestParam String hairShopId, HttpSession session) {
 		if (session.getAttribute("memEmail") != null) {
@@ -136,29 +135,6 @@ public class HairShopController {
 	   System.out.println("하트버튼 "+map.get("hairShopId"));
 	   ModelAndView mav = new ModelAndView();
 	   hairShopDAO.deleteHeart(map);
-	   mav.setViewName("jsonView");
-	   return mav;
-   }
-   
-   @RequestMapping(value="/hairShop/getHairShopInfo.do", method=RequestMethod.POST)
-   public ModelAndView getHairShopInfo(@RequestParam String hairShopId, HttpSession session) {
-	   if(session.getAttribute("memEmail")!= null) {
-		   String email = (String)session.getAttribute("memEmail");
-		   System.out.println("getHairShopInfo 세션"+email);
-	   }
-	   
-	   ModelAndView mav = new ModelAndView();
-	   System.out.println("ajax hairShopId"+hairShopId);
-	   Map<String, Object> map = hairShopDAO.getHairShopInfo(hairShopId);
-	   List<Map<String, Object>> list = hairShopDAO.getDesignerInfo(hairShopId);
-	   System.out.println(map.size() +" list size = "+list.size());
-	   for (Iterator<String> iterator = map.keySet().iterator(); iterator.hasNext();) {
-           String keyName = (String) iterator.next();
-           Object valueName = map.get(keyName);
-           System.out.println(keyName +" = " +valueName);
-	   }
-	   mav.addObject("map",map);
-	   mav.addObject("list",list);
 	   mav.setViewName("jsonView");
 	   return mav;
    }

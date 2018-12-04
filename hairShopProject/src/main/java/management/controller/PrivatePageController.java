@@ -144,14 +144,11 @@ public class PrivatePageController {
 	
 	// 회원탈퇴폼 불러내기
 	@RequestMapping(value="deleteForm", method=RequestMethod.GET)
-	public ModelAndView deleteForm(@RequestParam String memEmail) {
+	public ModelAndView deleteForm() {
 		ModelAndView mav = new ModelAndView();
-		
 		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
 		mav.addObject("memberPage", "/managementPage/privatePage/deleteForm.jsp");
-		mav.addObject("memEmail", memEmail);
 		mav.setViewName("/main/index");
-		
 		return mav;
 	}
 	

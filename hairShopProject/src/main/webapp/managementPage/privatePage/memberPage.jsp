@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <link rel="stylesheet" href="/hairShopProject/managementPage/privatePage/css/memberPage.css">
+<link rel="stylesheet" href="/hairShopProject/managementPage/css/companyPage.css">
 
 <div class="myPage">
    <div class="myPage_menu">

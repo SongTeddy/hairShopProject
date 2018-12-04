@@ -76,7 +76,7 @@ $(document).ready(function(){
 						html : "&times;",
 						id : "cancel_heart",
 						onclick : "cancel_heart('"+item.HAIRSHOPID+"');",
-						style : "margin-left:37%"
+						style : "margin-left:30%"
 					}))).append($('<p/>',{
 						class:"explore-rating-search-price"
 					}).append($('<span/>',{
