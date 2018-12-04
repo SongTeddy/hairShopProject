@@ -285,7 +285,7 @@ public class ManageController {
 	@RequestMapping(value="memberPage", method=RequestMethod.GET)
 	public ModelAndView memberPage() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
 		mav.setViewName("/main/index");
 		
 		return mav;
@@ -295,7 +295,7 @@ public class ManageController {
 	@RequestMapping(value="heartList", method=RequestMethod.GET)
 	public ModelAndView heartList(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
 		mav.addObject("memberPage", "/managementPage/heartList.jsp");
 		mav.setViewName("/main/index");
 		return mav;
@@ -319,7 +319,7 @@ public class ManageController {
 		MemberDTO memberDTO = memberDAO.isCheckEmail((String)session.getAttribute("memEmail"));
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
 		mav.addObject("memberPage", "/managementPage/modifyForm.jsp");
 		mav.addObject("memberDTO", memberDTO);
 		mav.addObject("memEmail",(String)session.getAttribute("memEmail"));
@@ -339,7 +339,7 @@ public class ManageController {
 	@RequestMapping(value="usageDetailsInformationForm", method=RequestMethod.POST)
 	public ModelAndView usageDetailsInformationForm(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
 		mav.addObject("memberPage", "/managementPage/usageDetailsInformationForm.jsp");
 		mav.addObject("memEmail", (String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
@@ -353,7 +353,7 @@ public class ManageController {
 		List<Map<String,Object>> list = memberDAO.getUsageDetailsInfo((String)session.getAttribute("memEmail"));
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
 		mav.addObject("memberPage", "/managementPage/usageDetailsInformationForm.jsp");
 		mav.addObject("memEmail",(String)session.getAttribute("memEmail"));
 		mav.addObject("list", list);
@@ -366,7 +366,7 @@ public class ManageController {
 	@RequestMapping(value="reservationForm", method=RequestMethod.POST)
 	public ModelAndView reservationForm(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
 		mav.addObject("memberPage", "/managementPage/reservationForm.jsp");
 		mav.addObject("memEmail", (String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
@@ -380,7 +380,7 @@ public class ManageController {
 		List<Map<String,Object>> list = memberDAO.getReservationList((String)session.getAttribute("memEmail"));
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("display", "/managementPage/memberPage.jsp");
+		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
 		mav.addObject("memberPage", "/managementPage/reservationForm.jsp");
 		mav.addObject("memEmail", (String)session.getAttribute("memEmail"));
 		mav.addObject("list", list);
@@ -391,7 +391,9 @@ public class ManageController {
 	
 	// 예약 취소
 	@RequestMapping(value="reservationCancel", method=RequestMethod.POST)
-	public @ResponseBody String reservationCancel(@RequestParam String email, Model model) {
+	public @ResponseBody String reservationCancel(HttpSession session, Model model) {
+		String email = (String)session.getAttribute("memEmail");
+		
 		memberDAO.reservationCancel(email);
 		model.addAttribute("memEmail",email);
 		return "success";
@@ -399,12 +401,11 @@ public class ManageController {
 	
 	// 회원탈퇴폼 불러내기
 	@RequestMapping(value="deleteForm", method=RequestMethod.GET)
-	public ModelAndView deleteForm(@RequestParam String memEmail) {
+	public ModelAndView deleteForm() {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.addObject("display", "/managementPage/memberPage.jsp");
-		mav.addObject("memberPage", "/managementPage/deleteForm.jsp");
-		mav.addObject("memEmail", memEmail);
+		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
+		mav.addObject("memberPage", "/managementPage/privatePage/deleteForm.jsp");
 		mav.setViewName("/main/index");
 		
 		return mav;
@@ -412,14 +413,12 @@ public class ManageController {
 	
 	//회원탈퇴
 	@RequestMapping(value="delete", method=RequestMethod.POST)
-	public @ResponseBody String delete(String email, String pwd, Model model) {
+	public @ResponseBody String delete(String email, String pwd) {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("email", email);
 		map.put("pwd", pwd);
 		
 		memberDAO.userDelete(map);
-		
-		model.addAttribute("memEmail", email);
 		
 		return "success";
 	}

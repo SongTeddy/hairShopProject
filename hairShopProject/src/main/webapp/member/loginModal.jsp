@@ -42,22 +42,34 @@
 			<div class="card">
 				<h1 class="title">Login</h1>
 				
-				<form>
+				<form name="loginForm" id="loginForm" method="post" action="../member/memberLogin.do">
 					<div class="input-container">
-						<input type="text" id="loginEmail" required="required" /> <label for="${label}">Username</label>
+						<input type="text" name="loginEmail" id="loginEmail" required="required" /> <label for="${label}">Username</label>
 						<div class="bar"></div>
 					</div>
 					
+					<div class="input-container" align="center">
+						<div id="loginEmailDiv"></div>
+					</div>
+					
 					<div class="input-container">
-						<input type="text" id="loginPwd" required="required" /> <label for="${label}">Password</label>
+						<input type="password" name="loginPwd" id="loginPwd" required="required" /> <label for="${label}">Password</label>
 						<div class="bar"></div>
 					</div>
 					
-					<div id="loginBtn" class="button-container">
-						<button>
+					<div class="input-container" align="center">
+						<div id="loginPwdDiv"></div>
+					</div>
+					
+					<div class="button-container">
+						<button type="button" id="loginBtn">
 							<span>Go</span>
 						</button>
 					</div>
+					<input type="hidden" name="publicKeyModulus" id="hiddenModulus" value="${publicKeyModulus }">
+					<input type="hidden" name="publicKeyExponent" id="hiddenExponent" value="${publicKeyExponent }">
+					<input type="hidden" name="securedUsername" id="securedUsername">
+					<input type="hidden" name="securedPassword" id="securedPassword">
 				</form>
 			</div>
 			
@@ -235,6 +247,10 @@
 	</div>
 
 </div>
+<script type="text/javascript" src="http://www-cs-students.stanford.edu/~tjw/jsbn/rsa.js"></script>
+<script type="text/javascript" src="http://www-cs-students.stanford.edu/~tjw/jsbn/jsbn.js"></script>
+<script type="text/javascript" src="http://www-cs-students.stanford.edu/~tjw/jsbn/prng4.js"></script>
+<script type="text/javascript" src="http://www-cs-students.stanford.edu/~tjw/jsbn/rng.js"></script>
 <script	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -242,10 +258,6 @@
 <script src="/hairShopProject/member/js/login.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$('#licenseDiv').hide();
-	$('#hairShopDiv').hide();
-	$('#componyAddr1Div').hide();
-	$('#componyAddr2Div').hide();
 	$('.findPwdForm').hide();
 	
 	if($('input:radio[name=find]:checked').val()==0){
