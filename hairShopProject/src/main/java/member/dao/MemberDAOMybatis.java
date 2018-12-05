@@ -302,8 +302,8 @@ public class MemberDAOMybatis implements MemberDAO {
 	}
 
 	@Override
-	public Map<String, String> getHomepageLink(String memEmail) {
-		return sqlSession.selectOne("memberSQL.getHomepageLink", memEmail);
+	public Map<String, String> getHairShopInfo(String memEmail) {
+		return sqlSession.selectOne("memberSQL.getHairShopInfo", memEmail);
 	}
 
 	@Override
@@ -331,5 +331,10 @@ public class MemberDAOMybatis implements MemberDAO {
 	@Override
 	public int hairShopInfoUpdate(Map<String, Object> map) {
 		return sqlSession.update("memberSQL.hairShopInfoUpdate", map);
+	}
+	
+	@Override
+	public int hairShopInfoUpdateExceptImg(Map<String, Object> map) {
+		return sqlSession.update("memberSQL.hairShopInfoUpdateExceptImg", map);
 	}
 }

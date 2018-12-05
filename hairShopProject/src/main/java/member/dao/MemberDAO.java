@@ -36,10 +36,12 @@ public interface MemberDAO {
 	public List<ReservationDTO> getReservation(String designername);
 	public List<String> getHairShopDesigner(String hairshopId);
   
-	public Map<String, String> getHomepageLink(String memEmail);
+	public Map<String, String> getHairShopInfo(String memEmail);
 	public boolean isExistId(String hairShopId);
 	public boolean isExistLicense(Map<String, String> map);
 	public int hairShopInfoUpdate(Map<String, Object> map);
+	public int hairShopInfoUpdateExceptImg(Map<String, Object> map);
+	
 	public List<Map<String, String>> heartList(String memEmail);
 	public Map<String, String> checkReservationList(Map<String, String> map);
 	public void reservationCancel(String email);

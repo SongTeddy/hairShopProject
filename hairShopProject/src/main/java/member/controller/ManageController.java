@@ -278,6 +278,12 @@ public class ManageController {
 		memberDAO.designerModify(designerDTO);
 	}
 	
+	
+	
+	
+	
+	
+	
 
 //====================마이페이지 개인유저===============================
 	
@@ -421,60 +427,5 @@ public class ManageController {
 		return "success";
 	}
 
-	
-	@RequestMapping(value="getHomepageLink", method=RequestMethod.POST)
-	public ModelAndView getHomepageLink(HttpSession session) {
-		Map<String, String> map = memberDAO.getHomepageLink((String)session.getAttribute("memEmail"));
-		System.out.println("hairShopId"  + "   " + map.get("HAIRSHOPID") + "   " + map.get("NAME"));
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("map", map);
-		mav.setViewName("jsonView");
-		return mav;
-	}
-	
-	@RequestMapping(value="checkId.do")
-	public @ResponseBody String checkId(@RequestParam String hairShopId) {
-		System.out.println("아이디 찾으려구용" + hairShopId);
-		if(memberDAO.isExistId(hairShopId))
-			return "exist";
-		else
-			return "not_exist";
-	}
-	
-	// 헤어샵 정보 등록 페이지
-	@RequestMapping(value="hairShopInfoInput", method=RequestMethod.GET)
-	public ModelAndView hairShopInfoInput(HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-		if(session.getAttribute("memEmail")!=null) {
-			Map<String, String> map = memberDAO.getHomepageLink((String)session.getAttribute("memEmail"));
-			mav.addObject("map", map);
-			mav.addObject("display", "/managementPage/companyPage.jsp");
-			mav.addObject("myPageBody", "/managementPage/hairShopInfoInput.jsp");
-		}else {
-			mav.addObject("display", "/main/body.jsp");
-		}
-		mav.setViewName("/main/index");
-		return mav;
-	}
-	
-	@RequestMapping(value="checkLicense.do")
-	public @ResponseBody String checkLicense(@RequestParam Map<String, String> map) {
-		System.out.println("라이센스 찾으려구용" + map);
-		if(memberDAO.isExistLicense(map))
-			return "exist";
-		else
-			return "not_exist";
-	}
-	
-	@RequestMapping(value="hairShopInfoUpdate.do", method=RequestMethod.POST)
-	public ModelAndView hairShopInfoUpdate(@RequestParam Map<String, Object> map, HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-		System.out.println("데이오프 어케들어오니" + map.get("dayoff"));
-		map.put("memEmail", session.getAttribute("memEmail"));
-		int su = memberDAO.hairShopInfoUpdate(map);
-		mav.addObject("display", "/managementPage/companyPage.jsp");
-		mav.addObject("myPageBody", "/managementPage/hairShopInfoUpdate.jsp");
-		mav.setViewName("/main/index");
-		return mav;
-	}
+
 }
