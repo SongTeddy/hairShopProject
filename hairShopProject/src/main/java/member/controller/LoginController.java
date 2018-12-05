@@ -1,6 +1,13 @@
 package member.controller;
 
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPublicKeySpec;
 
 import javax.crypto.Cipher;
 import javax.servlet.http.HttpSession;
@@ -72,6 +79,33 @@ public class LoginController {
 			
 			return "non_exist";
 		}
+	}
+	
+	@RequestMapping(value="makeRSAKey", method=RequestMethod.POST)
+	public @ResponseBody String makeRSAKey(HttpSession session, Model model) throws InvalidKeySpecException {
+		String rsaPublicKey = null;
+		try {
+			KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+			generator.initialize(512);
+			KeyPair keyPair = generator.genKeyPair();
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+			PublicKey publicKey = keyPair.getPublic();
+			PrivateKey privateKey = keyPair.getPrivate();
+			
+			session.setAttribute("rsaPrivateKey", privateKey);
+			
+			RSAPublicKeySpec publicSpec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
+			
+			rsaPublicKey = publicSpec.getModulus().toString(16)+","+publicSpec.getPublicExponent().toString(16);
+			String[] splitrsaPublicKey = rsaPublicKey.split(",");
+			
+			session.setAttribute("publicKeyModulus", splitrsaPublicKey[0]);
+			session.setAttribute("publicKeyExponent", splitrsaPublicKey[1]);
+		
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return rsaPublicKey;
 	}
 	
 	@RequestMapping(value="memberLogout.do", method=RequestMethod.GET)

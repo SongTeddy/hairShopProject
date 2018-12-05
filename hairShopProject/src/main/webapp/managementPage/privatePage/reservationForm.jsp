@@ -26,7 +26,7 @@
 </div>
 <input type="hidden" name="memEmail" class="reservationEmail" value="${memEmail}">
 </form>
-<script src="js/memberPage.js"></script>
+<script src="/hairShopProject/managementPage/privatePage/js/memberPage.js"></script>
 <script>
 Date.prototype.format = function(f) {
     if (!this.valueOf()) return " ";

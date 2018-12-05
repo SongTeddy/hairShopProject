@@ -22,26 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class IndexController {
 	@RequestMapping(value="/main/index.do", method=RequestMethod.GET)
 	public ModelAndView input(HttpSession session, Model model) throws InvalidKeySpecException {  //사용자가 만든 콜백 메소드 
-		try {
-			KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-			generator.initialize(512);
-			KeyPair keyPair = generator.genKeyPair();
-			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-			PublicKey publicKey = keyPair.getPublic();
-			PrivateKey privateKey = keyPair.getPrivate();
-			
-			session.setAttribute("rsaPrivateKey", privateKey);
-			
-			RSAPublicKeySpec publicSpec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
-			
-			String publicKeyModulus = publicSpec.getModulus().toString(16);
-			String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
-			
-			session.setAttribute("publicKeyModulus", publicKeyModulus);
-			session.setAttribute("publicKeyExponent", publicKeyExponent);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/main/body.jsp");
 		mav.setViewName("/main/index");

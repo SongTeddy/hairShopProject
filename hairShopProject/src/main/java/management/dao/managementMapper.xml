@@ -131,7 +131,7 @@
 	
 	<!-- 예약 취소 -->
 	<delete id="reservationCancel" parameterType="String">
-		<![CDATA[delete reservation where bookeremail=#{email} and didORdidNOT=0 and sysdate < stattime]]>
+		<![CDATA[delete reservation where bookeremail=#{email} and didORdidNOT=0 and sysdate < starttime]]>
 	</delete>
 	
 	<!-- 리뷰글 쓸때 필요한 데이터 받기 -->	

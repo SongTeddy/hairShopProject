@@ -20,4 +20,5 @@ public interface MemberDAO {
 	public MemberDTO login(String id, String pwd);
 	public void find_pw(HttpServletResponse response, MemberDTO memberDTO) throws Exception;
 	public String searchId(MemberDTO memberDTO);
+	public MemberDTO changeUserInfo(String email);
 }

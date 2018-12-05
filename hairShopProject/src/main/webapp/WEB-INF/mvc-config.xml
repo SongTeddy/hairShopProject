@@ -26,6 +26,8 @@
 	<bean id="privatePageController" class="management.controller.PrivatePageController"></bean>
 	<bean id="adminPageController" class="management.controller.AdminPageController"></bean>
 	
+	<bean id="stylebookController" class="stylebook.controller.StylebookController"></bean>
+	
 	<context:component-scan base-package="hairShop.bean" />
 	<context:component-scan base-package="hairShop.dao"/>
 	
@@ -36,6 +38,8 @@
 	<context:component-scan base-package="board.dao"/>
 	
 	<context:component-scan base-package="management.dao"/>
+	
+	<context:component-scan base-package="stylebook.dao"/>
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	        <property name="suffix" value=".jsp"/>
