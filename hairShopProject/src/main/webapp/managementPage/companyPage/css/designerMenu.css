@@ -42,11 +42,11 @@
 	height: 15px;
 }
 
-/* 디자이너 추가*/
+/* �뵒�옄�씠�꼫 異붽�*/
 .designerMenu.designerAdd .designerAddDiv {
   position: absolute;
-  top: 200px;
-  right: 30%;
+  top: 110px;
+  right: 45%;
   width: 500px;
   z-index: 11;
   min-width: 500px;
@@ -62,18 +62,18 @@
 	right: 0;
 }
 
-.designerMenu.designerAdd .designerAddDiv .designerAddTitle, /* 占쎄맒占쎈뼊疫뀐옙占쎌쁽("�뜮袁⑨옙甕곕뜇�깈 筌≪뼐由�") */
-.designerMenu.designerAdd .designerAddDiv .input-container, /* 占쎌젟癰귨옙 Input�겫占썽겫占� */
+.designerMenu.designerAdd .designerAddDiv .designerAddTitle, /* �뜝�럡留믣뜝�럥堉딁뼨�먯삕�뜝�럩�겱("占쎈쑏熬곣뫅�삕�뵓怨뺣쐡占쎄퉰 嶺뚢돦堉먪뵳占�") */
+.designerMenu.designerAdd .designerAddDiv .input-container, /* �뜝�럩�젧�솻洹⑥삕 Input占쎄껀�뜝�띂寃ュ뜝占� */
 .designerMenu.designerAdd .designerAddDiv .button-container,
 .designerMenu.designerAdd .designerAddDiv .idValid-container,
-.designerMenu.designerAdd .designerAddDiv .pwdValid-container { /* NEXT甕곌쑵�뱣 */
+.designerMenu.designerAdd .designerAddDiv .pwdValid-container { /* NEXT�뵓怨뚯뫓占쎈괏 */
   left: 0;
   opacity: 0.9;
   visibility: visible;
   transition: .3s ease;
 }
 
-/* 揶쏉옙 �겫占썽겫袁⑹뵠 占쎌몛占쎈뮉 占쎈뻻揶쏉옙 */
+/* �뤆�룊�삕 占쎄껀�뜝�띂寃ヨ쥈�뫗逾� �뜝�럩紐쎾뜝�럥裕� �뜝�럥六삥뤆�룊�삕 */
 .designerMenu.designerAdd .designerAddDiv .designerAddTitle {
   transition-delay: .3s;
 }
@@ -96,7 +96,7 @@
   visibility: hidden;
 }
 
-/* �뜮袁⑨옙甕곕뜇�깈 筌≪뼐由� 占쎈땭占쏙옙占쎌뱽 占쎈르 甕곌쑵�뱣 癰귨옙占쎌넅 */
+/* 占쎈쑏熬곣뫅�삕�뵓怨뺣쐡占쎄퉰 嶺뚢돦堉먪뵳占� �뜝�럥�빆�뜝�룞�삕�뜝�럩諭� �뜝�럥瑜� �뵓怨뚯뫓占쎈괏 �솻洹⑥삕�뜝�럩�꼨 */
 .designerMenu.designerAdd .designerAddDiv .designerAddToggle {
   position: absolute;
   top: 40px;
@@ -113,7 +113,7 @@
   content: '';
 }
 
-/* �뜮袁⑨옙甕곕뜇�깈 筌≪뼐由� 占쎌읈筌ｏ옙 */
+/* 占쎈쑏熬곣뫅�삕�뵓怨뺣쐡占쎄퉰 嶺뚢돦堉먪뵳占� �뜝�럩�쓧嶺뚳퐦�삕 */
 .designerAddDiv {
   position: relative;
   top: 10px;
@@ -128,22 +128,22 @@
   transition: .3s ease;
 }
 
-/* �뜮袁⑨옙甕곕뜇�깈 筌≪뼐由� 甕곌쑵�뱣 */
+/* 占쎈쑏熬곣뫅�삕�뵓怨뺣쐡占쎄퉰 嶺뚢돦堉먪뵳占� �뵓怨뚯뫓占쎈괏 */
 .designerAddDiv .designerAddToggle {
   position: absolute;
-  background: #878787; /* 甕곌쑵�뱣, 筌≪뼐由� 占쎈쨲 獄쏄퀗瑗랃옙源� */ 
+  background: #878787; /* �뵓怨뚯뫓占쎈괏, 嶺뚢돦堉먪뵳占� �뜝�럥夷� �뛾�룄�쀧몭�엪�삕繹먲옙 */ 
   width: 60px;
   height: 60px;
   border-radius: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  color: #ffffff; /* 占쎈�볩옙�뮞占쎈뱜 占쎄퉳繹먲옙 */
+  color: #ffffff; /* �뜝�럥占쎈낑�삕占쎈츩�뜝�럥諭� �뜝�럡�돰濚밸㉡�삕 */
   font-size: 0px;
-  line-height: 108px; /* 占쎈�볩옙�뮞占쎈뱜 占쎌맄燁삼옙 */
+  line-height: 108px; /* �뜝�럥占쎈낑�삕占쎈츩�뜝�럥諭� �뜝�럩留꾤뇖�궪�삕 */
   text-align: center;
   cursor: pointer;
 }
 
-/* 甕곌쑵�뱣 占쎈�볩옙�뮞占쎈뱜 */
+/* �뵓怨뚯뫓占쎈괏 �뜝�럥占쎈낑�삕占쎈츩�뜝�럥諭� */
 .designerAddDiv .designerAddToggle:before {
   content: '\f067';
   display: inline-block;
@@ -162,13 +162,13 @@
 	right: -1500px;
 }
 
-/* input 占쎌맄燁삼옙 鈺곌퀣�젟 */
+/* input �뜝�럩留꾤뇖�궪�삕 �댖怨뚰�ｏ옙�젧 */
 .designerAddDiv .input-container {
   position: relative;
   margin: 0px 30px 30px 30px;
 }
 
-/* 占쎄맒占쎈뼊 title, close甕곌쑵�뱣 */
+/* �뜝�럡留믣뜝�럥堉� title, close�뵓怨뚯뫓占쎈괏 */
 .designerAddDiv .designerAddTitle{
   font-size : 30px;
   position: relative;
@@ -195,7 +195,7 @@
   content: '\00d7';
 }
 
-/* Input, label 占쎄퐬占쎌젟 */
+/* Input, label �뜝�럡�맟�뜝�럩�젧 */
 .designerAddDiv .input-container input {
   outline: none;
   z-index: 1;
@@ -210,7 +210,7 @@
   font-weight: 400;
 }
 
-.designerAddDiv .input-container label { /* 占쎌뵬甕곤옙 占쎌뵠占쎈짗 占쎌읈 占쎄퉳占쎄맒 */
+.designerAddDiv .input-container label { /* �뜝�럩逾х뵓怨ㅼ삕 �뜝�럩逾졾뜝�럥吏� �뜝�럩�쓧 �뜝�럡�돰�뜝�럡留� */
   position: absolute;
   top: 0px;
   left: 0px;
@@ -218,15 +218,15 @@
   font-size: 15px;
   font-weight: 300;
   line-height: 60px;
-  transition: 0.2s ease; /* label 疫뀐옙占쎌쁽揶쏉옙 占쎌궞占쎌뵬揶쏉옙占쎈뮉 占쎈꺗占쎈즲 */
+  transition: 0.2s ease; /* label �뼨�먯삕�뜝�럩�겱�뤆�룊�삕 �뜝�럩沅욃뜝�럩逾ф뤆�룊�삕�뜝�럥裕� �뜝�럥爰쀥뜝�럥利� */
 }
 
 .designerAddDiv .input-container input:focus ~ label {
   color: #ffffff;
   -webkit-transform: translate(-12%, -50%) scale(0.75);
           transform: translate(-12%, -50%) scale(0.75);  
-          /* scale(疫뀐옙占쎈뎁占쎄쾿疫뀐옙) 
-          	 translate(x�빊占�, y�빊占�)*/
+          /* scale(�뼨�먯삕�뜝�럥�럞�뜝�럡苡욜뼨�먯삕) 
+          	 translate(x占쎈퉲�뜝占�, y占쎈퉲�뜝占�)*/
 }
 
 .designerAddDiv .input-container input:valid ~ label {
@@ -244,13 +244,13 @@
   color: #ffffff;
 }
 
-/* Input 占쎈툡占쎌삋 占쎄퐨 */
+/* Input �뜝�럥�닡�뜝�럩�굥 �뜝�럡�맖 */
 .designerAddDiv .input-container .bar::before,
 .designerAddDiv .input-container .bar::after {
 	content: "";
 }
 
-/* focus 占쎌읈 */
+/* focus �뜝�럩�쓧 */
 .designerAddDiv .input-container .bar {
   position: absolute;
   top: 58px;
@@ -261,7 +261,7 @@
   height: 1px;
 }
 
-/* focus 占쎌뜎 */
+/* focus �뜝�럩�쐩 */
 .designerAddDiv .input-container .bar:before, .designerAddDiv .input-container .bar:after {
   content: '';
   position: absolute;
@@ -279,7 +279,7 @@
   right: 50%;
 }
 
-/* NEXT 甕곌쑵�뱣 */
+/* NEXT �뵓怨뚯뫓占쎈괏 */
 .designerAddDiv .button-container button {
   width: 350px;
   height: 70px;

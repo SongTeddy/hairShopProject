@@ -27,20 +27,21 @@
 	text-align: right;
 }
 
-.hairShopInfoTable caption{
-	color: black;
-	font-size: 20pt;
-	margin-bottom: 20px;
-}
 #addr1, #addr2{
 	margin-top: 5px;
 }
 </style>
 <body>
-<div class="infoTableDiv" align="center">
+<div class="infoTableDiv">
 <form name="hairShopInfoUpdateForm" method="post" enctype="Multipart/form-data" action="/hairShopProject/companyPage/hairShopInfoUpdate.do">
-	<table class="table table-striped hairShopInfoTable" id="">
-		<caption>${map.NAME }의 등록 정보</caption>
+	<font size="6pt" style="color: #363636;">${map.NAME }의 등록 정보</font><br>
+	<hr align="left" style="color: black;
+				  margin-top: 10px;
+		    	  margin-bottom: 0px;
+		    	  width: 315px;
+		    	  border-top: 2px solid #5A5A5A;"><br>
+		    	  
+	<table class="table table-striped hairShopInfoTable" id="">		
 		<tr>
 			<td>상호명</td>
 			<td><input type="text" name="name" value="${map.NAME }" size="24"/></td>

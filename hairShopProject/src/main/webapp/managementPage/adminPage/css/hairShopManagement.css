@@ -22,12 +22,12 @@
 	height: auto;
 }
 
-#hairShopListTable {
+table {
 	border: 2px solid #EDEDED;
 	padding: 5px;
 }
 
-#hairShopListTable td {
+table td {
 	text-align: center;
 	height: 40px;
 	width: 1000px;
@@ -35,7 +35,7 @@
 	font-weight: bold;
 }
 
-#hairShopListTable tbody {
+table tbody {
 	text-align: center;
 	color : black;
 	padding: 5px;
@@ -44,15 +44,15 @@
 	overflow: scroll;
 }
 
-#hairShopListTable input{
+table input{
 	transition: .2s ease;
 }
 
-#hairShopListTable input[type=button] {
+table input[type=button] {
 	font-size: 13px;
 }
 
-.hairShopManagement #hairShopListTable input[type=checkbox] {
+.hairShopManagement table input[type=checkbox] {
 	width: 15px;
 	height: 15px;
 }

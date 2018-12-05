@@ -156,17 +156,18 @@
 </delete>
 
 <select id="getSearchHairShopList" parameterType="String" resultType="java.util.Map">
-select * from
-(
-select nvl(avg(starscope),0) as avgstar, count(starscope) as reviewcnt, hairshopid, hairshopimage1, name, 
-addr1, addr2, latitud, longitude, tel1, tel2, tel3, 
-hairshopcontent, opentime, closetime, dayoff
-from review left full join memberinfo using(hairshopid)
-where memberinfo.name like '%${value }%' and memberinfo.type = 1
-group by hairshopid, hairshopimage1, name,
-addr1, addr2, latitud, longitude, tel1, tel2, tel3, 
-hairshopcontent, opentime, closetime, dayoff
-)
-order by avgstar
+	select * from
+	(
+	select nvl(round(avg(starscope), 1), 0) as avgstar, count(starscope) as reviewcnt,
+	hairshopid, hairshopimage1, name, 
+	addr1, addr2, latitud, longitude, tel1, tel2, tel3, 
+	hairshopcontent, opentime, closetime, dayoff
+	from review left full join memberinfo using(hairshopid)
+	where memberinfo.name like '%${value }%' and memberinfo.type = 1
+	group by hairshopid, hairshopimage1, name,
+	addr1, addr2, latitud, longitude, tel1, tel2, tel3, 
+	hairshopcontent, opentime, closetime, dayoff
+	)
+	order by avgstar
 </select>
 </mapper>

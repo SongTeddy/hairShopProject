@@ -60,14 +60,27 @@
 		<result property="theday" column="THEDAY" />
 		<result property="didordidnot" column="DIDORDIDNOT" />
 	</resultMap>
+	
+<!-- ==================================================== 페이지 이동 ==================================================== -->
 
-<!-- =================== 마이페이지(관리자) ========================== -->
+	<!-- 헤어샵 이름 조회 -->
+	<select id="getMemberType" parameterType="String" resultType="String">
+		select type from memberInfo where email=#{email }
+	</select>
+
+<!-- ==================================================== 마이페이지(관리자) ==================================================== -->
+	
 	
 	<!-- /////////////////////// 헤어샵 관리 메뉴 /////////////////////// -->
 	
 	<!-- 헤어샵 이름 조회 -->
 	<select id="getHairShopName" resultType="String">
 		select distinct name from memberInfo where type='1'
+	</select>
+	
+	<!-- 헤어샵 리스트 조회 -->
+	<select id="getHairShopList" parameterType="String" resultType="String">
+		select * from memberInfo where name=#{hairShopName }
 	</select>
 	
 	<!-- /////////////////////// 회원 관리 메뉴 /////////////////////// -->
@@ -78,8 +91,8 @@
 	</select>
 	
 	<!-- 개인회원 total 조회 -->
-	<select id="getMemberTotal" parameterType="String" resultType="String">
-		select count(*) from memberinfo where type=#{type }
+	<select id="getMemberTotal" resultType="String">
+		select count(*) from memberinfo where type='0'
 	</select>
 	
 	<!-- 개인회원 삭제 -->
@@ -92,7 +105,9 @@
 		update memberinfo set pwd=#{modifyPwd } where email=#{email }
 	</update>
 	
-<!-- =================== 마이페이지(개인) ========================== -->
+	
+<!-- ==================================================== 마이페이지(개인) ==================================================== -->
+
 
 	<!-- 개인회원 정보수정 -->
 	<update id="updateInfo" parameterType="member">
@@ -123,17 +138,119 @@
 	<select id="checkReservationList" parameterType="Map" resultType="Map">
 		select d.designerimage, d.positioncode, r.* from reservation r inner join designerinfo d on d.designerid = r.designerid where bookeremail=#{email} and didordidnot=1 and theday=#{theday}
 	</select>
-
 	
-	<!-- 헤어샵 홈페이지 링크 띄우기 -->
-   <select id="getHomepageLink" parameterType="String" resultType="java.util.Map">
-      select name, hairshopid from memberinfo where email=#{memEmail }
-   </select>
-   
-   <select id="isExistId" parameterType="java.lang.String" resultType="java.util.Map">
-	  select * from memberinfo where hairshopid=#{hairShopId } 
-   </select>	
-	<select id="heartList" parameterType="java.lang.String" resultType="java.util.Map">
-		select * from heart join memberinfo using (hairshopid) where heart.email = #{memEmail }
+	<select id="heartList" parameterType= "java.lang.String" resultType="java.util.Map">
+		select * from heart where email=#{memEmail }
 	</select>
+
+
+<!-- ==================================================== 마이페이지(헤어샵) ==================================================== -->
+	
+	
+	<!-- /////////////////////// 예약 현황 메뉴 /////////////////////// -->
+
+	<!-- 예약 현황 조회 -->
+	<select id="getTotalReservation" parameterType="String" resultType="String">
+		select count(*) from reservation where hairshopid=#{hairshopId }
+	</select>
+	
+	<!-- 총 예약 금액 조회 -->
+	<select id="getTotalReservePrice" parameterType="String" resultType="String">
+		select price from reservation where hairshopid=#{hairshopId }
+	</select>
+	
+	<!-- 헤어샵의 디자이너 조회 -->
+	<select id="getHairShopDesigner" parameterType="String" resultType="String">
+		select designername from designerinfo where hairshopid=#{hairshopId }
+	</select>
+	
+	<!-- 헤어샵 정보 조회 -->
+	<select id="getMemberInfo" parameterType="String" resultType="member">
+		select * from memberInfo where hairshopid=#{hairshopId }
+	</select>
+	
+	<!-- 한명의 예약 정보 조회 -->
+	<select id="getReservation" parameterType="String" resultType="reservation">
+		select * from reservation where designername=#{designername }
+	</select>
+
+	<!-- /////////////////////// 디자이너 관리 메뉴 /////////////////////// -->
+
+	<!-- 디자이너 정보 -->
+	<select id="getDesignerInfo" parameterType="String" resultType="designer">
+		select * from designerinfo where hairshopid=#{hairshopId }
+	</select>
+	
+	<!-- 디자이너의 예약 수-->
+	<select id="getDesignerReserve" parameterType="String" resultType="String">
+		select count(*) from reservation where designerid=#{designerId }
+	</select>
+	
+	<!-- 디자이너 삭제-->
+	<select id="designerDelete" parameterType="String">
+		delete designerinfo where seq=#{seq }
+	</select>
+	
+	<!-- 디자이너 삭제-->
+	<select id="designerCheckedDelete" parameterType="int">
+		delete designerinfo where seq in 
+		<foreach collection="list" item="data" open="(" close=")" separator=",">
+			#{data}
+		</foreach>
+	</select>
+	
+	<!-- 디자이너 추가-->
+	<insert id="designerAdd" parameterType="designer">
+		insert into designerinfo(seq, designerid, hairshopid, designername, positioncode, position, dayoff) values(seq_designerinfo.nextval, #{designerid }, #{hairshopid }, #{designername }, #{positioncode }, #{position }, #{dayoff })
+	</insert>
+	
+	<!-- 디자이너 수정-->
+	<update id="designerModify" parameterType="designer">
+		update designerinfo set designerid=#{designerid}, designername=#{designername }, designerimage=#{designerimage }, positioncode=#{positioncode }, position=#{position }, dayoff=#{dayoff } where seq=#{seq }
+	</update>
+	
+	<!-- /////////////////////// 헤어샵 정보 등록(수정) 메뉴  /////////////////////// -->
+	
+	<!-- 헤어샵 정보 받기 -->
+	<select id="getHairShopInfo" parameterType="String" resultType="java.util.Map">
+		select * from memberinfo where email=#{memEmail }
+   	</select>
+   
+   	<!-- 헤어샵  등록할 때, 아이디 중복 막기 -->
+   	<select id="isExistId" parameterType="java.lang.String" resultType="java.util.Map">
+		select * from memberinfo where hairshopid=#{hairShopId } 
+   	</select>
+   
+   	<!-- 헤어샵  등록할 때, 사업자등록번호 중복 막기 -->
+  	<select id="isExistLicense" parameterType="java.util.Map" resultType="java.util.Map">
+		select * from MEMBERINFO where license1=#{license1 } and license2=#{license2 } and license3=#{license3 }
+   	</select>
+   
+   	<!-- 헤어샵 정보 등록 및 변경 -->
+   	<update id="hairShopInfoUpdate" parameterType="java.util.Map">
+	     update MEMBERINFO set name=#{name },
+	     license1=#{license1 }, license2=#{license2 }, license3=#{license3 },
+	     addr1=#{addr1 }, addr2=#{addr2 }, zipcode=#{zipcode },
+	     tel1=#{tel1 }, tel2=#{tel2 }, tel3=#{tel3 },
+	     hairshopcontent = #{hairShopContent },
+	     opentime=#{openTime }, closetime=#{closeTime }, 
+	     hairshopid=#{hairShopId },
+	     hairshopimage1=#{hairShopImage1 }, 
+	     hairshopimage2=#{hairShopImage2 }, 
+	     hairshopimage3=#{hairShopImage3 }, 
+	     dayoff=#{dayoff }
+	     where email=#{email }
+	</update>
+   
+	<update id="hairShopInfoUpdateExceptImg" parameterType="java.util.Map">
+		update MEMBERINFO set name=#{name },
+		license1=#{license1 }, license2=#{license2 }, license3=#{license3 },
+		addr1=#{addr1 }, addr2=#{addr2 }, zipcode=#{zipcode },
+		tel1=#{tel1 }, tel2=#{tel2 }, tel3=#{tel3 },
+		hairshopcontent = #{hairShopContent },
+		opentime=#{openTime }, closetime=#{closeTime }, 
+		hairshopid=#{hairShopId },
+		dayoff=#{dayoff }
+		where email=#{email }
+	</update>
 </mapper>

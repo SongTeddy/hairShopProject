@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" href="/hairShopProject/managementPage/css/companyPage.css">
+<link rel="stylesheet" href="/hairShopProject/managementPage/companyPage/css/companyPage.css">
 
 <div class="myPage">
    <div class="myPage_menu">
@@ -11,7 +11,7 @@
         <li class="myPage_menu_li"><a href="/hairShopProject/companyPage/hairShopInfoInput.do">헤어샵 정보 등록 | 수정</a></li>
       </ul>
    </div>
-   <div class="myPage_body" align="center">
+   <div class="myPage_body">
       <jsp:include page="${myPageBody }" />
    </div>
 </div>

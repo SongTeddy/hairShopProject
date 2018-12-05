@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import management.dao.ManagementDAO;
 import member.dao.MemberDAO;
 
 @Component
@@ -17,13 +18,15 @@ import member.dao.MemberDAO;
 public class ManageController {
 	@Autowired
 	private MemberDAO memberDAO;
+	@Autowired
+	private ManagementDAO managementDAO;
 
 // 페이지 이동
 	
 	// 관리페이지 (개인, 사업자 구분)
 	@RequestMapping(value="managementPage", method=RequestMethod.POST)
 	public @ResponseBody String managementPages(@RequestParam String memEmail) {
-		return memberDAO.getMemberType(memEmail);
+		return managementDAO.getMemberType(memEmail);
 	}
 	
 	// 개인 페이지 이동

@@ -20,33 +20,4 @@ public interface MemberDAO {
 	public MemberDTO login(String id, String pwd);
 	public void find_pw(HttpServletResponse response, MemberDTO memberDTO) throws Exception;
 	public String searchId(MemberDTO memberDTO);
-	public String getMemberType(String email);
-	public String getCompanyType(String email);
-	
-	// 마이페이지
-	public String getTotalReservation(String email);
-	public List<DesignerDTO> getDesignerInfo(String hairshopId);
-	public String getDesignerReserve(String string);
-	public void designerDelete(String seq);
-	public void designerCheckedDelete(List<Integer> list);
-	public void designerAdd(DesignerDTO designerDTO);
-	public void designerModify(DesignerDTO designerDTO);
-	public List<String> getTotalReservePrice(String hairshopId);
-	public List<MemberDTO> getMemberInfo(String hairshopId);
-	public List<ReservationDTO> getReservation(String designername);
-	public List<String> getHairShopDesigner(String hairshopId);
-  
-	public Map<String, String> getHairShopInfo(String memEmail);
-	public boolean isExistId(String hairShopId);
-	public boolean isExistLicense(Map<String, String> map);
-	public int hairShopInfoUpdate(Map<String, Object> map);
-	public int hairShopInfoUpdateExceptImg(Map<String, Object> map);
-	
-	public List<Map<String, String>> heartList(String memEmail);
-	public Map<String, String> checkReservationList(Map<String, String> map);
-	public void reservationCancel(String email);
-	public List<Map<String, Object>> getReservationList(String email);
-	public List<Map<String, Object>> getUsageDetailsInfo(String email);
-	public void userDelete(Map<String, String> map);
-	public void updateInfo(MemberDTO memberDTO);
 }

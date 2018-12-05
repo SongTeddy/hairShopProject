@@ -64,9 +64,10 @@ public class AdminPageController {
 		return mav;
 	}
 	
+	// 개인회원 total 조회
 	@RequestMapping(value="getMemberTotal", method=RequestMethod.POST)
 	public @ResponseBody String getMemberTotal() {		
-		return managementDAO.getMemberTotal("0");
+		return managementDAO.getMemberTotal();
 	}
 	
 	// 개인회원 삭제
@@ -99,8 +100,10 @@ public class AdminPageController {
 	
 	// 헤어샵 리스트 조회
 	@RequestMapping(value="getHairShopList", method=RequestMethod.POST)
-	public ModelAndView getHairShopList() {
-		List<MemberDTO> hairShopList = managementDAO.getMemberByType("1");
+	public ModelAndView getHairShopList(@RequestParam String hairShopName) {
+		List<MemberDTO> hairShopList = managementDAO.getHairShopList(hairShopName);
+		
+		System.out.println(hairShopList.size());
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("hairShopList", hairShopList);

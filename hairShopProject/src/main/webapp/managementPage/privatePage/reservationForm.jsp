@@ -58,7 +58,7 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
 $(document).ready(function(){
 	$.ajax({
 		type : 'POST',
-		url : '../managementPage/reservation.do',
+		url : '../privatePage/reservation.do',
 		data : {'email':$('.reservationEmail').val()},
 		dataType : 'json',
 		success : function(data){

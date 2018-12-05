@@ -61,7 +61,6 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="/hairShopProject/managementPage/companyPage/js/totalReservation.js"></script>
 <script>
-
 var todayAr = new Array(); // 년, 월, 일 배열
 var dayOfWeekAr = new Array(); // 요일 배열
 
@@ -111,7 +110,7 @@ function showDesignerSchedule() {
 				bookerRequestsAr[index] = items;[index] = items;
 			});
 			
-			
+
 			// 서비스명을 가진 배열 초기화
 			$.each(data.serviceList, function(index, items) {
 				serviceAr[index] = items;
@@ -281,7 +280,13 @@ $(document).ready(function() {
 	
 	// 디자이너가 바뀌면 일정표를 다시 불러옴
 	$('#designerSelect').change(function() {
+		$('.changeWeekBtn').text('NEXT');
+		
+		$('.topTr td:not(.backslash)').remove();
+		
+		startDay = 0; // 현재
 		showDesignerSchedule();
+		addReserveDate()
 	});
 
 	// 총 예약 수
@@ -436,8 +441,6 @@ $(document).ready(function() {
 			showDesignerSchedule();
 			addReserveDate()
 		}
-		
-		
 	});
 });
 </script>

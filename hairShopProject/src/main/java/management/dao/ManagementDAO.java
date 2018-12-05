@@ -3,6 +3,8 @@ package management.dao;
 import java.util.List;
 import java.util.Map;
 
+import hairShop.bean.ReservationDTO;
+import member.bean.DesignerDTO;
 import member.bean.MemberDTO;
 
 public interface ManagementDAO {	
@@ -14,14 +16,33 @@ public interface ManagementDAO {
 	public void updateInfo(MemberDTO memberDTO);
 	public Map<String, String> checkReservationList(Map<String, String> map);
 
-	public Map<String, String> getHomepageLink(String memEmail);
 	public boolean isExistId(String hairShopId);
 	public List<Map<String, String>> heartList(String memEmail);
 	
 	// 관리자 페이지
-	public List<MemberDTO> getMemberByType(String type);
+	public List<MemberDTO> getHairShopList(String hairShopName);
 	public void memberDelete(String email);
 	public void memberPwdModify(String email, String modifyPwd);
-	public String getMemberTotal(String string);
+	public String getMemberTotal();
 	public List<String> getHairShopName();
+	public List<MemberDTO> getMemberByType(String type);
+	
+	// 헤어샵 페이지
+	public String getMemberType(String email);
+	public String getCompanyType(String email);
+	public String getTotalReservation(String hairshopid);
+	public List<String> getTotalReservePrice(String hairshopId);
+	public List<ReservationDTO> getReservation(String designername);
+	public List<DesignerDTO> getDesignerInfo(String hairshopId);
+	public String getDesignerReserve(String designerId);
+	public void designerDelete(String seq);
+	public void designerCheckedDelete(List<Integer> list);
+	public void designerAdd(DesignerDTO designerDTO);
+	public void designerModify(DesignerDTO designerDTO);
+	public List<MemberDTO> getMemberInfo(String hairshopId);
+	public List<String> getHairShopDesigner(String hairshopId);
+	public Map<String, String> getHairShopInfo(String memEmail);
+	public boolean isExistLicense(Map<String, String> map);
+	public int hairShopInfoUpdate(Map<String, Object> map);
+	public int hairShopInfoUpdateExceptImg(Map<String, Object> map);
 }

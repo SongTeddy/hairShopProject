@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import hairShop.bean.HairShopReviewDTO;
 import hairShop.dao.HairShopDAO;
+import management.dao.ManagementDAO;
 import member.dao.MemberDAO;
 
 @Controller
@@ -27,6 +28,8 @@ public class HairShopController {
    private HairShopDAO hairShopDAO;
    @Autowired
    private MemberDAO memberDAO;
+   @Autowired
+   private ManagementDAO managementDAO;
    @Autowired
    private HairShopReviewDTO hairShopReviewDTO;
    
@@ -218,6 +221,7 @@ public class HairShopController {
 	   mav.setViewName("jsonView");
 	   return mav;
    }
+   
    //리뷰 작성
    @RequestMapping(value="/hairShop/reviewWrite.do",method=RequestMethod.POST)
    public @ResponseBody String reviewWrite(@RequestParam Map<String,String> map, HttpSession session, Model model) {
@@ -225,7 +229,7 @@ public class HairShopController {
 	  String reviewContent = map.get("designerContent");
 	  String starScope = map.get("starScope");
 	   
-	  map = memberDAO.checkReservationList(map);
+	  map = managementDAO.checkReservationList(map);
 	  map.put("reviewSubject", reviewSubject);
 	  map.put("reviewContent", reviewContent);
 	  map.put("starScope", starScope);
