@@ -191,8 +191,8 @@
 	</select>
 
 	
-		<!-- 헤어샵 홈페이지 링크 띄우기 -->
-   <select id="getHomepageLink" parameterType="String" resultType="java.util.Map">
+	<!-- 헤어샵 정보 받기 -->
+   <select id="getHairShopInfo" parameterType="String" resultType="java.util.Map">
       select * from memberinfo where email=#{memEmail }
    </select>
    
@@ -207,18 +207,31 @@
    </select>
 	
 	<!-- 헤어샵 정보 등록 및 변경 -->
-	<update id="hairShopInfoUpdate" parameterType="java.lang.String">
+	<update id="hairShopInfoUpdate" parameterType="java.util.Map">
 		update MEMBERINFO set name=#{name },
 		license1=#{license1 }, license2=#{license2 }, license3=#{license3 },
 		addr1=#{addr1 }, addr2=#{addr2 }, zipcode=#{zipcode },
 		tel1=#{tel1 }, tel2=#{tel2 }, tel3=#{tel3 },
 		hairshopcontent = #{hairShopContent },
 		opentime=#{openTime }, closetime=#{closeTime }, 
-<!-- 		hairshopimage1=#{hairShopImage1 }, 
+		hairshopid=#{hairShopId },
+		hairshopimage1=#{hairShopImage1 }, 
 		hairshopimage2=#{hairShopImage2 }, 
-		hairshopimage3=#{hairShopImage3 }, --> 
+		hairshopimage3=#{hairShopImage3 }, 
 		dayoff=#{dayoff }
-		where email=#{memEmail }
+		where email=#{email }
+	</update>
+	
+	<update id="hairShopInfoUpdateExceptImg" parameterType="java.util.Map">
+		update MEMBERINFO set name=#{name },
+		license1=#{license1 }, license2=#{license2 }, license3=#{license3 },
+		addr1=#{addr1 }, addr2=#{addr2 }, zipcode=#{zipcode },
+		tel1=#{tel1 }, tel2=#{tel2 }, tel3=#{tel3 },
+		hairshopcontent = #{hairShopContent },
+		opentime=#{openTime }, closetime=#{closeTime }, 
+		hairshopid=#{hairShopId },
+		dayoff=#{dayoff }
+		where email=#{email }
 	</update>
   	
   	<select id="heartList" parameterType= "java.lang.String" resultType="java.util.Map">

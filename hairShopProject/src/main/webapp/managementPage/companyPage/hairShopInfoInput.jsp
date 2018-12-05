@@ -38,7 +38,7 @@
 </style>
 <body>
 <div class="infoTableDiv" align="center">
-<form name="hairShopInfoUpdateForm" method="post" action="/hairShopProject/managementPage/hairShopInfoUpdate.do">
+<form name="hairShopInfoUpdateForm" method="post" enctype="Multipart/form-data" action="/hairShopProject/companyPage/hairShopInfoUpdate.do">
 	<table class="table table-striped hairShopInfoTable" id="">
 		<caption>${map.NAME }의 등록 정보</caption>
 		<tr>
@@ -119,11 +119,16 @@
 			~ <input class="closeTimePicker" name="closeTime" size="5" readonly="readonly" />
 		</tr>
 		<tr>
-			<td style="height: 70px;"><span>헤어샵 이미지</span>
+			<td style="height: 70px;">
+			<span>헤어샵 이미지</span><br/>
+			<span style="font-size: 8pt;">최대 3개 등록 가능합니다.</span><br/>
 			</td>
-			<td>
-				<input type="file" name="img1[]" id="img1" multiple="multiple" />
-				<span style="font-size: 8pt;">최대 3개 등록 가능합니다.</span>
+			<td>				
+				<span id="imageSpan"></span><br/>
+				<div id="image1" style="display: inline-block; margin-right: 10px;"></div>
+				<div id="image2" style="display: inline-block;"></div>
+				<div id="image3" style="display: inline-block;"></div>
+				<input type="file" name="imageUpload[]" id="imageUpload" multiple="multiple" />
 			</td>
 		</tr> 
 	</table>
@@ -171,6 +176,7 @@ $('.closeTimePicker').timepicker({
     scrollbar: true
 });
 
+
 // 데이터 들어있으면 뿌려주기
 if('${map.HAIRSHOPID }' != ""){
 	$('input[name=hairShopId]').val('${map.HAIRSHOPID }');
@@ -212,21 +218,41 @@ if('${map.DAYOFF}' != ""){
 
 if('${map.TEL1}'!= "")
 	$('select[name=tel1]').val('${map.TEL1}');
-
-
-if('${map.OPENTIME }' != ""){
+	
+if('${map.OPENTIME }' != "")
 	$('input[name=openTime]').val('${map.OPENTIME }');
-}
-if('${map.CLOSETIME }' != ""){
+
+if('${map.CLOSETIME }' != "")
 	$('input[name=closeTime]').val('${map.CLOSETIME }');
+
+
+
+if('${map.HAIRSHOPIMAGE1 }' != ""){
+	$('#imageSpan').text("현재 등록된 이미지");
+	$('<img/>', {
+		width : '50',
+		src : '/hairShopProject/storage/${map.HAIRSHOPIMAGE1 }'
+	}).appendTo($('div#image1'));
 }
+if('${map.HAIRSHOPIMAGE2 }' != ""){
+	$('<img/>', {
+		width : '50',
+		src : '/hairShopProject/storage/${map.HAIRSHOPIMAGE2 }'
+	}).appendTo($('div#image2'));
+}
+if('${map.HAIRSHOPIMAGE3 }' != ""){
+	$('<img/>', {
+		width : '50',
+		src : '/hairShopProject/storage/${map.HAIRSHOPIMAGE3 }'
+	}).appendTo($('div#image3'));
+}
+
+
 
 $(document).ready(function(){
 	
 	var geocoder = new daum.maps.services.Geocoder();
 	survey($('input[name=addr1]'), function(){ 
-
-		alert(document.getElementById('addr1').value + 'changed');
 		// 주소-좌표 변환 객체를 생성합니다
 	
 		// 주소로 좌표를 검색합니다
@@ -273,8 +299,11 @@ $(document).ready(function(){
 		else if($('input[name=dayoff]').val()== "")
 			alert("영업 시간을 등록해주세요.");
 		else {
-			alert("서밋하러 갑시다");
-			$('form[name=hairShopInfoUpdateForm]').submit();			
+			if($('#imageUpload').get(0).files.length < 4 ){
+				alert("서밋하러 갑시다");
+				$('form[name=hairShopInfoUpdateForm]').submit();				
+			} else 
+				alert("이미지 파일은 최대 3개까지 업로드 가능합니다.");
 		}
 	});
 });
@@ -316,11 +345,12 @@ $(document).ready(function(){
 		return strTmp;
 	}
 	
+	
 	function checkLicense(){
 		if(chkWorkNumb($('input[name=license1]').val()+$('input[name=license2]').val()+$('input[name=license3]').val())){
 			$.ajax({
 				type : 'POST',
-				url : '/hairShopProject/managementPage/checkLicense.do',
+				url : '/hairShopProject/companyPage/checkLicense.do',
 				data : {'license1' :  $('input[name=license1]').val(), 'license2' :  $('input[name=license2]').val(), 'license3' :  $('input[name=license3]').val()},
 				dataType : 'text',
 				success : function(data){
@@ -340,7 +370,7 @@ $(document).ready(function(){
 			});
 		}
 	}
-
+	
 	function survey(selector, callback) {
 		var input = $(selector);
 		var oldvalue = input.val();
@@ -400,7 +430,7 @@ $(document).ready(function(){
 		} else {
 			$.ajax({
 				type : 'POST',
-				url : '/hairShopProject/managementPage/checkId.do',
+				url : '/hairShopProject/companyPage/checkId.do',
 				data : {'hairShopId' :  $('#hairShopId').val()},
 				dataType : 'text',
 				success : function(data){

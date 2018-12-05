@@ -1,19 +1,26 @@
 package management.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import hairShop.bean.ReservationDTO;
@@ -278,5 +285,124 @@ public class CompanyPageController {
 		
 		memberDAO.designerModify(designerDTO);
 	}
+	
 
+	// 헤어샵 정보 등록 페이지
+	@RequestMapping(value="hairShopInfoInput", method=RequestMethod.GET)
+	public ModelAndView hairShopInfoInput(HttpSession session) {
+		System.out.println("헤어샵 정보 등록 페이지 컨트롤러");
+		ModelAndView mav = new ModelAndView();
+		if(session.getAttribute("memEmail")!=null) {
+			Map<String, String> map = memberDAO.getHairShopInfo((String)session.getAttribute("memEmail"));
+			mav.addObject("map", map);
+			mav.addObject("display", "/managementPage/companyPage/companyPage.jsp");
+			mav.addObject("myPageBody", "/managementPage/companyPage/hairShopInfoInput.jsp");
+		}else {
+			mav.addObject("display", "/main/body.jsp");
+		}
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
+	@RequestMapping(value="getHairShopInfo", method=RequestMethod.POST)
+	public ModelAndView getHairShopInfo(HttpSession session) {
+		Map<String, String> map = memberDAO.getHairShopInfo((String)session.getAttribute("memEmail"));
+		System.out.println("링크 있니 ? hairShopId"  + "   " + map.get("HAIRSHOPID") + "   " + map.get("NAME"));
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("map", map);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	@RequestMapping(value="checkId.do")
+	public @ResponseBody String checkId(@RequestParam String hairShopId) {
+		System.out.println("아이디 찾으려구용" + hairShopId);
+		if(memberDAO.isExistId(hairShopId))
+			return "exist";
+		else
+			return "not_exist";
+	}
+	
+	@RequestMapping(value="checkLicense.do")
+	public @ResponseBody String checkLicense(@RequestParam Map<String, String> map) {
+		System.out.println("라이센스 찾으려구용" + map);
+		if(memberDAO.isExistLicense(map))
+			return "exist";
+		else
+			return "not_exist";
+	}
+	
+	
+	@RequestMapping(value="hairShopInfoUpdate", method=RequestMethod.POST)
+	public ModelAndView hairShopInfoUpdate(HttpSession session,
+			@RequestParam("imageUpload[]") List<MultipartFile> imageUpload,
+			@RequestParam String hairShopId,
+			@RequestParam String name,
+			@RequestParam String license1,
+			@RequestParam String license2,
+			@RequestParam String license3,
+			@RequestParam String addr1,
+			@RequestParam String addr2,
+			@RequestParam String zipcode,
+			@RequestParam String tel1,
+			@RequestParam String tel2,
+			@RequestParam String tel3,
+			@RequestParam String hairShopContent,
+			@RequestParam String dayoff,
+			@RequestParam String openTime,
+			@RequestParam String closeTime) {
+		System.out.println("hairShopInfoUpdate 컨트롤러    " + imageUpload.size() + "이미지 리스트 사이즈"  + imageUpload.get(0));
+		ModelAndView mav = new ModelAndView();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("email", (String)session.getAttribute("memEmail"));
+		map.put("name", name);
+		map.put("hairShopId", hairShopId);
+		map.put("license1", license1);
+		map.put("license2", license2);
+		map.put("license3", license3);
+		map.put("addr1", addr1);
+		map.put("addr2", addr2);
+		map.put("zipcode", zipcode);
+		map.put("tel1", tel1);
+		map.put("tel2", tel2);
+		map.put("tel3", tel3);
+		map.put("hairShopContent", hairShopContent);
+		map.put("dayoff", dayoff);
+		map.put("openTime", openTime);
+		map.put("closeTime", closeTime);
+		
+		String fileName = "";
+		int su = 0;
+		if(!imageUpload.get(0).getOriginalFilename().equals("")) {
+			for(int i=0; i<imageUpload.size(); i++) {
+				MultipartFile eachImage = imageUpload.get(i);
+				
+				String filePath = "E:\\workspaceForOurProject\\hairShopProject\\hairShopProject\\src\\main\\webapp\\storage";
+				fileName = (String)map.get("hairShopId") + "_" + eachImage.getOriginalFilename();
+				File file = new File(filePath, fileName);
+				map.put("hairShopImage" + (i+1), fileName);
+				try {
+					FileCopyUtils.copy(eachImage.getInputStream(), new FileOutputStream(file));
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+			}		
+			if(imageUpload.size()==1) {
+				map.put("hairShopImage" + "2", fileName);			
+				map.put("hairShopImage" + "3", fileName);			
+			}
+			if(imageUpload.size()==2) {
+				map.put("hairShopImage" + "3", fileName);			
+			}
+			su = memberDAO.hairShopInfoUpdate(map);
+		}else {
+			su = memberDAO.hairShopInfoUpdateExceptImg(map);			
+		}
+		mav.addObject("su", su);
+		mav.addObject("display", "/managementPage/companyPage/companyPage.jsp");
+		mav.addObject("myPageBody", "/managementPage/companyPage/hairShopInfoUpdate.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
 }
