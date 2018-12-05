@@ -1,0 +1,101 @@
+@charset "UTF-8";
+.stylebookFormDiv{
+	position: relative;
+}
+.stylebookFormDiv .stylebook-header{
+	width: 59%;
+	margin: 20px auto;
+	border-top: 2px solid #bababc;
+	text-align: center;
+	
+}
+.stylebookFormDiv .stylebook-body{
+	clear: left;
+	width: 65%;
+	padding-top: 50px;
+	height: 100%;
+	top: 0px;
+	margin: 20px auto;
+}
+
+.stylebook-header .stylebook-category{
+	position: relative;
+	float: left;
+	width: 183px;
+	left: 60px;
+	height: 30px;
+	cursor: pointer;
+	margin: 0px 100px 0px 0px;
+	text-align: center;
+}
+/* .stylebook-topbar{
+	clear: left;
+	width: 59%;
+	margin: 0px auto;
+	border: 1px solid #bababc;
+} */
+.stylebook-bottombar{
+	clear: left;
+	width: 59%;
+	margin: 5px auto;
+	border: 1px solid #bababc;
+}
+.stylebook-header div:hover{
+	background-color: #bababc;
+    color: white;
+}
+.stylebook-category .stylebook-icon{
+	float: left;
+	width: 30px;
+	height: 20px;
+	cursor: pointer;
+}
+
+.stylebook-category .category-title{
+	float: left;
+	padding-left: 50px;
+	font-size: 17pt;
+	font-weight: bold;
+	font-style: italic;
+	color: black;
+	cursor: pointer;
+}
+.stylebook-section{
+	float: left;
+	width: 300px;
+	height: 300px;
+	margin-left: 80px;
+}
+
+.stylebook-section .stylebook-image{
+	width: 300px;
+	height: 300px;
+	cursor: pointer;
+}
+.stylebook-image img:hover{
+	opacity: 0.3;
+	filter: alpha(opacity:'30');
+}
+.stylebook-section .stylebook-subject{
+	margin: 10px auto;
+	font-weight: bold;
+	font-size: 14pt;
+	width: 300px;
+	padding-top: 5px;
+	color: black;
+	cursor: pointer;
+	text-align: center;
+}
+.stylebook-section .stylebook-hashTag{
+	margin: 10px auto;
+	font-size: 9pt;
+	width: 300px;
+	padding-top: 5px;
+	color: black;
+	text-align: right;
+}
+.stylebook-hashTag a:hover{
+	cursor: pointer;
+	padding: 5px 5px;
+}
+

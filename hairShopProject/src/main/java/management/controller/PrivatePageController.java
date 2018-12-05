@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import hairShop.bean.ReservationDTO;
 import management.dao.ManagementDAO;
-import member.bean.DesignerDTO;
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
 
@@ -27,12 +25,6 @@ import member.dao.MemberDAO;
 public class PrivatePageController {	
 	@Autowired
 	private MemberDAO memberDAO;
-	@Autowired
-	private MemberDTO memberDTO;
-	@Autowired
-	private DesignerDTO designerDTO;
-	@Autowired
-	private ReservationDTO reservationDTO;
 	@Autowired
 	private ManagementDAO managementDAO;
 	
@@ -75,9 +67,12 @@ public class PrivatePageController {
 	
 	// modifyForm에서 넘어온 데이터로 업데이트
 	@RequestMapping(value="modify", method=RequestMethod.POST)
-	public @ResponseBody String modify(@ModelAttribute MemberDTO memberDTO, Model model) {
+	public @ResponseBody String modify(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
 		managementDAO.updateInfo(memberDTO);
-		model.addAttribute("memEmail", memberDTO.getEmail());
+		memberDTO = memberDAO.changeUserInfo(memberDTO.getEmail());
+		session.setAttribute("memName", memberDTO.getName());
+		session.setAttribute("memEmail", memberDTO.getEmail());
+		
 		return "success";
 	}
 	// 이용내역안내 폼 불러내기

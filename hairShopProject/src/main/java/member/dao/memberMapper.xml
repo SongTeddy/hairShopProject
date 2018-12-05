@@ -89,4 +89,8 @@
 	<select id="searchId" parameterType="member" resultType="java.lang.String">
 		select email from memberinfo where tel1=#{tel1} and tel2=#{tel2} and tel3=#{tel3}
 	</select>
+	
+	<select id="changeUserInfo" parameterType="String" resultType="member">
+  		select * from memberInfo where email=#{email}
+  	</select>
 </mapper>

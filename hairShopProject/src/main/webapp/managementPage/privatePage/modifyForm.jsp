@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- <link rel="stylesheet" href="/hairShopProject/managementPage/css/bootstrap.css">
-<link rel="stylesheet" href="/hairShopProject/managementPage/css/bootstrap.min.css"> -->
 <link rel="stylesheet" href="/hairShopProject/managementPage/privatePage/css/memberPage.css">
 
 <div id="modifyFormDiv" style="overflow-x:hidden; height: 100%; ">
 	<br/><br/>
 <h3 align="center">회원정보수정</h3><br><br>
-<form name="modifyForm" class="modifyForm" method="post" action="modify.do">
-<table class="modifyTable table table-striped">
+<form name="modifyForm" class="modifyForm">
+<table class="modifyTable">
 	<tr>
 		<td align="center">이메일</td>
 		<td>
@@ -63,12 +61,8 @@
 	</tr>
 </table>
 </form>
-<input type="hidden" class="modifyFormEmail" value="${sessionScope.memEmail }">
 </div>
-<!-- <script src="js/bootstrap.js"></script>
- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="js/bootstrap.min.js"></script> -->
+<script src="/hairShopProject/managementPage/privatePage/js/memberPage.js"></script>
 <script>
 $(document).ready(function(){
 	$('table td:last').css("background","white").css("font-weight","initial");
@@ -119,7 +113,7 @@ $(document).ready(function(){
 		}else {
 			$.ajax({
 				type : 'POST',
-				url : '../managementPage/modify.do',
+				url : '../privatePage/modify.do',
 				data :  {'email':$('.modifyEmail').val(), 'name':$('.modifyName').val(), 'pwd':$('.modifyPwd').val(), 'tel1':$('.modifyTel1').val(), 'tel2':$('.modifyTel2').val(), 'tel3':$('.modifyTel3').val(), 'zipcode':$('#zipcode').val(), 'addr1':$('#addr1').val(), 'addr2':$('#addr2').val()},
 				dataType : 'text',
 				success : function(data){
