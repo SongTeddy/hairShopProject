@@ -15,6 +15,7 @@ public class HairShopReviewDTO {
 	private String email;//회원아이디(이메일)
 	private String hairshopid; //헤어샵아이디
 	private String designerid; //헤어샵아이디 + 디자이너이름
+	private int positionCode; //디자이너 직책
 	private String position; //디자이너 직책
 	private String designername; //디자이너 이름
 	private String designerimage; //디자이너이미지
@@ -22,11 +23,11 @@ public class HairShopReviewDTO {
 	private String description; //서비스설명
 	private String reviewsubject;//리뷰제목
 	private String reviewcontent;//리뷰내용
-	private String hairshopstar;//미용실 별점
-	private String designerstar;//디자이너 별점
-	
+	private String starscope;//디자이너 별점
 	private String reply;//답글
 	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date logtime;//현재날짜 -- Date(?)
+	
+	private String name;
 }

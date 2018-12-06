@@ -1,16 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     
 <link rel="stylesheet" href="/hairShopProject/managementPage/adminPage/css/adminPage.css">
 
-<div class="myPage" style="background-color: #F9F9F9; height: auto;">
-	<div class="myPage_menu">
-		<a href="/hairShopProject/managementPage/adminPage.do">Çì¾î¼¥ °ü¸®</a><br><br>
-		<a href="/hairShopProject/adminPage/memberManagement.do">È¸¿ø °ü¸®</a><br><br>
-		<a href="/hairShopProject/adminPage/eventManagement.do">ÀÌº¥Æ® °ü¸®</a><br><br>
-	</div>
-	
-	<div class="myPage_body">
-		<jsp:include page="${myPageBody }" />
-	</div>
+<div class="myPage">
+   <div class="myPage_menu">
+      <ul class="myPage_menu_ul">
+		<li class="myPage_menu_li"><a href="/hairShopProject/managementPage/adminPage.do">í—¤ì–´ìƒµ ê´€ë¦¬</a></li>
+		<li class="myPage_menu_li"><a href="/hairShopProject/adminPage/memberManagement.do">íšŒì› ê´€ë¦¬</a></li>
+        <li class="myPage_menu_li"><a href="/hairShopProject/adminPage/eventManagement.do">ì´ë²¤íŠ¸ ê´€ë¦¬</a></li>
+      </ul>
+   </div>
+   <div class="myPage_body">
+      <jsp:include page="${myPageBody }" />
+   </div>
 </div>

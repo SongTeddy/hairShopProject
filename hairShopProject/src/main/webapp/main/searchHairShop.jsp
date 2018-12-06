@@ -233,7 +233,7 @@ $(document).ready(function() {
 								style:"text-align:right;"
 							}).append($('<span/>',{
 								class:"explore-rating",
-								html : "<img src='/hairShopProject/managementPage/img/star2.png' style='width:13px; height:13px; padding-right: 2px;' /><span style='vertical-align: top; margin-left: 0px;'>"+item.AVGSTAR+"</span>"
+								html : "<img src='/hairShopProject/hairShop/img/star2.png' style='width:13px; height:13px; padding-right: 2px;' /><span style='vertical-align: top; margin-left: 0px;'>"+item.AVGSTAR+"</span>"
 							})).append($('<span/>',{
 								text:"리뷰수 "+item.REVIEWCNT
 							})))).append($('<p/>',{

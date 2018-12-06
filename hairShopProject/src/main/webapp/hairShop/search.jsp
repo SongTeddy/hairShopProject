@@ -315,7 +315,7 @@ $(document).ready(function() {
 					html: listSearch[j].NAME
 				})).append($('<span/>',{
 					class:"explore-rating",
-					html : "<img src='/hairShopProject/managementPage/img/star2.png' style='width:13px; height:13px; padding-right: 2px;' /><span style='vertical-align: top; margin-left: 0px;'>"+listSearch[j].AVGSTAR+"</span>"
+					html : "<img src='/hairShopProject/hairShop/img/star2.png' style='width:13px; height:13px; padding-right: 2px;' /><span style='vertical-align: top; margin-left: 0px;'>"+listSearch[j].AVGSTAR+"</span>"
 				})).append($('<span/>',{
 					text: '리뷰 '+ listSearch[j].REVIEWCNT + ' 개'
 				}))).append($('<p/>',{
@@ -569,7 +569,7 @@ function getSearchList(){
 						html: item.NAME
 					})).append($('<span/>',{
 						class:"explore-rating",
-						html : "<img src='/hairShopProject/managementPage/img/star2.png' style='width:13px; height:13px; padding-right: 2px;' /><span style='vertical-align: top; margin-left: 0px;'>"+item.AVGSTAR+"</span>"
+						html : "<img src='/hairShopProject/hairShop/img/star2.png' style='width:13px; height:13px; padding-right: 2px;' /><span style='vertical-align: top; margin-left: 0px;'>"+item.AVGSTAR+"</span>"
 					})).append($('<span/>',{
 						text: '리뷰 ' + item.REVIEWCNT + ' 개'
 					}))).append($('<p/>',{

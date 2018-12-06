@@ -576,6 +576,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #ff545a;}
 .single-explore-txt.bg-theme-2 .explore-map-icon a svg:hover{color: #00c437;}
 .single-explore-item:hover{box-shadow: 0 10px 20px rgba(21,19,19,.2);}
 
+
 /*-------------------------------------
         8. Reviews
 --------------------------------------*/
@@ -630,10 +631,6 @@ nav.navbar.bootsnav .navbar-toggle i{color: #ff545a;}
     font-size: 14px;
     font-weight: 400;
     margin-top: 10px;
-}
-.testimonial-person-star i {
-    color: #ffda2b;
-    margin: 9px 4px 0 0;
 }/* testimonial-info */
 
 

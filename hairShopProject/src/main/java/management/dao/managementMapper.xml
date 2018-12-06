@@ -105,6 +105,58 @@
 		update memberinfo set pwd=#{modifyPwd } where email=#{email }
 	</update>
 	
+	<!-- 이벤트 등록 -->
+	<update id="eventRegister" parameterType="Map">
+		insert into event
+		values (event_seq.nextval, #{eventSubject }, 
+		to_date(#{eventStartDate}, 'mm/dd/yyyy'), 
+		to_date(#{eventEndDate}, 'mm/dd/yyyy'), 
+		#{eventBannerImage },
+		#{eventDetailImage })
+	</update>
+	
+	<!-- 이벤트와 쿠폰 동시 등록 -->
+	<update id="eventAndCouponRegister" parameterType="Map">
+		begin
+			insert into event
+			values (event_seq.nextval, #{eventSubject }, 
+			to_date(#{eventStartDate}, 'mm/dd/yyyy'), 
+			to_date(#{eventEndDate}, 'mm/dd/yyyy'), 
+			#{eventBannerImage },
+			#{eventDetailImage });
+			
+			insert into coupon 
+			values(event_seq.currval, #{eventSubject }||#{discountAmount }||' 쿠폰',
+			#{discountOption }, #{discountAmount },
+			#{expirationOption },
+			to_date(#{expirationDate }, 'mm/dd/yyyy'), 	
+			#{termOfValidity },
+			#{couponImage });
+		end;
+	</update>
+	
+	<!-- 모든 이벤트 가져오기. 쿠폰들도 있으면 조인해서 가져옴. 쿠폰이 없는 이벤트는 쿠폰 컬럼에 모두 null값 들어있음 -->
+	<select id="totalEvents" resultType="java.util.Map">
+		select * from event left join coupon using(seq)	
+	</select>
+
+	<!-- 이벤트 정보 가져오기 -->
+	<select id="getEventList" resultType="java.util.Map">
+      <![CDATA[select * from event where eventenddate > sysdate order by seq desc]]>
+	</select>
+
+	<select id="getEndEventList" resultType="java.util.Map">
+      <![CDATA[select * from event where eventenddate < sysdate order by seq desc]]>
+	</select>
+
+	<select id="getEventImageName" parameterType="int"
+		resultType="java.util.Map">
+      <![CDATA[select eventdetailimage,'[현재 진행중 이벤트] '||eventSubject as eventSubject,seq from event where seq=#{seq } and eventenddate > sysdate]]>
+	</select>
+	<select id="getEndEventImageName" parameterType="int"
+		resultType="java.util.Map">
+      <![CDATA[select eventdetailimage,'[종료된 이벤트] '||eventSubject as eventSubject,seq from event where seq=#{seq } and eventenddate < sysdate]]>
+	</select>
 	
 <!-- ==================================================== 마이페이지(개인) ==================================================== -->
 
