@@ -73,15 +73,30 @@
 	
 	<!-- /////////////////////// 헤어샵 관리 메뉴 /////////////////////// -->
 	
+	<!-- 헤어샵 total 조회 -->
+	<select id="getTotalHairShop" resultType="String">
+		select count(*) from memberInfo where type='1'
+	</select>
+	
 	<!-- 헤어샵 이름 조회 -->
 	<select id="getHairShopName" resultType="String">
 		select distinct name from memberInfo where type='1'
 	</select>
 	
 	<!-- 헤어샵 리스트 조회 -->
-	<select id="getHairShopList" parameterType="String" resultType="String">
+	<select id="getHairShopList" parameterType="String" resultType="member">
 		select * from memberInfo where name=#{hairShopName }
 	</select>
+	
+	<!-- 헤어샵 삭제 -->
+	<delete id="hairShopDelete" parameterType="String">
+		delete memberinfo where email=#{email }
+	</delete>
+	
+	<!-- 헤어샵 비밀번호 수정 -->
+	<update id="hairShopPwdModify" parameterType="Map">
+		update memberinfo set pwd=#{modifyPwd } where email=#{email }
+	</update>
 	
 	<!-- /////////////////////// 회원 관리 메뉴 /////////////////////// -->
 	
