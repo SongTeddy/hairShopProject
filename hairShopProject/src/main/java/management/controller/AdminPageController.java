@@ -30,7 +30,7 @@ import member.dao.MemberDAO;
 
 @Component
 @RequestMapping(value = "/adminPage")
-public class AdminPageController implements ServletContextAware{
+public class AdminPageController {
 	@Autowired
 	private MemberDAO memberDAO;
 	@Autowired
@@ -42,8 +42,6 @@ public class AdminPageController implements ServletContextAware{
 	@Autowired
 	private ManagementDAO managementDAO;
 	
-	private ServletContext servletContext;
-
 /////////////////////////// 메뉴이동 ///////////////////////////
 
 	// 회원 관리 메뉴 이동
@@ -173,8 +171,6 @@ public class AdminPageController implements ServletContextAware{
 			System.out.println(keyName + " = " + valueName);
 		}
 		
-		String realPath = servletContext.getRealPath("/main/assets/images/event");
-		System.out.println(realPath + "진짜 경로 가져오는가!!! 서블릿 컨텍스트 너만 믿는다");
 		if (!map.containsKey("termOfValidity"))
 			map.put("termOfValidity", "");
 
@@ -227,11 +223,10 @@ public class AdminPageController implements ServletContextAware{
 	
 	// 헤어샵 삭제
 	@RequestMapping(value="hairShopPwdModify", method=RequestMethod.POST)
-	public @ResponseBody void hairShopPwdModify(@RequestParam String email,
-												@RequestParam String modifyPwd) {
-		
+	public @ResponseBody void hairShopPwdModify(@RequestParam String email,	
+						    @RequestParam String modifyPwd) {
 		managementDAO.hairShopPwdModify(email, modifyPwd);
-
+	}
 	// event 조회
 	@RequestMapping(value = "getEventList", method = RequestMethod.POST)
 	public ModelAndView getEventList() {
@@ -245,10 +240,5 @@ public class AdminPageController implements ServletContextAware{
 		mav.addObject("endEventList", getEndEventList);
 		mav.setViewName("jsonView");
 		return mav;
-	}
-
-	@Override
-	public void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
 	}
 }
