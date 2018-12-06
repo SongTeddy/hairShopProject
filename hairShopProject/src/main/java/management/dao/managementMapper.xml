@@ -73,15 +73,30 @@
 	
 	<!-- /////////////////////// 헤어샵 관리 메뉴 /////////////////////// -->
 	
+	<!-- 헤어샵 total 조회 -->
+	<select id="getTotalHairShop" resultType="String">
+		select count(*) from memberInfo where type='1'
+	</select>
+	
 	<!-- 헤어샵 이름 조회 -->
 	<select id="getHairShopName" resultType="String">
 		select distinct name from memberInfo where type='1'
 	</select>
 	
 	<!-- 헤어샵 리스트 조회 -->
-	<select id="getHairShopList" parameterType="String" resultType="String">
+	<select id="getHairShopList" parameterType="String" resultType="member">
 		select * from memberInfo where name=#{hairShopName }
 	</select>
+	
+	<!-- 헤어샵 삭제 -->
+	<delete id="hairShopDelete" parameterType="String">
+		delete memberinfo where email=#{email }
+	</delete>
+	
+	<!-- 헤어샵 비밀번호 수정 -->
+	<update id="hairShopPwdModify" parameterType="Map">
+		update memberinfo set pwd=#{modifyPwd } where email=#{email }
+	</update>
 	
 	<!-- /////////////////////// 회원 관리 메뉴 /////////////////////// -->
 	
@@ -104,8 +119,62 @@
 	<update id="memberPwdModify" parameterType="Map">
 		update memberinfo set pwd=#{modifyPwd } where email=#{email }
 	</update>
+
+	<!-- 이벤트 등록 -->
+	<update id="eventRegister" parameterType="Map">
+		insert into event
+		values (event_seq.nextval, #{eventSubject }, 
+		to_date(#{eventStartDate}, 'mm/dd/yyyy'), 
+		to_date(#{eventEndDate}, 'mm/dd/yyyy'), 
+		#{eventBannerImage },
+		#{eventDetailImage })
+	</update>
 	
-	<!-- /////////////////////// 스타일 찾기 추가 | 관리  /////////////////////// -->
+	<!-- 이벤트와 쿠폰 동시 등록 -->
+	<update id="eventAndCouponRegister" parameterType="Map">
+		begin
+			insert into event
+			values (event_seq.nextval, #{eventSubject }, 
+			to_date(#{eventStartDate}, 'mm/dd/yyyy'), 
+			to_date(#{eventEndDate}, 'mm/dd/yyyy'), 
+			#{eventBannerImage },
+			#{eventDetailImage });
+			
+			insert into coupon 
+			values(event_seq.currval, #{eventSubject }||#{discountAmount }||' 쿠폰',
+			#{discountOption }, #{discountAmount },
+			#{expirationOption },
+			to_date(#{expirationDate }, 'mm/dd/yyyy'), 	
+			#{termOfValidity },
+			#{couponImage });
+		end;
+	</update>
+	
+	<!-- 모든 이벤트 가져오기. 쿠폰들도 있으면 조인해서 가져옴. 쿠폰이 없는 이벤트는 쿠폰 컬럼에 모두 null값 들어있음 -->
+	<select id="totalEvents" resultType="java.util.Map">
+		select * from event left join coupon using(seq)	
+	</select>
+
+	<!-- 이벤트 정보 가져오기 -->
+	<select id="getEventList" resultType="java.util.Map">
+      <![CDATA[select * from event where eventenddate > sysdate order by seq desc]]>
+	</select>
+
+	<select id="getEndEventList" resultType="java.util.Map">
+      <![CDATA[select * from event where eventenddate < sysdate order by seq desc]]>
+	</select>
+
+	<select id="getEventImageName" parameterType="int"
+		resultType="java.util.Map">
+      <![CDATA[select eventdetailimage,'[현재 진행중 이벤트] '||eventSubject as eventSubject,seq from event where seq=#{seq } and eventenddate > sysdate]]>
+	</select>
+	<select id="getEndEventImageName" parameterType="int"
+		resultType="java.util.Map">
+      <![CDATA[select eventdetailimage,'[종료된 이벤트] '||eventSubject as eventSubject,seq from event where seq=#{seq } and eventenddate < sysdate]]>
+	</select>
+	
+  
+  <!-- /////////////////////// 스타일 찾기 추가 | 관리  /////////////////////// -->
 	<select id="getStylebookImage" parameterType="String" resultType="Map">
 		select m.name, s.permImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not permimage is null
 		union
@@ -114,8 +183,7 @@
 		select m.name, s.styleImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not styleImage is null
 		union
 		select m.name, s.dyeingImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not dyeingImage is null
-	</select>
-	
+  </select>
 <!-- ==================================================== 마이페이지(개인) ==================================================== -->
 
 

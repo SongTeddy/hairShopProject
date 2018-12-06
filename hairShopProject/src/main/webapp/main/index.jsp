@@ -115,7 +115,7 @@
 							data-out="fadeOutUp">
 							<li class=" scroll" style="padding-left: 35px;"><a href="javascript:void(0)" class="searchHairShopByName">미용실찾기</a></li>
 							<li class="scroll"style="padding-left: 165px;"><a href="javascript:void(0)" class="stylebook">스타일찾기</a></li>
-							<li class="scroll" style="padding-left: 165px;"><a href="javascript:void(0)">이벤트</a></li>
+							<li class="scroll" style="padding-left: 165px;"><a href="javascript:void(0)" class="eventPage" >이벤트</a></li>
 							<li class="scroll" style="padding-left: 165px;">
 								<input type="hidden" id="typeVal" value="${memType }" />
 								<input type="hidden" id="memEmail" value="${memEmail }" />
@@ -299,6 +299,10 @@
 	
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
+			$(".eventPage").on('click',function(){
+	            location.href="/hairShopProject/main/event.do";
+	         });
+			
 			$(".searchHairShopByName").on('click',function(){
 				location.href="searchHairShop.do";
 			});

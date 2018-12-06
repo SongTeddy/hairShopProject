@@ -17,6 +17,7 @@
     
 	<bean id="indexController" class="main.controller.IndexController"></bean>
 	<bean id="hairShopController" class="hairShop.controller.HairShopController"></bean>
+	<bean id="boardController" class="board.controller.BoardController"></bean>
 	
 	<bean id="memberController" class="member.controller.MemberController"></bean>
 	<bean id="loginController" class="member.controller.LoginController"></bean>

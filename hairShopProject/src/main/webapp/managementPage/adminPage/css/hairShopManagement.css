@@ -1,3 +1,7 @@
+* {
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
 .hairShopManagement {
 	color : #636363;
 	font-weight: bold;
@@ -30,7 +34,7 @@ table {
 table td {
 	text-align: center;
 	height: 40px;
-	width: 1000px;
+	width: 1141px;
 	font-family: 'Nanum Gothic', sans-serif;
 	font-weight: bold;
 }
@@ -55,4 +59,35 @@ table input[type=button] {
 .hairShopManagement table input[type=checkbox] {
 	width: 15px;
 	height: 15px;
+}
+
+/* 헤어샵 리스트 div */
+.hairShopManagement div:not(.hairShopTotal) {
+	float: left;
+	border: 1px solid #000000;
+	border-bottom: 2px solid #000000;
+	border-top: none;
+	height: 30px;
+	text-align: center;
+	line-height: 28px;
+	margin-top: -2px;
+	display: none;
+}
+
+/* 헤어샵 수정, 삭제 버튼 */
+.hairShopDeleteBtn {
+	opacity: .8;
+	transition: .15s ease;
+}
+.hairShopDeleteBtn:hover {
+	opacity: 1;
+	transition: .15s ease;
+}
+
+.hairShopModifyBtn {
+	opacity: .7;
+}
+.hairShopModifyBtn:hover {
+	opacity: 1;
+	transition: .15s ease;
 }
