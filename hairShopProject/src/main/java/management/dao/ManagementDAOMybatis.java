@@ -224,4 +224,9 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	   public int hairShopInfoUpdateExceptImg(Map<String, Object> map) {
 	      return sqlSession.update("managementSQL.hairShopInfoUpdateExceptImg", map);
 	   }
+
+	@Override
+	public List<Map<String, String>> getStylebookImage(String hairShopId) {
+		return sqlSession.selectList("managementSQL.getStylebookImage", hairShopId);
+	}
 }

@@ -23,6 +23,12 @@
 }
 </style>
 
+<font size="6pt" clss="modifyFormTitle" style="color: #363636;">관심 헤어샵</font><br>
+<hr align="left" clss="modifyFormTitle" style="color: black;
+			  margin-top: 10px;
+	    	  margin-bottom: 0px;
+	    	  width: 213px;
+	    	  border-top: 2px solid #5A5A5A;"><br><br><br>
 <div id="searchResultDiv" style="overflow-x:hidden; height: 100%; ">
 	<table id="searchResultTable" class="table table-hover">
 		<thead></thead>

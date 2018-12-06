@@ -15,10 +15,13 @@
 	background-position:0 0;
 }
 </style>
+<font size="6pt" clss="modifyFormTitle" style="color: #363636;">이용 내역 안내</font><br>
+<hr align="left" clss="modifyFormTitle" style="color: black;
+			  margin-top: 10px;
+	    	  margin-bottom: 0px;
+	    	  width: 213px;
+	    	  border-top: 2px solid #5A5A5A;"><br><br><br>
 <div class="usageDetailsInformationForm">
-	<div class="usageDetailsInformationTitle">
-		<h3>이용 내역 안내</h3>
-	</div><br><br>
 	<div class="usageDetailsInformationTableDiv">
 		<table class="usageDetailsInformationTable">
 			<thead>

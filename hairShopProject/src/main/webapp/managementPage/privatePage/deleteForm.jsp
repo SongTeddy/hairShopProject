@@ -2,7 +2,12 @@
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/hairShopProject/managementPage/privatePage/css/memberPage.css">
 <div class="deleteFormDiv">
-<h3>회원 탈퇴</h3><br><br>
+<font size="6pt" clss="modifyFormTitle" style="color: #363636;">회원 탈퇴</font><br>
+<hr align="left" clss="modifyFormTitle" style="color: black;
+			  margin-top: 10px;
+	    	  margin-bottom: 0px;
+	    	  width: 145px;
+	    	  border-top: 2px solid #5A5A5A;"><br><br><br>
 	<table class="deleteTable">
 		<tr>
 			<td>이메일</td>

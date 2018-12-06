@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+.stylebookMenagement-section{
+	float: left;
+	width: 300px;
+	height: 300px;
+	margin: 30px 0px 60px 80px;
+}
+
+.stylebookMenagement-section .stylebookMenagement-image{
+	width: 300px;
+	height: 300px;
+}
+
+.stylebook-image img:hover{
+	opacity: 0.3;
+	filter: alpha(opacity:'30');
+}
+.stylebook-section .stylebook-subject{
+	margin: 10px auto;
+	font-weight: bold;
+	font-size: 14pt;
+	width: 300px;
+	padding-top: 5px;
+	color: black;
+	cursor: pointer;
+	text-align: center;
+}
+.stylebook-section .stylebook-hashTag{
+	margin: 10px auto;
+	font-size: 9pt;
+	width: 300px;
+	padding-top: 5px;
+	color: black;
+	text-align: right;
+}

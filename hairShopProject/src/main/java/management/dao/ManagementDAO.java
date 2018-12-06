@@ -45,4 +45,5 @@ public interface ManagementDAO {
 	public boolean isExistLicense(Map<String, String> map);
 	public int hairShopInfoUpdate(Map<String, Object> map);
 	public int hairShopInfoUpdateExceptImg(Map<String, Object> map);
+	public List<Map<String, String>> getStylebookImage(String hairShopId);
 }

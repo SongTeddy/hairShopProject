@@ -404,4 +404,32 @@ public class CompanyPageController {
       mav.setViewName("/main/index");
       return mav;
    }
+   
+   @RequestMapping(value="stylebookManagement.do")
+   public ModelAndView stylebookMenagement(HttpSession session) {
+	   memberDTO = memberDAO.isCheckEmail((String)session.getAttribute("memEmail"));
+	   
+	   ModelAndView mav = new ModelAndView();
+	   mav.addObject("display", "/managementPage/companyPage/companyPage.jsp");
+	   mav.addObject("myPageBody", "/managementPage/companyPage/stylebookManagement.jsp");
+	   mav.addObject("hairShopId", memberDTO.getHairshopid());
+	   mav.setViewName("/main/index");
+	   return mav;
+   }
+   @RequestMapping(value="getStylebookImage.do")
+   public ModelAndView getStylebookImage(@RequestParam String hairShopId, HttpSession session) {
+	   System.out.println(hairShopId);
+	   List<Map<String,String>> list = managementDAO.getStylebookImage(hairShopId);
+	   memberDTO = memberDAO.isCheckEmail((String)session.getAttribute("memEmail"));
+	   
+	   ModelAndView mav = new ModelAndView();
+	   
+	   mav.addObject("list", list);
+	   mav.addObject("display", "/managementPage/companyPage/companyPage.jsp");
+	   mav.addObject("myPageBody", "/managementPage/companyPage/stylebookManagement.jsp");
+	   mav.addObject("hairShopId", memberDTO.getHairshopid());
+	   mav.setViewName("jsonView");
+	   
+	   return mav;
+   }
 }
