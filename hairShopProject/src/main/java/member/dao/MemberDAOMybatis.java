@@ -2,7 +2,6 @@ package member.dao;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -14,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import hairShop.bean.ReservationDTO;
-import member.bean.DesignerDTO;
 import member.bean.MemberDTO;
 
 @Component
@@ -179,5 +176,10 @@ public class MemberDAOMybatis implements MemberDAO {
 		String email = sqlSession.selectOne("memberSQL.searchId", memberDTO);
 
 		return email;
+	}
+
+	@Override
+	public MemberDTO changeUserInfo(String email) {
+		return sqlSession.selectOne("memberSQL.changeUserInfo", email);
 	}
 }

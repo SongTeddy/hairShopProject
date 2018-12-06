@@ -114,8 +114,8 @@
 						<ul class="nav navbar-nav navbar-right" data-in="fadeInDown"
 							data-out="fadeOutUp">
 							<li class=" scroll" style="padding-left: 35px;"><a href="javascript:void(0)" class="searchHairShopByName">미용실찾기</a></li>
-							<li class="scroll"style="padding-left: 165px;"><a href="javascript:void(0)">스타일찾기</a></li>
-							<li class="scroll" style="padding-left: 165px;"><a href="javascript:void(0)">이벤트</a></li>
+							<li class="scroll"style="padding-left: 165px;"><a href="javascript:void(0)" class="stylebook">스타일찾기</a></li>
+							<li class="scroll" style="padding-left: 165px;"><a href="javascript:void(0)" class="eventPage" >이벤트</a></li>
 							<li class="scroll" style="padding-left: 165px;">
 								<input type="hidden" id="typeVal" value="${memType }" />
 								<input type="hidden" id="memEmail" value="${memEmail }" />
@@ -299,8 +299,17 @@
 	
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
+			$(".eventPage").on('click',function(){
+	            location.href="/hairShopProject/main/event.do";
+	         });
+			
 			$(".searchHairShopByName").on('click',function(){
 				location.href="searchHairShop.do";
+			});
+			
+			//스타일찾기폼
+			$('.stylebook').on('click',function(){
+				location.href="../stylebook/stylebookForm.do";
 			});
 			
 			$(".z-tabs").on('click','li',function(){
@@ -348,7 +357,18 @@
 				});
 
 				//애니메이션 효과
-				$('#myModal').fadeIn(500);
+				$.ajax({
+					type : 'POST',
+					url : '../member/makeRSAKey.do',
+					success : function(data) {
+						var rsaPublicKey = data.split(',');
+						$('#hiddenModulus').val(rsaPublicKey[0]);
+						$('#hiddenExponent').val(rsaPublicKey[1]);
+						if(data!=null){
+							$('#myModal').fadeIn(500);
+						}
+					}
+				});
 				
 
 				/* $('#myModal').show(); */

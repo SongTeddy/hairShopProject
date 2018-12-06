@@ -69,8 +69,13 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	}
   
 	@Override
-	public List<HairShopReviewDTO> hairShopReviewList() {
-		return sqlSession.selectList("hairShopSQL.hairShopReviewList");
+	public List<HairShopReviewDTO> hairShopReviewList(String hairShopId) {
+		return sqlSession.selectList("hairShopSQL.hairShopReviewList", hairShopId);
+	}
+
+	@Override
+	public List<HairShopReviewDTO> randomReviewList() {
+		return sqlSession.selectList("hairShopSQL.randomReviewList");
 	}
 	
 	//리뷰작성
@@ -99,6 +104,4 @@ public class HairShopDAOMybatis implements HairShopDAO {
 	public List<Map<String, Object>> getSearchHairShopList(String hairShopName) {
 		return sqlSession.selectList("hairShopSQL.getSearchHairShopList", hairShopName);
 	}
-	
-
 }

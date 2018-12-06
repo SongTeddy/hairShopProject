@@ -56,14 +56,6 @@
 							<span class="starR hairshop_star" style="margin-left: 15px;">4</span>
 							<span class="starR hairshop_star" style="margin-left: 15px;">5</span>
 						</div>
-						<div class="input-container hairShopStarRev">
-							<span class="designer_star_title" style="font-weight: bold; margin-right: 57px; color:black;">디자이너 별점</span>
-							<span class="starR on designer_star">1</span>
-							<span class="starR designer_star" style="margin-left: 15px;">2</span>
-							<span class="starR designer_star" style="margin-left: 15px;">3</span>
-							<span class="starR designer_star" style="margin-left: 15px;">4</span>
-							<span class="starR designer_star" style="margin-left: 15px;">5</span>
-						</div>
 						<div class="button-container" style="margin-top: 50px;">
 							<input type="button" class="reviewWriteBtn" style="width: 80px; margin-right: 10px; color:black;" value="리뷰 작성">
 							<input type="reset" style="width: 80px; color:black;" value="다시 작성">
@@ -77,7 +69,6 @@
 <input type="hidden" class="usageDetailsInformationEmail" value="${memEmail}">
 <input type="hidden" class="hiddenTheDay" value="">
 <input type="hidden" class="hairShopStar" value="1">
-<input type="hidden" class="designerStar" value="1">
 <script>
 Date.prototype.format = function(f) {
     if (!this.valueOf()) return " ";
@@ -167,15 +158,6 @@ $(document).ready(function(){
 		alert("미용실 별점 = "+$(this).text());
 		$('.hairShopStar').val($(this).text());
 	
-		return false;
-		
-	});
-	$('.designerStarRev').on('click','.designer_star',function(){
-		$(this).parent().children('span').removeClass('on');
-		$(this).addClass('on').prevAll('span').addClass('on');
-		alert("디자이너 별점 = "+$(this).text());
-		$('.designerStar').val($(this).text());
-		
 		return false;
 		
 	});
