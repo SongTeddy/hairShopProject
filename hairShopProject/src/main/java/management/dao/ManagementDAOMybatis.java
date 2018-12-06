@@ -33,8 +33,13 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	}
 
 // 마이페이지(관리자)=================================================================================
-
-	// ------------------------------- 헤어샵 관리 메뉴 -------------------------------//
+	
+	//------------------------------- 헤어샵 관리 메뉴 -------------------------------//
+	
+	@Override
+	public String getTotalHairShop() {
+		return sqlSession.selectOne("managementSQL.getTotalHairShop");
+	}
 
 	// 헤어샵 이름 조회
 	@Override
@@ -46,9 +51,23 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public List<MemberDTO> getHairShopList(String hairShopName) {
 		return sqlSession.selectList("managementSQL.getHairShopList", hairShopName);
 	}
+	
+	@Override
+	public void hairShopDelete(String email) {
+		sqlSession.delete("managementSQL.hairShopDelete", email);
+	}
+	
+	@Override
+	public void hairShopPwdModify(String email, String modifyPwd) {
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("email", email);
+		map.put("modifyPwd", modifyPwd);
 
-	// ------------------------------- 회원 관리 메뉴 -------------------------------//
-
+		sqlSession.update("managementSQL.hairShopPwdModify", map);
+	}
+	
+	//------------------------------- 회원 관리 메뉴 -------------------------------//
+	
 	// type에 의한 멤버 조회
 	@Override
 	public List<MemberDTO> getMemberByType(String type) {
@@ -215,11 +234,40 @@ public class ManagementDAOMybatis implements ManagementDAO {
 			return false;
 	}
 	
-	// 헤어샵 정보 등록
+	//------------------------------- 헤어샵 정보 등록(수정) 메뉴 -------------------------------//
+	   
+	@Override
+	public Map<String, String> getHairShopInfo(String memEmail) {
+	  return sqlSession.selectOne("managementSQL.getHairShopInfo", memEmail);
+	}
+
+	@Override
+	public boolean isExistId(String hairShopId) {
+		System.out.println(hairShopId + "여긴 DAO");
+		if (sqlSession.selectOne("managementSQL.isExistId", hairShopId) != null)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public boolean isExistLicense(Map<String, String> map) {
+		if (sqlSession.selectOne("managementSQL.isExistLicense", map) != null)
+			return true;
+		else
+			return false;
+	}	
+
 	@Override
 	public int hairShopInfoUpdate(Map<String, Object> map) {
 		return sqlSession.update("managementSQL.hairShopInfoUpdate", map);
 	}
+
+	@Override
+	public int hairShopInfoUpdateExceptImg(Map<String, Object> map) {
+		return sqlSession.update("managementSQL.hairShopInfoUpdateExceptImg", map);
+	}
+	// 헤어샵 정보 등록
 
 	@Override
 	public int hairShopInfoUpdateExceptImg(Map<String, Object> map) {
@@ -259,5 +307,4 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public Map<String, String> getEndEventImageName(int seq) {
 		return sqlSession.selectOne("managementSQL.getEndEventImageName", seq);
 	}
-
 }

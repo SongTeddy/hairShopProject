@@ -77,6 +77,22 @@ public class AdminPageController implements ServletContextAware{
 
 		return mav;
 	}
+	
+	// 예약 관리 메뉴 이동
+	@RequestMapping(value="reservationManagement", method=RequestMethod.GET)
+	public ModelAndView reservationManagement(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		if(session.getAttribute("memEmail")!=null) {
+			mav.addObject("display", "/managementPage/adminPage/adminPage.jsp");
+			mav.addObject("myPageBody", "/managementPage/adminPage/reservationManagement.jsp");
+		}else {
+			mav.addObject("display", "/main/body.jsp");
+		}
+		mav.setViewName("/main/index");
+		
+		return mav;
+	}
 
 /////////////////////////// 회원 관리 ///////////////////////////
 
@@ -112,6 +128,12 @@ public class AdminPageController implements ServletContextAware{
 	}
 
 ///////////////////////// 헤어샵 관리 ///////////////////////////
+	
+	// 헤어샵 total 조회
+	@RequestMapping(value="getTotalHairShop", method=RequestMethod.POST)
+	public @ResponseBody String getTotalHairShop() {
+		return managementDAO.getTotalHairShop();
+	}
 
 	// 헤어샵 이름 조회
 	@RequestMapping(value = "getHairShopName", method = RequestMethod.POST)
@@ -129,9 +151,6 @@ public class AdminPageController implements ServletContextAware{
 	@RequestMapping(value = "getHairShopList", method = RequestMethod.POST)
 	public ModelAndView getHairShopList(@RequestParam String hairShopName) {
 		List<MemberDTO> hairShopList = managementDAO.getHairShopList(hairShopName);
-
-		System.out.println(hairShopList.size());
-
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("hairShopList", hairShopList);
 		mav.setViewName("jsonView");
@@ -199,6 +218,19 @@ public class AdminPageController implements ServletContextAware{
 
 		return mav;
 	}
+	
+	// 헤어샵 삭제
+	@RequestMapping(value="hairShopDelete", method=RequestMethod.POST)
+	public @ResponseBody void hairShopDelete(@RequestParam String email) {
+		managementDAO.hairShopDelete(email);
+	}
+	
+	// 헤어샵 삭제
+	@RequestMapping(value="hairShopPwdModify", method=RequestMethod.POST)
+	public @ResponseBody void hairShopPwdModify(@RequestParam String email,
+												@RequestParam String modifyPwd) {
+		
+		managementDAO.hairShopPwdModify(email, modifyPwd);
 
 	// event 조회
 	@RequestMapping(value = "getEventList", method = RequestMethod.POST)

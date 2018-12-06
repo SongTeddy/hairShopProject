@@ -26,6 +26,9 @@ public interface ManagementDAO {
 	public String getMemberTotal();
 	public List<String> getHairShopName();
 	public List<MemberDTO> getMemberByType(String type);
+	public String getTotalHairShop();
+	public void hairShopDelete(String email);
+	public void hairShopPwdModify(String email, String modifyPwd);
 	public int eventRegister(Map<String, String> map);
 	
 	// 헤어샵 페이지
