@@ -10,18 +10,12 @@ import lombok.Data;
 public class BoardDTO {
 	private int seq;
 	private String email;
-	private String nickname;
 	private String subject;
 	private String content;
-	
-	private int ref;
-	private int lev;
-	private int step;
-	private int pseq;
-	private int reply;
+	private String hairshopid;
 
-	private int hit;
-	
+	private int ref;
+
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date logtime;
 
@@ -41,14 +35,6 @@ public class BoardDTO {
 		this.email = email;
 	}
 
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
 	public String getSubject() {
 		return subject;
 	}
@@ -64,6 +50,14 @@ public class BoardDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	public String getHairshopid() {
+		return hairshopid;
+	}
+
+	public void setHairshopid(String hairshopid) {
+		this.hairshopid = hairshopid;
+	}
 
 	public int getRef() {
 		return ref;
@@ -72,47 +66,7 @@ public class BoardDTO {
 	public void setRef(int ref) {
 		this.ref = ref;
 	}
-
-	public int getLev() {
-		return lev;
-	}
-
-	public void setLev(int lev) {
-		this.lev = lev;
-	}
-
-	public int getStep() {
-		return step;
-	}
-
-	public void setStep(int step) {
-		this.step = step;
-	}
-
-	public int getPseq() {
-		return pseq;
-	}
-
-	public void setPseq(int pseq) {
-		this.pseq = pseq;
-	}
-
-	public int getReply() {
-		return reply;
-	}
-
-	public void setReply(int reply) {
-		this.reply = reply;
-	}
-
-	public int getHit() {
-		return hit;
-	}
-
-	public void setHit(int hit) {
-		this.hit = hit;
-	}
-
+	
 	public Date getLogtime() {
 		return logtime;
 	}

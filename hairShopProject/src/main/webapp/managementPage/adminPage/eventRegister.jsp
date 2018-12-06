@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
 
 <script type="text/javascript">
-window.onload=function(){
-	alert("문의 및 질문이 등록되었습니다.");
-	location.href="boardList.do?pg=1";
-}
+	alert("이벤트 등록 완료");		
+	location.href = "/hairShopProject/adminPage/eventManagement.do";
 </script>

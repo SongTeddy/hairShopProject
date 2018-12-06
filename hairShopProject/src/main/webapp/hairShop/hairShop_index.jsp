@@ -785,53 +785,17 @@ button.selectedBtn {
 					 <div id="review_area" align="center">
 					 	<ul id="reviewList"></ul>
 					 </div>
-					 <input type="button" value="리뷰쓰기" id="reviewWriteBtn">
 				</div>
 			</div>
 			<div class="tab-pane  fade" id="tabBody4" role="tabpanel"
 				aria-labelledby="tab1" aria-hidden="true" tabindex="0">
 				<div class="row">
-					<div class="col-md-12">
-						<h2>Q & A</h2>
-						<p>질문 답변 게시판</p>
-						<!-- db에서 content 받아서 뿌리기 -->
-					</div>
-				</div>
-				<div class="row">
 					<div class="col-md-offset-2 col-md-8">
 						<div class="section-heading">
 							<div class="tab-pane z-tab3" id="tab3">
-								<input type="hidden" id="pg" value="${pg}" />
-								<table id="boardListTable" cellpadding="5" frame="hsides"
-									rules="rows">
-									<tr>
-										<th width="100">글번호</th>
-										<th width="250">제목</th>
-										<th width="100">작성자</th>
-										<th width="150">작성일</th>
-										<th width="100">조회수</th>
-									</tr>
-								</table>
-								<div id="boardPagingDiv"
-									style="float: left; width: 700px; text-align: center;"></div>
-
-								<br>
-								<br>
-								<br>
-								<div style="width: 750px; text-align: center;">
-									<select id="searchOption">
-										<option value="subject">제목</option>
-										<option value="id">아이디</option>
-									</select> <input type="text" id="keyword" width="30px"> <input
-										type="button" value="검색" id="searchBtn">
-									<!-- 글쓰기 버튼 -->
-									<div style="float: right; text-align: center;">
-										<c:if test="${memId!=null}">
-											<a href="/hairShopProject/hairShop/board/boardWriteForm.do"
-												style="color: black; font-family: 한컴 윤체 L; text-decoration: none">글쓰기</a>
-										</c:if>
-									</div>
-								</div>
+								<h2>공 지 사 항</h2>
+								<p>공지 및 이벤트 게시판</p>
+								<jsp:include page="board/boardList.jsp" />
 							</div>
 						</div>
 					</div>
@@ -936,29 +900,33 @@ button.selectedBtn {
 		vanillaCalendar.init({
 			disablePastDays: true
 		});
-		//.ajax onload
 		
-		var chosenHairShopName = "";
-		$.ajax({
-			type : 'POST',
-			url : '/hairShopProject/hairShop/getHairShopInfo.do',
-			data : {'hairShopId' : '${hairShopId }'},
-			dataType: 'json',
-			success : function(data){
-				$('#hairshopAddr').text(data.map.HAIRSHOPADDR);
-				$('#hairshopTel').text(data.map.HAIRSHOPTEL);
-				$('#hairshopName_span').text(data.map.NAME);
-				$('#hairshopName_span2').text(data.map.NAME);
-				chosenHairShopName = data.map.NAME;
-				$('#hairshopContent').text(data.map.HAIRSHOPCONTENT);
-				$('#hairShopOpTime').text(data.map.OPENTIME);
-				$('#hairShopClTime').text(data.map.CLOSETIME);
-				$('div#index_img1').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE1+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
+		
+		//.ajax onload
+	      //소개글쪽 정보
+	      var chosenHairShopName = "";
+	      $.ajax({
+	         type : 'POST',
+	         url : '/hairShopProject/hairShop/getHairShopInfo.do',
+	         data : {'hairShopId' : '${hairShopId }'},
+	         dataType: 'json',
+	         success : function(data){
+	            $('#hairshopAddr1').text(data.map.ADDR1);
+	            $('#hairshopAddr2').text(data.map.ADDR2);
+	            $('#hairshopTel1').text(data.map.TEL1);
+	            $('#hairshopTel2').text(data.map.TEL2);
+	            $('#hairshopTel3').text(data.map.TEL3);
+	            $('#hairshopName_span').text(data.map.NAME);
+	            $('#hairshopName_span2').text(data.map.NAME);
+	            $('#hairshopContent').text(data.map.HAIRSHOPCONTENT);
+	            $('#hairShopOpTime').text(data.map.OPENTIME);
+	            $('#hairShopClTime').text(data.map.CLOSETIME);
+	            $('div#index_img1').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE1+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
 	            $('div#index_img2').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE2+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
 	            $('div#index_img3').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE3+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
-				
-	            
-	        	/* 미용실 위치 띄우기 */
+	        
+	               
+	            /* 미용실 위치 띄우기 */
 	        	var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 	        	    mapOption = { 
 	        	        center: new daum.maps.LatLng(data.map.LATITUD , data.map.LONGITUDE), // 지도의 중심좌표
@@ -986,26 +954,25 @@ button.selectedBtn {
 	        	$('#hairShopAddress').text(data.map.ADDR1 + " " + data.map.ADDR2);
 	            
 	            $.each(data.list, function(index, items){
-					$('<div/>',{
-						class:'col-xs-12 col-sm-3 col-md-3 col-lg-3',
-						html : '<div class="box-team wow bounceInDown" data-wow-delay="0.1s">'+
-								'<div id="designer_img"><img data-u="image" src="/hairShopProject/hairShop/img/team/'+items.DESIGNERIMAGE+'"></div>'+  
-			                    '<h2><span id="designerName'+index+'"></span></h2>'+
-			                    '<p id="designerPosition'+index+'"></p>'+  
-			                    '<span >쉬는요일 : </span>'+
-			                    '<span id="dayoff'+index+'"></span>'+
-								'</div>'
-					}).appendTo($('div.designer'));
-					
-					$('span#designerName'+index).text(items.NAME);
-					$('p#designerPosition'+index).text(items.POSITION);
-					$('span#dayoff'+index).text(items.DAYOFF);
-					
-				});
-
-			},
-			error : function(){alert("정보 에러");}
-		});
+	                $('<div/>',{
+	                   class:'col-xs-12 col-sm-3 col-md-3 col-lg-3',
+	                   html : '<div class="box-team wow bounceInDown" data-wow-delay="0.1s">'+
+	                         '<div id="designer_img"><img data-u="image" src="/hairShopProject/hairShop/img/team/'+(items.DESIGNERIMAGE==="null"? "nullchar.jpg" : items.DESIGNERIMAGE)+'"></div>'+
+	                         '<h2><span id="designerName'+index+'"></span></h2>'+
+	                              '<p id="designerPosition'+index+'"></p>'+ 
+	                              '<span >쉬는요일 : </span>'+
+	                              '<span id="dayoff'+index+'"></span>'+
+	                         '</div>'
+	                }).appendTo($('div.designer'));
+	                $('span#designerName'+index).text(items.DESIGNERNAME);
+	                $('p#designerPosition'+index).text(items.POSITION);
+	                $('span#dayoff'+index).text(items.DAYOFF);   
+	             });
+	          },
+	          error : function(){
+	             alert("소개쪽 정보 에러");
+	          }
+	     });
 		// banner slide start!!
 		jssor_1_slider_init();
 		
@@ -1326,7 +1293,7 @@ button.selectedBtn {
 	<script type="text/javascript">
 	$(document).ready(function(){
 		//리뷰
-		$('#review').on('click',function(){
+		$('#li-tab3').on('click',function(){
 			var dataList;
 			var listIndex;
 			var i = 0;
@@ -1335,19 +1302,20 @@ button.selectedBtn {
 			$.ajax({
 				type : 'POST',
 				url : '/hairShopProject/hairShop/reviewList.do',
+				data : {'hairShopId' : '${hairShopId }'},
 				dataType : 'json',
 				success : function(data){
 					//alert(JSON.stringify(data));
 					dataList = data.list;
 					dataListSize = dataList.length;
-					$('#reviewListTable tr:eq(0)').remove();
+					$('#reviewList li:ge(0)').remove();
 					$.each(data.list,function(index,items){
 						var email = items.email.split("@");
 						var name = email[0];
 						$('<li/>').append($('<div/>',{
 							class : 'info_area',
 							align : 'left',
-							html : "["+items.service+"]"+items.reviewsubject+"&emsp;"+items.position+"&nbsp;"+items.designername//[서비스] + 리뷰제목 + 디자이너직책 + 디자이너이름 
+							html : "["+items.service+"] " + items.description  + " - " + items.reviewsubject+"&emsp;"+items.position+"&nbsp;"+items.designername//[서비스] + 리뷰제목 + 디자이너직책 + 디자이너이름 
 						})).append($('<div/>',{
 							colspan : 3,
 							align : 'left',
@@ -1357,7 +1325,7 @@ button.selectedBtn {
 							class : 'star_name_logtime_area',
 							align : 'left', 
 							html : '<img style = "width : 13px; height : 13px; margin-top : -3px;" src = "/hairShopProject/hairShop/img/review/img_star.png" />' +
-									'x'+items.designerstar+"&emsp;"+ name+"&emsp;"+ items.logtime
+									'x'+items.starscope+"&emsp;"+ name+"&emsp;"+ items.logtime
 						})).append($('<hr>')).appendTo($('#reviewList'));
 						
 						if((index%10) == 9){
@@ -1369,6 +1337,8 @@ button.selectedBtn {
 							listIndex = index;
 							return false;
 						}
+						
+						
 					});//$.each
 					i = i+10;
 					//alert(i);
@@ -1384,7 +1354,7 @@ button.selectedBtn {
 							$('<li/>').append($('<div/>',{
 								class : 'info_area',
 								align : 'left',
-								html : "["+dataList[j].service+"]"+dataList[j].reviewsubject+"&emsp;"+dataList[j].position+"&nbsp;"+dataList[j].designername//[서비스] + 리뷰제목 + 디자이너직책 + 디자이너이름 
+								html : "["+dataList[j].service+"] " + dataList[j].description + " - " +dataList[j].reviewsubject+"&emsp;"+dataList[j].position+"&nbsp;"+dataList[j].designername//[서비스] + 리뷰제목 + 디자이너직책 + 디자이너이름 
 							})).append($('<div/>',{
 								colspan : 3,
 								align : 'left',
@@ -1394,11 +1364,15 @@ button.selectedBtn {
 								class : 'star_name_logtime_area',
 								align : 'left', 
 								html : '<img style = "width : 13px; height : 13px; margin-top : -3px;" src = "/hairShopProject/hairShop/img/review/img_star.png" />' +
-										'x'+dataList[j].designerstar+"&emsp;"+ name+"&emsp;"+ dataList[j].logtime
+										'x'+dataList[j].starscope+"&emsp;"+ name+"&emsp;"+ dataList[j].logtime
 							})).append($('<hr>')).appendTo($('#reviewList'));
 						}
 						$('#nextView').show();
-					});
+					}); 
+					
+					//alert(listIndex + 1);
+					//alert(dataList.length);//리뷰리스트 개수
+					
 				},
 				error : function(data){
 					alert("error");

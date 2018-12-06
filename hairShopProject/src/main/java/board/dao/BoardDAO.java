@@ -19,9 +19,7 @@ public interface BoardDAO {
 
 	public BoardDTO boardView(int seq);
 
-	public void boardReply(BoardDTO boardDTO);
-
 	public void boardModify(Map<String, String> map);
 
-	public void boardDelete(int seq);
+	public void BoardDelete(int seq);
 }

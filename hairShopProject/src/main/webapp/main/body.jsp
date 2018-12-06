@@ -30,12 +30,14 @@
 	font-size: 16pt;
 	margin-left: 10px;
 	margin-right: 20px;
+	margin-top : 30px;
 	float: left;
 
 }
-.testimonial-person-star{
-	margin-top: -8px;
+#testimonial-person-star{
+	margin-top : 23px;
 	float: left;
+	
 
 }
 .testimonial-person{
@@ -50,9 +52,15 @@
 .testimonial-img{
 	float: left;
 }
+i{
+	color: #ffda2b;
+    margin: 9px 4px 0 0;
+}
+.swiper-slide{
+	cursor: pointer;
+}
 </style>
 <!-- review swiper end -->
-
 
 <section id="display">
 	<!--welcome-hero start -->
@@ -670,225 +678,7 @@
 		<br><br>
 		<div class="swiper-container">
 			<div class="swiper-wrapper">
-				<!-- 리뷰1 -->
-			    <div class="swiper-slide">
-					<!-- 사진 -->
-					<div class="testimonial-img">
-						<img class="photo" src="/hairShopProject/main/assets/images/clients/리나.png" alt="clients">
-						<div class="name1">디자이너</div>
-						<div class="name2">리나</div>
-					</div><!--/.testimonial-img-->	
-						<div class="testimonial-description">
-							<div class="testimonial-info">
-							<!-- 이름 , 미용실, 별점 -->
-							<div class="testimonial-person">
-								<div class="beautysalon">헤어코코</div>
-								<div class="testimonial-person-star">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-								</div>
-							</div><!--/.testimonial-person-->
-						</div><!--/.testimonial-info-->
-						<!-- 글 -->
-						<div class="testimonial-comment">
-							<p style="font-size: 13pt;">
-								헤어코코의 디자이너 리나<br>
-							</p>
-						</div><!--/.testimonial-comment-->
-					</div><!--/.testimonial-description-->
-				</div><!--/.swiper-slide-->
-				<!-- 리뷰2 -->
-			    <div class="swiper-slide">
-					<div class="testimonial-img">
-						<img class="photo" src="/hairShopProject/main/assets/images/clients/혜성.png" alt="clients">
-						<div class="name1">디자이너</div>
-						<div class="name2">혜성</div>
-					</div><!--/.testimonial-img-->
-					<div class="testimonial-description">
-						<div class="testimonial-info">
-							<div class="testimonial-person">
-								<div class="beautysalon">JDS헤어디자인</div>
-								<div class="testimonial-person-star">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-								</div>
-							</div><!--/.testimonial-person-->
-						</div><!--/.testimonial-info-->
-						<div class="testimonial-comment">
-							<p style="font-size: 13pt;">
-								JDS헤어디자인의 디자이너 혜성<br>
-							</p>
-						</div><!--/.testimonial-comment-->
-					</div><!--/.testimonial-description-->
-				</div><!--/.swiper-slide-->
-				<!-- 리뷰3 -->
-			    <div class="swiper-slide">
-					<div class="testimonial-img">
-						<img class="photo" src="/hairShopProject/main/assets/images/clients/미코.png" alt="clients">
-						<div class="name1">디자이너</div>
-						<div class="name2">미코</div>
-					</div><!--/.testimonial-img-->
-					<div class="testimonial-description">
-						<div class="testimonial-info">
-							<div class="testimonial-person">
-								<div class="beautysalon">레드스토리</div>
-								<div class="testimonial-person-star">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-								</div>
-							</div><!--/.testimonial-person-->
-						</div><!--/.testimonial-info-->
-						<div class="testimonial-comment">
-							<p style="font-size: 13pt;">
-								레드스토리의 디자이너 미코
-							</p>
-						</div><!--/.testimonial-comment-->
-					</div><!--/.testimonial-description-->
-				</div><!--/.swiper-slide-->
-				<!-- 리뷰4 -->
-			    <div class="swiper-slide">
-					<div class="testimonial-img">
-						<img class="photo" src="/hairShopProject/main/assets/images/clients/하울.png" alt="clients">
-						<div class="name1">디자이너</div>
-						<div class="name2">하울</div>
-					</div><!--/.testimonial-img-->
-					<div class="testimonial-description">
-						<div class="testimonial-info">
-							<div class="testimonial-person">
-								<div class="beautysalon">리헤어</div>
-								<div class="testimonial-person-star">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-								</div>
-							</div><!--/.testimonial-person-->
-						</div><!--/.testimonial-info-->
-						<div class="testimonial-comment">
-							<p style="font-size: 13pt;">
-								리헤어의 디자이너 하울<br>	
-							</p>
-						</div><!--/.testimonial-comment-->
-					</div><!--/.testimonial-description-->
-				</div><!--/.swiper-slide-->
-				<!-- 리뷰5 -->
-			    <div class="swiper-slide">
-					<div class="testimonial-img">
-						<img class="photo" src="/hairShopProject/main/assets/images/clients/혜미.PNG" alt="clients">
-						<div class="name1">디자이너</div>
-						<div class="name">혜미</div>
-					</div><!--/.testimonial-img-->
-					<div class="testimonial-description">
-						<div class="testimonial-info">
-							<div class="testimonial-person">
-								<div class="beautysalon">헤어앤타쿠미</div>
-								<div class="testimonial-person-star">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-								</div>
-							</div><!--/.testimonial-person-->
-						</div><!--/.testimonial-info-->
-						<div class="testimonial-comment">
-							<p style="font-size: 13pt;">
-								헤어앤타쿠미의 디자이너 혜미<br>
-							</p>
-						</div><!--/.testimonial-comment-->
-					</div><!--/.testimonial-description-->
-				</div><!--/.swiper-slide-->
-				<!-- 리뷰6 -->
-			    <div class="swiper-slide">
-					<div class="testimonial-img">
-						<img class="photo" src="/hairShopProject/main/assets/images/clients/동우.PNG" alt="clients">
-						<div class="name1">디자이너</div>
-						<div class="name2">동우</div>
-					</div><!--/.testimonial-img-->
-					<div class="testimonial-description">
-						<div class="testimonial-info">
-							<div class="testimonial-person">
-								<div class="beautysalon">헤어스테이지</div>
-								<div class="testimonial-person-star">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-								</div>
-							</div><!--/.testimonial-person-->
-						</div><!--/.testimonial-info-->
-						<div class="testimonial-comment">
-							<p style="font-size: 13pt;">
-								헤어스테이지의 디자이너 동우<br>
-							</p>
-						</div><!--/.testimonial-comment-->
-					</div><!--/.testimonial-description-->
-				</div><!--/.swiper-slide-->
-				<!-- 리뷰7 -->
-			    <div class="swiper-slide">
-					<div class="testimonial-img">
-						<img class="photo" src="/hairShopProject/main/assets/images/clients/보나.PNG" alt="clients">
-						<div class="name1">디자이너</div>
-						<div class="name2">보나</div>
-					</div><!--/.testimonial-img-->
-					<div class="testimonial-description">
-						<div class="testimonial-info">
-							<div class="testimonial-person">
-								<div class="beautysalon">청담동미용실</div>
-								<div class="testimonial-person-star">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-								</div>
-							</div><!--/.testimonial-person-->
-						</div><!--/.testimonial-info-->
-						<div class="testimonial-comment">
-							<p style="font-size: 13pt;">
-								청담동미용실의 디자이너 보나<br>
-							</p>
-						</div><!--/.testimonial-comment-->
-					</div><!--/.testimonial-description-->
-				</div><!--/.swiper-slide-->
-				<!-- 리뷰8 -->
-			    <div class="swiper-slide">
-					<div class="testimonial-img">
-						<img class="photo" src="/hairShopProject/main/assets/images/clients/하성.PNG" alt="clients">
-						<div class="name1">디자이너</div>
-						<div class="name2">하성</div>
-					</div><!--/.testimonial-img-->
-					<div class="testimonial-description">
-						<div class="testimonial-info">
-							<div class="testimonial-person">
-								<div class="beautysalon">프리베헤어</div>
-								<div class="testimonial-person-star">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-								</div>
-							</div><!--/.testimonial-person-->
-						</div><!--/.testimonial-info-->
-						<div class="testimonial-comment">
-							<p style="font-size: 13pt;">
-								프리베헤어의 디자이너 하성<br>
-							</p>
-						</div><!--/.testimonial-comment-->
-					</div><!--/.testimonial-description-->
-				</div><!--/.swiper-slide-->
+				
 			</div>
 			<!-- 네비게이션 버튼 지정 -->
 			<div class="swiper-button-next"></div>
@@ -1039,5 +829,129 @@
 				  $('form[name=searchingForm]').submit();
 			  }
 		  });
+		  
+		//사라지게하는 이벤트
+		  $('#explore').on('click',function(){
+			  //서비스
+			  $('.serviceMenu').fadeOut(300,function(){
+			     $('.sub-menu').css('transition-delay', '0s, 0s, 0.3s');
+			     $('.serviceMenu').css('visibility', 'hidden');
+		      });
+			  //지역
+			  $('.locationMenu').fadeOut(300,function(){
+			     $('.sub-menu').css('transition-delay', '0s, 0s, 0.3s');
+			     $('.locationMenu').css('visibility', 'hidden');
+			  });
+		  });
+		  
+		  //랜덤 리뷰
+		  $.ajax({
+			  type : 'GET',
+			  url : '/hairShopProject/hairShop/randomReview.do',
+			  dataType : 'json',
+			  success : function(data){
+				  var dataList;
+				  //alert(JSON.stringify(data));
+				  $.each(data.list, function(index,items){
+					dataList = data.list;
+					if(index == 8) return false;
+					  $('<div/>',{
+						  class : 'swiper-slide',
+						  onclick : 'moveToHair("'+items.hairshopid+'")'
+						  }).append($('<div/>',{
+							  class : 'testimonial-img'
+							  }).append($('<img/>',{
+								  class : 'photo',
+								  src : '/hairShopProject/main/assets/images/clients/리나.png',
+								  alt : 'clients'
+							  })).append($('<div/>',{
+								  class : 'name1',
+								  text : items.position
+							  })).append($('<div/>',{
+								  class : 'name2',
+								  text : items.designername
+							  }))
+						  ).append($('<div/>',{
+						  		class : 'testimonial-description'
+						  	}).append($('<div/>',{
+						  		class : 'testimonial-info'
+							  	}).append($('<div/>',{
+							  		class : 'testimonial-person'
+								  	}).append($('<div/>',{
+								  		class : 'beautysalon',
+								  		text : items.name
+								  	})).append($('<div/>',{
+								  		class : 'testimonial-person-star'+index,
+								  		id : 'testimonial-person-star'
+								  	}))
+							  	)
+						  	).append($('<div/>',{
+						  		class : 'testimonial-comment'
+						  		}).append($('<p/>',{
+						  			style : 'width : 350px; height : 50px;',
+						  			text : items.reviewcontent
+						  		}))
+					  		)
+					  		
+					  	).appendTo($('.swiper-wrapper'));
+					 	 
+					  for(var i=0; i<5; i++){  
+						if(i<items.starscope){
+							  $('.testimonial-person-star'+index).append($('<i/>',{
+								  class : 'fa fa-star'
+							  }));
+						  }
+					  }
+					 	
+				  });//$.each
+				  
+				  init();
+			  },
+			  error : function(data){
+				  alert("error");
+			  }
+			  
+		  });
    	});
+	
+	
+	
+	//랜덤리뷰
+	 var coverflowSetting = {
+			  slideShadow : true,
+			  rotate : 50,
+			  stretch : 0, // 슬라이더간 거리(픽셀) : 클수록 슬라이더가 서로 많이 겹침
+			  depth : 100, // 깊이 효과값 : 클수록 멀리있는 느낌이 강해짐
+		      modifier : 1,
+	  }
+	  var myswiper = null;
+
+	  function init(){
+
+	  	if(myswiper != null) myswiper.destroy();
+
+	  	myswiper = new Swiper( '.swiper-container', {
+	  		effect : 'coverflow', // 커버플로우 효과 사용
+	  		coverflowEffect : coverflowSetting, // 커버플로우 설정
+	  		loop : true, // 슬라이드 반복
+
+	  		autoplay : { // 자동 재생
+	  			delay : 0, // 딜레이 0
+	  		},
+	  		speed : 4000, // 슬라이드 속도 2초
+
+	  		navigation : {
+	  			nextEl : '.swiper-button-next', // 다음 버튼 클래스명
+	  			prevEl : '.swiper-button-prev', // 이번 버튼 클래스명
+	  		},
+	  		pagination : { // 페이징 설정
+	  			el : '.swiper-pagination',
+	  			clickable : true, // 페이징을 클릭하면 해당 영역으로 이동, 필요시 지정해 줘야 기능 작동
+	  		},
+	  	});
+	  }
+		function moveToHair(hairshopid) {
+			location.href="/hairShopProject/hairShop/hairShop_index.do?hairShopId="+hairshopid;
+		}
+	  
 </script>

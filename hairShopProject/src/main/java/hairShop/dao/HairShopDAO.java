@@ -16,7 +16,6 @@ public interface HairShopDAO {
 	public List<Map<String, String>> noConflict(Map<String, String> map);
 	public int confirmedReservation(Map<String, String> map);
 	public Map<String, Object> getTel(String memEmail);
-	public List<HairShopReviewDTO> hairShopReviewList();
 	//리뷰작성
 	public void hairShopReviewWrite(Map<String, String> map);
 	
@@ -25,4 +24,8 @@ public interface HairShopDAO {
 	public void insertHeart(Map<String, String> map);
 	public void deleteHeart(Map<String, String> map);
 	public List<Map<String, Object>> getSearchHairShopList(String hairShopName);
+	
+	//리뷰 리스트 띄우기
+	public List<HairShopReviewDTO> hairShopReviewList(String hairShopId);
+	public List<HairShopReviewDTO> randomReviewList();
 }
