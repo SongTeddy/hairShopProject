@@ -1,3 +1,4 @@
+
 package management.dao;
 
 import java.util.List;
@@ -45,6 +46,9 @@ public interface ManagementDAO {
 	public void designerModify(DesignerDTO designerDTO);
 	public List<MemberDTO> getMemberInfo(String hairshopId);
 	public List<String> getHairShopDesigner(String hairshopId);
+  
+  //스타일 찾기
+  public List<Map<String, String>> getStylebookImage(String hairShopId);
 	
 	// 헤어샵 정보 등록 관련
 	public Map<String, String> getHairShopInfo(String memEmail);

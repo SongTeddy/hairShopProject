@@ -34,6 +34,7 @@ public class ManageController {
 	public ModelAndView memberPage() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
+		mav.addObject("memberPage", "/managementPage/privatePage/heartList.jsp");
 		mav.setViewName("/main/index");
 		
 		return mav;

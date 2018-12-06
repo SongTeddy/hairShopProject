@@ -119,7 +119,7 @@
 	<update id="memberPwdModify" parameterType="Map">
 		update memberinfo set pwd=#{modifyPwd } where email=#{email }
 	</update>
-	
+
 	<!-- 이벤트 등록 -->
 	<update id="eventRegister" parameterType="Map">
 		insert into event
@@ -173,6 +173,17 @@
       <![CDATA[select eventdetailimage,'[종료된 이벤트] '||eventSubject as eventSubject,seq from event where seq=#{seq } and eventenddate < sysdate]]>
 	</select>
 	
+  
+  <!-- /////////////////////// 스타일 찾기 추가 | 관리  /////////////////////// -->
+	<select id="getStylebookImage" parameterType="String" resultType="Map">
+		select m.name, s.permImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not permimage is null
+		union
+		select m.name, s.cutImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not cutImage is null
+		union
+		select m.name, s.styleImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not styleImage is null
+		union
+		select m.name, s.dyeingImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not dyeingImage is null
+  </select>
 <!-- ==================================================== 마이페이지(개인) ==================================================== -->
 
 

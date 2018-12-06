@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="stylebookSQL">
-	<select id="getPermImage" resultType="Map">
-		select permImage, service, discription from stylebook
+	<select id="getPermImage" parameterType="String" resultType="Map">
+		select m.name, s.hairShopId, s.permImage, s.discription from stylebook s inner join memberInfo m on s.hairShopId = m.hairShopId where service=#{perm}
+	</select>
+	
+	<select id="getCutImage" parameterType="String" resultType="Map">
+		select m.name, s.hairShopId, s.cutImage, s.discription from stylebook s inner join memberInfo m on s.hairShopId = m.hairShopId where service=#{cut}
+	</select>
+	
+	<select id="getStyleImage" parameterType="String" resultType="Map">
+		select m.name, s.hairShopId, s.styleImage, s.discription from stylebook s inner join memberInfo m on s.hairShopId = m.hairShopId where service=#{style}
+	</select>
+	
+	<select id="getDyeImage" parameterType="String" resultType="Map">
+		select m.name, s.hairShopId, s.dyeingImage, s.discription from stylebook s inner join memberInfo m on s.hairShopId = m.hairShopId where service=#{dyeing}
 	</select>
 </mapper>

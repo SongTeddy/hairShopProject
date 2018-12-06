@@ -8,6 +8,7 @@
       <ul class="myPage_menu_ul">
 		<li class="myPage_menu_li"><a href="/hairShopProject/managementPage/companyPage.do">예약 현황</a></li>
 		<li class="myPage_menu_li"><a href="/hairShopProject/companyPage/designerMenu.do">디자이너 관리</a></li>
+		<li class="myPage_menu_li"><a href="/hairShopProject/companyPage/stylebookManagement.do">스타일 찾기 추가 | 관리</a></li>
         <li class="myPage_menu_li"><a href="/hairShopProject/companyPage/hairShopInfoInput.do">헤어샵 정보 등록 | 수정</a></li>
       </ul>
    </div>

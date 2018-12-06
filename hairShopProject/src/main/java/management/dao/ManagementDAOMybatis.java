@@ -307,4 +307,10 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public Map<String, String> getEndEventImageName(int seq) {
 		return sqlSession.selectOne("managementSQL.getEndEventImageName", seq);
 	}
+  
+  // ----------------------------- 스타일북 이미지
+  @Override
+	public List<Map<String, String>> getStylebookImage(String hairShopId) {
+		return sqlSession.selectList("managementSQL.getStylebookImage", hairShopId);
+	}
 }
