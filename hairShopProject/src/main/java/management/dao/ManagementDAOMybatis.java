@@ -243,11 +243,6 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	}
 	// 헤어샵 정보 등록
 
-	@Override
-	public int hairShopInfoUpdateExceptImg(Map<String, Object> map) {
-		return sqlSession.update("managementSQL.hairShopInfoUpdateExceptImg", map);
-	}
-
 	// 이벤트 등록
 	@Override
 	public int eventRegister(Map<String, String> map) {
