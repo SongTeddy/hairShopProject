@@ -151,9 +151,23 @@
 	</update>
 	
 	<!-- 모든 이벤트 가져오기. 쿠폰들도 있으면 조인해서 가져옴. 쿠폰이 없는 이벤트는 쿠폰 컬럼에 모두 null값 들어있음 -->
-	<select id="totalEvents" resultType="java.util.Map">
-		select * from event left join coupon using(seq)	
+	
+	<!-- 현재 진행중인 이벤트와 쿠폰 -->
+	<select id="getCurrentEventAndCouponList" resultType="java.util.Map">
+		 <![CDATA[
+		 select * from event left join coupon using(seq) 
+		 where eventenddate > sysdate order by seq desc
+		 ]]>
 	</select>
+	
+	<!-- 지난 이벤트와 쿠폰 -->
+	<select id="getPastEventAndCouponList" resultType="java.util.Map">
+		 <![CDATA[
+		 select * from event left join coupon using(seq) 
+		 where eventenddate < sysdate order by seq desc
+		 ]]>
+	</select>
+
 
 	<!-- 이벤트 정보 가져오기 -->
 	<select id="getEventList" resultType="java.util.Map">
@@ -168,11 +182,46 @@
 		resultType="java.util.Map">
       <![CDATA[select eventdetailimage,'[현재 진행중 이벤트] '||eventSubject as eventSubject,seq from event where seq=#{seq } and eventenddate > sysdate]]>
 	</select>
+	
 	<select id="getEndEventImageName" parameterType="int"
 		resultType="java.util.Map">
       <![CDATA[select eventdetailimage,'[종료된 이벤트] '||eventSubject as eventSubject,seq from event where seq=#{seq } and eventenddate < sysdate]]>
 	</select>
 	
+	
+	<!-- 이벤트 삭제하기 -->
+ 	<delete id="deleteEvent" parameterType="java.util.List">
+		delete event where seq in 
+		<foreach collection="list" item="data" open="(" close=")" separator=",">
+			#{data }
+		</foreach>
+	</delete>
+	
+	<select id="getTargetEvent" parameterType="java.lang.String" resultType="java.util.Map">
+		select * from event left join coupon using(seq) where seq=#{value }
+	</select>
+	
+	<update id="updateEvent" parameterType="java.util.Map">
+		begin
+			update event set 
+			eventSubject = #{eventSubject }, 
+			eventStartDate = to_date(#{eventStartDate}, 'mm/dd/yyyy'), 
+			eventEndDate = to_date(#{eventEndDate}, 'mm/dd/yyyy'), 
+			eventBannerImage = #{eventBannerImage },
+			eventDetailImage =#{eventDetailImage }
+			where seq= #{seq };
+			
+			update coupon set 
+			couponname = #{eventSubject }||#{discountAmount }||' 쿠폰',
+			discountOption = #{discountOption },
+			discountAmount = #{discountAmount },
+			expirationOption = #{expirationOption },
+			expirationdate = to_date(#{expirationDate }, 'mm/dd/yyyy'), 	
+			termOfValidity = #{termOfValidity },
+			couponImage = #{couponImage }
+			where seq = #{seq };
+		end;
+	</update>
   
   <!-- /////////////////////// 스타일 찾기 추가 | 관리  /////////////////////// -->
 	<select id="getStylebookImage" parameterType="String" resultType="Map">

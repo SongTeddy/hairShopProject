@@ -59,6 +59,12 @@ public interface ManagementDAO {
 	// 이벤트 관련
 	public List<Map<String, Object>> getEventList();
 	public List<Map<String, Object>> getEndEventList();
+	
+	public List<Map<String, Object>> getCurrentEventAndCouponList();
+	public List<Map<String, Object>> getPastEventAndCouponList();
 	public Map<String,String> getEventImageName(int seq);
 	public Map<String, String> getEndEventImageName(int seq);
+	public void deleteEvent(List<Integer> list);
+	public Map<String, Object> getTargetEvent(String seq);
+	public void updateEvent(Map<String, String> map);
 }
