@@ -265,6 +265,15 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public List<Map<String, Object>> getEndEventList() {
 		return sqlSession.selectList("managementSQL.getEndEventList");
 	}
+	
+	@Override
+	public List<Map<String, Object>> getCurrentEventAndCouponList() {
+		return sqlSession.selectList("managementSQL.getCurrentEventAndCouponList");
+	}
+	@Override
+	public List<Map<String, Object>> getPastEventAndCouponList() {
+		return sqlSession.selectList("managementSQL.getPastEventAndCouponList");
+	}
 
 	@Override
 	public Map<String, String> getEventImageName(int seq) {
@@ -281,6 +290,23 @@ public class ManagementDAOMybatis implements ManagementDAO {
 		return sqlSession.selectOne("managementSQL.getCoupon",seq);
 	}
   
+	// 이벤트 삭제
+	@Override
+	public void deleteEvent(List<Integer> list) {
+		sqlSession.delete("managementSQL.deleteEvent", list);
+	}
+	
+	// 수정할 이벤트 정보 받기
+	@Override
+	public Map<String, Object> getTargetEvent(String seq){
+		return sqlSession.selectOne("managementSQL.getTargetEvent", seq);
+	}
+	
+	// 이벤트 수정
+	public void updateEvent(Map<String, String> map) {
+		sqlSession.update("managementSQL.updateEvent", map);
+	}
+	
 	// ----------------------------- 스타일북 이미지
 	@Override
   	public List<Map<String, String>> getStylebookImage(String hairShopId) {
