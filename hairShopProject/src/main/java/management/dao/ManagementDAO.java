@@ -61,4 +61,10 @@ public interface ManagementDAO {
 	public List<Map<String, Object>> getEndEventList();
 	public Map<String,String> getEventImageName(int seq);
 	public Map<String, String> getEndEventImageName(int seq);
+	public Map<String, String> getCoupon(int seq);
+	public void couponDownExpire(Map<String, String> map);
+	public void couponDownTerm(Map<String, String> map);
+	public int couponCheckDuplication(Map<String, String> map);
+	public List<Map<String, Object>> getCouponList(String memEmail);
+	public List<Map<String, Object>> getEndCouponList(String memEmail);
 }

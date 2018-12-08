@@ -52,12 +52,12 @@
 .testimonial-img{
 	float: left;
 }
-i{
-	color: #ffda2b;
-    margin: 9px 4px 0 0;
-}
 .swiper-slide{
 	cursor: pointer;
+}
+i.fa-star {
+	color : #ffda2b;
+	margin: 9px 4px 0 0;
 }
 </style>
 <!-- review swiper end -->

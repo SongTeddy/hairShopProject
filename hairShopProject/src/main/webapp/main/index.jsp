@@ -69,6 +69,9 @@
 
 <!-- 우리가 준 스타일 css -->
 <style type="text/css">
+.logo-img:hover {
+	cursor:pointer;
+}
 .photo{
 	width: 120px; 
 	height: 120px;
@@ -85,7 +88,6 @@
 	<!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
-
 	<!--header-top start -->
 	<!-- top-area Start -->
 	<header class="top-area">
@@ -104,7 +106,7 @@
 							data-target="#navbar-menu">
 							<i class="fa fa-bars"></i>
 						</button>
-						<a class="navbar-brand" href="/hairShopProject/main/index.do">Hair<span>Shop</span></a>
+						<img class="navbar-brand logo-img" src="/hairShopProject/main/assets/logo/logo.png" style="position:absolute; top:13px; width:130px; height: auto;" onclick="location.href='/hairShopProject/main/index.do'" />
 					</div>
 					<!--/.navbar-header-->
 					<!-- End Header Navigation -->
@@ -177,9 +179,7 @@
 			<div class="footer-menu">
 				<div class="row">
 					<div class="col-sm-3">
-						<div class="navbar-header">
-							<a class="navbar-brand" href="index.do">Hair<span>Shop</span></a>
-						</div>
+						<p><img class="navbar-brand logo-img" src="/hairShopProject/main/assets/logo/logo.png" style="position:absolute; top:40px; width:130px; height: auto;" onclick="location.href='/hairShopProject/main/index.do'" /></p>
 						<!--/.navbar-header-->
 					</div>
 				</div>
@@ -189,7 +189,7 @@
 					<div class="col-sm-5">
 						<p>
 							&copy;copyright. designed and developed by <a
-								href="index.do">우리동네 HairShop</a>
+								href="index.do">머리어때</a>
 						</p>
 						<!--/p-->
 					</div>
@@ -304,7 +304,7 @@
 	         });
 			
 			$(".searchHairShopByName").on('click',function(){
-				location.href="searchHairShop.do";
+				location.href="/hairShopProject/main/searchHairShop.do";
 			});
 			
 			//스타일찾기폼
@@ -369,7 +369,6 @@
 						}
 					}
 				});
-				
 
 				/* $('#myModal').show(); */
 			});

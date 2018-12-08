@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <style type="text/css">
 img.events:hover {
 	cursor:pointer;
@@ -229,7 +229,7 @@ div {
 				<div class="arrow-down">
 					<div class="arrow-down-inner"></div>
 				</div> <a id="tab0" href="#tabBody0" role="tab" aria-controls="tabBody0"
-				aria-selected="true" data-toggle="tab" tabindex="0"> <span>진행중인 이벤트</span>
+				aria-selected="true" data-toggle="tab" tabindex="0"> <span>사용가능한 쿠폰</span>
 			</a>
 				<div class="whiteBlock"></div>
 			</li>
@@ -237,7 +237,7 @@ div {
 				<div class="arrow-down">
 					<div class="arrow-down-inner"></div>
 				</div> <a id="tab1" href="#tabBody1" role="tab" aria-controls="tabBody1"
-				aria-selected="true" data-toggle="tab" tabindex="0"> <span>종료된 이벤트</span>
+				aria-selected="true" data-toggle="tab" tabindex="0"> <span>만료된 쿠폰</span>
 			</a>
 				<div class="whiteBlock"></div>
 			</li>
@@ -253,57 +253,57 @@ div {
 		</div>
 	</section>
 </div>
-<script type="text/javascript" >
+ <script type="text/javascript" >
 function addBannerAddress(address) {
 	var addr = new String("/hairShopProject/main/assets/images/event/");
 	return addr = addr + address;
 }
-
-function eventView(seq) {
-	location.href = "/hairShopProject/main/eventView.do?seq="+seq+"&type=0";
-}
-function endEventView(seq) {
-	location.href = "/hairShopProject/main/eventView.do?seq="+seq+"&type=1";
-}
-
 $(document).ready(function(){
 	$.ajax({
 		type : 'POST',
-		url : '/hairShopProject/adminPage/getEventList.do',
+		url : '/hairShopProject/privatePage/getMyCouponCheck.do',
 		dataType: 'json',
 		success: function(data){
-			//진행이벤트
-			var eventLength = 0;
-			var eventListLength =0;
-			var endEventListLength =0;
-			$.each(data.eventList,function(index,item){
-				var addr = addBannerAddress(item.EVENTBANNERIMAGE);
-				$('<div/>',{
-					class : "col-md-offset-2 col-md-8",
-					style : "width:100%; right:17%; border-bottom: 0.5px solid gray;",
-					html : 	'<div class="section-heading" >' +
-							'<img src="'+addr+'" class="events" onclick="eventView('+item.SEQ+')" />' + 
-							'</div>'
+			//사용가능 쿠폰
+			var couponLength = 0;
+			var couponListLength =0;
+			var endCouponListLength =0;
+			if(data.couponList.length != 0) {
+				$.each(data.couponList,function(index,item){
+					var addr = addBannerAddress(item.COUPONIMAGE);
+					$('<div/>',{
+						class : "col-md-offset-2 col-md-8",
+						style : "width:80%; right:7%; border-bottom: 0.5px solid gray;",
+						html : 	'<div class="section-heading" >' +
+								'<img src="'+addr+'" class="events" onclick="eventView('+item.SEQ+')" />' + 
+								'</div>'
+					}).appendTo($('div#tabBody0'));
+					couponListLength = index;
+				});
+			} else {
+				$('<span/>',{
+					text : "사용 가능한 쿠폰이 없습니다 ㅠ.ㅠ"
 				}).appendTo($('div#tabBody0'));
-				eventListLength = index;
-			});
-			//종료된 이벤트
-			$.each(data.endEventList,function(index,item){
-				var addr = addBannerAddress(item.EVENTBANNERIMAGE);
-				$('<div/>',{
-					class : "col-md-offset-2 col-md-8",
-					style : "width:100%; right:17%; border-bottom: 0.5px solid gray;",
-					html : 	'<div class="section-heading">' +
-							'<img src="'+addr+'" class="events" onclick="endEventView('+item.SEQ+')" style="width:100%;"/>'+ 
-							'</div>'
-				}).appendTo($('div#tabBody1'));
-				endEventListLength = index;
-			});
-			if(eventListLength > endEventListLength) eventLength = eventListLength+1;
-			else eventLength = endEventListLength+1;
-			$('div#myTabContent').height(250*eventLength);
+			}
+			//만료된 쿠폰 
+			if(data.endCouponList.length != 0) {
+				$.each(data.endCouponList,function(index,item){
+					var addr = addBannerAddress(item.COUPONIMAGE);
+					$('<div/>',{
+						class : "col-md-offset-2 col-md-8",
+						style : "width:80%; right:7%; border-bottom: 0.5px solid gray;",
+						html : 	'<div class="section-heading">' +
+								'<img src="'+addr+'" class="events" onclick="endEventView('+item.SEQ+')" style="width:100%;"/>'+ 
+								'</div>'
+					}).appendTo($('div#tabBody1'));
+					endCouponListLength = index;
+				});
+			}
+			if(couponListLength > endCouponListLength) couponLength = couponListLength+1;
+			else couponLength = endCouponListLength+1;
+			$('div#myTabContent').height(250*couponLength);
 		}, error : function() {
-			alert("이벤트리스트 에러");
+			alert("쿠폰리스트 에러");
 		}
 	});
 	$('.fancyTabs').each(function() {
