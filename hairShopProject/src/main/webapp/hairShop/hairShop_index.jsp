@@ -925,7 +925,6 @@ button.selectedBtn {
 	            $('div#index_img2').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE2+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
 	            $('div#index_img3').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE3+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
 	        
-	               
 	            /* 미용실 위치 띄우기 */
 	        	var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 	        	    mapOption = { 
@@ -966,7 +965,7 @@ button.selectedBtn {
 	                }).appendTo($('div.designer'));
 	                $('span#designerName'+index).text(items.DESIGNERNAME);
 	                $('p#designerPosition'+index).text(items.POSITION);
-	                $('span#dayoff'+index).text(items.DAYOFF);   
+	                $('span#dayoff'+index).text(changeDayOff(items.DAYOFF));   
 	             });
 	          },
 	          error : function(){
@@ -1072,7 +1071,7 @@ button.selectedBtn {
 						}).append($('<div/>',{
 						}).append($('<img/>',{
 							class : 'designerImages',
-							src :'/hairShopProject/hairShop/img/team/1.jpg'
+							src :'/hairShopProject/hairShop/img/designer/'+item.DESIGNERIMAGE   // 디자이너 이미지 폴더 수정해야해요
 						})).append($('<span/>',{
 							html : '<br/>' + item.POSITION + " " + item.DESIGNERNAME
 						})))).append($('<td/>',{
@@ -1386,5 +1385,26 @@ button.selectedBtn {
 	        i = "0" + i;
 	    }
 	    return i;
+	}
+	
+	function changeDayOff(item) {
+		var dayOff = new String("");
+		for(var i=1; i<8; i++) {
+			var check = new String(i);
+			if(!item.includes(check)) {
+				dayOff = dayOff + changeYoil(check) + "  ";
+			}
+		}
+		return dayOff;
+	}
+	
+	function changeYoil(n) {
+		if(n == "1") return "일";
+		else if(n == "2") return "월";
+		else if(n == "3") return "화";
+		else if(n == "4") return "수";
+		else if(n == "5") return "목";
+		else if(n == "6") return "금";
+		else return "토";
 	}
 	</script>

@@ -46,9 +46,6 @@ public interface ManagementDAO {
 	public void designerModify(DesignerDTO designerDTO);
 	public List<MemberDTO> getMemberInfo(String hairshopId);
 	public List<String> getHairShopDesigner(String hairshopId);
-  
-  //스타일 찾기
-  public List<Map<String, String>> getStylebookImage(String hairShopId);
 	
 	// 헤어샵 정보 등록 관련
 	public Map<String, String> getHairShopInfo(String memEmail);
@@ -64,6 +61,15 @@ public interface ManagementDAO {
 	public List<Map<String, Object>> getPastEventAndCouponList();
 	public Map<String,String> getEventImageName(int seq);
 	public Map<String, String> getEndEventImageName(int seq);
+	public Map<String, String> getCoupon(int seq);
+	public void couponDownExpire(Map<String, String> map);
+	public void couponDownTerm(Map<String, String> map);
+	public int couponCheckDuplication(Map<String, String> map);
+	public List<Map<String, Object>> getCouponList(String memEmail);
+	public List<Map<String, Object>> getEndCouponList(String memEmail);
+  
+  //스타일 찾기
+  public List<Map<String, String>> getStylebookImage(String hairShopId);
 	public void deleteEvent(List<Integer> list);
 	public Map<String, Object> getTargetEvent(String seq);
 	public void updateEvent(Map<String, String> map);

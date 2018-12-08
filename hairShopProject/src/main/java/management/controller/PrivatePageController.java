@@ -37,7 +37,7 @@ public class PrivatePageController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
-	// 하트 리스트
+	// 하트 리스트 ajax
 	@RequestMapping(value="getHeartList", method=RequestMethod.POST)
 	public ModelAndView getHeartList(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -49,6 +49,32 @@ public class PrivatePageController {
 		mav.setViewName("jsonView");
 		return mav;
 	}
+	
+	// 쿠폰 체크 페이지
+	@RequestMapping(value="myCouponCheck", method=RequestMethod.GET)
+	public ModelAndView myCouponCheck(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/managementPage/privatePage/memberPage.jsp");
+		mav.addObject("memberPage", "/managementPage/privatePage/myCouponCheck.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
+	// 쿠폰 체크 ajax
+	@RequestMapping(value="getMyCouponCheck", method=RequestMethod.POST)
+	public ModelAndView getMyCouponCheck(HttpSession session) {
+		List<Map<String, Object>> couponList = managementDAO.getCouponList((String) session.getAttribute("memEmail"));
+		List<Map<String, Object>> endCouponList = managementDAO.getEndCouponList((String) session.getAttribute("memEmail"));
+		System.out.println("쿠폰리스트 사이즈" + couponList.size());
+		System.out.println("만료쿠폰리스트 사이즈" + endCouponList.size());
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("couponList", couponList);
+		mav.addObject("endCouponList", endCouponList);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
 	
 	//memberPage에서 email을 받아와 회원정보수정 테이블에 불러온 데이터 출력
 	@RequestMapping(value="modifyForm", method=RequestMethod.GET)

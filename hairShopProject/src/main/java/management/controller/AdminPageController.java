@@ -3,6 +3,7 @@ package management.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -247,6 +248,19 @@ public class AdminPageController {
 		return mav;
 	}
 	
+	// 헤어샵 삭제
+	@RequestMapping(value="hairShopDelete", method=RequestMethod.POST)
+	public @ResponseBody void hairShopDelete(@RequestParam String email) {
+		managementDAO.hairShopDelete(email);
+	}
+	
+	// 헤어샵 삭제
+	@RequestMapping(value="hairShopPwdModify", method=RequestMethod.POST)
+	public @ResponseBody void hairShopPwdModify(@RequestParam String email,	
+						    @RequestParam String modifyPwd) {
+		managementDAO.hairShopPwdModify(email, modifyPwd);
+	}
+	
 	// event 조회
 	@RequestMapping(value = "getEventList", method = RequestMethod.POST)
 	public ModelAndView getEventList() {
@@ -262,6 +276,19 @@ public class AdminPageController {
 		return mav;
 	}
 	
+	// member Coupon Down
+	@RequestMapping(value = "couponDownExpire", method = RequestMethod.POST)
+	public ModelAndView couponDownExpire(@RequestParam String seq, @RequestParam String memEmail) {
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("seq",seq);
+		map.put("memEmail",memEmail);
+		ModelAndView mav = new ModelAndView();
+		if(managementDAO.couponCheckDuplication(map) == 0) {
+			managementDAO.couponDownExpire(map);
+			mav.addObject("success","0"); // 0일때 쿠폰다운 성공
+		} else {
+			mav.addObject("success","1");
+		}
 	
 	@RequestMapping(value = "getEventAndCouponList", method = RequestMethod.POST)
 	public ModelAndView getEventAndCouponList() {
@@ -277,6 +304,22 @@ public class AdminPageController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "couponDownTerm", method = RequestMethod.POST)
+	public ModelAndView couponDownTerm(@RequestParam String seq, @RequestParam String memEmail) {
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("seq",seq);
+		map.put("memEmail",memEmail);
+		ModelAndView mav = new ModelAndView();
+		if(managementDAO.couponCheckDuplication(map) == 0) {
+			managementDAO.couponDownTerm(map);
+			mav.addObject("success","0");
+		} else {
+			mav.addObject("success","1");
+		}
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	//member coupon end
 	@RequestMapping(value = "eventUpdate", method = RequestMethod.POST)
 	public ModelAndView eventUpdate(@RequestParam String updateOrDelete, @RequestParam String[] seqs) {
 		ModelAndView mav = new ModelAndView();

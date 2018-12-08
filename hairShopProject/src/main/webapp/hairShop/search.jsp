@@ -27,6 +27,9 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 
 <style type="text/css">
+.logo-img:hover {
+	cursor:pointer;
+}
 html, body{
 	max-height: 100%;
 }
@@ -73,8 +76,9 @@ html, body{
  <section style="margin-bottom: 20px;">
  		<!-- service, date, day, latitud, longitude 좌표만보냄 -->
         <form name="searchingForm" method="post" action="/hairShopProject/hairShop/search.do">
-        <div class="welcome-hero-search-box">
-           <div class="welcome-hero-form">
+			<img class="navbar-brand logo-img" src="/hairShopProject/main/assets/logo/logo.png" style="position:absolute; top:13px; width:130px; height: auto;" onclick="location.href='/hairShopProject/main/index.do'" />
+        <div class="welcome-hero-search-box" style="margin: 8px 135px -10px 135px;">
+           <div class="welcome-hero-form" >
                <div class="single-welcome-hero-form">
                      <img class="serviceCategory" src="/hairShopProject/main/assets/images/welcome-hero/ic_service-category.png" style="cursor: pointer;"></img>
                      <input type="text" name="service" id="service" class="serviceCategory" placeholder="서비스 유형" autocomplete="off"/>

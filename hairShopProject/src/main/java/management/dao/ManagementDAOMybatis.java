@@ -256,7 +256,6 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	}
 
 	// ------------------ 이벤트 DAO
-
 	@Override
 	public List<Map<String, Object>> getEventList() {
 		return sqlSession.selectList("managementSQL.getEventList");
@@ -285,6 +284,12 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public Map<String, String> getEndEventImageName(int seq) {
 		return sqlSession.selectOne("managementSQL.getEndEventImageName", seq);
 	}
+	
+	@Override
+	public Map<String, String> getCoupon(int seq) {
+		return sqlSession.selectOne("managementSQL.getCoupon",seq);
+	}
+  
 	// 이벤트 삭제
 	@Override
 	public void deleteEvent(List<Integer> list) {
@@ -321,5 +326,30 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	@Override
 	public void stylebookManagementInsert(Map<String, String> map) {
 		sqlSession.delete("managementSQL.stylebookManagementInsert", map);
+	}
+
+	@Override
+	public void couponDownExpire(Map<String, String> map) {
+		sqlSession.insert("managementSQL.couponDownExpire",map);
+	}
+	
+	@Override
+	public void couponDownTerm(Map<String, String> map) {
+		sqlSession.insert("managementSQL.couponDownTerm",map);
+	}
+
+	@Override
+	public int couponCheckDuplication(Map<String, String> map) {
+		return sqlSession.selectOne("managementSQL.couponCheckDuplication", map);
+	}
+
+	@Override
+	public List<Map<String, Object>> getCouponList(String memEmail) {
+		return sqlSession.selectList("managementSQL.getCouponList", memEmail);
+	}
+
+	@Override
+	public List<Map<String, Object>> getEndCouponList(String memEmail) {
+		return sqlSession.selectList("managementSQL.getEndCouponList", memEmail);
 	}
 }
