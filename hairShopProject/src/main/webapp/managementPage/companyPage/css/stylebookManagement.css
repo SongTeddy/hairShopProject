@@ -1,22 +1,17 @@
 @charset "UTF-8";
 
-.stylebookMenagement-section{
+.stylebookManagement-section{
 	float: left;
 	width: 300px;
-	height: 300px;
+	height: 350px;
 	margin: 30px 0px 60px 80px;
 }
-
-.stylebookMenagement-section .stylebookMenagement-image{
+.stylebookManagement-section .stylebookManagement-image{
 	width: 300px;
 	height: 300px;
+	align: center;
 }
-
-.stylebook-image img:hover{
-	opacity: 0.3;
-	filter: alpha(opacity:'30');
-}
-.stylebook-section .stylebook-subject{
+.stylebookManagement-section .stylebookManagement-subject{
 	margin: 10px auto;
 	font-weight: bold;
 	font-size: 14pt;
@@ -26,11 +21,77 @@
 	cursor: pointer;
 	text-align: center;
 }
-.stylebook-section .stylebook-hashTag{
+.stylebookManagement-section .stylebookManagement-hairShopName{
 	margin: 10px auto;
-	font-size: 9pt;
+	font-size: 10pt;
 	width: 300px;
 	padding-top: 5px;
 	color: black;
 	text-align: right;
+}
+.stylebookManagement-section .stylebookManagement-btn{
+	margin: 10px auto;
+	font-size: 12pt;
+	color: black;
+}
+.stylebookManagement-modifyBtn{
+	margin-right: 5px;
+}
+.stylebookManagementInsertModal-content .button-container,
+.stylebookManagementModifyModal-content .button-container{
+	margin: 30px auto 10px auto;
+}
+
+/* Modal Content/Box */
+.stylebookManagementInsertModal{
+	display: none;  /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9005; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.stylebookManagementInsertModal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%; /* Could be more or less, depending on screen size */                          
+}
+.stylebookManagementModifyModal {
+	display: none;  /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9005; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.stylebookManagementModifyModal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%; /* Could be more or less, depending on screen size */                          
+}
+/* The Close Button */
+.closeStylebookManagementModal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.closeStylebookManagementModal:hover,
+.closeStylebookManagementModal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }

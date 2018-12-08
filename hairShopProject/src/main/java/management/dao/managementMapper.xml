@@ -174,16 +174,52 @@
 	</select>
 	
   
-  <!-- /////////////////////// 스타일 찾기 추가 | 관리  /////////////////////// -->
+  	<!-- /////////////////////// 스타일 찾기 추가 | 관리  /////////////////////// -->
 	<select id="getStylebookImage" parameterType="String" resultType="Map">
-		select m.name, s.permImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not permimage is null
+		select m.name, s.permImage, s.seq, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not permimage is null
 		union
-		select m.name, s.cutImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not cutImage is null
+		select m.name, s.cutImage, s.seq, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not cutImage is null
 		union
-		select m.name, s.styleImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not styleImage is null
+		select m.name, s.styleImage, s.seq, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not styleImage is null
 		union
-		select m.name, s.dyeingImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not dyeingImage is null
-  </select>
+		select m.name, s.dyeingImage, s.seq, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not dyeingImage is null
+  	</select>
+  
+  	<!-- /////////////////////// 스타일 찾기 수정  /////////////////////// -->
+  	<update id="stylebookManagementModify" parameterType="Map">
+  		<if test='service.equals("커트")'>
+  			update stylebook set cutImage=#{image}, discription=#{discription}, service=#{service} where seq=#{seq}
+  		</if>
+  		<if test='service.equals("펌")'>
+  			update stylebook set permImage=#{image}, discription=#{discription}, service=#{service} where seq=#{seq}
+  		</if>
+  		<if test='service.equals("스타일")'>
+  			update stylebook set styleImage=#{image}, discription=#{discription}, service=#{service} where seq=#{seq}
+  		</if>
+  		<if test='service.equals("염색")'>
+  			update stylebook set dyeingImage=#{image}, discription=#{discription}, service=#{service} where seq=#{seq}
+  		</if>
+  	</update>
+  	
+  	<!-- /////////////////////// 스타일 찾기 삭제  /////////////////////// -->
+  	<delete id="stylebookDelete" parameterType="String">
+  		delete stylebook where seq=#{seq}
+  	</delete>
+  	
+  	<insert id="stylebookManagementInsert" parameterType="Map">
+  		<if test='service.equals("커트")'>
+  			insert into stylebook(seq, cutImage, discription, service, hairShopId) values(seq_stylebook.nextval,#{image},#{discription},#{service},#{hairShopId})
+  		</if>
+  		<if test='service.equals("펌")'>
+  			insert into stylebook(seq, permImage, discription, service, hairShopId) values(seq_stylebook.nextval,#{image},#{discription},#{service},#{hairShopId})
+  		</if>
+  		<if test='service.equals("스타일")'>
+  			insert into stylebook(seq, styleImage, discription, service, hairShopId) values(seq_stylebook.nextval,#{image},#{discription},#{service},#{hairShopId})
+  		</if>
+  		<if test='service.equals("염색")'>
+  			insert into stylebook(seq, dyeingImage, discription, service, hairShopId) values(seq_stylebook.nextval,#{image},#{discription},#{service},#{hairShopId})
+  		</if>
+  	</insert>
 <!-- ==================================================== 마이페이지(개인) ==================================================== -->
 
 

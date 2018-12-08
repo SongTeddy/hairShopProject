@@ -61,4 +61,7 @@ public interface ManagementDAO {
 	public List<Map<String, Object>> getEndEventList();
 	public Map<String,String> getEventImageName(int seq);
 	public Map<String, String> getEndEventImageName(int seq);
+	public void stylebookManagementModify(Map<String, String> map);
+	public void stylebookDelete(String seq);
+	public void stylebookManagementInsert(Map<String, String> map);
 }
