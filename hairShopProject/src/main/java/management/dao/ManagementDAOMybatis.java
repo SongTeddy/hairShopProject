@@ -281,10 +281,25 @@ public class ManagementDAOMybatis implements ManagementDAO {
 		return sqlSession.selectOne("managementSQL.getCoupon",seq);
 	}
   
-  // ----------------------------- 스타일북 이미지
-  @Override
-	public List<Map<String, String>> getStylebookImage(String hairShopId) {
-		return sqlSession.selectList("managementSQL.getStylebookImage", hairShopId);
+	// ----------------------------- 스타일북 이미지
+	@Override
+  	public List<Map<String, String>> getStylebookImage(String hairShopId) {
+	  return sqlSession.selectList("managementSQL.getStylebookImage", hairShopId);
+  	}
+
+  	@Override
+  	public void stylebookManagementModify(Map<String, String> map) {
+  		sqlSession.update("managementSQL.stylebookManagementModify", map);
+  	}
+
+	@Override
+	public void stylebookDelete(String seq) {
+		sqlSession.delete("managementSQL.stylebookDelete", seq);
+	}
+
+	@Override
+	public void stylebookManagementInsert(Map<String, String> map) {
+		sqlSession.delete("managementSQL.stylebookManagementInsert", map);
 	}
 
 	@Override
