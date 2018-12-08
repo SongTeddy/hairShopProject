@@ -3,11 +3,11 @@ package management.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import fileUpload.realPath.FileUploadRealPath;
 import hairShop.bean.ReservationDTO;
 import management.dao.ManagementDAO;
 import member.bean.DesignerDTO;
@@ -73,6 +73,22 @@ public class AdminPageController {
 		}
 		mav.setViewName("/main/index");
 
+		return mav;
+	}
+
+	// 이벤트 관리 메뉴 이동
+	@RequestMapping(value = "eventList", method = RequestMethod.GET)
+	public ModelAndView eventList(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		if (session.getAttribute("memEmail") != null) {
+			mav.addObject("display", "/managementPage/adminPage/adminPage.jsp");
+			mav.addObject("myPageBody", "/managementPage/adminPage/eventList.jsp");
+		} else {
+			mav.addObject("display", "/main/body.jsp");
+		}
+		mav.setViewName("/main/index");
+		
 		return mav;
 	}
 	
@@ -155,7 +171,23 @@ public class AdminPageController {
 
 		return mav;
 	}
-
+	
+	// 헤어샵 삭제
+	@RequestMapping(value="hairShopDelete", method=RequestMethod.POST)
+	public @ResponseBody void hairShopDelete(@RequestParam String email) {
+		managementDAO.hairShopDelete(email);
+	}
+	
+	// 헤어샵 삭제
+	@RequestMapping(value="hairShopPwdModify", method=RequestMethod.POST)
+	public @ResponseBody void hairShopPwdModify(@RequestParam String email,	
+						    @RequestParam String modifyPwd) {
+		managementDAO.hairShopPwdModify(email, modifyPwd);
+	}
+	
+	
+	///////////////////////// 이벤트 관리 ///////////////////////////
+	
 	// 이벤트 등록
 	@RequestMapping(value = "eventRegister", method = RequestMethod.POST)
 	public ModelAndView eventRegister(@RequestParam Map<String, String> map,
@@ -177,10 +209,10 @@ public class AdminPageController {
 		if (!map.containsKey("expirationDate"))
 			map.put("expirationDate", "");
 		
-		String filePath = "C:\\Users\\stell\\git\\hairShopProject\\hairShopProject\\hairShopProject\\src\\main\\webapp\\main\\assets\\images\\event";
+		String filePath = new FileUploadRealPath().eventImagePath;
 		try {
 			if (!eventBannerImage.isEmpty()) {
-				String fileName1 = map.get("eventSubject") + eventBannerImage.getOriginalFilename();
+				String fileName1 = "register_" + eventBannerImage.getOriginalFilename();
 				map.put("eventBannerImage", fileName1);
 				File file1 = new File(filePath, fileName1);
 				FileCopyUtils.copy(eventBannerImage.getInputStream(), new FileOutputStream(file1));
@@ -188,7 +220,7 @@ public class AdminPageController {
 				map.put("eventBannerImage", "");
 			}
 			if (!eventDetailImage.isEmpty()) {
-				String fileName2 = map.get("eventSubject") + eventDetailImage.getOriginalFilename();
+				String fileName2 = "register_" + eventDetailImage.getOriginalFilename();
 				map.put("eventDetailImage", fileName2);
 				File file2 = new File(filePath, fileName2);
 				FileCopyUtils.copy(eventDetailImage.getInputStream(), new FileOutputStream(file2));
@@ -196,7 +228,7 @@ public class AdminPageController {
 				map.put("eventDetailImage", "");
 			}
 			if (!couponImage.isEmpty()) {
-				String fileName3 = map.get("eventSubject") + couponImage.getOriginalFilename();
+				String fileName3 = "register_" + couponImage.getOriginalFilename();
 				map.put("couponImage", fileName3);
 				File file3 = new File(filePath, fileName3);
 				FileCopyUtils.copy(couponImage.getInputStream(), new FileOutputStream(file3));
@@ -215,18 +247,6 @@ public class AdminPageController {
 		return mav;
 	}
 	
-	// 헤어샵 삭제
-	@RequestMapping(value="hairShopDelete", method=RequestMethod.POST)
-	public @ResponseBody void hairShopDelete(@RequestParam String email) {
-		managementDAO.hairShopDelete(email);
-	}
-	
-	// 헤어샵 삭제
-	@RequestMapping(value="hairShopPwdModify", method=RequestMethod.POST)
-	public @ResponseBody void hairShopPwdModify(@RequestParam String email,	
-						    @RequestParam String modifyPwd) {
-		managementDAO.hairShopPwdModify(email, modifyPwd);
-	}
 	// event 조회
 	@RequestMapping(value = "getEventList", method = RequestMethod.POST)
 	public ModelAndView getEventList() {
@@ -239,6 +259,103 @@ public class AdminPageController {
 		mav.addObject("eventList", eventList);
 		mav.addObject("endEventList", getEndEventList);
 		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	
+	@RequestMapping(value = "getEventAndCouponList", method = RequestMethod.POST)
+	public ModelAndView getEventAndCouponList() {
+		List<Map<String, Object>> currentEventAndList = managementDAO.getCurrentEventAndCouponList();
+		List<Map<String, Object>> pastEventAndList = managementDAO.getPastEventAndCouponList();
+		System.out.println("진행중인 이벤트와 쿠폰 리스트 사이즈" + currentEventAndList.size());
+		System.out.println("종료된 이벤트와 쿠폰 리스트 사이즈" + pastEventAndList.size());
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("currentEventAndList", currentEventAndList);
+		mav.addObject("pastEventAndList", pastEventAndList);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	@RequestMapping(value = "eventUpdate", method = RequestMethod.POST)
+	public ModelAndView eventUpdate(@RequestParam String updateOrDelete, @RequestParam String[] seqs) {
+		ModelAndView mav = new ModelAndView();
+
+		if(updateOrDelete.equals("doDelete")) {
+			List<Integer> list = new ArrayList<Integer>();
+			for(String seq : seqs) {
+				list.add(Integer.parseInt(seq));
+			}
+			managementDAO.deleteEvent(list);
+			mav.addObject("myPageBody", "/managementPage/adminPage/eventDeleted.jsp");			
+		}else if(updateOrDelete.equals("doUpdate")) {
+			Map<String, Object> eventMap = managementDAO.getTargetEvent(seqs[0]);
+			mav.addObject("eventMap", eventMap);
+			mav.addObject("myPageBody", "/managementPage/adminPage/eventUpdate.jsp");
+		}
+		mav.addObject("display", "/managementPage/adminPage/adminPage.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
+	@RequestMapping(value = "eventUpdated", method = RequestMethod.POST)
+	public ModelAndView eventUpdated(@RequestParam Map<String, String> map,
+			@RequestParam(required = false) MultipartFile eventBannerImage,
+			@RequestParam(required = false) MultipartFile eventDetailImage,
+			@RequestParam(required = false) MultipartFile couponImage,
+			HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		
+		System.out.println("수정할 녀석들");
+		for (Iterator<String> iterator = map.keySet().iterator(); iterator.hasNext();) {
+			String keyName = (String) iterator.next();
+			Object valueName = map.get(keyName);
+			System.out.println(keyName + " = " + valueName);
+		}
+		System.out.println(eventBannerImage.getOriginalFilename());
+		System.out.println(eventDetailImage.getOriginalFilename());
+		System.out.println(couponImage.getOriginalFilename());
+		
+		if (!map.containsKey("termOfValidity"))
+			map.put("termOfValidity", "");
+
+		if (!map.containsKey("expirationDate"))
+			map.put("expirationDate", "");
+		
+		String filePath = new FileUploadRealPath().eventImagePath;
+		try {
+			if (!eventBannerImage.isEmpty()) {
+				String fileName1 = "register_" + eventBannerImage.getOriginalFilename();
+				map.put("eventBannerImage", fileName1);
+				File file1 = new File(filePath, fileName1);
+				FileCopyUtils.copy(eventBannerImage.getInputStream(), new FileOutputStream(file1));
+			} else {
+				map.put("eventBannerImage", map.get("unchangedBannerImg"));
+			}
+			if (!eventDetailImage.isEmpty()) {
+				String fileName2 ="register_" + eventDetailImage.getOriginalFilename();
+				map.put("eventDetailImage", fileName2);
+				File file2 = new File(filePath, fileName2);
+				FileCopyUtils.copy(eventDetailImage.getInputStream(), new FileOutputStream(file2));
+			} else {
+				map.put("eventDetailImage", map.get("unchangedDetailImg"));
+			}
+			if (!couponImage.isEmpty()) {
+				String fileName3 = "register_" + couponImage.getOriginalFilename();
+				map.put("couponImage", fileName3);
+				File file3 = new File(filePath, fileName3);
+				FileCopyUtils.copy(couponImage.getInputStream(), new FileOutputStream(file3));
+			} else {
+				map.put("couponImage", map.get("unchangerdCouponImg"));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		managementDAO.updateEvent(map);
+		mav.addObject("myPageBody", "/managementPage/adminPage/eventUpdated.jsp");			
+		mav.addObject("display", "/managementPage/adminPage/adminPage.jsp");
+		mav.setViewName("/main/index");
 		return mav;
 	}
 }

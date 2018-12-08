@@ -53,9 +53,13 @@
 	float: left;
 }
 i{
-	color: #ffda2b;
     margin: 9px 4px 0 0;
 }
+
+i.fa-star {
+   color : #ffda2b;
+}
+
 .swiper-slide{
 	cursor: pointer;
 }
@@ -124,27 +128,27 @@ i{
         <div class="welcome-hero-search-box">
            <div class="welcome-hero-form">
                <div class="single-welcome-hero-form">
-                     <img class="serviceCategory" src="assets/images/welcome-hero/ic_service-category.png" style="cursor: pointer;"></img>
+                     <img class="serviceCategory" src="/hairShopProject/main/assets/images/welcome-hero/ic_service-category.png" style="cursor: pointer;"></img>
                      <input type="text" name="service" id="service" class="serviceCategory" placeholder="서비스 유형" autocomplete="off"/>
                      <div class="welcome-hero-form-icon">
                    <div class="sub-menu serviceMenu">
                      <table class="sub-menuTable">
                         <tr>
-                           <td><img src="assets/images/welcome-hero/haircut.png" class="serviceIcon" width="70" /><br />
+                           <td><img src="/hairShopProject/main/assets/images/welcome-hero/haircut.png" class="serviceIcon" width="70" /><br />
                               <button type="button" class="btn btn-default btn-sm serviceOption">컷트</button>
                            </td>
-                           <td><img src="assets/images/welcome-hero/perm.png" class="serviceIcon" width="70" /><br />
+                           <td><img src="/hairShopProject/main/assets/images/welcome-hero/perm.png" class="serviceIcon" width="70" /><br />
                               <button type="button" class="btn btn-default btn-sm serviceOption">펌</button>
                            </td>
-                           <td><img src="assets/images/welcome-hero/dye.png" class="serviceIcon" width="70" /><br />
+                           <td><img src="/hairShopProject/main/assets/images/welcome-hero/dye.png" class="serviceIcon" width="70" /><br />
                               <button type="button" class="btn btn-default btn-sm serviceOption">염색</button>
                            </td>
                         </tr>
                         <tr>
-                           <td><img src="assets/images/welcome-hero/styling.png" class="serviceIcon" width="70" /><br />
+                           <td><img src="/hairShopProject/main/assets/images/welcome-hero/styling.png" class="serviceIcon" width="70" /><br />
                               <button type="button" class="btn btn-default btn-sm serviceOption">스타일링</button>
                            </td>
-                           <td><img src="assets/images/welcome-hero/clinic.png" class="serviceIcon" width="70" /><br />
+                           <td><img src="/hairShopProject/main/assets/images/welcome-hero/clinic.png" class="serviceIcon" width="70" /><br />
                               <button type="button" class="btn btn-default btn-sm serviceOption">클리닉</button>
                            </td>
                            <td></td>
@@ -154,7 +158,7 @@ i{
                </div>
                   </div>
                   <div class="single-welcome-hero-form">
-                     <img class="ic_calendar" src="assets/images/welcome-hero/ic_calendar.png" style="cursor: pointer;"></img>
+                     <img class="ic_calendar" src="/hairShopProject/main/assets/images/welcome-hero/ic_calendar.png" style="cursor: pointer;"></img>
                         <input type="text" name="date" id="date" placeholder="예약 날짜 지정" autocomplete="off"/>
                         <input type="hidden" name="day" id="day" />
                      <div class="welcome-hero-form-icon">
@@ -162,7 +166,7 @@ i{
                   </div>
                   
             <div class="single-welcome-hero-form">
-               <img class="locationCategory" src="assets/images/welcome-hero/ic_place.png" style="cursor: pointer;"/> 
+               <img class="locationCategory" src="/hairShopProject/main/assets/images/welcome-hero/ic_place.png" style="cursor: pointer;"/> 
                
                <input type="text" class="locationCategory" placeholder="지역 선택" autocomplete="off" />
                <input type="hidden" name="latitud" id="latitud"/>
@@ -172,7 +176,7 @@ i{
                   <div class="sub-menu locationMenu" style="width: 400px;">
                      <div class="location-picker-panel-current-location" id="gpsIndicator">
                         <p >
-                           <img alt="위치" src="assets/images/welcome-hero/ic-location.png">
+                           <img alt="위치" src="/hairShopProject/main/assets/images/welcome-hero/ic-location.png">
                          	 현재 위치로 찾기
                         </p>
                      </div>
