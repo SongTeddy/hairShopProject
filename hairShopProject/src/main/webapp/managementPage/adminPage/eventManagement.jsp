@@ -2,12 +2,6 @@
     pageEncoding="UTF-8"%>
 
 <style>
-.ui-corner-all{
-	font-size: 8pt !important;
-	text-align: left !important; 
-/* 	width: 90%  !important; */
-}
-
 .eventRegisterTable{
 	width: 70%;
 	color: black;
@@ -16,16 +10,6 @@
 	width: 70%;
 	color: black;
 	text-align: right;
-}
-
-.eventRegisterTable caption{
-	color: black;
-	font-size: 20pt;
-	margin-bottom: 20px;
-}
-
-.couponResiterTable td{
-	padding: 10px;
 }
 
 </style>
@@ -67,7 +51,7 @@
 		<tr>
 			<td>이벤트 기간</td>
 			<td>
-				<p id="jqueryExample">
+				<p>
 				    <input type="text" name="eventStartDate" id="startDate" placeholder="시작 일자" autocomplete="off"/>
 				    ~ <input type="text" name="eventEndDate" id="endDate" placeholder="종료 일자" autocomplete="off" />
 				</p>
@@ -92,6 +76,9 @@
 					<span id="limitDateOrDurationTd">
 					<input type="text" name="expirationDate" placeholder="종료 일자" autocomplete="off" />
 					</span>
+					<hr style="margin: 5px">
+					적용 금액&emsp;
+					<input type="number" name="minPrice" placeholder="적용 가능 최저 금액" autocomplete="off" max="1000000" />
 				</td>
 		</tr>
 		<tr>
@@ -202,7 +189,6 @@ $(document).ready(function(){
 			var day = date.getDay();
 		},
 		onClose: function(value){
-			var date = new Date(value);
 			var day = date.getDay();
 		}
 	});

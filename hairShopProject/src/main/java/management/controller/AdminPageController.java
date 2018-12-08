@@ -209,6 +209,9 @@ public class AdminPageController {
 
 		if (!map.containsKey("expirationDate"))
 			map.put("expirationDate", "");
+		if(map.get("minPrice").equals("")) {
+			map.put("minPrice", "0");
+		}
 		
 		String filePath = new FileUploadRealPath().eventImagePath;
 		try {
@@ -248,19 +251,6 @@ public class AdminPageController {
 		return mav;
 	}
 	
-	// 헤어샵 삭제
-	@RequestMapping(value="hairShopDelete", method=RequestMethod.POST)
-	public @ResponseBody void hairShopDelete(@RequestParam String email) {
-		managementDAO.hairShopDelete(email);
-	}
-	
-	// 헤어샵 삭제
-	@RequestMapping(value="hairShopPwdModify", method=RequestMethod.POST)
-	public @ResponseBody void hairShopPwdModify(@RequestParam String email,	
-						    @RequestParam String modifyPwd) {
-		managementDAO.hairShopPwdModify(email, modifyPwd);
-	}
-	
 	// event 조회
 	@RequestMapping(value = "getEventList", method = RequestMethod.POST)
 	public ModelAndView getEventList() {
@@ -289,6 +279,9 @@ public class AdminPageController {
 		} else {
 			mav.addObject("success","1");
 		}
+		return mav;
+	}
+	
 	
 	@RequestMapping(value = "getEventAndCouponList", method = RequestMethod.POST)
 	public ModelAndView getEventAndCouponList() {

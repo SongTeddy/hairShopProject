@@ -57,6 +57,7 @@
 			<th>이벤트 기간</th>
 			<th>쿠폰 정보</th>
 			<th>쿠폰 이미지</th>
+			<th>쿠폰 적용 금액</th>
 		</tr>
 	</thead>
 	<tbody id="currentEventTbody">
@@ -82,6 +83,7 @@
 			<th>이벤트 기간</th>
 			<th>쿠폰 정보</th>
 			<th>쿠폰 이미지</th>
+			<th>쿠폰 적용 금액</th>
 		</tr>
 	</thead>
 	<tbody id="pastEventListTbody">
@@ -113,6 +115,11 @@ $(document).ready(function(){
 					item.DISCOUNTAMOUNT = (item.DISCOUNTAMOUNT).toLocaleString() + "원 할인";						
 					item.COUPONIMAGE = '<img src="/hairShopProject/main/assets/images/event/'+ item.COUPONIMAGE + '" width="100"/>';
 				}
+				if(item.MINPRICE != "0"){
+					item.MINPRICE = (item.MINPRICE).toLocaleString() + "원 이상"
+				}else{
+					item.MINPRICE = "";
+				}
 				
 				$('<tr/>').append($('<td/>', {
 				}).append($('<input/>', {
@@ -138,6 +145,9 @@ $(document).ready(function(){
 				}))
 				.append($('<td/>', {
 					html : item.COUPONIMAGE
+				}))
+				.append($('<td/>', {
+					text : item.MINPRICE
 				}))
 				.appendTo($('#currentEventTbody'));
 			});
@@ -178,6 +188,9 @@ $(document).ready(function(){
 				}))
 				.append($('<td/>', {
 					html : item.COUPONIMAGE
+				}))
+				.append($('<td/>', {
+					text : item.MINPRICE
 				}))
 				.appendTo($('#pastEventListTbody'));
 			});
