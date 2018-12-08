@@ -302,7 +302,7 @@ $(document).ready(function() {
 				}).append($('<div/>',{
 					
 				}).append($('<img/>',{
-					src:'/hairShopProject/main/assets/images/explore/e1.jpg',
+					src:'/hairShopProject/hairShop/img/banner/' + listSearch[j].HAIRSHOPIMAGE1,
 					alt:"explore image"
 				})))).append($('<td/>',{
 					
@@ -311,7 +311,7 @@ $(document).ready(function() {
 				}).append($('<span/>',{
 					
 				}).append($('<a/>',{
-					href: "javascript:moveTo('"+listSearch[j].HAIRSHOPID+"');",
+					href: "javascript:moveTo('"+ listSearch[j].HAIRSHOPID+"');",
 					html: listSearch[j].NAME
 				})).append($('<span/>',{
 					class:"explore-rating",
@@ -514,7 +514,7 @@ function getSearchList(){
 				            '        </div>' + 
 				            '        <div class="body">' + 
 				            '            <div class="img">' +
-				            '                <img src="../hairShop'+ item.HAIRSHOPIMAGE1 +'" width="73" height="70">' +
+				            '                <img src="/hairShopProject/hairShop/img/banner/'+ item.HAIRSHOPIMAGE1 +'" width="73" style="height: -webkit-fill-available;">' +
 				            '           </div>' + 
 				            '            <div class="desc">' + 
 				            '                <div class="ellipsis">'+ item.HAIRSHOPCONTENT +'</div>' + 
@@ -556,7 +556,7 @@ function getSearchList(){
 					}).append($('<div/>',{
 						
 					}).append($('<img/>',{
-						src:'/hairShopProject/main/assets/images/explore/e1.jpg',
+						src:'/hairShopProject/hairShop/img/banner/' + item.HAIRSHOPIMAGE1,
 						alt:"explore image"
 					})))).append($('<td/>',{
 						

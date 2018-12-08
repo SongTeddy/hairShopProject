@@ -107,7 +107,7 @@
 	</table>
 	<div class="btnDiv">
 		<input type="button" class="btn btn-default" id="eventUpdateBtn" value="이벤트 수정">
-		<input type="button" class="btn" value="취소">
+		<input type="button" class="btn" onclick="location.href='/hairShopProject/adminPage/eventList.do'" value="취소">
 	</div>
 	<input type="hidden" name="seq" value="${eventMap.SEQ }" />
 	
