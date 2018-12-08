@@ -27,7 +27,7 @@
 		    	  border-top: 2px solid #5A5A5A;"><br>
 
 
-	<table class="table table-striped eventRegisterTable" id="">
+	<table class="table table-striped eventRegisterTable" >
 		<tr>
 			<td>이벤트 제목</td>
 			<td><input type="text" name="eventSubject" size="40"/></td>
