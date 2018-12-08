@@ -241,6 +241,7 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public int hairShopInfoUpdateExceptImg(Map<String, Object> map) {
 		return sqlSession.update("managementSQL.hairShopInfoUpdateExceptImg", map);
 	}
+	// 헤어샵 정보 등록
 
 	// 이벤트 등록
 	@Override
@@ -284,7 +285,6 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public Map<String, String> getEndEventImageName(int seq) {
 		return sqlSession.selectOne("managementSQL.getEndEventImageName", seq);
 	}
-  
 	// 이벤트 삭제
 	@Override
 	public void deleteEvent(List<Integer> list) {
@@ -302,9 +302,24 @@ public class ManagementDAOMybatis implements ManagementDAO {
 		sqlSession.update("managementSQL.updateEvent", map);
 	}
 	
-  // ----------------------------- 스타일북 이미지
-  @Override
-	public List<Map<String, String>> getStylebookImage(String hairShopId) {
-		return sqlSession.selectList("managementSQL.getStylebookImage", hairShopId);
+	// ----------------------------- 스타일북 이미지
+	@Override
+  	public List<Map<String, String>> getStylebookImage(String hairShopId) {
+	  return sqlSession.selectList("managementSQL.getStylebookImage", hairShopId);
+  	}
+
+  	@Override
+  	public void stylebookManagementModify(Map<String, String> map) {
+  		sqlSession.update("managementSQL.stylebookManagementModify", map);
+  	}
+
+	@Override
+	public void stylebookDelete(String seq) {
+		sqlSession.delete("managementSQL.stylebookDelete", seq);
+	}
+
+	@Override
+	public void stylebookManagementInsert(Map<String, String> map) {
+		sqlSession.delete("managementSQL.stylebookManagementInsert", map);
 	}
 }

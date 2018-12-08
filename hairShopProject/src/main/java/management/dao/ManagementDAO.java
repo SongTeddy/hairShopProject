@@ -67,4 +67,7 @@ public interface ManagementDAO {
 	public void deleteEvent(List<Integer> list);
 	public Map<String, Object> getTargetEvent(String seq);
 	public void updateEvent(Map<String, String> map);
+	public void stylebookManagementModify(Map<String, String> map);
+	public void stylebookDelete(String seq);
+	public void stylebookManagementInsert(Map<String, String> map);
 }

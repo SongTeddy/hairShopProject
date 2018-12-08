@@ -1,6 +1,7 @@
 package management.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -406,7 +408,7 @@ public class CompanyPageController {
    }
    
    @RequestMapping(value="stylebookManagement.do")
-   public ModelAndView stylebookMenagement(HttpSession session) {
+   public ModelAndView stylebookManagement(HttpSession session) {
 	   memberDTO = memberDAO.isCheckEmail((String)session.getAttribute("memEmail"));
 	   
 	   ModelAndView mav = new ModelAndView();
@@ -418,7 +420,6 @@ public class CompanyPageController {
    }
    @RequestMapping(value="getStylebookImage.do")
    public ModelAndView getStylebookImage(@RequestParam String hairShopId, HttpSession session) {
-	   System.out.println(hairShopId);
 	   List<Map<String,String>> list = managementDAO.getStylebookImage(hairShopId);
 	   memberDTO = memberDAO.isCheckEmail((String)session.getAttribute("memEmail"));
 	   
@@ -431,5 +432,71 @@ public class CompanyPageController {
 	   mav.setViewName("jsonView");
 	   
 	   return mav;
+   }
+   
+   @RequestMapping(value="stylebookManagementInsert.do", method=RequestMethod.POST)
+   public String staybookManagementModify(@RequestParam String hairshopId,
+		   								  @RequestParam String insertDiscription,
+		   								  @RequestParam String insertService,
+		   								  @RequestParam MultipartFile insertImage,
+		   								  Model model) throws IOException {
+	   
+	   MultipartFile hairImage = insertImage;
+	   String filePath = "C:\\Users\\user\\git\\hairShopProject\\hairShopProject\\src\\main\\webapp\\storage";
+	   String fileName = hairImage.getOriginalFilename();
+	   File file = new File(filePath, fileName);
+	   FileCopyUtils.copy(hairImage.getInputStream(), new FileOutputStream(file));
+	   
+	   Map<String, String> map = new HashMap<String, String>();
+	   map.put("discription",insertDiscription);
+	   map.put("service",insertService);
+	   map.put("image",fileName);
+	   map.put("hairShopId", hairshopId);
+	   
+	   System.out.println(map);
+	   
+	   managementDAO.stylebookManagementInsert(map);
+	   
+	   model.addAttribute("display", "/managementPage/companyPage/companyPage.jsp");
+	   model.addAttribute("myPageBody", "/managementPage/companyPage/stylebookManagement.jsp");
+	   model.addAttribute("hairShopId", hairshopId);
+	   
+	   return "/main/index";
+   }
+   
+   @RequestMapping(value="staybookManagementModify.do", method=RequestMethod.POST)
+   public String staybookManagementModify(@RequestParam String seq,
+										  @RequestParam String hairShopId,
+										  @RequestParam String discription,
+										  @RequestParam String service,
+										  @RequestParam MultipartFile image,
+										  Model model) throws IOException{
+	   
+	   MultipartFile hairImage = image;
+	   String filePath = "C:\\Users\\user\\git\\hairShopProject\\hairShopProject\\src\\main\\webapp\\storage";
+	   String fileName = hairImage.getOriginalFilename();
+	   File file = new File(filePath, fileName);
+	   FileCopyUtils.copy(hairImage.getInputStream(), new FileOutputStream(file));
+	   
+	   Map<String, String> map = new HashMap<String, String>();
+	   map.put("seq", seq);
+	   map.put("discription",discription);
+	   map.put("service",service);
+	   map.put("image",fileName);
+	   
+	   managementDAO.stylebookManagementModify(map);
+	   
+	   model.addAttribute("display", "/managementPage/companyPage/companyPage.jsp");
+	   model.addAttribute("myPageBody", "/managementPage/companyPage/stylebookManagement.jsp");
+	   model.addAttribute("hairShopId",hairShopId);
+	   
+	   return "/main/index";
+   }
+   
+   @RequestMapping(value="stylebookDelete", method=RequestMethod.POST)
+   public @ResponseBody String stylebookDelete(@RequestParam String seq) {
+	   managementDAO.stylebookDelete(seq);
+	   
+	   return "success";
    }
 }
