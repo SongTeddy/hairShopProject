@@ -78,13 +78,13 @@ public class AdminPageController {
 	}
 
 	// 이벤트 관리 메뉴 이동
-	@RequestMapping(value = "eventList", method = RequestMethod.GET)
+	@RequestMapping(value = "eventRegister", method = RequestMethod.GET)
 	public ModelAndView eventList(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
 		if (session.getAttribute("memEmail") != null) {
 			mav.addObject("display", "/managementPage/adminPage/adminPage.jsp");
-			mav.addObject("myPageBody", "/managementPage/adminPage/eventList.jsp");
+			mav.addObject("myPageBody", "/managementPage/adminPage/eventRegister.jsp");
 		} else {
 			mav.addObject("display", "/main/body.jsp");
 		}
@@ -190,7 +190,7 @@ public class AdminPageController {
 	///////////////////////// 이벤트 관리 ///////////////////////////
 	
 	// 이벤트 등록
-	@RequestMapping(value = "eventRegister", method = RequestMethod.POST)
+	@RequestMapping(value = "eventRegistered", method = RequestMethod.POST)
 	public ModelAndView eventRegister(@RequestParam Map<String, String> map,
 			@RequestParam(required = false) MultipartFile eventBannerImage,
 			@RequestParam(required = false) MultipartFile eventDetailImage,
@@ -245,7 +245,7 @@ public class AdminPageController {
 		managementDAO.eventRegister(map);
 
 		mav.addObject("display", "/managementPage/adminPage/adminPage.jsp");
-		mav.addObject("myPageBody", "/managementPage/adminPage/eventRegister.jsp");
+		mav.addObject("myPageBody", "/managementPage/adminPage/eventRegistered.jsp");
 		mav.setViewName("/main/index");
 
 		return mav;
