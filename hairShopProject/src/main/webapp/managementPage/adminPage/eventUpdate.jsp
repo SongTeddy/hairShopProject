@@ -91,7 +91,7 @@
 						<option value="1">기간 지정</option>
 					</select>
 					<span id="limitDateOrDurationTd">
-					<input type="text" name="expirationDate" id="expirationDate" placeholder="종료 일자" autocomplete="off" />
+<!-- 					<input type="text" name="expirationDate" id="expirationDate" placeholder="종료 일자" autocomplete="off" /> -->
 					</span>
 				</td>
 		</tr>
@@ -107,7 +107,7 @@
 	</table>
 	<div class="btnDiv">
 		<input type="button" class="btn btn-default" id="eventUpdateBtn" value="이벤트 수정">
-		<input type="button" class="btn" value="취소">
+		<input type="button" class="btn" onclick="location.href='/hairShopProject/adminPage/eventList.do'" value="취소">
 	</div>
 	<input type="hidden" name="seq" value="${eventMap.SEQ }" />
 	
@@ -122,6 +122,21 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+	if('${eventMap.EXPIRATIONOPTION}' == 0){
+		$('<input/>',{
+			name : 'expirationDate',
+			id : 'expirationDate',
+			placeholder : '종료 일자',
+			value : new Date('${eventMap.EXPIRATIONDATE }').toLocaleDateString('en-029')
+		}).appendTo($('#limitDateOrDurationTd'));
+	}else if('${eventMap.EXPIRATIONOPTION}'==1){
+		$('<input/>',{
+			name : 'termOfValidity',
+			id : 'termOfValidity',
+			placeholder : '적용 기간',
+			value : '${eventMap.TERMOFVALIDITY }'
+		}).appendTo($('#limitDateOrDurationTd'));
+	}
 	
 	$('#discountOption').on('change', function(){
 		if($('#discountOption option:selected').val()==0){
@@ -191,8 +206,8 @@ $(document).ready(function(){
 	$('#startDate').val(new Date('${eventMap.EVENTSTARTDATE }').toLocaleDateString('en-029'));
 	$('#endDate').val(new Date('${eventMap.EVENTENDDATE }').toLocaleDateString('en-029'));
 	
-	$('#expirationDate').val(new Date('${eventMap.EXPIRATIONDATE }').toLocaleDateString('en-029'));
-	$('#termOfValidity').val('${eventMap.TERMOFVALIDITY }');
+// 	$('#expirationDate').val(new Date('${eventMap.EXPIRATIONDATE }').toLocaleDateString('en-029'));
+// 	$('#termOfValidity').val('${eventMap.TERMOFVALIDITY }');
 	
 
 	$('#eventUpdateBtn').on('click', function(){
