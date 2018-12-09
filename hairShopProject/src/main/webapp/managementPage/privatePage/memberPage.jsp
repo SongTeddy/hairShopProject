@@ -7,7 +7,8 @@
    <div class="myPage_menu">
       <ul class="myPage_menu_ul">
         <li class="myPage_menu_li"><a href="/hairShopProject/privatePage/modifyForm.do">회원정보수정</a></li>
-        <li class="myPage_menu_li"><a href="/hairShopProject/privatePage/heartList.do" onclick="heartList()">관심 헤어샵</a></li>
+        <li class="myPage_menu_li"><a href="/hairShopProject/privatePage/heartList.do">관심 헤어샵</a></li>
+        <li class="myPage_menu_li"><a href="/hairShopProject/privatePage/myCouponCheck.do">보유 쿠폰 확인</a></li>
         <li class="myPage_menu_li"><a href="/hairShopProject/privatePage/reservationForm.do">예약 확인</a></li>
         <li class="myPage_menu_li"><a href="/hairShopProject/privatePage/usageDetailsInformationForm.do">이용내역안내</a></li>
         <li class="myPage_menu_li"><a href="/hairShopProject/privatePage/deleteForm.do">회원 탈퇴</a></li>

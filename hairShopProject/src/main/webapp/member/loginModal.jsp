@@ -239,13 +239,7 @@
 		<div id="loginCancelBtn" class="rerun">
 			<a><i class="fa fa-reply" aria-hidden="true"></i></a>
 		</div>
-		
-		<!-- Portfolio-->
-		<a id="portfolio" href="http://andytran.me/" title="View my portfolio!"><i class="fa fa-link"></i></a>
-		<!-- CodePen-->
-		<a id="codepen" href="https://codepen.io/andytran/" title="Follow me!"><i class="fa fa-codepen"></i></a>
 	</div>
-
 </div>
 <script type="text/javascript" src="http://www-cs-students.stanford.edu/~tjw/jsbn/rsa.js"></script>
 <script type="text/javascript" src="http://www-cs-students.stanford.edu/~tjw/jsbn/jsbn.js"></script>

@@ -2,9 +2,13 @@
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/hairShopProject/managementPage/privatePage/css/memberPage.css">
 
-<div id="modifyFormDiv" style="overflow-x:hidden; height: 100%; ">
-	<br/><br/>
-<h3 align="center">회원정보수정</h3><br><br>
+<div id="modifyFormDiv">
+<font size="6pt" clss="modifyFormTitle" style="color: #363636;">회원 정보 수정</font><br>
+<hr align="left" clss="modifyFormTitle" style="color: black;
+			  margin-top: 10px;
+	    	  margin-bottom: 0px;
+	    	  width: 213px;
+	    	  border-top: 2px solid #5A5A5A;"><br><br><br>
 <form name="modifyForm" class="modifyForm">
 <table class="modifyTable">
 	<tr>
@@ -54,7 +58,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center">
+		<td colspan="2" align="center" style="background: #ffffff;">
 			<input type="button" class="modifyBtn" value="회원정보수정">
 			<input type="reset" value="다시작성">
 		</td>

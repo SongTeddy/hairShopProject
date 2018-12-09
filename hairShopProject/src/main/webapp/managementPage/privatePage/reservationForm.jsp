@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/hairShopProject/managementPage/privatePage/css/memberPage.css">
+<font size="6pt" clss="modifyFormTitle" style="color: #363636;">예약 확인</font><br>
+<hr align="left" clss="modifyFormTitle" style="color: black;
+			  margin-top: 10px;
+	    	  margin-bottom: 0px;
+	    	  width: 145px;
+	    	  border-top: 2px solid #5A5A5A;"><br><br><br>
 <form name="reservationForm" method="post">
 <div class="reservationForm">
-	<div class="reservationTitle">
-		<h3>예약 안내</h3>
-	</div><br><br>
 	<div class="reservationTableDiv">
 		<table class="reservationTable">
 			<thead> 

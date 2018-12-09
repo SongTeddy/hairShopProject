@@ -15,7 +15,22 @@ public class StylebookMybatisDAO implements StylebookDAO {
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<Map<String, String>> getPermImage() {
-		return sqlSession.selectList("stylebookSQL.getPermImage");
+	public List<Map<String, String>> getPermImage(String perm) {
+		return sqlSession.selectList("stylebookSQL.getPermImage", perm);
+	}
+
+	@Override
+	public List<Map<String, String>> getCutImage(String cut) {
+		return sqlSession.selectList("stylebookSQL.getCutImage", cut);
+	}
+
+	@Override
+	public List<Map<String, String>> getStyleImage(String style) {
+		return sqlSession.selectList("stylebookSQL.getStyleImage", style);
+	}
+
+	@Override
+	public List<Map<String, String>> getDyeImage(String dyeing) {
+		return sqlSession.selectList("stylebookSQL.getDyeImage", dyeing);
 	}
 }

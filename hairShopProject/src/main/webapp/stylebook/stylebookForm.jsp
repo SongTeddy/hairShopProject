@@ -3,42 +3,42 @@
 <link rel="stylesheet" href="/hairShopProject/stylebook/css/stylebook.css">
 <div class="stylebookFormDiv">
 	<div class="stylebook-header">
-		<div class="stylebook-category">
+		<div class="stylebook-category cut">
 			<div class="stylebook-icon">
 				<img src="image/cut.png"/>
 			</div>
-			<div class="category-title cut">
+			<div class="category-title">
 				<span>커트</span>
 			</div>
 		</div>
-		<div class="stylebook-category">
+		<div class="stylebook-category perm">
 			<div class="stylebook-icon">
 				<img src="image/perm.png"/>
 			</div>
-			<div class="category-title perm">
+			<div class="category-title">
 				<span>펌</span>
 			</div>
 		</div>
-		<div class="stylebook-category">
+		<div class="stylebook-category style" style="width:200px;">
 			<div class="stylebook-icon">
 				<img src="image/style.png"/>
 			</div>
-			<div class="category-title style">
+			<div class="category-title">
 				<span>스타일</span>
 			</div>
 		</div>
-		<div class="stylebook-category">
+		<div class="stylebook-category dyeing">
 			<div class="stylebook-icon">
 				<img src="image/dyeing.png"/>
 			</div>
-			<div class="category-title dyeing">
+			<div class="category-title">
 				<span>염색</span>
 			</div>
 		</div>
 	</div>
 	<div class="stylebook-bottombar"></div>
 	<div class="stylebook-body">
-	<!-- 	<div class="stylebook-section">
+	<%-- 	<div class="stylebook-section">
 			<div class="stylebook-image">
 				<img src="image/O컬펌.png"/>
 			</div>
@@ -88,7 +88,7 @@
 					<span class="hashTag-span"></span>
 				</a>
 			</div>
-		</div>-->
+		</div>--%>
 	</div> 
 </div>
 <script src="/hairShopProject/stylebook/js/stylebook.js"></script>

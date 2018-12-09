@@ -38,6 +38,7 @@
 	<context:component-scan base-package="board.bean" />
 	<context:component-scan base-package="board.dao"/>
 	
+	<context:component-scan base-package="management.bean"/>
 	<context:component-scan base-package="management.dao"/>
 	
 	<context:component-scan base-package="stylebook.dao"/>
