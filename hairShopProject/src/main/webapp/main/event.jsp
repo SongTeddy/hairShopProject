@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <style type="text/css">
+img.events:hover {
+	cursor:pointer;
+}
 .fancyTab {
 	text-align: center;
 	vertical-align: middle;
@@ -240,7 +243,7 @@ div {
 			</li>
 		</ul>
 		<div id="myTabContent" class="tab-content fancyTabContent"
-			aria-live="polite" style="height: 710px;">
+			aria-live="polite" >
 			<div class="tab-pane fade active in" id="tabBody0" role="tabpanel"
 				aria-labelledby="tab0" aria-hidden="false" tabindex="0" style="padding:0px; width:100%;">
 			</div>
@@ -270,15 +273,19 @@ $(document).ready(function(){
 		dataType: 'json',
 		success: function(data){
 			//진행이벤트
+			var eventLength = 0;
+			var eventListLength =0;
+			var endEventListLength =0;
 			$.each(data.eventList,function(index,item){
 				var addr = addBannerAddress(item.EVENTBANNERIMAGE);
 				$('<div/>',{
 					class : "col-md-offset-2 col-md-8",
 					style : "width:100%; right:17%; border-bottom: 0.5px solid gray;",
 					html : 	'<div class="section-heading" >' +
-							'<img src="'+addr+'" onclick="eventView('+item.SEQ+')" />' + 
+							'<img src="'+addr+'" class="events" onclick="eventView('+item.SEQ+')" />' + 
 							'</div>'
 				}).appendTo($('div#tabBody0'));
+				eventListLength = index;
 			});
 			//종료된 이벤트
 			$.each(data.endEventList,function(index,item){
@@ -287,10 +294,14 @@ $(document).ready(function(){
 					class : "col-md-offset-2 col-md-8",
 					style : "width:100%; right:17%; border-bottom: 0.5px solid gray;",
 					html : 	'<div class="section-heading">' +
-							'<img src="'+addr+'" onclick="endEventView('+item.SEQ+')" style="width:100%;"/>'+ 
+							'<img src="'+addr+'" class="events" onclick="endEventView('+item.SEQ+')" style="width:100%;"/>'+ 
 							'</div>'
 				}).appendTo($('div#tabBody1'));
+				endEventListLength = index;
 			});
+			if(eventListLength > endEventListLength) eventLength = eventListLength+1;
+			else eventLength = endEventListLength+1;
+			$('div#myTabContent').height(250*eventLength);
 		}, error : function() {
 			alert("이벤트리스트 에러");
 		}

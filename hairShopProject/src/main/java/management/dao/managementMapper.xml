@@ -29,7 +29,7 @@
 		<result property="approval_key" column="APPROVAL_KEY" />
 		<result property="logtime" column="LOGTIME" />
 	</resultMap>
-	
+
 	<resultMap type="designer" id="designerDTO">
 		<result property="seq" column="SEQ" />
 		<result property="designerid" column="DESIGNERID" />
@@ -40,7 +40,7 @@
 		<result property="position" column="POSITION" />
 		<result property="dayoff" column="DAYOFF" />
 	</resultMap>
-	
+
 	<resultMap type="reservation" id="reservationDTO">
 		<result property="bookeremail" column="BOOKEREMAIL" />
 		<result property="bookername" column="BOOKERNAME" />
@@ -61,64 +61,74 @@
 		<result property="didordidnot" column="DIDORDIDNOT" />
 		<result property="logtime" column="LOGTIME" />
 	</resultMap>
-	
-<!-- ==================================================== 페이지 이동 ==================================================== -->
+
+	<!-- ==================================================== 페이지 이동 ==================================================== -->
 
 	<!-- 헤어샵 이름 조회 -->
-	<select id="getMemberType" parameterType="String" resultType="String">
+	<select id="getMemberType" parameterType="String"
+		resultType="String">
 		select type from memberInfo where email=#{email }
 	</select>
 
-<!-- ==================================================== 마이페이지(관리자) ==================================================== -->
-	
-	
+	<!-- ==================================================== 마이페이지(관리자) ==================================================== -->
+
+
 	<!-- /////////////////////// 헤어샵 관리 메뉴 /////////////////////// -->
-	
+
 	<!-- 헤어샵 total 조회 -->
 	<select id="getTotalHairShop" resultType="String">
-		select count(*) from memberInfo where type='1'
+		select count(*) from
+		memberInfo where type='1'
 	</select>
-	
+
 	<!-- 헤어샵 이름 조회 -->
 	<select id="getHairShopName" resultType="String">
-		select distinct name from memberInfo where type='1'
+		select distinct name
+		from memberInfo where type='1'
 	</select>
-	
+
 	<!-- 헤어샵 리스트 조회 -->
-	<select id="getHairShopList" parameterType="String" resultType="member">
+	<select id="getHairShopList" parameterType="String"
+		resultType="member">
 		select * from memberInfo where name=#{hairShopName }
 	</select>
-	
+
 	<!-- 헤어샵 삭제 -->
 	<delete id="hairShopDelete" parameterType="String">
-		delete memberinfo where email=#{email }
+		delete memberinfo
+		where email=#{email }
 	</delete>
-	
+
 	<!-- 헤어샵 비밀번호 수정 -->
 	<update id="hairShopPwdModify" parameterType="Map">
-		update memberinfo set pwd=#{modifyPwd } where email=#{email }
+		update memberinfo
+		set pwd=#{modifyPwd } where email=#{email }
 	</update>
-	
+
 	<!-- /////////////////////// 회원 관리 메뉴 /////////////////////// -->
-	
+
 	<!-- 타입에 의해 memberinfo 조회 -->
-	<select id="getMemberByType" parameterType="String" resultType="member">
+	<select id="getMemberByType" parameterType="String"
+		resultType="member">
 		select * from memberinfo where type=#{type }
 	</select>
-	
+
 	<!-- 개인회원 total 조회 -->
 	<select id="getMemberTotal" resultType="String">
-		select count(*) from memberinfo where type='0'
+		select count(*) from
+		memberinfo where type='0'
 	</select>
-	
+
 	<!-- 개인회원 삭제 -->
 	<delete id="memberDelete" parameterType="String">
-		delete memberinfo where email=#{email }
+		delete memberinfo where
+		email=#{email }
 	</delete>
-	
+
 	<!-- 개인회원 비밀번호 수정 -->
 	<update id="memberPwdModify" parameterType="Map">
-		update memberinfo set pwd=#{modifyPwd } where email=#{email }
+		update memberinfo set
+		pwd=#{modifyPwd } where email=#{email }
 	</update>
 	
 	<!-- /////////////////////// 예약 관리 메뉴 /////////////////////// -->
@@ -155,37 +165,56 @@
 	<!-- 이벤트 등록 -->
 	<update id="eventRegister" parameterType="Map">
 		insert into event
-		values (event_seq.nextval, #{eventSubject }, 
-		to_date(#{eventStartDate}, 'mm/dd/yyyy'), 
-		to_date(#{eventEndDate}, 'mm/dd/yyyy'), 
+		values (event_seq.nextval, #{eventSubject },
+		to_date(#{eventStartDate}, 'mm/dd/yyyy'),
+		to_date(#{eventEndDate}, 'mm/dd/yyyy'),
 		#{eventBannerImage },
-		#{eventDetailImage })
+		#{eventDetailImage }
+		)
 	</update>
-	
+
 	<!-- 이벤트와 쿠폰 동시 등록 -->
 	<update id="eventAndCouponRegister" parameterType="Map">
 		begin
-			insert into event
-			values (event_seq.nextval, #{eventSubject }, 
-			to_date(#{eventStartDate}, 'mm/dd/yyyy'), 
-			to_date(#{eventEndDate}, 'mm/dd/yyyy'), 
-			#{eventBannerImage },
-			#{eventDetailImage });
-			
-			insert into coupon 
-			values(event_seq.currval, #{eventSubject }||#{discountAmount }||' 쿠폰',
-			#{discountOption }, #{discountAmount },
-			#{expirationOption },
-			to_date(#{expirationDate }, 'mm/dd/yyyy'), 	
-			#{termOfValidity },
-			#{couponImage });
+		insert into event
+		values (event_seq.nextval, #{eventSubject },
+		to_date(#{eventStartDate}, 'mm/dd/yyyy'),
+		to_date(#{eventEndDate}, 'mm/dd/yyyy'),
+		#{eventBannerImage },
+		#{eventDetailImage });
+
+		insert into coupon
+		values(event_seq.currval, #{eventSubject }||#{discountAmount }||' 쿠폰',
+		#{discountOption }, #{discountAmount },
+		#{expirationOption },
+		to_date(#{expirationDate }, 'mm/dd/yyyy'),
+		#{termOfValidity },
+		#{couponImage },
+		#{minPrice });
 		end;
 	</update>
-	
+
 	<!-- 모든 이벤트 가져오기. 쿠폰들도 있으면 조인해서 가져옴. 쿠폰이 없는 이벤트는 쿠폰 컬럼에 모두 null값 들어있음 -->
 	<select id="totalEvents" resultType="java.util.Map">
-		select * from event left join coupon using(seq)	
+		select * from event left
+		join coupon using(seq)
 	</select>
+	<!-- 현재 진행중인 이벤트와 쿠폰 -->
+	<select id="getCurrentEventAndCouponList" resultType="java.util.Map">
+		 <![CDATA[
+		 select * from event left join coupon using(seq) 
+		 where eventenddate > sysdate order by seq desc
+		 ]]>
+	</select>
+	
+	<!-- 지난 이벤트와 쿠폰 -->
+	<select id="getPastEventAndCouponList" resultType="java.util.Map">
+		 <![CDATA[
+		 select * from event left join coupon using(seq) 
+		 where eventenddate < sysdate order by seq desc
+		 ]]>
+	</select>
+
 
 	<!-- 이벤트 정보 가져오기 -->
 	<select id="getEventList" resultType="java.util.Map">
@@ -200,167 +229,373 @@
 		resultType="java.util.Map">
       <![CDATA[select eventdetailimage,'[현재 진행중 이벤트] '||eventSubject as eventSubject,seq from event where seq=#{seq } and eventenddate > sysdate]]>
 	</select>
+	
 	<select id="getEndEventImageName" parameterType="int"
 		resultType="java.util.Map">
       <![CDATA[select eventdetailimage,'[종료된 이벤트] '||eventSubject as eventSubject,seq from event where seq=#{seq } and eventenddate < sysdate]]>
 	</select>
 	
-  
-  <!-- /////////////////////// 스타일 찾기 추가 | 관리  /////////////////////// -->
-	<select id="getStylebookImage" parameterType="String" resultType="Map">
-		select m.name, s.permImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not permimage is null
-		union
-		select m.name, s.cutImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not cutImage is null
-		union
-		select m.name, s.styleImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not styleImage is null
-		union
-		select m.name, s.dyeingImage, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not dyeingImage is null
-  </select>
-<!-- ==================================================== 마이페이지(개인) ==================================================== -->
+	<select id="getCoupon" parameterType="int"
+		resultType="java.util.Map">
+		select * from coupon where seq=#{value }
+	</select>
 
+	<insert id="couponDownExpire" parameterType="java.util.Map" >
+		insert into coupondownload (couponseq,
+									email,
+									couponname,
+									discountoption,
+									discountamount,
+									expirationdate,
+									logtime, minprice) select #{seq } as seq,
+												    #{memEmail } as email,
+												    couponname,
+												    discountoption,
+												    discountamount,
+												    expirationdate,
+												    sysdate as logtime,
+												    minprice
+											 from coupon where seq=#{seq }
+	</insert>
+	
+	<insert id="couponDownTerm" parameterType="java.util.Map">
+		insert into coupondownload (couponseq,
+									email,
+									couponname,
+									discountoption,
+									discountamount,
+									expirationdate,
+									logtime,
+									minprice) select #{seq } as seq,
+													#{memEmail } as email,
+													couponname,
+													discountoption,
+													discountamount,
+													sysdate + termofvalidity,
+													sysdate as logtime,
+													minprice
+											 from coupon where seq=#{seq }
+	</insert>
+	
+	<!-- 쿠폰 중복 체크 -->
+	<select id="couponCheckDuplication" parameterType="java.util.Map" resultType="int" > 
+		select count(*) as count from coupondownload where email=#{memEmail } and couponseq=#{seq }
+	</select>
+	
+	<!-- 사용자 사용가능 쿠폰 -->
+	<select id="getCouponList" parameterType="java.lang.String" resultType="java.util.Map">
+		<![CDATA[select * from coupondownload  join coupon on(coupondownload.couponseq= coupon.SEQ) where coupondownload.email=#{value } and coupondownload.used=0 and coupondownload.expirationdate> sysdate]]>
+	</select>
+	<!-- 사용자 만료/사용불가 쿠폰 -->
+	<select id="getEndCouponList" parameterType="java.lang.String" resultType="java.util.Map">
+		<![CDATA[select * from coupondownload join coupon on(coupondownload.couponseq= coupon.SEQ) where coupondownload.email=#{value } and (coupondownload.used=1 or coupondownload.expirationdate<sysdate)]]>
+	</select>
+	
+	<!-- 쿠폰 사용한 거 표시해주기 -->
+	<update id="usedCoupon" parameterType="java.util.Map">
+		update coupondownload set used=1 where email=#{bookerEmail } and couponseq=#{couponSeq }
+	</update>
+	
+	<!-- ==================================================== 마이페이지(개인) ==================================================== -->
+	
+	
+	<!-- 이벤트 삭제하기 -->
+ 	<delete id="deleteEvent" parameterType="java.util.List">
+		delete event where seq in 
+		<foreach collection="list" item="data" open="(" close=")" separator=",">
+			#{data }
+		</foreach>
+	</delete>
+	
+	<select id="getTargetEvent" parameterType="java.lang.String" resultType="java.util.Map">
+		select * from event left join coupon using(seq) where seq=#{value }
+	</select>
+	
+	<update id="updateEvent" parameterType="java.util.Map">
+		begin
+			update event set 
+			eventSubject = #{eventSubject }, 
+			eventStartDate = to_date(#{eventStartDate}, 'mm/dd/yyyy'), 
+			eventEndDate = to_date(#{eventEndDate}, 'mm/dd/yyyy'), 
+			eventBannerImage = #{eventBannerImage },
+			eventDetailImage =#{eventDetailImage }
+			where seq= #{seq };
+			
+			update coupon set 
+			couponname = #{eventSubject }||#{discountAmount }||' 쿠폰',
+			discountOption = #{discountOption },
+			discountAmount = #{discountAmount },
+			expirationOption = #{expirationOption },
+			expirationdate = to_date(#{expirationDate }, 'mm/dd/yyyy'), 	
+			termOfValidity = #{termOfValidity },
+			couponImage = #{couponImage }
+			where seq = #{seq };
+		end;
+	</update>
+  
+  	<!-- /////////////////////// 스타일 찾기 추가 | 관리  /////////////////////// -->
+	<select id="getStylebookImage" parameterType="String" resultType="Map">
+		select m.name, s.permImage, s.seq, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not permimage is null
+		union
+		select m.name, s.cutImage, s.seq, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not cutImage is null
+		union
+		select m.name, s.styleImage, s.seq, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not styleImage is null
+		union
+		select m.name, s.dyeingImage, s.seq, s.discription from stylebook s inner join memberInfo m using(hairShopId) where hairShopId=#{hairShopId} and not dyeingImage is null
+  	</select>
+  
+  	<!-- /////////////////////// 스타일 찾기 수정  /////////////////////// -->
+  	<update id="stylebookManagementModify" parameterType="Map">
+  		<if test='service.equals("커트")'>
+  			update stylebook set cutImage=#{image}, discription=#{discription}, service=#{service} where seq=#{seq}
+  		</if>
+  		<if test='service.equals("펌")'>
+  			update stylebook set permImage=#{image}, discription=#{discription}, service=#{service} where seq=#{seq}
+  		</if>
+  		<if test='service.equals("스타일")'>
+  			update stylebook set styleImage=#{image}, discription=#{discription}, service=#{service} where seq=#{seq}
+  		</if>
+  		<if test='service.equals("염색")'>
+  			update stylebook set dyeingImage=#{image}, discription=#{discription}, service=#{service} where seq=#{seq}
+  		</if>
+  	</update>
+  	
+  	<!-- /////////////////////// 스타일 찾기 삭제  /////////////////////// -->
+  	<delete id="stylebookDelete" parameterType="String">
+  		delete stylebook where seq=#{seq}
+  	</delete>
+  	
+  	<insert id="stylebookManagementInsert" parameterType="Map">
+  		<if test='service.equals("커트")'>
+  			insert into stylebook(seq, cutImage, discription, service, hairShopId) values(seq_stylebook.nextval,#{image},#{discription},#{service},#{hairShopId})
+  		</if>
+  		<if test='service.equals("펌")'>
+  			insert into stylebook(seq, permImage, discription, service, hairShopId) values(seq_stylebook.nextval,#{image},#{discription},#{service},#{hairShopId})
+  		</if>
+  		<if test='service.equals("스타일")'>
+  			insert into stylebook(seq, styleImage, discription, service, hairShopId) values(seq_stylebook.nextval,#{image},#{discription},#{service},#{hairShopId})
+  		</if>
+  		<if test='service.equals("염색")'>
+  			insert into stylebook(seq, dyeingImage, discription, service, hairShopId) values(seq_stylebook.nextval,#{image},#{discription},#{service},#{hairShopId})
+  		</if>
+  	</insert>
+<!-- ==================================================== 마이페이지(개인) ==================================================== -->
 
 	<!-- 개인회원 정보수정 -->
 	<update id="updateInfo" parameterType="member">
-		update memberInfo set name=#{name}, pwd=#{pwd}, tel1=#{tel1}, tel2=#{tel2}, tel3=#{tel3}, zipcode=#{zipcode}, addr1=#{addr1}, addr2=#{addr2} where email=#{email}
+		update memberInfo set
+		name=#{name}, pwd=#{pwd}, tel1=#{tel1}, tel2=#{tel2}, tel3=#{tel3},
+		zipcode=#{zipcode}, addr1=#{addr1}, addr2=#{addr2} where
+		email=#{email}
 	</update>
-	
+
 	<!-- 회원탈퇴 -->
 	<delete id="userDelete" parameterType="Map">
-		delete memberInfo where email=#{email} and pwd=#{pwd}
+		delete memberInfo where
+		email=#{email} and pwd=#{pwd}
 	</delete>
-	
+
 	<!-- 이용내역 select -->
-	<select id="getUsageDetailsInfo" parameterType="String" resultType="Map">
-		select m.name, r.* from memberInfo m inner join reservation r on m.hairshopid = r.hairshopid where bookeremail=#{email}
+	<select id="getUsageDetailsInfo" parameterType="String"
+		resultType="Map">
+		select m.name, r.* from memberInfo m inner join reservation
+		r on m.hairshopid = r.hairshopid where bookeremail=#{email}
 	</select>
-	
+
 	<!-- 예약현황 select -->
-	<select id="getReservationList" parameterType="String" resultType="Map">
-		select m.name, r.* from memberInfo m inner join reservation r on m.hairshopid = r.hairshopid where bookeremail=#{email} and didordidnot=0
+	<select id="getReservationList" parameterType="String"
+		resultType="Map">
+		select m.name, r.* from memberInfo m inner join reservation
+		r on m.hairshopid = r.hairshopid where bookeremail=#{email} and
+		didordidnot=0
 	</select>
-	
+
 	<!-- 예약 취소 -->
 	<delete id="reservationCancel" parameterType="String">
 		<![CDATA[delete reservation where bookeremail=#{email} and didORdidNOT=0 and sysdate < starttime]]>
 	</delete>
-	
-	<!-- 리뷰글 쓸때 필요한 데이터 받기 -->	
-	<select id="checkReservationList" parameterType="Map" resultType="Map">
-		select d.designerimage, d.positioncode, r.* from reservation r inner join designerinfo d on d.designerid = r.designerid where bookeremail=#{email} and didordidnot=1 and theday=#{theday}
+
+	<!-- 리뷰글 쓸때 필요한 데이터 받기 -->
+	<select id="checkReservationList" parameterType="Map"
+		resultType="Map">
+		select d.designerimage, d.positioncode, r.* from
+		reservation r inner join designerinfo d on d.designerid = r.designerid
+		where bookeremail=#{email} and didordidnot=1 and theday=#{theday}
 	</select>
-	
-	<select id="heartList" parameterType= "java.lang.String" resultType="java.util.Map">
+
+	<select id="heartList" parameterType="java.lang.String"
+		resultType="java.util.Map">
 		select * from heart where email=#{memEmail }
 	</select>
 
 
-<!-- ==================================================== 마이페이지(헤어샵) ==================================================== -->
-	
-	
+	<!-- ==================================================== 마이페이지(헤어샵) ==================================================== -->
+
+
 	<!-- /////////////////////// 예약 현황 메뉴 /////////////////////// -->
 
 	<!-- 예약 현황 조회 -->
-	<select id="getTotalReservation" parameterType="String" resultType="String">
-		select count(*) from reservation where hairshopid=#{hairshopId }
+	<select id="getTotalReservation" parameterType="String"
+		resultType="String">
+		select count(*) from reservation where
+		hairshopid=#{hairshopId }
 	</select>
-	
+
 	<!-- 총 예약 금액 조회 -->
-	<select id="getTotalReservePrice" parameterType="String" resultType="String">
-		select price from reservation where hairshopid=#{hairshopId }
+	<select id="getTotalReservePrice" parameterType="String"
+		resultType="String">
+		select price from reservation where hairshopid=#{hairshopId
+		}
 	</select>
-	
+
 	<!-- 헤어샵의 디자이너 조회 -->
-	<select id="getHairShopDesigner" parameterType="String" resultType="String">
-		select designername from designerinfo where hairshopid=#{hairshopId }
+	<select id="getHairShopDesigner" parameterType="String"
+		resultType="String">
+		select designername from designerinfo where
+		hairshopid=#{hairshopId }
 	</select>
-	
+
 	<!-- 헤어샵 정보 조회 -->
-	<select id="getMemberInfo" parameterType="String" resultType="member">
+	<select id="getMemberInfo" parameterType="String"
+		resultType="member">
 		select * from memberInfo where hairshopid=#{hairshopId }
 	</select>
-	
+
 	<!-- 한명의 예약 정보 조회 -->
-	<select id="getReservation" parameterType="String" resultType="reservation">
-		select * from reservation where designername=#{designername }
+	<select id="getReservation" parameterType="String"
+		resultType="reservation">
+		select * from reservation where designername=#{designername
+		}
 	</select>
 
 	<!-- /////////////////////// 디자이너 관리 메뉴 /////////////////////// -->
 
 	<!-- 디자이너 정보 -->
-	<select id="getDesignerInfo" parameterType="String" resultType="designer">
+	<select id="getDesignerInfo" parameterType="String"
+		resultType="designer">
 		select * from designerinfo where hairshopid=#{hairshopId }
 	</select>
-	
-	<!-- 디자이너의 예약 수-->
-	<select id="getDesignerReserve" parameterType="String" resultType="String">
-		select count(*) from reservation where designerid=#{designerId }
+
+	<!-- 디자이너의 예약 수 -->
+	<select id="getDesignerReserve" parameterType="String"
+		resultType="String">
+		select count(*) from reservation where
+		designerid=#{designerId }
 	</select>
-	
-	<!-- 디자이너 삭제-->
+
+	<!-- 디자이너 삭제 -->
 	<select id="designerDelete" parameterType="String">
-		delete designerinfo where seq=#{seq }
+		delete designerinfo
+		where seq=#{seq }
 	</select>
-	
-	<!-- 디자이너 삭제-->
+
+	<!-- 디자이너 삭제 -->
 	<select id="designerCheckedDelete" parameterType="int">
-		delete designerinfo where seq in 
-		<foreach collection="list" item="data" open="(" close=")" separator=",">
+		delete designerinfo where seq in
+		<foreach collection="list" item="data" open="(" close=")"
+			separator=",">
 			#{data}
 		</foreach>
 	</select>
-	
-	<!-- 디자이너 추가-->
+
+	<!-- 디자이너 추가 -->
 	<insert id="designerAdd" parameterType="designer">
-		insert into designerinfo(seq, designerid, hairshopid, designername, positioncode, position, dayoff) values(seq_designerinfo.nextval, #{designerid }, #{hairshopid }, #{designername }, #{positioncode }, #{position }, #{dayoff })
+		insert into
+		designerinfo(seq, designerid, hairshopid, designername, positioncode,
+		position, dayoff) values(seq_designerinfo.nextval, #{designerid },
+		#{hairshopid }, #{designername }, #{positioncode }, #{position },
+		#{dayoff })
 	</insert>
-	
-	<!-- 디자이너 수정-->
+
+	<!-- 디자이너 수정 -->
 	<update id="designerModify" parameterType="designer">
-		update designerinfo set designerid=#{designerid}, designername=#{designername }, designerimage=#{designerimage }, positioncode=#{positioncode }, position=#{position }, dayoff=#{dayoff } where seq=#{seq }
+		update designerinfo
+		set designerid=#{designerid}, designername=#{designername },
+		designerimage=#{designerimage }, positioncode=#{positioncode },
+		position=#{position }, dayoff=#{dayoff } where seq=#{seq }
 	</update>
-	
-	<!-- /////////////////////// 헤어샵 정보 등록(수정) 메뉴  /////////////////////// -->
-	
+
+	<!-- /////////////////////// 헤어샵 정보 등록(수정) 메뉴 /////////////////////// -->
+
 	<!-- 헤어샵 정보 받기 -->
-	<select id="getHairShopInfo" parameterType="String" resultType="java.util.Map">
+	<select id="getHairShopInfo" parameterType="String"
+		resultType="java.util.Map">
 		select * from memberinfo where email=#{memEmail }
-   	</select>
-   
-   	<!-- 헤어샵  등록할 때, 아이디 중복 막기 -->
-   	<select id="isExistId" parameterType="java.lang.String" resultType="java.util.Map">
-		select * from memberinfo where hairshopid=#{hairShopId } 
-   	</select>
-   
-   	<!-- 헤어샵  등록할 때, 사업자등록번호 중복 막기 -->
-  	<select id="isExistLicense" parameterType="java.util.Map" resultType="java.util.Map">
-		select * from MEMBERINFO where license1=#{license1 } and license2=#{license2 } and license3=#{license3 }
-   	</select>
-   
-   	<!-- 헤어샵 정보 등록 및 변경 -->
-   	<update id="hairShopInfoUpdate" parameterType="java.util.Map">
-	     update MEMBERINFO set name=#{name },
-	     license1=#{license1 }, license2=#{license2 }, license3=#{license3 },
-	     addr1=#{addr1 }, addr2=#{addr2 }, zipcode=#{zipcode },
-	     tel1=#{tel1 }, tel2=#{tel2 }, tel3=#{tel3 },
-	     hairshopcontent = #{hairShopContent },
-	     opentime=#{openTime }, closetime=#{closeTime }, 
-	     hairshopid=#{hairShopId },
-	     hairshopimage1=#{hairShopImage1 }, 
-	     hairshopimage2=#{hairShopImage2 }, 
-	     hairshopimage3=#{hairShopImage3 }, 
-	     dayoff=#{dayoff }
-	     where email=#{email }
-	</update>
-   
-	<update id="hairShopInfoUpdateExceptImg" parameterType="java.util.Map">
+	</select>
+
+	<!-- 헤어샵 등록할 때, 아이디 중복 막기 -->
+	<select id="isExistId" parameterType="java.lang.String"
+		resultType="java.util.Map">
+		select * from memberinfo where hairshopid=#{hairShopId }
+	</select>
+
+	<!-- 헤어샵 등록할 때, 사업자등록번호 중복 막기 -->
+	<select id="isExistLicense" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select * from MEMBERINFO where license1=#{license1 } and
+		license2=#{license2 } and license3=#{license3 }
+	</select>
+
+	<!-- 헤어샵 정보 등록 및 변경 -->
+	<update id="hairShopInfoUpdate" parameterType="java.util.Map">
 		update MEMBERINFO set name=#{name },
 		license1=#{license1 }, license2=#{license2 }, license3=#{license3 },
 		addr1=#{addr1 }, addr2=#{addr2 }, zipcode=#{zipcode },
 		tel1=#{tel1 }, tel2=#{tel2 }, tel3=#{tel3 },
 		hairshopcontent = #{hairShopContent },
-		opentime=#{openTime }, closetime=#{closeTime }, 
+		opentime=#{openTime }, closetime=#{closeTime },
+		hairshopid=#{hairShopId },
+		hairshopimage1=#{hairShopImage1 },
+		hairshopimage2=#{hairShopImage2 },
+		hairshopimage3=#{hairShopImage3 },
+		dayoff=#{dayoff }
+		where email=#{email }
+	</update>
+
+	<update id="hairShopInfoUpdateExceptImg" parameterType="java.util.Map">
+		update MEMBERINFO set name=#{name },
+		license1=#{license1
+		}, license2=#{license2 }, license3=#{license3 },
+		addr1=#{addr1 },
+		addr2=#{addr2 }, zipcode=#{zipcode },
+		tel1=#{tel1 }, tel2=#{tel2 },
+		tel3=#{tel3 },
+		hairshopcontent = #{hairShopContent },
+		opentime=#{openTime }, closetime=#{closeTime },
 		hairshopid=#{hairShopId },
 		dayoff=#{dayoff }
 		where email=#{email }
 	</update>
+	
+	<!-- 디자이너 정보 얻기 -->
+	<select id="getInfoForScheduling" parameterType="java.lang.String" resultType="java.util.Map">
+		select position||' '||DESIGNERNAME as designer, 
+		designerid, hairshopid from designerinfo 
+		where hairshopid = (select hairshopid from memberinfo where email=#{memEmail })
+		order by positioncode asc
+	</select>
+	
+	<!-- 헤어샵 디자이너들 스케줄 넣기 -->
+	<insert id="totalHairShopSchedule" statementType="CALLABLE"  parameterType="hashmap">
+		{ call designerScheduleProcedure(to_date(#{totalStartDate }, 'mm/dd/yyyy'), ${i }, #{hairShopId })}
+	</insert>
+	
+	<!-- 개인 디자이너 휴가 -->
+	<delete id="vacationDesignerSchedule" parameterType="java.util.Map">
+		delete DESIGNERSCHEDULE where designerid = #{designerId } and
+		theday = to_char(to_date(#{vacationStartDate }, 'mm/dd/yyyy') + ${i }, 'yyyy-mm-dd')
+	</delete>
+	
+	<!-- 개인 디자이너 추가 근무 등록 -->
+	<insert id="overworkDesignerSchedule" parameterType="java.util.Map">
+ 		INSERT INTO designerschedule
+        (hairshopid, DESIGNERID, theday, starttime, endtime)
+        select #{hairShopId }, #{designerId }, to_char(to_date(#{overworkStartDate }, 'mm/dd/yyyy') + ${i },'yyyy-mm-dd'),
+        to_date(to_char(to_date(#{overworkStartDate }, 'mm/dd/yyyy'),'yyyy-mm-dd')||' '||(select opentime from memberinfo where hairshopid=#{hairShopId }), 'yyyy-mm-dd hh24:mi') + ${i }, 
+        to_date(to_char(to_date(#{overworkStartDate }, 'mm/dd/yyyy'),'yyyy-mm-dd')||' '||(select closetime from memberinfo where hairshopid=#{hairShopId }), 'yyyy-mm-dd hh24:mi') + ${i }
+        from dual
+        where not exists (select 0 from DESIGNERSCHEDULE
+        where DESIGNERID = #{designerId } and
+        theday=to_char(to_date(#{overworkStartDate }, 'mm/dd/yyyy') + ${i },'yyyy-mm-dd'))
+	</insert>
 </mapper>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +61,8 @@ public class IndexController {
 		ModelAndView mav = new ModelAndView();
 		if(type==0) {
 			Map<String,String> map = managementDAO.getEventImageName(Integer.parseInt(seq));
+			Map<String,String> mapCoupon = managementDAO.getCoupon(Integer.parseInt(seq));
+			if(mapCoupon!=null) mav.addObject("couponMap", mapCoupon);
 			mav.addObject("eventImageName", map.get("EVENTDETAILIMAGE"));
 			mav.addObject("eventSubject", map.get("EVENTSUBJECT"));
 			mav.addObject("seq", map.get("SEQ"));

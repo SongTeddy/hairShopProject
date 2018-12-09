@@ -8,12 +8,13 @@
 /* 	width: 90%  !important; */
 }
 
-.eventRegisterTable{
-	width: 70%;
+.currentEventListTable, .pastEventListTable{
+	width: 90%;
 	color: black;
+	margin-top: 10px;
 }
 .btnDiv{
-	width: 70%;
+	width: 90%;
 	color: black;
 	text-align: right;
 }
@@ -34,196 +35,270 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 
 <body>
-<form name="eventRegisterForm" method="post" enctype="Multipart/form-data" action="/hairShopProject/adminPage/eventRegister.do">
-<font size="6pt" style="color: #363636;">이벤트  등록하기</font><br>
+<form name="currentEventUpdateOrDeleteForm" method="post" enctype="Multipart/form-data" action="/hairShopProject/adminPage/eventUpdate.do">
+<font size="6pt" style="color: #363636;">이벤트  리스트</font><br>
 	<hr align="left" style="color: black;
 				  margin-top: 10px;
 		    	  margin-bottom: 0px;
-		    	  width: 235px;
+		    	  width: 210px;
 		    	  border-top: 2px solid #5A5A5A;"><br>
+	<div class="btnDiv">
+		<input type="button" class="btn btn-default" id="insertNewEvent" value="이벤트 추가" onclick="location.href='/hairShopProject/adminPage/eventRegister.do'">
+	</div>
 
-
-	<table class="table table-striped eventRegisterTable" id="">
+	<br/>
+	<font size="5pt" color="black">진행중인 이벤트</font>
+	<table class="table table-striped currentEventListTable">
+	<thead>
 		<tr>
-			<td>이벤트 제목</td>
-			<td><input type="text" name="eventSubject" size="40"/></td>
+			<th><input type="checkbox" id="selectAllCurrentEvent"/></th>
+			<th>번호</th>
+			<th>이벤트 제목</th>
+			<th>이벤트 배너 이미지</th>
+			<th>이벤트 기간</th>
+			<th>쿠폰 정보</th>
+			<th>쿠폰 이미지</th>
+			<th>쿠폰 적용 금액</th>
 		</tr>
-		<tr>
-			<td style="height: 70px;">
-			<span>이벤트 배너 이미지</span><br/>
-			</td>
-			<td>				
-				<input type="file" name="eventBannerImage" id="eventBannerImage" />
-			</td>
-		</tr> 
-		<tr>
-			<td style="height: 70px;">
-			<span>이벤트 상세 이미지</span><br/>
-			</td>
-			<td>				
-				<input type="file" name="eventDetailImage" id="eventDetailImage" />
-			</td>
-		</tr>
-		<tr>
-			<td>이벤트 기간</td>
-			<td>
-				<p id="jqueryExample">
-				    <input type="text" name="eventStartDate" id="startDate" placeholder="시작 일자" autocomplete="off"/>
-				    ~ <input type="text" name="eventEndDate" id="endDate" placeholder="종료 일자" autocomplete="off" />
-				</p>
-			</td>			
-		</tr>
-		<tr>
-			<td>쿠폰 등록</td>
-				<td>
-					할인 방법&emsp;
-					<select id="discountOption" name="discountOption" >
-						<option value="0">비율 할인 </option>
-						<option value="1">차감 할인</option>
-					</select>
-					<input name="discountAmount" type="number" placeholder="할인율(%)" min="0" max="100" />
-					<br/>
-					<hr style="margin: 5px">
-					종료 시점&emsp;
-					<select id="expirationOption" name="expirationOption" >
-						<option value="0">일자 지정</option>
-						<option value="1">기간 지정</option>
-					</select>
-					<span id="limitDateOrDurationTd">
-					<input type="text" name="expirationDate" placeholder="종료 일자" autocomplete="off" />
-					</span>
-				</td>
-		</tr>
-		<tr>
-			<td style="height: 70px;">
-				<span>쿠폰 이미지</span><br/>
-			</td>
-			<td>				
-				<input type="file" name="couponImage" id="couponImage" />
-			</td>
-		</tr>
+	</thead>
+	<tbody id="currentEventTbody">
+	</tbody>
 	</table>
 	<div class="btnDiv">
-		<input type="button" class="btn btn-default" id="eventRegisterBtn" value="이벤트 등록">
-		<input type="button" class="btn" value="취소">
+		<input type="button" class="btn btn-default" id="deleteCurrentEvent" value="선택한 이벤트 삭제">
+		<input type="button" class="btn btn-default" id="updateCurrentEvent" value="선택한 이벤트 수정">
 	</div>
+<input type="hidden" name="updateOrDelete" value="">
+</form>
+	<br/>
+	<br/>
+<form name="pastEventUpdateOrDeleteForm" method="post" enctype="Multipart/form-data" action="/hairShopProject/adminPage/eventUpdate.do">
+	<font size="5pt" color="black">종료된 이벤트</font>
+	<table class="table table-striped pastEventListTable">
+	<thead>
+		<tr>
+			<th><input type="checkbox" id="selectAllPastEvent"/></th>
+			<th>번호</th>
+			<th>이벤트 제목</th>
+			<th>이벤트 배너 이미지</th>
+			<th>이벤트 기간</th>
+			<th>쿠폰 정보</th>
+			<th>쿠폰 이미지</th>
+			<th>쿠폰 적용 금액</th>
+		</tr>
+	</thead>
+	<tbody id="pastEventListTbody">
+	</tbody>
+	</table>
+	<div class="btnDiv">
+		<input type="button" class="btn btn-default" id="deletePastEvent" value="선택한 이벤트 삭제">
+		<input type="button" class="btn btn-default" id="updatePastEvent" value="선택한 이벤트 수정">
+	</div>
+<input type="hidden" name="updateOrDelete" value="">
 </form>
 
-<!-- date picker -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
-<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
-
-<script type="text/javascript">
+<script>
 $(document).ready(function(){
-	
-	$('#discountOption').on('change', function(){
-		if($('#discountOption option:selected').val()==0){
-			$('input[name=discountAmount]').prop('placeholder', '할인율(%)');
-			$('input[name=discountAmount]').prop('max', 100);
-			$('input[name=discountAmount]').prop('min', 0);
-			$('input[name=discountAmount]').val("");
-		}else{			
-			$('input[name=discountAmount]').removeProp('max');
-			$('input[name=discountAmount]').prop('max', 1000000);
-			$('input[name=discountAmount]').prop('min', 0);
-			$('input[name=discountAmount]').prop('placeholder', '할인액(원)');	
-			$('input[name=discountAmount]').val("");
+	$.ajax({
+		type : 'POST',
+		url : '/hairShopProject/adminPage/getEventAndCouponList.do',
+		dataType : 'json',
+		success : function(data){
+			$.each(data.currentEventAndList, function(index, item){
+				if(item.DISCOUNTOPTION == null) {
+					item.DISCOUNTAMOUNT = "쿠폰 없음";
+					item.COUPONIMAGE = "";
+				}else if(item.DISCOUNTOPTION == '0'){
+					item.DISCOUNTAMOUNT = item.DISCOUNTAMOUNT + "% 할인";	
+					item.COUPONIMAGE = '<img src="/hairShopProject/main/assets/images/event/'+ item.COUPONIMAGE + '" width="100"/>';
+				}else if(item.DISCOUNTOPTION == '1'){
+					item.DISCOUNTAMOUNT = (item.DISCOUNTAMOUNT).toLocaleString() + "원 할인";						
+					item.COUPONIMAGE = '<img src="/hairShopProject/main/assets/images/event/'+ item.COUPONIMAGE + '" width="100"/>';
+				}
+				if(item.MINPRICE != "0"){
+					item.MINPRICE = (item.MINPRICE).toLocaleString() + "원 이상"
+				}else{
+					item.MINPRICE = "";
+				}
+				
+				$('<tr/>').append($('<td/>', {
+				}).append($('<input/>', {
+					type : 'checkbox',
+					value : item.SEQ,
+					name : 'seqs',
+					class : 'selectCurrentOne'
+				})))
+				.append($('<td/>', {
+					text : item.SEQ
+				}))
+				.append($('<td/>', {
+					text : item.EVENTSUBJECT
+				}))
+				.append($('<td/>', {
+					html : '<img src="/hairShopProject/main/assets/images/event/'+ item.EVENTBANNERIMAGE + '" width="150"/>'
+				}))
+				.append($('<td/>', {
+					text : new Date(item.EVENTSTARTDATE).toLocaleDateString("lt-Lt")  + " ~ " +  new Date(item.EVENTENDDATE).toLocaleDateString("lt-Lt")
+				}))
+				.append($('<td/>', {
+					text : item.DISCOUNTAMOUNT
+				}))
+				.append($('<td/>', {
+					html : item.COUPONIMAGE
+				}))
+				.append($('<td/>', {
+					text : item.MINPRICE
+				}))
+				.appendTo($('#currentEventTbody'));
+			});
+			
+			$.each(data.pastEventAndList, function(index, item){
+				if(item.DISCOUNTOPTION == null) {
+					item.DISCOUNTAMOUNT = "쿠폰 없음";
+					item.COUPONIMAGE = "";
+				}else if(item.DISCOUNTOPTION == '0'){
+					item.DISCOUNTAMOUNT = item.DISCOUNTAMOUNT + "% 할인";	
+					item.COUPONIMAGE = '<img src="/hairShopProject/main/assets/images/event/'+ item.COUPONIMAGE + '" width="100"/>';
+				}else if(item.DISCOUNTOPTION == '1'){
+					item.DISCOUNTAMOUNT = (item.DISCOUNTAMOUNT).toLocaleString() + "원 할인";						
+					item.COUPONIMAGE = '<img src="/hairShopProject/main/assets/images/event/'+ item.COUPONIMAGE + '" width="100"/>';
+				}
+				
+				$('<tr/>').append($('<td/>', {
+				}).append($('<input/>', {
+					type : 'checkbox',
+					value : item.SEQ,
+					name : 'seqs',
+					class : 'selectPastOne'
+				})))
+				.append($('<td/>', {
+					text : item.SEQ
+				}))
+				.append($('<td/>', {
+					text : item.EVENTSUBJECT
+				}))
+				.append($('<td/>', {
+					html : '<img src="/hairShopProject/main/assets/images/event/'+ item.EVENTBANNERIMAGE + '" width="150"/>'
+				}))
+				.append($('<td/>', {
+					text : new Date(item.EVENTSTARTDATE).toLocaleDateString("lt-Lt")  + " ~ " +  new Date(item.EVENTENDDATE).toLocaleDateString("lt-Lt")
+				}))
+				.append($('<td/>', {
+					text : item.DISCOUNTAMOUNT
+				}))
+				.append($('<td/>', {
+					html : item.COUPONIMAGE
+				}))
+				.append($('<td/>', {
+					text : item.MINPRICE
+				}))
+				.appendTo($('#pastEventListTbody'));
+			});
+		},
+		error : function(){
+			alert("이벤트 리스트 못받아와요");
 		}
 	});
 	
-	$('#expirationOption').on('change', function(){
-		$('#limitDateOrDurationTd').empty();
-		if($('#expirationOption option:selected').val()==0){
- 			$('<input/>',{
- 				name : 'expirationDate',
- 				placeholder : '종료 일자'
- 			}).appendTo($('#limitDateOrDurationTd'));
- 			$('input[name=expirationDate]').datepicker({
- 				todayHighlight: true,
- 				minDate: "0", 
- 				changeMonth: true, 
- 			       dayNames: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
- 			       dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
- 			       monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
- 			       monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
- 			       onSelect: function(value){
- 					var date = new Date(value);
- 					var day = date.getDay();
- 				},
- 				onClose: function(value){
- 					var date = new Date(value);
- 					var day = date.getDay();
- 				}
- 			});
-		}else{
-			$('<input/>',{
-				name : 'termOfValidity',
-				placeholder : '적용 기간'
-			}).appendTo($('#limitDateOrDurationTd'));
-			alert($('#limitDateOrDurationTd').children(':first').attr('name'));
+	
+	$('#selectAllCurrentEvent').on('change', function(){
+		if($('input#selectAllCurrentEvent').prop("checked")){
+			$('input:checkbox[class="selectCurrentOne"]').prop('checked', true);
+		}else {
+			$('.selectCurrentOne:checked').each(function(index, item){
+				item.checked=false;
+			});
 		}
 	});
 	
-	$('#eventRegisterBtn').on('click', function(){
-		$('form[name=eventRegisterForm]').submit();
+
+	$(".currentEventListTable").on('change', '.selectCurrentOne', function(){
+		var length = $(".selectCurrentOne").length;
+		var c =0;
+		$(".selectCurrentOne:checked").each(function (index, item) {
+			c+=1;
+		});
+		if(!$(this).is(":checked")){
+			$("#selectAllCurrentEvent").prop("checked", false);
+		} else if(c==length){
+			$("#selectAllCurrentEvent").prop("checked", true);
+		}
+	 });
+	
+	
+
+	$('#selectAllPastEvent').on('click', function(){
+		if($('input#selectAllPastEvent').prop("checked")){
+			$('input:checkbox[class="selectPastOne"]').prop('checked', true);
+		}else {
+			$('.selectPastOne:checked').each(function(index, item){
+				item.checked=false;
+			});
+		}
+	});
+	
+	
+	$(".pastEventListTable").on('change', '.selectPastOne', function(){
+		var length = $(".selectPastOne").length;
+		var c =0;
+		$(".selectPastOne:checked").each(function (index, item) {
+			c+=1;
+		});
+		if(!$(this).is(":checked")){
+			$("#selectAllPastEvent").prop("checked", false);
+		} else if(c==length){
+			$("#selectAllPastEvent").prop("checked", true);
+		}
+	});
+	
+	
+	// 삭제 버튼 이벤트
+	$('#deleteCurrentEvent').on('click', function(){
+		var count = $('.selectCurrentOne').length;
+		if(count>0){
+			$('input[name=updateOrDelete]').val('doDelete');
+ 			$('form[name=currentEventUpdateOrDeleteForm]').submit();			
+		} else{
+			alert("삭제할 이벤트를 선택해주세요.");
+		}
+	});
+	
+	
+	// 수정 버튼 이벤트
+	$('#updateCurrentEvent').on('click', function(){
+		var count = $('.selectCurrentOne:checked').length;
+		if(count==1){
+			$('input[name=updateOrDelete]').val('doUpdate');
+			$('form[name=currentEventUpdateOrDeleteForm]').submit();			
+		} else if(count>1) {
+			alert("수정할 이벤트를 하나만 선택해주세요.");			
+		} else {
+			alert("삭제할 이벤트를 선택해주세요.");			
+		}
+	});
+	
+	
+	$('#deletePastEvent').on('click', function(){
+		var count = $('.selectPastOne').length;
+		if(count>0){
+			$('input[name=updateOrDelete]').val('doDelete');
+			$('form[name=pastEventUpdateOrDeleteForm]').submit();			
+		} else{
+			alert("삭제할 이벤트를 선택해주세요.");
+		}
+	});
+	
+	$('#updatePastEvent').on('click', function(){
+		var count = $('.selectPastOne:checked').length;
+		if(count==1){
+			$('input[name=updateOrDelete]').val('doUpdate');
+			$('form[name=pastEventUpdateOrDeleteForm]').submit();			
+		} else if(count>1) {
+			alert("수정할 이벤트를 하나만 선택해주세요.");			
+		} else {
+			alert("삭제할 이벤트를 선택해주세요.");
+		}
 	});
 });
-
-	//날짜 선택
-	$("#startDate").datepicker({
-		todayHighlight: true,
-		minDate: "0", 
-		changeMonth: true, 
-	       dayNames: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
-	       dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
-	       monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
-	       monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	       onSelect: function(value){
-			var date = new Date(value);
-			var day = date.getDay();
-		},
-		onClose: function(value){
-			var date = new Date(value);
-			var day = date.getDay();
-		}
-	});
-	
-	
-	$("#endDate").datepicker({
-		todayHighlight: true,
-		minDate: "0", 
-		changeMonth: true, 
-	       dayNames: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
-	       dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
-	       monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
-	       monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	       onSelect: function(value){
-			var date = new Date(value);
-			var day = date.getDay();
-		},
-		onClose: function(value){
-			var date = new Date(value);
-			var day = date.getDay();
-		}
-	});
-
-	$('input[name=expirationDate]').datepicker({
-			todayHighlight: true,
-			minDate: "0", 
-			changeMonth: true, 
-		       dayNames: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
-		       dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
-		       monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
-		       monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-		       onSelect: function(value){
-				var date = new Date(value);
-				var day = date.getDay();
-			},
-			onClose: function(value){
-				var date = new Date(value);
-				var day = date.getDay();
-			}
-		});
-	
 </script>
 </body>
