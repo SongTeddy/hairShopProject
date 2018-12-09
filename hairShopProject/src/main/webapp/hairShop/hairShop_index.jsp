@@ -623,6 +623,7 @@ button.selectedBtn {
 			<div class="tab-pane fade active in" id="tabBody0" role="tabpanel"
 				aria-labelledby="tab0" aria-hidden="false" tabindex="0">
 				<section id="spacer1" class="home-section spacer">
+				
 					<!-- 소개글 내 이미지 -->
 					<div class="container" id="homeBackgroundImg">
 						<div class="row">
@@ -915,6 +916,8 @@ button.selectedBtn {
 	            $('div#index_img1').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE1+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
 	            $('div#index_img2').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE2+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
 	            $('div#index_img3').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE3+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
+	            $('#').text(data.map.CLOSETIME);
+	               
 	        
 	            /* 미용실 위치 띄우기 */
 	        	var mapContainer = document.getElementById('map'), // 지도의 중심좌표
@@ -958,6 +961,8 @@ button.selectedBtn {
 	                $('p#designerPosition'+index).text(items.POSITION);
 	                $('span#dayoff'+index).text(changeDayOff(items.DAYOFF));   
 	             });
+	            
+	            
 	          },
 	          error : function(){
 	             alert("소개쪽 정보 에러");

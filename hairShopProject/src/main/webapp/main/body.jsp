@@ -240,431 +240,24 @@ i.fa-star {
    </section>
    <!--/.welcome-hero-->
    
-	<!--welcome-hero end -->
+  <!--welcome-hero end -->
 	<!--explore start -->
 	<section id="explore" class="explore">
 		<div class="container">
 			<div class="section-header">
-				<h2>explore</h2>
-				<p>Explore New place, food, culture around the world and many
-					more</p>
+				<h2>이 달의 추천 헤어샵</h2>
+				<p>에디터가 선정한 이달의 추천 헤어샵 입니다!</p>
 			</div>
 			<!--/.section-header-->
 			<div class="explore-content">
 				<div class="row">
-					<div class=" col-md-4 col-sm-6">
-						<div class="single-explore-item">
-							<div class="single-explore-img" onclick="location.href='/hairShopProject/hairShop/hairShop_index.do?hairShopId=juno'">
-								<img src="/hairShopProject/main/assets/images/explore/e1.jpg"
-									alt="explore image" >
-								<div class="single-explore-img-info">
-									<button onclick="window.location.href='#'">best rated</button>
-									<div class="single-explore-image-icon-box">
-										<ul>
-											<li>
-												<div class="single-explore-image-icon">
-													<i class="fa fa-arrows-alt"></i>
-												</div>
-											</li>
-											<li>
-												<div class="single-explore-image-icon">
-													<i class="fa fa-bookmark-o"></i>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="single-explore-txt bg-theme-1">
-								<h2>
-									<a href="#">tommy helfinger bar</a>
-								</h2>
-								<p class="explore-rating-price">
-									<span class="explore-rating">5.0</span> <a href="#"> 10
-										ratings</a> <span class="explore-price-box"> form <span
-										class="explore-price">5$-300$</span>
-									</span> <a href="#">resturent</a>
-								</p>
-								<div class="explore-person">
-									<div class="row">
-										<div class="col-sm-2">
-											<div class="explore-person-img">
-												<a href="#"> <img
-													src="/hairShopProject/main/assets/images/explore/person.png"
-													alt="explore person">
-												</a>
-											</div>
-										</div>
-										<div class="col-sm-10">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed do eiusmod tempor incid ut labore et dolore magna
-												aliqua....</p>
-										</div>
-									</div>
-								</div>
-								<div class="explore-open-close-part">
-									<div class="row">
-										<div class="col-sm-5">
-											<button class="close-btn" onclick="window.location.href='#'">close
-												now</button>
-										</div>
-										<div class="col-sm-7">
-											<div class="explore-map-icon">
-												<a href="#"><i data-feather="map-pin"></i></a> <a href="#"><i
-													data-feather="upload"></i></a> <a href="#"><i
-													data-feather="heart"></i></a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6">
-						<div class="single-explore-item">
-							<div class="single-explore-img">
-								<img src="/hairShopProject/main/assets/images/explore/e2.jpg"
-									alt="explore image">
-								<div class="single-explore-img-info">
-									<button onclick="window.location.href='#'">featured</button>
-									<div class="single-explore-image-icon-box">
-										<ul>
-											<li>
-												<div class="single-explore-image-icon">
-													<i class="fa fa-arrows-alt"></i>
-												</div>
-											</li>
-											<li>
-												<div class="single-explore-image-icon">
-													<i class="fa fa-bookmark-o"></i>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="single-explore-txt bg-theme-2">
-								<h2>
-									<a href="#">swim and dine resort</a>
-								</h2>
-								<p class="explore-rating-price">
-									<span class="explore-rating">4.5</span> <a href="#"> 8
-										ratings</a> <span class="explore-price-box"> form <span
-										class="explore-price">50$-500$</span>
-									</span> <a href="#">hotel</a>
-								</p>
-								<div class="explore-person">
-									<div class="row">
-										<div class="col-sm-2">
-											<div class="explore-person-img">
-												<a href="#"> <img
-													src="/hairShopProject/main/assets/images/explore/person.png"
-													alt="explore person">
-												</a>
-											</div>
-										</div>
-										<div class="col-sm-10">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed do eiusmod tempor incid ut labore et dolore magna
-												aliqua....</p>
-										</div>
-									</div>
-								</div>
-								<div class="explore-open-close-part">
-									<div class="row">
-										<div class="col-sm-5">
-											<button class="close-btn open-btn"
-												onclick="window.location.href='#'">open now</button>
-										</div>
-										<div class="col-sm-7">
-											<div class="explore-map-icon">
-												<a href="#"><i data-feather="map-pin"></i></a> <a href="#"><i
-													data-feather="upload"></i></a> <a href="#"><i
-													data-feather="heart"></i></a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6">
-						<div class="single-explore-item">
-							<div class="single-explore-img">
-								<img src="/hairShopProject/main/assets/images/explore/e3.jpg"
-									alt="explore image">
-								<div class="single-explore-img-info">
-									<button onclick="window.location.href='#'">best rated</button>
-									<div class="single-explore-image-icon-box">
-										<ul>
-											<li>
-												<div class="single-explore-image-icon">
-													<i class="fa fa-arrows-alt"></i>
-												</div>
-											</li>
-											<li>
-												<div class="single-explore-image-icon">
-													<i class="fa fa-bookmark-o"></i>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="single-explore-txt bg-theme-3">
-								<h2>
-									<a href="#">europe tour</a>
-								</h2>
-								<p class="explore-rating-price">
-									<span class="explore-rating">5.0</span> <a href="#"> 15
-										ratings</a> <span class="explore-price-box"> form <span
-										class="explore-price">5k$-10k$</span>
-									</span> <a href="#">destination</a>
-								</p>
-								<div class="explore-person">
-									<div class="row">
-										<div class="col-sm-2">
-											<div class="explore-person-img">
-												<a href="#"> <img
-													src="/hairShopProject/main/assets/images/explore/person.png"
-													alt="explore person">
-												</a>
-											</div>
-										</div>
-										<div class="col-sm-10">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed do eiusmod tempor incid ut labore et dolore magna
-												aliqua....</p>
-										</div>
-									</div>
-								</div>
-								<div class="explore-open-close-part">
-									<div class="row">
-										<div class="col-sm-5">
-											<button class="close-btn" onclick="window.location.href='#'">close
-												now</button>
-										</div>
-										<div class="col-sm-7">
-											<div class="explore-map-icon">
-												<a href="#"><i data-feather="map-pin"></i></a> <a href="#"><i
-													data-feather="upload"></i></a> <a href="#"><i
-													data-feather="heart"></i></a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class=" col-md-4 col-sm-6">
-						<div class="single-explore-item">
-							<div class="single-explore-img">
-								<img src="/hairShopProject/main/assets/images/explore/e4.jpg"
-									alt="explore image">
-								<div class="single-explore-img-info">
-									<button onclick="window.location.href='#'">most view</button>
-									<div class="single-explore-image-icon-box">
-										<ul>
-											<li>
-												<div class="single-explore-image-icon">
-													<i class="fa fa-arrows-alt"></i>
-												</div>
-											</li>
-											<li>
-												<div class="single-explore-image-icon">
-													<i class="fa fa-bookmark-o"></i>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="single-explore-txt bg-theme-4">
-								<h2>
-									<a href="#">banglow with swiming pool</a>
-								</h2>
-								<p class="explore-rating-price">
-									<span class="explore-rating">5.0</span> <a href="#"> 10
-										ratings</a> <span class="explore-price-box"> form <span
-										class="explore-price">10k$-15k$</span>
-									</span> <a href="#">real estate</a>
-								</p>
-								<div class="explore-person">
-									<div class="row">
-										<div class="col-sm-2">
-											<div class="explore-person-img">
-												<a href="#"> <img
-													src="/hairShopProject/main/assets/images/explore/person.png"
-													alt="explore person">
-												</a>
-											</div>
-										</div>
-										<div class="col-sm-10">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed do eiusmod tempor incid ut labore et dolore magna
-												aliqua....</p>
-										</div>
-									</div>
-								</div>
-								<div class="explore-open-close-part">
-									<div class="row">
-										<div class="col-sm-5">
-											<button class="close-btn" onclick="window.location.href='#'">close
-												now</button>
-										</div>
-										<div class="col-sm-7">
-											<div class="explore-map-icon">
-												<a href="#"><i data-feather="map-pin"></i></a> <a href="#"><i
-													data-feather="upload"></i></a> <a href="#"><i
-													data-feather="heart"></i></a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6">
-						<div class="single-explore-item">
-							<div class="single-explore-img">
-								<img src="/hairShopProject/main/assets/images/explore/e5.jpg"
-									alt="explore image">
-								<div class="single-explore-img-info">
-									<button onclick="window.location.href='#'">featured</button>
-									<div class="single-explore-image-icon-box">
-										<ul>
-											<li>
-												<div class="single-explore-image-icon">
-													<i class="fa fa-arrows-alt"></i>
-												</div>
-											</li>
-											<li>
-												<div class="single-explore-image-icon">
-													<i class="fa fa-bookmark-o"></i>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="single-explore-txt bg-theme-2">
-								<h2>
-									<a href="#">vintage car expo</a>
-								</h2>
-								<p class="explore-rating-price">
-									<span class="explore-rating">4.2</span> <a href="#"> 8
-										ratings</a> <span class="explore-price-box"> form <span
-										class="explore-price">500$-1200$</span>
-									</span> <a href="#">automotion</a>
-								</p>
-								<div class="explore-person">
-									<div class="row">
-										<div class="col-sm-2">
-											<div class="explore-person-img">
-												<a href="#"> <img
-													src="/hairShopProject/main/assets/images/explore/person.png"
-													alt="explore person">
-												</a>
-											</div>
-										</div>
-										<div class="col-sm-10">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed do eiusmod tempor incid ut labore et dolore magna
-												aliqua....</p>
-										</div>
-									</div>
-								</div>
-								<div class="explore-open-close-part">
-									<div class="row">
-										<div class="col-sm-5">
-											<button class="close-btn open-btn"
-												onclick="window.location.href='#'">open now</button>
-										</div>
-										<div class="col-sm-7">
-											<div class="explore-map-icon">
-												<a href="#"><i data-feather="map-pin"></i></a> <a href="#"><i
-													data-feather="upload"></i></a> <a href="#"><i
-													data-feather="heart"></i></a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-6">
-						<div class="single-explore-item">
-							<div class="single-explore-img">
-								<img src="/hairShopProject/main/assets/images/explore/e6.jpg"
-									alt="explore image">
-								<div class="single-explore-img-info">
-									<button onclick="window.location.href='#'">best rated</button>
-									<div class="single-explore-image-icon-box">
-										<ul>
-											<li>
-												<div class="single-explore-image-icon">
-													<i class="fa fa-arrows-alt"></i>
-												</div>
-											</li>
-											<li>
-												<div class="single-explore-image-icon">
-													<i class="fa fa-bookmark-o"></i>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="single-explore-txt bg-theme-5">
-								<h2>
-									<a href="#">thailand tour</a>
-								</h2>
-								<p class="explore-rating-price">
-									<span class="explore-rating">5.0</span> <a href="#"> 15
-										ratings</a> <span class="explore-price-box"> form <span
-										class="explore-price">5k$-10k$</span>
-									</span> <a href="#">destination</a>
-								</p>
-								<div class="explore-person">
-									<div class="row">
-										<div class="col-sm-2">
-											<div class="explore-person-img">
-												<a href="#"> <img
-													src="/hairShopProject/main/assets/images/explore/person.png"
-													alt="explore person">
-												</a>
-											</div>
-										</div>
-										<div class="col-sm-10">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit, sed do eiusmod tempor incid ut labore et dolore magna
-												aliqua....</p>
-										</div>
-									</div>
-								</div>
-								<div class="explore-open-close-part">
-									<div class="row">
-										<div class="col-sm-5">
-											<button class="close-btn" onclick="window.location.href='#'">close
-												now</button>
-										</div>
-										<div class="col-sm-7">
-											<div class="explore-map-icon">
-												<a href="#"><i data-feather="map-pin"></i></a> <a href="#"><i
-													data-feather="upload"></i></a> <a href="#"><i
-													data-feather="heart"></i></a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					<!-- 1~6 슬롯 헤어샵 시작 -->
+					<div class="row recommendHairShopContent"></div>
+					<!-- 1~6 슬롯 헤어샵 끝 -->
 				</div>
 			</div>
 		</div>
 		<!--/.container-->
-
 	</section>
 	<!--/.explore-->
 	<!--explore end -->
@@ -953,5 +546,88 @@ i.fa-star {
 		function moveToHair(hairshopid) {
 			location.href="/hairShopProject/hairShop/hairShop_index.do?hairShopId="+hairshopid;
 		}
-	  
+	  $(document).ready(function() {
+			$.ajax({
+		         type : 'POST',
+		         url : '/hairShopProject/main/getRecommendView.do',
+		         dataType: 'json',
+		         success : function(data){
+		        	/* alert(JSON.stringify(data)); */
+		        	
+		         	$.each(data.list, function(index,items){
+		         		 $('<div/>',{
+		         			class : 'recommendHairShopContentBody',
+		         			html : /* '<div class="single-explore-img" id="hairShopRecommendSlot" onclick="location.href='/hairShopProject/hairShop/hairShop_index.do?hairShopId='">'+ */
+		         				'<div class=" col-md-4 col-sm-6">'+
+		         				'<div class="single-explore-item">'+
+		         				'<div class="single-explore-img" id="hairShopRecommendSlot">'+
+								'<div id="mainTitleHairShopImage'+index+'"></div>'+ /* 타이틀 이미지 */
+								'<div class="single-explore-img-info">'+
+								'<button onclick="window.location.href=#">이번달 추천!</button>'+ /* 빨간 추천 버튼 */
+								'<div class="single-explore-image-icon-box">'+
+								'<ul>'+
+								'<li>'+
+								'<div class="single-explore-image-icon">'+
+								'<i class="fa fa-arrows-alt"></i>'+
+								'</div>'+
+								'</li>'+
+								'<li>'+
+								'<div class="single-explore-image-icon">'+
+								'<i class="fa fa-bookmark-o"></i>'+
+								'</div>'+
+								'</li>'+
+								'</ul>'+
+								'</div>'+
+								'</div>'+
+								'</div>'+
+								'<div class="single-explore-txt bg-theme-1">'+
+								'<h2>'+
+								'<a id="mainTitleHairShopName'+index+'" class="hairShopLink'+index+'" href="/hairShopProject/hairShop/hairShop_index.do?hairShopId='+items.HAIRSHOPID+'"></a>'+ /* 헤어샵 타이틀 */
+								'</h2>'+
+								'<p class="explore-rating-price">'+
+								'<span class="explore-rating" id="hairShopStarScope'+index+'"></span>'+ /* 평점 */
+								'<span class="explore-price-box"> form <span class="explore-price" id="hairShopPrice'+index+'"></span>'+/* 기본요금 */
+								'</span>'+
+								'</p>'+
+								'<div class="explore-person">'+
+								'<div class="row">'+
+								'<div class="col-sm-2">'+
+								'<div class="explore-person-img">'+
+								'</div>'+
+								'</div>'+
+								'<div class="col-sm-10">'+
+								'<span id="hairshopAddr1'+index+'"></span><span id="hairshopAddr2'+index+'"></span>'+ /* 헤어샵 소개부분(주소) */
+								'</div>'+
+								'</div>'+
+								'</div>'+
+								'<div class="explore-open-close-part">'+
+								'<div class="row">'+
+								'<div class="col-sm-5">'+
+								'<span id="hairShopOpTime'+index+'"></span>'+ /* 오픈 시간 */
+								'<span> - </span>'+ /* 영업시간 */
+								'<span id="hairShopClTime'+index+'"></span>'+ /* 클로즈 시간 */
+								'</div>'+
+								'<div class="col-sm-7">'+
+								'<div class="explore-map-icon">'+
+								'<a href="#"><i data-feather="map-pin"></i></a> <a href="#"><i data-feather="upload"></i></a> <a href="#"><i data-feather="heart"></i></a>'+
+								'</div>'+
+								'</div>'+
+								'</div>'+
+								'</div>'+
+								'</div>'+
+								'</div>'+
+								'</div>'
+		         		 }).appendTo($('div.recommendHairShopContent'));
+		         		$('div#mainTitleHairShopImage'+index).html("<img src='/hairShopProject/hairShop/img/banner/"+items.HAIRSHOPIMAGE+"' alt='explore image'/>");
+		         		$('div.bg-theme-1 #mainTitleHairShopName'+index).text(items.NAME);
+		         		$('span#hairShopPrice'+index).text(items.MIN.toLocaleString()+" ~ "+items.MAX.toLocaleString()); /* 가격 최대 최소 */
+		         		$('span#hairShopStarScope'+index).text(items.AVG); /* 평점 평균 집계  */
+		         		$('span#hairshopAddr1'+index).text(items.ADDR1);
+			            $('span#hairshopAddr2'+index).text(items.ADDR2);
+			            $('span#hairShopOpTime'+index).text(items.OPENTIME);
+			            $('span#hairShopClTime'+index).text(items.CLOSETIME);
+		         	});
+		         }
+			});
+		});
 </script>

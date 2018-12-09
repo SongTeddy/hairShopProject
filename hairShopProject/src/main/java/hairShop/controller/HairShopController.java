@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import hairShop.bean.HairShopReviewDTO;
 import hairShop.dao.HairShopDAO;
 import management.dao.ManagementDAO;
+import member.bean.MemberDTO;
 import member.dao.MemberDAO;
 
 @Controller
@@ -34,7 +35,7 @@ public class HairShopController {
 	private HairShopReviewDTO hairShopReviewDTO;
 
 	@RequestMapping(value = "/hairShop/hairShop_index.do", method = RequestMethod.GET)
-	public ModelAndView input(@RequestParam String hairShopId) { // 사용자가 만든 콜백 메소드
+	public ModelAndView input(@RequestParam String hairShopId, HttpSession session) { // 사용자가 만든 콜백 메소드
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("hairShopId", hairShopId);
 		mav.addObject("display", "/hairShop/hairShop_index.jsp");
