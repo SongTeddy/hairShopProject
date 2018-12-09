@@ -61,7 +61,7 @@
 	$(document).ready(function(){
 		$('#serviceRegisterBtn').on('click', function(){
 			if($('input[name=description]').val()==""){
-				alert("서비스에 대한 설명을 입력하세요.");				
+				alert("서비스에 대한 설명을 입력하세요.");
 			}else if($('input[name=price]').val()==""){
 				alert("이용 요금을 입력하세요.");	
 			}else if($('input[name=timeRequired]').val()%30!=0){

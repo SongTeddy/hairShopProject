@@ -312,6 +312,7 @@ public class AdminPageController {
 		mav.setViewName("jsonView");
 		return mav;
 	}
+	
 	//member coupon end
 	@RequestMapping(value = "eventUpdate", method = RequestMethod.POST)
 	public ModelAndView eventUpdate(@RequestParam String updateOrDelete, @RequestParam String[] seqs) {

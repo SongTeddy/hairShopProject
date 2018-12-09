@@ -44,26 +44,15 @@ function couponDownLoad(seq) {
 				data : {"memEmail" : memEmail , "seq" : seq},
 				dataType: 'json',			
 				success : function(data) {
-					alert("쿠폰 다운 성공");
+					if(data.success == 1) alert("이미 쿠폰을 다운 받으셨습니다.");
+					else if(data.success == 0) alert("쿠폰을 다운 받으셨습니다.");
 				}, error : function(){
 					alert("쿠폰 다운 실패");
 				}
 			});
 		}
 	} else {
-		if(confirm("로그인 후 이용 하실수 있습니다.\n로그인 하시겠습니까?") == true) {    //확인
-				var maskHeight = $(document).height();
-				var maskWidth = $(window).width();
-				//마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
-				$('#myModal').css({
-					'width' : maskWidth,
-					'height' : maskHeight
-				});
-				//애니메이션 효과
-				$('#myModal').fadeIn(500);
-		}else{   //취소
-		    return;
-		}
+		loginPop();
 	}
 }
 $(document).ready(function(){
@@ -83,8 +72,7 @@ $(document).ready(function(){
 	}
 	
 	$('img#eventImg').each(function() {
-        $(this).load(function(){ //이미지를 다 불러온후 확인하기 위해
-	      	//var height = this.naturalHeight; //이미지 크키가 정해져 있지 않을때
+        $(this).load(function(){ 
 	      	var height = $(this).height();
 			$('div#eventViewBody').css('height', height+100);
         	$('<button/>',{
