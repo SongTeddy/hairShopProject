@@ -182,4 +182,10 @@ public class MemberDAOMybatis implements MemberDAO {
 	public MemberDTO changeUserInfo(String email) {
 		return sqlSession.selectOne("memberSQL.changeUserInfo", email);
 	}
+	
+	// 아이디로 하나의 헤어샵 정보 조회
+	@Override
+	public MemberDTO getHairShopInfoById(String hairShopId) {
+		return sqlSession.selectOne("memberSQL.getHairShopInfoById", hairShopId);
+	}
 }

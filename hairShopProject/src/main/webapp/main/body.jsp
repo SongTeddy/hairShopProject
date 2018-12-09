@@ -59,9 +59,20 @@ i{
 .swiper-slide{
 	cursor: pointer;
 }
+
+/* 버튼 */
+.exploreChangeBtn {
+	background: linear-gradient(to bottom, #0078FF, #28A0FF);
+	font-size: 15px;
+	color: #ffffff;
+	width: 50px;
+	height: 30px;
+	border-radius:7px;
+}
 </style>
 <!-- review swiper end -->
 
+<input type="hidden" id="memEmailVal" value="${memEmail }" />
 <section id="display">
 	<!--welcome-hero start -->
 	<section id="home" class="welcome-hero">
@@ -252,7 +263,7 @@ i{
 			<!--/.section-header-->
 			<div class="explore-content">
 				<div class="row">
-					<div class=" col-md-4 col-sm-6">
+					<div class=" col-md-4 col-sm-6">						
 						<div class="single-explore-item">
 							<div class="single-explore-img" onclick="location.href='/hairShopProject/hairShop/hairShop_index.do?hairShopId=juno'">
 								<img src="/hairShopProject/main/assets/images/explore/e1.jpg"
@@ -277,7 +288,7 @@ i{
 							</div>
 							<div class="single-explore-txt bg-theme-1">
 								<h2>
-									<a href="#">tommy helfinger bar</a>
+									<a href="#" id="hairShopNameA1"></a>
 								</h2>
 								<p class="explore-rating-price">
 									<span class="explore-rating">5.0</span> <a href="#"> 10
@@ -320,7 +331,7 @@ i{
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-6">
+					<div class="col-md-4 col-sm-6">						
 						<div class="single-explore-item">
 							<div class="single-explore-img">
 								<img src="/hairShopProject/main/assets/images/explore/e2.jpg"

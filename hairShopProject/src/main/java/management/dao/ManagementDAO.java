@@ -31,6 +31,11 @@ public interface ManagementDAO {
 	public void hairShopDelete(String email);
 	public void hairShopPwdModify(String email, String modifyPwd);
 	public int eventRegister(Map<String, String> map);
+	public List<ReservationDTO> getAllReservation();
+	public List<ReservationDTO> getReservationList(int startNum, int endNum);
+	public int getListTotalA();
+	public List<ReservationDTO> reservationSearch(Map<String, String> map);
+	public int getSearchReservationTotalA(Map<String, String> map);
 	
 	// 헤어샵 페이지
 	public String getMemberType(String email);
@@ -47,8 +52,8 @@ public interface ManagementDAO {
 	public List<MemberDTO> getMemberInfo(String hairshopId);
 	public List<String> getHairShopDesigner(String hairshopId);
   
-  //스타일 찾기
-  public List<Map<String, String>> getStylebookImage(String hairShopId);
+	//스타일 찾기
+	public List<Map<String, String>> getStylebookImage(String hairShopId);
 	
 	// 헤어샵 정보 등록 관련
 	public Map<String, String> getHairShopInfo(String memEmail);
