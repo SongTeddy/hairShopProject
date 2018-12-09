@@ -377,4 +377,18 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public void overworkDesignerSchedule(Map<String, Object> map) {
 		sqlSession.insert("managementSQL.overworkDesignerSchedule", map);
 	}
+	
+	@Override
+	public List<Map<String, Object>> getServices(Map<String, String> map){
+		return sqlSession.selectList("managementSQL.getServices", map);
+	}
+		
+	@Override
+	public void deleteService(Map<String, String> map) {
+		sqlSession.delete("managementSQL.deleteService", map);
+	}
+
+	public void serviceRegister(Map<String, String> map) {
+		sqlSession.delete("managementSQL.serviceRegister", map);		
+	}
 }

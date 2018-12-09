@@ -84,4 +84,9 @@ public interface ManagementDAO {
 	public void totalHairShopSchedule(Map<String, Object> map);
 	public void vacationDesignerSchedule(Map<String, Object> map);
 	public void overworkDesignerSchedule(Map<String, Object> map);
+	
+	// 서비스 관련
+	public List<Map<String, Object>> getServices(Map<String, String> map);
+	public void deleteService(Map<String, String> map);
+	public void serviceRegister(Map<String, String> map);
 }
