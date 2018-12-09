@@ -166,6 +166,8 @@ function modifyT(seq){
 	      }
 	 }
 	 
+	 
+	 
 	 $.ajax({
 			type : 'POST',
 			url : '/hairShopProject/hairShop/board/boardModifyForm.do',
