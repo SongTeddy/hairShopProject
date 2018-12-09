@@ -29,6 +29,7 @@
 	
 	<bean id="stylebookController" class="stylebook.controller.StylebookController"></bean>
 	
+	
 	<context:component-scan base-package="hairShop.bean" />
 	<context:component-scan base-package="hairShop.dao"/>
 	
@@ -41,6 +42,8 @@
 	<context:component-scan base-package="management.dao"/>
 	
 	<context:component-scan base-package="stylebook.dao"/>
+	
+	<context:component-scan base-package="main.dao"/>
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	        <property name="suffix" value=".jsp"/>

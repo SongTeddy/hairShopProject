@@ -1,6 +1,7 @@
 package main.controller;
 
 import java.security.spec.InvalidKeySpecException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -14,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import management.dao.ManagementDAO;
+import main.dao.MainDAO;
 
 @Controller
 public class IndexController {
 	@Autowired
 	private ManagementDAO managementDAO;
+	@Autowired
+	private MainDAO mainDAO;
 	
 	@RequestMapping(value="/main/index.do", method=RequestMethod.GET)
 	public ModelAndView input(HttpSession session, Model model) throws InvalidKeySpecException {  //사용자가 만든 콜백 메소드 
@@ -62,4 +66,25 @@ public class IndexController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
+	
+	@RequestMapping(value="/main/getRecommendView.do", method=RequestMethod.POST)
+	public ModelAndView recommendView() {
+		ModelAndView mav = new ModelAndView();
+		List<Map<String, Object>> list = mainDAO.getRecommendView();
+		System.out.println(list);
+		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	@RequestMapping(value="/main/getHairShopStarScopeAvg.do", method=RequestMethod.POST)
+	public ModelAndView getHairShopStarScopeAvg() {
+		ModelAndView mav = new ModelAndView();
+		List<Map<String, Object>> list = mainDAO.getHairShopStarScopeAvg();
+		mav.addObject("list", list);
+		mav.addObject("display", "/main/body.jsp");
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
 }

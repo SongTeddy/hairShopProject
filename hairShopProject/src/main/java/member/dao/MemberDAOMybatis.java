@@ -138,6 +138,7 @@ public class MemberDAOMybatis implements MemberDAO {
 	// DB에서 이메일 체크
 	@Override
 	public MemberDTO isCheckEmail(String email) {
+		System.out.println(email);
 		MemberDTO memberDTO = sqlSession.selectOne("memberSQL.checkEmail", email);
 
 		return memberDTO;

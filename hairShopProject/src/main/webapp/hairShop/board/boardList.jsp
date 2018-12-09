@@ -14,13 +14,12 @@
 	div #boardPagingDiv{
 		display:inline;
 	}
-	.qnatable tr td .contentVerticalAlign{
-		vertical-align: middle;
-	}
 </style>
 
 <!-- 리스트 목록 -->
+
 <input type="hidden" id="pg" value="${param.pg}" />
+<input type="hidden" id="emailCheck" value="0" />
 <div id="boardView_div" class="list_sub">
 <table id="boardListTable" cellpadding="5" frame="hsides" rules="rows">
 	<thead>
@@ -45,16 +44,11 @@
 	<select id="searchOption">
 		<option value="subject">제목</option>
 		<option value="email">작성자</option>
-		<option value="logtime">작성일</option>
 	</select>
 	<input type="text" id="keyword" width="30px">
 	<input type="button" value="검색" id="searchBtn">
 	<!-- 글쓰기 버튼 -->
-	<div style="float: right; text-align: center;">
-		<c:if test="${memEmail==null}">
-			<!-- <a id="qnawriteBtn" style="color:black; font-family:한컴 윤체 L; text-decoration:none; cursor:pointer">글쓰기</a> -->
-			<button type="button" id="qnawriteBtn" class="qnaButton">공지 작성</button>
-		</c:if>
+	<div style="float: right; text-align: center;" id="qnawriteDiv">
 	</div>
 </div>
 
@@ -66,19 +60,19 @@
      <div class="qnamopdel-content">
        <span id="closeQNA">&times;</span>
        <p style="font-size:25px; color:black;">공지 작성</p>
-       <form name="boardWriteForm" id="boardWriteForm" method="post" action="board/boardWrite.do">
+       <form name="boardWriteForm" id="boardWriteForm" method="post" action="/hairShopProject/hairShop/board/boardWrite.do">
        <table class="qnatable">
 	       <tr>
 		       <td>제목</td>
 		       <td>
-		       	<input type="text" id="subject" class="qna100" placeholder="제목입력">
+		       	<input type="text" name="subject" id="subject" class="qna100" placeholder="제목입력">
 		       	<div id="subjectDiv"></div>
 		       </td>
 	       </tr>
 	       <tr>
-		       <td class="contentVerticalAlign">내용</td>
+		       <td class="contentVerticalAlign" style="vertical-align: top;">내용</td>
 		       <td>
-		       <textarea id="content" class="qna200" style="height:200px;" placeholder="작성할 글 입력"></textarea>
+		       <textarea id="content" name="content" class="qna200" style="resize:none; height:200px;" placeholder="작성할 글 입력"></textarea>
 		       <div id="contentDiv"></div>
 		       </td>
 	       </tr>
@@ -105,8 +99,7 @@
        <span id="closeQNA">&times;</span>
        <p style="font-size:25px; color:black;">공지 수정</p>
        <form name="boardModifyForm" id="boardModifyForm" method="post" action="board/boardModify.do">
-       <input type="hidden" name="seq" value="${boardDTO.seq }">
-	   <input type="hidden" name="pg" value="${param.pg}">
+       <input type="hidden" name="seq" class="hiddenSeq">
        <table class="qnatable" style="vertical-align:middle;">
 	       <tr>
 		       <td>제목</td>
@@ -118,16 +111,14 @@
 	       <tr  style="vertical-align:middle;">
 		       <td class="contentVerticalAlign" >내용</td>
 		       <td>
-		       <textarea class="qna200" placeholder="내용 입력" id="content2" style="height:200px;"></textarea>
+		       <textarea class="qna200" placeholder="내용 입력" id="content2" style="resize:none; height:200px;"></textarea>
 		       <div id="contentDiv2"></div>
 		       </td>
 	       </tr>
 	       <tr>
-		        <td colspan="2" align="center">
-		        <br>
-				<input type="button" class="qnaButton" id="boardModifyBtn" value="수정 하기"/>&emsp;
-				<br>
-				</td>
+		        <td colspan="2" align="center"><br>
+					<input type="button" class="qnaButton" id="boardModifyBtn" value="수정 하기"/>&emsp;
+				</td> 
 	       </tr>
        </table>
        </form>
@@ -140,6 +131,11 @@
 </script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+function boardSearch(pg,searchOption,keyword){
+	alert(pg+" "+searchOption+" "+keyword);
+	$('#pg').val(pg);
+	boardList();
+}
 function deleteT(seq){
 	$.ajax({
 		type : 'POST',
@@ -158,6 +154,9 @@ function modifyT(seq){
 	$('table#boardListTable').on('click','#qnaModifyBtn',function(){
 		modal2.style.display = "block";
 	});
+	
+	document.boardModifyForm.seq.value = seq;
+	
 	 $('div span#closeQNA').on('click',function(){
 	      modal2.style.display = "none";
 	 });
@@ -166,7 +165,6 @@ function modifyT(seq){
 	          modal2.style.display = "none";
 	      }
 	 }
-	 
 	 $.ajax({
 			type : 'POST',
 			url : '/hairShopProject/hairShop/board/boardModifyForm.do',
@@ -182,4 +180,32 @@ function modifyT(seq){
 		 });
 }
 
+$(document).ready(function(){
+	$.ajax({
+		type : 'POST',
+		url : '/hairShopProject/hairShop/board/isCheckId.do',
+		data : {'hairShopId' : '${hairShopId }'},
+		dataType : 'json',
+		success : function(data){
+			if(data.isCheckId == 1) {
+				$('#emailCheck').val("1");
+				//alert($('input#emailCheck').val());
+				alert(data.isCheckId);
+				$('div#qnawriteDiv').html('<button type="button" id="qnawriteBtn" class="qnaButton">공지 작성</button>');
+			};
+		}
+	});
+	var modal =  document.getElementById("qnaWriteForm");
+    $(document).on('click','button#qnawriteBtn',function(){
+        modal.style.display = "block";
+    });
+  	$('#closeQNA').on('click',function(){
+        modal.style.display = "none";
+   	});
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+});
 </script>

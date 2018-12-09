@@ -54,4 +54,5 @@ public class BoardDAOMybatis implements BoardDAO {
 	public void BoardDelete(int seq) {
 		sqlSession.delete("boardSQL.boardDelete", seq);
 	}
+
 }
