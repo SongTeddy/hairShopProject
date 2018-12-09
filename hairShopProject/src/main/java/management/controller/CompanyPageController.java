@@ -305,6 +305,22 @@ public class CompanyPageController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
+	
+	// 헤어샵 서비스 등록 페이지
+	@RequestMapping(value = "serviceRegister", method = RequestMethod.GET)
+	public ModelAndView serviceRegister(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		if (session.getAttribute("memEmail") != null) {
+			Map<String, String> map = managementDAO.getHairShopInfo((String) session.getAttribute("memEmail"));
+			mav.addObject("map", map);
+			mav.addObject("display", "/managementPage/companyPage/companyPage.jsp");
+			mav.addObject("myPageBody", "/managementPage/companyPage/serviceRegister.jsp");
+		} else {
+			mav.addObject("display", "/main/body.jsp");
+		}
+		mav.setViewName("/main/index");
+		return mav;
+	}
 
 	// 헤어샵 스케줄 등록 페이지 띄우기
 	@RequestMapping(value = "scheduleManagement", method = RequestMethod.GET)

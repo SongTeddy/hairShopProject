@@ -154,7 +154,18 @@ $(document).ready(function(){
 	});
 	
 	$('#eventRegisterBtn').on('click', function(){
-		$('form[name=eventRegisterForm]').submit();
+		if($('input[name=eventSubject]').val()=="")
+			alert("이벤트 제목을 입력하세요.");
+		else if($('input[name=eventBannerImage]').val()=="")
+			alert("이벤트 배너 이미지를 등록하세요.");
+		else if($('input[name=eventBannerImage]').val()=="")
+			alert("이벤트 상세 이미지를 등록하세요.");
+		else if($('input[name=eventStartDate]').val()=="")
+			alert("이벤트 시작 일자를 입력하세요");
+		else if($('input[name=eventEndDate]').val()=="")
+			alert("이벤트 종료 일자를 입력하세요");
+		else
+			$('form[name=eventRegisterForm]').submit();
 	});
 });
 
