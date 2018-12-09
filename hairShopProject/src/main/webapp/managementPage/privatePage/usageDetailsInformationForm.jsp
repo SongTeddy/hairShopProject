@@ -59,9 +59,9 @@
 							<span class="starR hairshop_star" style="margin-left: 15px;">4</span>
 							<span class="starR hairshop_star" style="margin-left: 15px;">5</span>
 						</div>
-						<div class="button-container" style="margin-top: 50px;">
-							<input type="button" class="reviewWriteBtn" style="width: 80px; margin-right: 10px; color:black;" value="리뷰 작성">
-							<input type="reset" style="width: 80px; color:black;" value="다시 작성">
+						<div class="button-container" style="margin-top: 50px; text-align: center;'">
+							<input type="button" class="reviewWriteBtn btn btn-success" style="width: 90px; font-weight: bold; box-shadow: 1px 1px 1px grey;" value="리뷰 작성">&nbsp;
+							<input type="reset" class="btn btn-success" style="width: 90px; font-weight: bold; box-shadow: 1px 1px 1px grey;" value="다시 작성">
 						</div>
 					</div>
 				</div>

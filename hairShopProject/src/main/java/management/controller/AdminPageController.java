@@ -381,7 +381,6 @@ public class AdminPageController {
 		return mav;
 	}
 	
-	
 	@RequestMapping(value = "getEventAndCouponList", method = RequestMethod.POST)
 	public ModelAndView getEventAndCouponList() {
 		List<Map<String, Object>> currentEventAndList = managementDAO.getCurrentEventAndCouponList();
