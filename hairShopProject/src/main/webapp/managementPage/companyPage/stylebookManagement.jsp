@@ -3,9 +3,9 @@
 <link rel="stylesheet" href="/hairShopProject/managementPage/companyPage/css/stylebookManagement.css">
 
 <font size="6pt" class="modifyFormTitle" style="color: #363636;">스타일 찾기 추가 | 관리</font>
-<input type="button" class="btn btn-primary insertModal" value="추가" style="margin: 30px 0px 10px 690px; width:100px; height:50px; font-weight:bold; font-size:13pt;"><br>
+<input type="button" class="btn btn-danger insertModal" value="추가" style="box-shadow: 1px 1px 1px grey; margin: 30px 0px 10px 690px; width:100px; height:50px; font-weight:bold; font-size:13pt;"><br>
 <hr align="left" class="modifyFormTitle" style="color: black;
-			  margin-top: 10px;
+			  margin-top: -30px;
 	    	  margin-bottom: 0px;
 	    	  width: 340px;
 	    	  border-top: 2px solid #5A5A5A;"><br>
@@ -47,8 +47,8 @@
 	    	  width: 535px;
 	    	  border-top: 1px solid #5A5A5A;">
 		<div class="button-container" align="center">
-			<input type="button" class="stylebookManagementInsertBtn" style="width: 80px; margin-right: 10px; color:black;" value="작성">
-			<input type="reset" style="width: 80px; color:black;" value="다시 작성">
+			<input type="button" class="stylebookManagementInsertBtn btn btn-success" style="width: 80px; margin-right: 10px; color:black;" value="작성">
+			<input type="reset" class="btn btn-success" style="width: 80px; color:black;" value="다시 작성">
 			</div>
 		</div>
 	</div>
@@ -89,8 +89,8 @@
 	    	  width: 535px;
 	    	  border-top: 1px solid #5A5A5A;">
 		<div class="button-container" align="center">
-			<input type="button" class="stylebookManagementModifyBtn" style="width: 80px; margin-right: 10px; color:black;" value="변경">
-			<input type="reset" style="width: 80px; color:black;" value="다시 작성">
+			<input type="button" class="stylebookManagementModifyBtn btn btn-success" style="width: 80px; margin-right: 10px; font-weight: bold; box-shadow: 1px 1px 1px grey;" value="변경">
+			<input type="reset" class="btn btn-success" style="width: 80px; font-weight: bold; box-shadow: 1px 1px 1px grey;" value="다시 작성">
 			</div>
 		</div>
 	</div>
@@ -128,14 +128,16 @@ $(document).ready(function(){
 					class : 'stylebookManagement-btn'
 					}).append($('<input/>',{
 						type : 'button',
-						class : 'stylebookManagement-modifyBtn',
+						class : 'btn btn-primary btn-sm stylebookManagement-modifyBtn',
 						value : '수정',
-						onclick : 'stylebookManagementModify(\''+seq+'\')'
+						onclick : 'stylebookManagementModify(\''+seq+'\')',
+						style : 'font-weight: bold; box-shadow: 1px 1px 1px grey;'
 					})).append($('<input/>',{
 						type : 'button',
-						class : 'stylebookManagement-deleteBtn',
+						class : 'btn btn-secondary btn-sm stylebookManagement-deleteBtn',
 						value : '삭제',
-						onclick : 'stylebookManagementDelete(\''+seq+'\')'
+						onclick : 'stylebookManagementDelete(\''+seq+'\')',
+						style : 'font-weight: bold; box-shadow: 1px 1px 1px grey;'
 					}))
 				).appendTo($('div.stylebookManagementFormDiv'));
 			});
