@@ -59,6 +59,7 @@
 		<result property="endtime" column="ENDTIME" />
 		<result property="theday" column="THEDAY" />
 		<result property="didordidnot" column="DIDORDIDNOT" />
+		<result property="logtime" column="LOGTIME" />
 	</resultMap>
 
 	<!-- ==================================================== 페이지 이동 ==================================================== -->
@@ -129,6 +130,37 @@
 		update memberinfo set
 		pwd=#{modifyPwd } where email=#{email }
 	</update>
+	
+	<!-- /////////////////////// 예약 관리 메뉴 /////////////////////// -->
+	
+	<!-- 예약 total 조회 -->
+	<select id="getAllReservation" resultType="reservation">
+		select * from reservation
+	</select>
+	
+	<!-- 예약 리스트 페이징 조회 -->
+	<select id="getReservationPaging" parameterType="java.util.Map" resultType="reservation">
+		<![CDATA[select * from(select rownum rn, tt.* from(select * from reservation order by ref desc, step asc) tt)where rn>=#{startNum } and rn<=#{endNum } ]]>
+	</select>
+	<select id="getListTotalA" resultType="int">
+		select count(*) as totalA from reservation
+	</select>
+	
+	<!-- 예약 검색 -->
+	<select id="reservationSearch" parameterType="java.util.Map" resultType="reservation">
+		select * from (select rownum rn, tt.* 
+		from (select * from reservation 
+		where ${searchOption } like '%${keyword }%' 
+		order by ref desc, step asc) tt) 
+		where rn between ${startNum } and ${endNum }
+	</select>
+	
+	<!-- 총 글수 -->
+	<select id="getSearchReservationTotalA" parameterType="java.util.Map" resultType="int">
+		select count(*) as totalA from reservation where ${searchOption } like '%${keyword }%'
+	</select>
+	
+	<!-- /////////////////////// 이벤트 관리 메뉴 /////////////////////// -->
 
 	<!-- 이벤트 등록 -->
 	<update id="eventRegister" parameterType="Map">

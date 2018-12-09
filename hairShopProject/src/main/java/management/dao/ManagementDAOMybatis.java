@@ -1,5 +1,6 @@
 package management.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,41 @@ public class ManagementDAOMybatis implements ManagementDAO {
 		map.put("modifyPwd", modifyPwd);
 
 		sqlSession.update("managementSQL.memberPwdModify", map);
+	}
+	
+	//------------------------------- 예약 관리 메뉴 -------------------------------//
+	
+	// 모든 예약 조회
+	@Override
+	public List<ReservationDTO> getAllReservation() {
+		return sqlSession.selectList("managementSQL.getAllReservation");
+	}
+	
+	// 예약 리스트 페이징 조회
+	@Override
+	public List<ReservationDTO> getReservationList(int startNum, int endNum) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+
+		return sqlSession.selectList("managementSQL.getReservationPaging", map);
+	}
+	
+	// 예약 전체 카운트
+	@Override
+	public int getListTotalA() {
+		return sqlSession.selectOne("managementSQL.getListTotalA");
+	}
+	
+	// 예약 검색
+	@Override
+	public List<ReservationDTO> reservationSearch(Map<String, String> map) {
+		return sqlSession.selectList("managementSQL.reservationSearch", map);
+	}
+	
+	@Override
+	public int getSearchReservationTotalA(Map<String, String> map) {
+		return sqlSession.selectOne("managementSQL.getSearchReservationTotalA", map);
 	}
 
 // 마이페이지(개인)=================================================================================
@@ -208,6 +244,7 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public List<String> getHairShopDesigner(String hairshopId) {
 		return sqlSession.selectList("managementSQL.getHairShopDesigner", hairshopId);
 	}
+	
 	//------------------------------- 헤어샵 정보 등록(수정) 메뉴 -------------------------------//
 	   
 	@Override
