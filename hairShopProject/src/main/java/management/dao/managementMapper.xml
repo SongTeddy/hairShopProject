@@ -137,7 +137,8 @@
 		to_date(#{eventStartDate}, 'mm/dd/yyyy'),
 		to_date(#{eventEndDate}, 'mm/dd/yyyy'),
 		#{eventBannerImage },
-		#{eventDetailImage })
+		#{eventDetailImage }
+		)
 	</update>
 
 	<!-- 이벤트와 쿠폰 동시 등록 -->
@@ -156,7 +157,8 @@
 		#{expirationOption },
 		to_date(#{expirationDate }, 'mm/dd/yyyy'),
 		#{termOfValidity },
-		#{couponImage });
+		#{couponImage },
+		#{minPrice });
 		end;
 	</update>
 
@@ -213,13 +215,14 @@
 									discountoption,
 									discountamount,
 									expirationdate,
-									logtime) select #{seq } as seq,
+									logtime, minprice) select #{seq } as seq,
 												    #{memEmail } as email,
 												    couponname,
 												    discountoption,
 												    discountamount,
 												    expirationdate,
-												    sysdate as logtime
+												    sysdate as logtime,
+												    minprice
 											 from coupon where seq=#{seq }
 	</insert>
 	
@@ -230,13 +233,15 @@
 									discountoption,
 									discountamount,
 									expirationdate,
-									logtime) select #{seq } as seq,
+									logtime,
+									minprice) select #{seq } as seq,
 													#{memEmail } as email,
 													couponname,
 													discountoption,
 													discountamount,
 													sysdate + termofvalidity,
-													sysdate as logtime
+													sysdate as logtime,
+													minprice
 											 from coupon where seq=#{seq }
 	</insert>
 	
@@ -509,8 +514,7 @@
 		where email=#{email }
 	</update>
 
-	<update id="hairShopInfoUpdateExceptImg"
-		parameterType="java.util.Map">
+	<update id="hairShopInfoUpdateExceptImg" parameterType="java.util.Map">
 		update MEMBERINFO set name=#{name },
 		license1=#{license1
 		}, license2=#{license2 }, license3=#{license3 },
@@ -524,4 +528,36 @@
 		dayoff=#{dayoff }
 		where email=#{email }
 	</update>
+	
+	<!-- 디자이너 정보 얻기 -->
+	<select id="getInfoForScheduling" parameterType="java.lang.String" resultType="java.util.Map">
+		select position||' '||DESIGNERNAME as designer, 
+		designerid, hairshopid from designerinfo 
+		where hairshopid = (select hairshopid from memberinfo where email=#{memEmail })
+		order by positioncode asc
+	</select>
+	
+	<!-- 헤어샵 디자이너들 스케줄 넣기 -->
+	<insert id="totalHairShopSchedule" statementType="CALLABLE"  parameterType="hashmap">
+		{ call designerScheduleProcedure(to_date(#{totalStartDate }, 'mm/dd/yyyy'), ${i }, #{hairShopId })}
+	</insert>
+	
+	<!-- 개인 디자이너 휴가 -->
+	<delete id="vacationDesignerSchedule" parameterType="java.util.Map">
+		delete DESIGNERSCHEDULE where designerid = #{designerId } and
+		theday = to_char(to_date(#{vacationStartDate }, 'mm/dd/yyyy') + ${i }, 'yyyy-mm-dd')
+	</delete>
+	
+	<!-- 개인 디자이너 추가 근무 등록 -->
+	<insert id="overworkDesignerSchedule" parameterType="java.util.Map">
+ 		INSERT INTO designerschedule
+        (hairshopid, DESIGNERID, theday, starttime, endtime)
+        select #{hairShopId }, #{designerId }, to_char(to_date(#{overworkStartDate }, 'mm/dd/yyyy') + ${i },'yyyy-mm-dd'),
+        to_date(to_char(to_date(#{overworkStartDate }, 'mm/dd/yyyy'),'yyyy-mm-dd')||' '||(select opentime from memberinfo where hairshopid=#{hairShopId }), 'yyyy-mm-dd hh24:mi') + ${i }, 
+        to_date(to_char(to_date(#{overworkStartDate }, 'mm/dd/yyyy'),'yyyy-mm-dd')||' '||(select closetime from memberinfo where hairshopid=#{hairShopId }), 'yyyy-mm-dd hh24:mi') + ${i }
+        from dual
+        where not exists (select 0 from DESIGNERSCHEDULE
+        where DESIGNERID = #{designerId } and
+        theday=to_char(to_date(#{overworkStartDate }, 'mm/dd/yyyy') + ${i },'yyyy-mm-dd'))
+	</insert>
 </mapper>

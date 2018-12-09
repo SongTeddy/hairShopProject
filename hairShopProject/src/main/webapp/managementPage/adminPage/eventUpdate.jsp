@@ -107,7 +107,7 @@
 	</table>
 	<div class="btnDiv">
 		<input type="button" class="btn btn-default" id="eventUpdateBtn" value="이벤트 수정">
-		<input type="button" class="btn" onclick="location.href='/hairShopProject/adminPage/eventList.do'" value="취소">
+		<input type="button" class="btn" onclick="location.href='/hairShopProject/adminPage/eventManagement.do'" value="취소">
 	</div>
 	<input type="hidden" name="seq" value="${eventMap.SEQ }" />
 	
@@ -271,6 +271,33 @@ $(document).ready(function(){
 			}
 		});
 	
+	// 미리보기 띄워주기
+	$(function() {
+		$('input[type=file]').on('change', function() {
+			$(this).prev().remove();
+			$(this).next().remove();
+			$('<img/>', {
+				id : 'preview' + this.id,
+				src : '#',
+				style : 'margin-top : 5px; width : 100px;'
+			}).appendTo($(this).parent());
+			
+			readURL(this);
+		});
+	});
+	
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$(input).next().attr('src', e.target.result);
+			}
+
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 </script>
 </body>
     
