@@ -212,28 +212,7 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	// ------------------------------- 헤어샵 정보 등록(수정) 메뉴
 	// -------------------------------//
 
-	@Override
-	public Map<String, String> getHairShopInfo(String memEmail) {
-		return sqlSession.selectOne("managementSQL.getHairShopInfo", memEmail);
-	}
 
-	@Override
-	public boolean isExistId(String hairShopId) {
-		System.out.println(hairShopId + "여긴 DAO");
-		if (sqlSession.selectOne("managementSQL.isExistId", hairShopId) != null)
-			return true;
-		else
-			return false;
-	}
-
-	@Override
-	public boolean isExistLicense(Map<String, String> map) {
-		if (sqlSession.selectOne("managementSQL.isExistLicense", map) != null)
-			return true;
-		else
-			return false;
-	}
-	
 	//------------------------------- 헤어샵 정보 등록(수정) 메뉴 -------------------------------//
 	   
 	@Override
@@ -269,10 +248,7 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	}
 	// 헤어샵 정보 등록
 
-	@Override
-	public int hairShopInfoUpdateExceptImg(Map<String, Object> map) {
-		return sqlSession.update("managementSQL.hairShopInfoUpdateExceptImg", map);
-	}
+
 
 	// 이벤트 등록
 	@Override
@@ -307,4 +283,18 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public Map<String, String> getEndEventImageName(int seq) {
 		return sqlSession.selectOne("managementSQL.getEndEventImageName", seq);
 	}
+	
+	//----------------------- 배너 DAO
+	
+	@Override
+	public void bannerResister(String bannerOption) {
+		sqlSession.insert("managementSQL.bannerResister", bannerOption);
+	}
+
+	@Override
+	public List<Map<String, Object>> getBannerList() {
+		return sqlSession.selectList("managementSQL.getBannerList");
+	}
+
+	
 }

@@ -1,6 +1,7 @@
 package main.controller;
 
 import java.security.spec.InvalidKeySpecException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -22,8 +23,13 @@ public class IndexController {
 	
 	@RequestMapping(value="/main/index.do", method=RequestMethod.GET)
 	public ModelAndView input(HttpSession session, Model model) throws InvalidKeySpecException {  //사용자가 만든 콜백 메소드 
+		
+		List<Map<String, Object>> bannerList = managementDAO.getBannerList();
+		
 		ModelAndView mav = new ModelAndView();
+		
 		mav.addObject("display", "/main/body.jsp");
+		mav.addObject("bannerList", bannerList);
 		mav.setViewName("/main/index");
 		return mav;
 	}

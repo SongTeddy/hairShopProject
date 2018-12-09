@@ -320,4 +320,14 @@
 		dayoff=#{dayoff }
 		where email=#{email }
 	</update>
+	
+	<!-- 배너 등록 -->
+	<insert id="bannerResister" parameterType="String">
+		insert into banner values(seq_banner.nextval,#{bannerOption})
+	</insert>
+	
+	<!-- 배너 select -->
+	<select id="getBannerList" resultType="java.util.Map">
+		select EVENTBANNERIMAGE from banner
+	</select>
 </mapper>

@@ -57,4 +57,10 @@ public interface ManagementDAO {
 	public List<Map<String, Object>> getEndEventList();
 	public Map<String,String> getEventImageName(int seq);
 	public Map<String, String> getEndEventImageName(int seq);
+	
+	//배너 관련
+	public void bannerResister(String bannerOption);
+	public List<Map<String, Object>> getBannerList();
+	
+	
 }
