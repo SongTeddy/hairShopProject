@@ -179,7 +179,7 @@ public class AdminPageController {
 		managementDAO.hairShopDelete(email);
 	}
 	
-	// 헤어샵 삭제
+	// 헤어샵 수정
 	@RequestMapping(value="hairShopPwdModify", method=RequestMethod.POST)
 	public @ResponseBody void hairShopPwdModify(@RequestParam String email,	
 						    @RequestParam String modifyPwd) {
