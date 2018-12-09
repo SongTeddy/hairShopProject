@@ -621,10 +621,14 @@
 		)
 	</insert>
   
-  <!-- 배너 등록 -->
-	<insert id="bannerResister" parameterType="String">
-		insert into banner values(seq_banner.nextval,#{bannerOption})
+  	<!-- 배너 등록 -->
+	<insert id="bannerResister" parameterType="java.lang.String">
+		insert into banner values (seq_banner.nextval, #{data })
 	</insert>
+	<!-- 배너 삭제 -->
+	<delete id="bannerDelete" >
+			delete banner
+	</delete>
 	
 	<!-- 배너 select -->
 	<select id="getBannerList" resultType="java.util.Map">

@@ -324,8 +324,8 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	//----------------------- 배너 DAO
 	
 	@Override
-	public void bannerResister(String bannerOption) {
-		sqlSession.insert("managementSQL.bannerResister", bannerOption);
+	public void bannerResister(String a) {
+		sqlSession.insert("managementSQL.bannerResister", a);
 	}
 
 	@Override
@@ -333,8 +333,6 @@ public class ManagementDAOMybatis implements ManagementDAO {
 		return sqlSession.selectList("managementSQL.getBannerList");
 	}
 
-	
-}
 	@Override
 	public Map<String, String> getCoupon(int seq) {
 		return sqlSession.selectOne("managementSQL.getCoupon",seq);
@@ -437,8 +435,13 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public void deleteService(Map<String, String> map) {
 		sqlSession.delete("managementSQL.deleteService", map);
 	}
-
+	@Override
 	public void serviceRegister(Map<String, String> map) {
-		sqlSession.delete("managementSQL.serviceRegister", map);		
+		sqlSession.insert("managementSQL.serviceRegister", map);		
+	}
+
+	@Override
+	public void bannerDelete() {
+		sqlSession.delete("managementSQL.bannerDelete");
 	}
 }
