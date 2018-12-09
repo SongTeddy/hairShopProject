@@ -12,7 +12,7 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 <!-- title of site -->
-<title>hairShop</title>
+<title>머리어때</title>
 
 
 <!-- 스와이퍼 -->
@@ -346,37 +346,54 @@
 		  });
 			
 			$('#loginA').on('click', function() {
-				//화면의 높이와 너비를 구한다.
 				var maskHeight = $(document).height();
 				var maskWidth = $(window).width();
-
 				//마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
 				$('#myModal').css({
 					'width' : maskWidth,
 					'height' : maskHeight
 				});
-
 				//애니메이션 효과
-				$.ajax({
-					type : 'POST',
-					url : '../member/makeRSAKey.do',
-					success : function(data) {
-						var rsaPublicKey = data.split(',');
-						$('#hiddenModulus').val(rsaPublicKey[0]);
-						$('#hiddenExponent').val(rsaPublicKey[1]);
-						if(data!=null){
-							$('#myModal').fadeIn(500);
-						}
-					}
-				});
-
-				/* $('#myModal').show(); */
+				rsaLogin();				
 			});
-		});	
+		});
+		
+			
 		//팝업 Close 기능
 		function close_pop(flag) {
 			$('#myModal').hide();
 		};
+		
+		function rsaLogin(){
+			//애니메이션 효과
+			$.ajax({
+				type : 'POST',
+				url : '../member/makeRSAKey.do',
+				success : function(data) {
+					var rsaPublicKey = data.split(',');
+					$('#hiddenModulus').val(rsaPublicKey[0]);
+					$('#hiddenExponent').val(rsaPublicKey[1]);
+					if(data!=null){
+						$('#myModal').fadeIn(500);
+					}
+				}
+			});
+		}
+		function loginPop() {
+			if (confirm("로그인 후 이용 하실수 있습니다.\n로그인 하시겠습니까?") == true){    //확인
+				var maskHeight = $(document).height();
+				var maskWidth = $(window).width();
+				//마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
+				$('#myModal').css({
+					'width' : maskWidth,
+					'height' : maskHeight
+				});
+				//애니메이션 효과
+				rsaLogin();
+			}else{   //취소
+			    return;
+			}
+		}
 	</script>
 </body>
 </html>

@@ -67,6 +67,8 @@ public interface ManagementDAO {
 	public int couponCheckDuplication(Map<String, String> map);
 	public List<Map<String, Object>> getCouponList(String memEmail);
 	public List<Map<String, Object>> getEndCouponList(String memEmail);
+	public void usedCoupon(Map<String, String> map);
+
   
 	//스타일 찾기
 	public List<Map<String, String>> getStylebookImage(String hairShopId);

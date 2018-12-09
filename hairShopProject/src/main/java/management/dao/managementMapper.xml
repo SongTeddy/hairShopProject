@@ -258,6 +258,12 @@
 	<select id="getEndCouponList" parameterType="java.lang.String" resultType="java.util.Map">
 		<![CDATA[select * from coupondownload join coupon on(coupondownload.couponseq= coupon.SEQ) where coupondownload.email=#{value } and (coupondownload.used=1 or coupondownload.expirationdate<sysdate)]]>
 	</select>
+	
+	<!-- 쿠폰 사용한 거 표시해주기 -->
+	<update id="usedCoupon" parameterType="java.util.Map">
+		update coupondownload set used=1 where email=#{bookerEmail } and couponseq=#{couponSeq }
+	</update>
+	
 	<!-- ==================================================== 마이페이지(개인) ==================================================== -->
 	
 	

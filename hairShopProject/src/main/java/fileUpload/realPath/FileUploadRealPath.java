@@ -5,6 +5,4 @@ public class FileUploadRealPath {
 	public final String hairShopImagePath = "E:\\workspaceForOurProject\\hairShopProject\\hairShopProject\\src\\main\\webapp\\hairShop\\img\\banner";
 	public final String designerImagePath = "";
 	public final String styleImagePath = "E:\\workspaceForOurProject\\hairShopProject\\hairShopProject\\src\\main\\webapp\\storage";
-	public final String bannerImagePath = "";
-	public final String recommandHairShopImagePath = "";
 }

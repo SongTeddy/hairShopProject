@@ -337,6 +337,11 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public void couponDownTerm(Map<String, String> map) {
 		sqlSession.insert("managementSQL.couponDownTerm",map);
 	}
+	
+	@Override
+	public void usedCoupon(Map<String, String> map) {
+		sqlSession.update("managementSQL.usedCoupon", map);
+	}
 
 	@Override
 	public int couponCheckDuplication(Map<String, String> map) {
