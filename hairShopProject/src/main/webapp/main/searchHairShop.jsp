@@ -46,6 +46,7 @@ html, body{
  <!-- welcome-hero-search-box start -->
 	<section style="margin-bottom: 20px;">
  		<!-- service, date, day, latitud, longitude 좌표만보냄 -->
+		<form id="searchForm" name="searchForm" action="/hairShopProject/main/searchHairShop.do" method="get">
 		<div class="welcome-hero-search-box">
        		<div class="single-welcome-hero-form" style="width: 100%;">
 				<img class="serviceCategory" src="/hairShopProject/main/assets/images/welcome-hero/ic_service-category.png" style="cursor: pointer;"></img>
@@ -57,6 +58,7 @@ html, body{
 				</button>
             </div>
 		</div>
+		</form>
 	</section>
    <!--/.welcome-hero--> 
 	<!--welcome-hero end -->
@@ -69,7 +71,7 @@ html, body{
       </div>
       <div style="padding: 30px 30px 0px 30px; height: 100%;">
          <div id="searchResultDiv" style="overflow-y: scroll; overflow-x:hidden; height: 100%; border-top: 3px gray solid;">
-            <table id="searchResultTable" class="table table-hover">
+         <table id="searchResultTable" class="table table-hover">
             <thead></thead>
             <tbody id="searchResultTableBody">
          </tbody>
@@ -138,126 +140,129 @@ $(document).ready(function() {
 		if($('#service').val() === '') {
 			alert("검색어를 입력하세요");
 		} else {
-			$.ajax({
-				type : 'POST',
-				url : '/hairShopProject/hairShop/getSearchHairShopList.do',
-				data : {'hairShopName' : $('#service').val()},
-				dataType: 'json',
-				success : function(data){
-					listSearch = data.list;
-					listLength = data.listSize;
-					$('#listSize').text(listLength);
-					
-					$.each(data.list, function(index, item){
-						var imageSrc = '/hairShopProject/hairShop/img/미용실아이콘.png', // 마커이미지의 주소입니다    
-						imageSize = new daum.maps.Size(32, 45), // 마커이미지의 크기입니다
-						imageOption = {offset: new daum.maps.Point(16, 37)}; 
-						// 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-						  
-						//마커의 이미지정보를 가지고 있는 마커이미지를 생성합니당!
-						var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize, imageOption),
-						    markerPosition = new daum.maps.LatLng(item.LATITUD, item.LONGITUDE); // 마커가 표시될 위치입니다
-						
-						markers.push(new daum.maps.Marker({
-							position: markerPosition, 
-						    image: markerImage
-						}));
-						
-						    
-						markers[index].setMap(map);
-						contents.push('<div class="wrap">' + 
-						            '    <div class="info">' + 
-						            '        <div class="title">' + item.NAME  +
-						            '            <div class="close" onclick="closeOverlay(' + index + ')" title="닫기"></div>' + 
-						            '        </div>' + 
-						            '        <div class="body">' + 
-						            '            <div class="img">' +
-						            '                <img src="../hairShop'+ item.HAIRSHOPIMAGE1 +'" width="73" height="70">' +
-						            '           </div>' + 
-						            '            <div class="desc">' + 
-						            '                <div class="ellipsis">'+ item.HAIRSHOPCONTENT +'</div>' + 
-						            '                <div class="jibun ellipsis">' + item.ADDR1 + " " + item.ADDR2 + '</div>' + 
-						            '                <div class="jibun ellipsis">' +  item.TEL1 + '-' + item.TEL2 + '-' + item.TEL3 + '</div>' + 
-						            '                <div align="right"><a class="goToReserve" href="/hairShopProject/hairShop/hairShop_index.do?hairShopId='+ item.HAIRSHOPID + '#tab2">예약하기</a></div>' + 
-						            '            </div>' + 
-						            '        </div>' + 
-						            '    </div>' +
-						            '</div>');
-			
-						// 마커 위에 커스텀오버레이를 표시합니다
-						// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
-						overlays.push(new daum.maps.CustomOverlay({
-						    content: contents[index],
-						    map: map,
-						    position: markers[index].getPosition()       
-						}));
-						
-						overlays[index].setMap(null);
-								
-						// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-						daum.maps.event.addListener(markers[index], 'click', function() {
-							for(i=0; i<overlays.length; i++){
-								overlays[i].setMap(null); 
-							}
-						    overlays[index].setMap(map);
-						});
-					});
-					
-					
-					$.each(data.list, function(index, item){
-						alert("테이블 붙어라 얍!");
-						if(index>=i && index<i+10){
-							markers[index].setMap(map);
-							$('<tr/>', {
-								id : index
-							}).append($('<td/>',{
-								
-							}).append($('<div/>',{
-								
-							}).append($('<img/>',{
-								src:'/hairShopProject/main/assets/images/explore/e1.jpg',
-								alt:"explore image"
-							})))).append($('<td/>',{
-								
-							}).append($('<div/>',{
-								class:"single-explore-search-txt bg-theme-1"
-							}).append($('<span/>',{
-								
-							}).append($('<a/>',{
-								href: "javascript:moveTo('"+item.HAIRSHOPID+"');",
-								html: item.NAME
-							})).append($('<div/>',{
-								class:"row",
-								style:"text-align:right;"
-							})).append($('<div/>',{
-								style:"text-align:right;"
-							}).append($('<span/>',{
-								class:"explore-rating",
-								html : "<img src='/hairShopProject/hairShop/img/star2.png' style='width:13px; height:13px; padding-right: 2px;' /><span style='vertical-align: top; margin-left: 0px;'>"+item.AVGSTAR+"</span>"
-							})).append($('<span/>',{
-								text:"리뷰수 "+item.REVIEWCNT
-							})))).append($('<p/>',{
-							}).append($('<span/>',{
-								text : item.ADDR1+" "+item.ADDR2
-							}).append($('<div/>',{
-								class:"row"
-							}).append($('<p/>',{
-								style : "margin-left: 25px; padding-bottom: -5px;",
-								text:"영업시간    "
-							}).append($('<span/>',{
-								class:"close-btn open-btn",
-								text:item.OPENTIME + "~" +item.CLOSETIME
-							})))))))).appendTo($('#searchResultTableBody'));
-						}
-					});
-				},
-				error : function(){
-					alert("getSearchList 에러에러!");
-				}
-			});
-			/*ajax end  */
+			$('form#searchForm').submit();
 		}
 	});
+	if('${service }' != '') {
+		$('input#service').val('${service }');
+		$.ajax({
+			type : 'POST',
+			url : '/hairShopProject/hairShop/getSearchHairShopList.do',
+			data : {'hairShopName' : '${service }'},
+			dataType: 'json',
+			success : function(data){
+				$('table#searchResultTable tbody#searchResultTableBody').empty();
+				listSearch = data.list;
+				listLength = data.listSize;
+				$('#listSize').text(listLength);
+				
+				$.each(data.list, function(index, item){
+					var imageSrc = '/hairShopProject/hairShop/img/미용실아이콘.png', // 마커이미지의 주소입니다    
+					imageSize = new daum.maps.Size(32, 45), // 마커이미지의 크기입니다
+					imageOption = {offset: new daum.maps.Point(16, 37)}; 
+					// 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+					  
+					//마커의 이미지정보를 가지고 있는 마커이미지를 생성합니당!
+					var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize, imageOption),
+					    markerPosition = new daum.maps.LatLng(item.LATITUD, item.LONGITUDE); // 마커가 표시될 위치입니다
+					
+					markers.push(new daum.maps.Marker({
+						position: markerPosition, 
+					    image: markerImage
+					}));
+					
+					   
+					markers[index].setMap(map);
+					contents.push('<div class="wrap">' + 
+					            '    <div class="info">' + 
+					            '        <div class="title">' + item.NAME  +
+					            '            <div class="close" onclick="closeOverlay(' + index + ')" title="닫기"></div>' + 
+					            '        </div>' + 
+					            '        <div class="body">' + 
+					            '            <div class="img">' +
+					            '                <img src="/hairShopProject/hairShop/img/banner/'+ item.HAIRSHOPIMAGE1 +'" width="73" style="height: -webkit-fill-available;">' +
+					            '           </div>' + 
+					            '            <div class="desc">' + 
+					            '                <div class="ellipsis">'+ item.HAIRSHOPCONTENT +'</div>' + 
+					            '                <div class="jibun ellipsis">' + item.ADDR1 + " " + item.ADDR2 + '</div>' + 
+					            '                <div class="jibun ellipsis">' +  item.TEL1 + '-' + item.TEL2 + '-' + item.TEL3 + '</div>' + 
+					            '                <div align="right"><a class="goToReserve" href="/hairShopProject/hairShop/hairShop_index.do?hairShopId='+ item.HAIRSHOPID + '#tab2">예약하기</a></div>' + 
+					            '            </div>' + 
+					            '        </div>' + 
+					            '    </div>' +
+					            '</div>');
+		
+					// 마커 위에 커스텀오버레이를 표시합니다
+					// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+					overlays.push(new daum.maps.CustomOverlay({
+					    content: contents[index],
+					    map: map,
+					    position: markers[index].getPosition()       
+					}));
+					
+					overlays[index].setMap(null);
+							
+					// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+					daum.maps.event.addListener(markers[index], 'click', function() {
+						for(i=0; i<overlays.length; i++){
+							overlays[i].setMap(null); 
+						}
+					    overlays[index].setMap(map);
+					});
+				});
+				$.each(data.list, function(index, item){
+					if(index>=i && index<i+10){
+						markers[index].setMap(map);
+						$('<tr/>', {
+							id : index
+						}).append($('<td/>',{
+							
+						}).append($('<div/>',{
+							
+						}).append($('<img/>',{
+							src:'/hairShopProject/hairShop/img/banner/' + item.HAIRSHOPIMAGE1,
+							alt:"explore image"
+						})))).append($('<td/>',{
+							
+						}).append($('<div/>',{
+							class:"single-explore-search-txt bg-theme-1"
+						}).append($('<span/>',{
+							
+						}).append($('<a/>',{
+							href: "javascript:moveTo('"+item.HAIRSHOPID+"');",
+							html: item.NAME
+						})).append($('<div/>',{
+							class:"row",
+							style:"text-align:right;"
+						})).append($('<div/>',{
+							style:"text-align:right;"
+						}).append($('<span/>',{
+							class:"explore-rating",
+							html : "<img src='/hairShopProject/hairShop/img/star2.png' style='width:13px; height:13px; padding-right: 2px;' /><span style='vertical-align: top; margin-left: 0px;'>"+item.AVGSTAR+"</span>"
+						})).append($('<span/>',{
+							text:"리뷰수 "+item.REVIEWCNT
+						})))).append($('<p/>',{
+						}).append($('<span/>',{
+							text : item.ADDR1+" "+item.ADDR2
+						}).append($('<div/>',{
+							class:"row"
+						}).append($('<p/>',{
+							style : "margin-left: 25px; padding-bottom: -5px;",
+							text:"영업시간    "
+						}).append($('<span/>',{
+							class:"close-btn open-btn",
+							text:item.OPENTIME + "~" +item.CLOSETIME
+						})))))))).appendTo($('#searchResultTableBody'));
+					}
+				});
+			},
+			error : function(){
+				alert("getSearchList 에러에러!");
+			}
+		});
+		/*ajax end  */
+	}
+
 	/* scroll function start */
  	$('#searchResultDiv').scroll(function(){
 		var scrollT = $('#searchResultDiv').scrollTop(); //스크롤바의 상단위치
@@ -277,7 +282,7 @@ $(document).ready(function() {
 				}).append($('<div/>',{
 					
 				}).append($('<img/>',{
-					src:'/hairShopProject/main/assets/images/explore/e1.jpg',
+					src: '/hairShopProject/hairShop/img/banner/' + listSearch[j].HAIRSHOPIMAGE1,
 					alt:"explore image"
 				})))).append($('<td/>',{
 					
@@ -286,7 +291,7 @@ $(document).ready(function() {
 				}).append($('<span/>',{
 					
 				}).append($('<a/>',{
-					href: "javascript:moveTo('"+listSearch[j].HAIRSHOPID+"');",
+					href: "javascript:moveTo('"+ listSearch[j].HAIRSHOPID+"');",
 					html: listSearch[j].NAME
 				})).append($('<span/>',{
 					class:"explore-rating",

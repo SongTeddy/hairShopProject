@@ -25,7 +25,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type : 'POST',
-			url : '/hairShopProject/managementPage/designerAdd.do',
+			url : '/hairShopProject/companyPage/designerAdd.do',
 			data : {'designername':designername,
 					'designerid':designerid,
 					'hairshopid':hairshopId,
@@ -44,8 +44,8 @@ $(document).ready(function(){
 		if (confirm("정말 삭제하시겠습니까?")==true){
 		    $.ajax({
 		    	type : 'POST',
-		    	url : '/hairShopProject/managementPage/designerDelete.do',
-		    	data : {'seq':$('#seq').val()},
+		    	url : '/hairShopProject/companyPage/designerDelete.do',
+		    	data : {'seq':$(this).parent().prev().prev().prev().prev().prev().prev().children().val()},
 		    	success : function() {
 		    		location.reload();
 		    	}
@@ -68,7 +68,7 @@ $(document).ready(function(){
 		if(count>0) {
 			$.ajax({
 				type : 'POST',
-				url : '/hairShopProject/managementPage/designerCheckedDelete.do',
+				url : '/hairShopProject/companyPage/designerCheckedDelete.do',
 				data : {ar:ar},
 				success : function() {
 					alert("삭제되었습니다");
@@ -84,12 +84,12 @@ $(document).ready(function(){
 	// 수정완료 버튼
 	$('#designerTable').on('click', '.designerModify', function() {
 		if (confirm("수정하시겠습니까?")==true){
-			var seq = $('.seq').val();
-			var designerimage = $('.designerimage').val();
-			var designername = $('.designername').val();
-			var designerid = $('.designerid').val();
-			var position = $('.position').val();
-			var dayoff = ($('.dayoff').val()).replace('월 ', '1')
+			var seq = $(this).parent().prev().prev().prev().prev().prev().prev().children().val();
+			var designerimage = $(this).parent().prev().prev().prev().prev().prev().children().val();
+			var designername = $(this).parent().prev().prev().prev().prev().children().val();
+			var designerid = $(this).parent().prev().prev().prev().children().val();
+			var position = $(this).parent().prev().prev().children().val();
+			var dayoff = ($(this).parent().prev().children().val()).replace('월 ', '1')
 											 .replace('화 ', '2')
 											 .replace('수 ', '3')
 											 .replace('목 ', '4')
@@ -99,7 +99,7 @@ $(document).ready(function(){
 			
 			$.ajax({
 				type : 'POST',
-				url : '/hairShopProject/managementPage/designerModify.do',
+				url : '/hairShopProject/companyPage/designerModify.do',
 				data : {'designerimage':designerimage,
 						'designername':designername,
 						'designerid':designerid,

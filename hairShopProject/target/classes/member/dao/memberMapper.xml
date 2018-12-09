@@ -93,4 +93,8 @@
 	<select id="changeUserInfo" parameterType="String" resultType="member">
   		select * from memberInfo where email=#{email}
   	</select>
+  	
+  	<select id="getHairShopInfoById" parameterType="String" resultType="member">
+  		select * from memberInfo where hairshopid=#{hairShopId}
+  	</select>
 </mapper>

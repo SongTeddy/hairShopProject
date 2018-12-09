@@ -42,7 +42,6 @@ $(document).ready(function(){
 			dataType : 'json',
 			success : function(data){
 				$.each(data.list, function(index, items){
-					alert(items);
 					$('<div/>',{
 						class : 'stylebook-section'
 					}).append($('<div/>',{

@@ -27,6 +27,9 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 
 <style type="text/css">
+.logo-img:hover {
+	cursor:pointer;
+}
 html, body{
 	max-height: 100%;
 }
@@ -73,8 +76,9 @@ html, body{
  <section style="margin-bottom: 20px;">
  		<!-- service, date, day, latitud, longitude 좌표만보냄 -->
         <form name="searchingForm" method="post" action="/hairShopProject/hairShop/search.do">
-        <div class="welcome-hero-search-box">
-           <div class="welcome-hero-form">
+			<img class="navbar-brand logo-img" src="/hairShopProject/main/assets/logo/logo.png" style="position:absolute; top:13px; width:130px; height: auto;" onclick="location.href='/hairShopProject/main/index.do'" />
+        <div class="welcome-hero-search-box" style="margin: 8px 135px -10px 135px;">
+           <div class="welcome-hero-form" >
                <div class="single-welcome-hero-form">
                      <img class="serviceCategory" src="/hairShopProject/main/assets/images/welcome-hero/ic_service-category.png" style="cursor: pointer;"></img>
                      <input type="text" name="service" id="service" class="serviceCategory" placeholder="서비스 유형" autocomplete="off"/>
@@ -302,7 +306,7 @@ $(document).ready(function() {
 				}).append($('<div/>',{
 					
 				}).append($('<img/>',{
-					src:'/hairShopProject/main/assets/images/explore/e1.jpg',
+					src:'/hairShopProject/hairShop/img/banner/' + listSearch[j].HAIRSHOPIMAGE1,
 					alt:"explore image"
 				})))).append($('<td/>',{
 					
@@ -311,7 +315,7 @@ $(document).ready(function() {
 				}).append($('<span/>',{
 					
 				}).append($('<a/>',{
-					href: "javascript:moveTo('"+listSearch[j].HAIRSHOPID+"');",
+					href: "javascript:moveTo('"+ listSearch[j].HAIRSHOPID+"');",
 					html: listSearch[j].NAME
 				})).append($('<span/>',{
 					class:"explore-rating",
@@ -514,7 +518,7 @@ function getSearchList(){
 				            '        </div>' + 
 				            '        <div class="body">' + 
 				            '            <div class="img">' +
-				            '                <img src="../hairShop'+ item.HAIRSHOPIMAGE1 +'" width="73" height="70">' +
+				            '                <img src="/hairShopProject/hairShop/img/banner/'+ item.HAIRSHOPIMAGE1 +'" width="73" style="height: -webkit-fill-available;">' +
 				            '           </div>' + 
 				            '            <div class="desc">' + 
 				            '                <div class="ellipsis">'+ item.HAIRSHOPCONTENT +'</div>' + 
@@ -556,7 +560,7 @@ function getSearchList(){
 					}).append($('<div/>',{
 						
 					}).append($('<img/>',{
-						src:'/hairShopProject/main/assets/images/explore/e1.jpg',
+						src:'/hairShopProject/hairShop/img/banner/' + item.HAIRSHOPIMAGE1,
 						alt:"explore image"
 					})))).append($('<td/>',{
 						

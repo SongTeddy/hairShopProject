@@ -94,16 +94,19 @@
 	font-family: 함초롬돋움; 
 	font-size: 17px;
 	font-weight: bold;
+	margin-left: 13px;
 }
 .reviewcontent_area{
 	line-height: 25px;
 	font-family: 함초롬돋움; 
 	font-size: 17px;
+	margin-left: 13px;
 }
 .star_name_logtime_area{
 	line-height: 25px;
 	font-family: 함초롬돋움; 
 	font-size: 17px;
+	margin-left: 13px;
 }
 
 button.disable {
@@ -874,19 +877,7 @@ button.selectedBtn {
 			});
 		} else {
 			$('button#heartBtn').click(function(){
-				if (confirm("로그인 후 이용 하실수 있습니다.\n로그인 하시겠습니까?") == true){    //확인
-					var maskHeight = $(document).height();
-					var maskWidth = $(window).width();
-					//마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
-					$('#myModal').css({
-						'width' : maskWidth,
-						'height' : maskHeight
-					});
-					//애니메이션 효과
-					$('#myModal').fadeIn(500);
-				}else{   //취소
-				    return;
-				}
+				loginPop();
 			});
 		}
 		
@@ -927,6 +918,7 @@ button.selectedBtn {
 	            $('div#index_img3').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE3+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
 	            $('#').text(data.map.CLOSETIME);
 	               
+	        
 	            /* 미용실 위치 띄우기 */
 	        	var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 	        	    mapOption = { 
@@ -967,7 +959,7 @@ button.selectedBtn {
 	                }).appendTo($('div.designer'));
 	                $('span#designerName'+index).text(items.DESIGNERNAME);
 	                $('p#designerPosition'+index).text(items.POSITION);
-	                $('span#dayoff'+index).text(items.DAYOFF);   
+	                $('span#dayoff'+index).text(changeDayOff(items.DAYOFF));   
 	             });
 	            
 	            
@@ -1075,7 +1067,7 @@ button.selectedBtn {
 						}).append($('<div/>',{
 						}).append($('<img/>',{
 							class : 'designerImages',
-							src :'/hairShopProject/hairShop/img/team/1.jpg'
+							src :'/hairShopProject/hairShop/img/designer/'+item.DESIGNERIMAGE   // 디자이너 이미지 폴더 수정해야해요
 						})).append($('<span/>',{
 							html : '<br/>' + item.POSITION + " " + item.DESIGNERNAME
 						})))).append($('<td/>',{
@@ -1205,11 +1197,14 @@ button.selectedBtn {
 		
 		$('body').on('click', '#reserveBtn', function(){
 			//alert(chosenDesignerId);
-			var params = {'chosenHairShopName' : chosenHairShopName, 'pickedService' : pickedService, 'chosenService' : chosenService, 'chosenServicePrice': chosenServicePrice, 'chosenServiceRequiredTime': chosenServiceRequiredTime, 'chosenTime' : chosenTime, 'theday': theday, 'whichDay' : $('#whichDay').val(), 'hairShopId' : '${hairShopId }', 'chosenDesignerId' : chosenDesignerId, 'chosenDesigner' : chosenDesigner };
-			var path = "/hairShopProject/hairShop/reserve.do";
-			var method = 'post';
-			post_to_url(path, params, method);
-			
+			if(memEmail != "null") {
+				var params = {'chosenHairShopName' : chosenHairShopName, 'pickedService' : pickedService, 'chosenService' : chosenService, 'chosenServicePrice': chosenServicePrice, 'chosenServiceRequiredTime': chosenServiceRequiredTime, 'chosenTime' : chosenTime, 'theday': theday, 'whichDay' : $('#whichDay').val(), 'hairShopId' : '${hairShopId }', 'chosenDesignerId' : chosenDesignerId, 'chosenDesigner' : chosenDesigner };
+				var path = "/hairShopProject/hairShop/reserve.do";
+				var method = 'post';
+				post_to_url(path, params, method);
+			} else {
+				loginPop();
+			}
 		});
 		
 		var numItems = $('li.fancyTab').length;
@@ -1389,5 +1384,26 @@ button.selectedBtn {
 	        i = "0" + i;
 	    }
 	    return i;
+	}
+	
+	function changeDayOff(item) {
+		var dayOff = new String("");
+		for(var i=1; i<8; i++) {
+			var check = new String(i);
+			if(!item.includes(check)) {
+				dayOff = dayOff + changeYoil(check) + "  ";
+			}
+		}
+		return dayOff;
+	}
+	
+	function changeYoil(n) {
+		if(n == "1") return "일";
+		else if(n == "2") return "월";
+		else if(n == "3") return "화";
+		else if(n == "4") return "수";
+		else if(n == "5") return "목";
+		else if(n == "6") return "금";
+		else return "토";
 	}
 	</script>

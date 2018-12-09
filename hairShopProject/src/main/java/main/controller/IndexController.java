@@ -1,12 +1,15 @@
 package main.controller;
 
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,24 +18,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import management.dao.ManagementDAO;
-import main.dao.MainDAO;
+import member.bean.MemberDTO;
+import member.dao.MemberDAO;
 
-@Controller
+@Component
+@RequestMapping(value = "/main")
 public class IndexController {
 	@Autowired
-	private ManagementDAO managementDAO;
+	private MemberDTO memberDTO;
 	@Autowired
-	private MainDAO mainDAO;
+	private MemberDAO memberDAO;
+	@Autowired
+	private ManagementDAO managementDAO;
 	
-	@RequestMapping(value="/main/index.do", method=RequestMethod.GET)
-	public ModelAndView input(HttpSession session, Model model) throws InvalidKeySpecException {  //사용자가 만든 콜백 메소드 
+	@RequestMapping(value="index", method=RequestMethod.GET)
+	public ModelAndView input(HttpSession session, Model model) throws InvalidKeySpecException {  //사용자가 만든 콜백 메소드
 		ModelAndView mav = new ModelAndView();
+    List<Map<String, Object>> bannerList = managementDAO.getBannerList();
 		mav.addObject("display", "/main/body.jsp");
+		mav.addObject("bannerList", bannerList);
+		mav.addObject("memEmail", session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
 		return mav;
 	}
 	
-	@RequestMapping(value="/main/searchHairShop.do", method=RequestMethod.GET)
+	@RequestMapping(value="searchHairShop", method=RequestMethod.GET)
 	public ModelAndView searchHairShop() {  //사용자가 만든 콜백 메소드 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/main/searchHairShop.jsp");
@@ -40,7 +50,7 @@ public class IndexController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/main/event.do", method=RequestMethod.GET)
+	@RequestMapping(value="event", method=RequestMethod.GET)
 	public ModelAndView event() {  
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/main/event.jsp");
@@ -48,11 +58,13 @@ public class IndexController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/main/eventView.do", method=RequestMethod.GET)
+	@RequestMapping(value="eventView", method=RequestMethod.GET)
 	public ModelAndView eventView(@RequestParam String seq, @RequestParam int type) {
 		ModelAndView mav = new ModelAndView();
 		if(type==0) {
 			Map<String,String> map = managementDAO.getEventImageName(Integer.parseInt(seq));
+			Map<String,String> mapCoupon = managementDAO.getCoupon(Integer.parseInt(seq));
+			if(mapCoupon!=null) mav.addObject("couponMap", mapCoupon);
 			mav.addObject("eventImageName", map.get("EVENTDETAILIMAGE"));
 			mav.addObject("eventSubject", map.get("EVENTSUBJECT"));
 			mav.addObject("seq", map.get("SEQ"));
@@ -76,7 +88,7 @@ public class IndexController {
 		mav.setViewName("jsonView");
 		return mav;
 	}
-	
+  
 	@RequestMapping(value="/main/getHairShopStarScopeAvg.do", method=RequestMethod.POST)
 	public ModelAndView getHairShopStarScopeAvg() {
 		ModelAndView mav = new ModelAndView();

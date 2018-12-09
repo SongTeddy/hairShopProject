@@ -7,7 +7,7 @@ ul.myPage_menu_ul {
     margin: 0;
     padding: 0;
     width: 20%;
-    background-color: #f1f1f1;
+    background-color: #D2D2D2;
     position: relative; /* Make it stick, even on scroll */
     overflow: auto; /* Enable scrolling if the sidenav has too much content */
     z-index : 5;
@@ -46,7 +46,8 @@ div.myPage {
 .myPage_body {
    position: relative;
    width: 80%;
-   height: 80%;
+   height: 100vh;
+   background-color: #F3F3F3;
    padding: 50px 0px 0px 50px;
    z-index : 5;
    min-height: 80%;

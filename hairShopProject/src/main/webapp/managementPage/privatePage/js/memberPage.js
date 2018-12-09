@@ -13,7 +13,7 @@ $(document).ready(function(){
 				}
 			});
 		} else {
-			history.go(0);
+			window.location.reload();
 		}
 	});
 	
@@ -33,6 +33,7 @@ $(document).ready(function(){
 			});
 		} else {
 			history.go(0);
+			
 		}
 	});
 	
