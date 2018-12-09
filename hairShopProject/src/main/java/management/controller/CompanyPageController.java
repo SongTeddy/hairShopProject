@@ -246,49 +246,59 @@ public class CompanyPageController {
 		return mav;
 	}
 
-	// 디자이너 추가
+	// 디자이너 추가 or 수정
 	@RequestMapping(value = "designerAdd", method = RequestMethod.POST)
-	public @ResponseBody void designerAdd(@ModelAttribute DesignerDTO designerDTO) {
-		if ((designerDTO.getPosition()).equals("원장"))
-			designerDTO.setPositioncode(1);
-		else if ((designerDTO.getPosition()).equals("실장"))
-			designerDTO.setPositioncode(2);
-		else if ((designerDTO.getPosition()).equals("디자이너"))
-			designerDTO.setPositioncode(4);
-
-		managementDAO.designerAdd(designerDTO);
-	}
-
-	// 디자이너 삭제
-	@RequestMapping(value = "designerDelete", method = RequestMethod.POST)
-	public @ResponseBody void designerDelete(@RequestParam String seq) {
-		managementDAO.designerDelete(seq);
+	public ModelAndView designerAdd(@RequestParam Map<String, String> map, 
+			@RequestParam(required = false) MultipartFile designerimageOriginal) {
+		System.out.println("인서트 할지 수정할지 결정해라 " + map.get("insertOrUpdate"));
+		map.put("designerid", map.get("hairshopid") + "_" + map.get("designername"));
+		for (Iterator<String> iterator = map.keySet().iterator(); iterator.hasNext();) {
+			String keyName = (String) iterator.next();
+			Object valueName = map.get(keyName);
+			System.out.println(keyName + " = " + valueName);
+		}
+		String filePath = new FileUploadRealPath().designerImagePath;
+		try {
+			if (!designerimageOriginal.isEmpty()) {
+				String fileName = map.get("designerid") + designerimageOriginal.getOriginalFilename();
+				map.put("designerimage", fileName);
+				File file1 = new File(filePath, fileName);
+				FileCopyUtils.copy(designerimageOriginal.getInputStream(), new FileOutputStream(file1));
+			} else {
+				map.put("designerimage", "");
+			} 
+		}catch (IOException e) {
+				e.printStackTrace();
+		}
+		if(map.get("insertOrUpdate").equals("insert")) {
+			managementDAO.designerAdd(map);			
+		}else if(map.get("insertOrUpdate").equals("update")) {
+			if (!designerimageOriginal.isEmpty()) {
+				managementDAO.designerModify(map);				
+			}else {
+				managementDAO.designerModifyExceptImg(map);			
+			}
+		}
+	
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/managementPage/companyPage/companyPage.jsp");
+		mav.addObject("myPageBody", "/managementPage/companyPage/designerMenu.jsp");
+		mav.setViewName("/main/index");
+		return mav;
 	}
 
 	// 선택된 디자이너 삭제
 	@RequestMapping(value = "designerCheckedDelete", method = RequestMethod.POST)
-	public @ResponseBody void designerCheckedDelete(@RequestParam(value = "ar[]") List<String> arr) {
-		List<Integer> list = new ArrayList<Integer>();
+	public @ResponseBody void designerCheckedDelete(@RequestParam(value = "designerIds[]") List<String> designerIds) {
+		List<String> list = new ArrayList<String>();
 
-		for (String data : arr)
-			list.add(Integer.parseInt(data));
+		for (String designerId : designerIds)
+			list.add(designerId);
 
 		// DB
 		managementDAO.designerCheckedDelete(list);
 	}
 
-	// 디자이너 수정
-	@RequestMapping(value = "designerModify", method = RequestMethod.POST)
-	public @ResponseBody void designerModify(@ModelAttribute DesignerDTO designerDTO) {
-		if ((designerDTO.getPosition()).equals("원장"))
-			designerDTO.setPositioncode(1);
-		else if ((designerDTO.getPosition()).equals("실장"))
-			designerDTO.setPositioncode(2);
-		else if ((designerDTO.getPosition()).equals("디자이너"))
-			designerDTO.setPositioncode(4);
-
-		managementDAO.designerModify(designerDTO);
-	}
 
 	// 헤어샵 정보 등록 페이지
 	@RequestMapping(value = "hairShopInfoInput", method = RequestMethod.GET)
@@ -305,12 +315,11 @@ public class CompanyPageController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
-	
-	
-	
+
 	// 헤어샵 서비스 리스트 페이지
 	@RequestMapping(value = "serviceManagement")
-	public ModelAndView serviceManagement(HttpSession session, @RequestParam(required=false, defaultValue="")String serviceCategory) {
+	public ModelAndView serviceManagement(HttpSession session,
+			@RequestParam(required = false, defaultValue = "") String serviceCategory) {
 		ModelAndView mav = new ModelAndView();
 		if (session.getAttribute("memEmail") != null) {
 			System.out.println(serviceCategory + "선택한 카테고리");
@@ -328,7 +337,7 @@ public class CompanyPageController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
-	
+
 	// 헤어샵 서비스 등록 페이지
 	@RequestMapping(value = "serviceRegister", method = RequestMethod.GET)
 	public ModelAndView serviceRegister(HttpSession session) {
@@ -347,12 +356,13 @@ public class CompanyPageController {
 
 	// 헤어샵 서비스 삭제하기
 	@RequestMapping(value = "serviceDeleted")
-	public ModelAndView serviceDeleted(HttpSession session, @RequestParam String[] hairShopId, @RequestParam String[] descriptions) {
+	public ModelAndView serviceDeleted(HttpSession session, @RequestParam String[] hairShopId,
+			@RequestParam String[] descriptions) {
 		ModelAndView mav = new ModelAndView();
 		if (session.getAttribute("memEmail") != null) {
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("hairShopId", hairShopId[0]);
-			for(int i=0; i<descriptions.length; i++) {
+			for (int i = 0; i < descriptions.length; i++) {
 				map.put("description", descriptions[i]);
 				managementDAO.deleteService(map);
 			}
@@ -364,7 +374,7 @@ public class CompanyPageController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
-	
+
 	// 헤어샵 서비스 등록하기
 	@RequestMapping(value = "serviceRegistered")
 	public ModelAndView serviceRegistered(@RequestParam Map<String, String> map) {
@@ -375,7 +385,6 @@ public class CompanyPageController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
-	
 
 	// 헤어샵 스케줄 등록 페이지 띄우기
 	@RequestMapping(value = "scheduleManagement", method = RequestMethod.GET)
@@ -399,7 +408,7 @@ public class CompanyPageController {
 		mav.setViewName("jsonView");
 		return mav;
 	}
-	
+
 	// 한 헤어샵의 전체 디자이너 스케줄 등록
 	@RequestMapping(value = "totalHairShopSchedule", method = RequestMethod.POST)
 	public ModelAndView totalHairShopSchedule(@RequestParam Map<String, String> map) {
@@ -407,30 +416,30 @@ public class CompanyPageController {
 		Map<String, Object> loopMap = new HashMap<String, Object>();
 		loopMap.put("totalStartDate", map.get("totalStartDate"));
 		loopMap.put("hairShopId", map.get("hairShopId"));
-		for(int i=0; i<=Integer.parseInt(map.get("iMax")); i++) {
+		for (int i = 0; i <= Integer.parseInt(map.get("iMax")); i++) {
 			loopMap.put("i", i);
-			managementDAO.totalHairShopSchedule(loopMap);			
+			managementDAO.totalHairShopSchedule(loopMap);
 		}
 		mav.setViewName("jsonView");
 		return mav;
 	}
-	
+
 	// 휴가 등록
 	@RequestMapping(value = "vacationDesignerSchedule", method = RequestMethod.POST)
 	public ModelAndView vacationDesignerSchedule(@RequestParam Map<String, String> map) {
-		System.out.println("휴가 가는 디자이너 "+ map.get("designerId"));
+		System.out.println("휴가 가는 디자이너 " + map.get("designerId"));
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> loopMap = new HashMap<String, Object>();
 		loopMap.put("vacationStartDate", map.get("vacationStartDate"));
 		loopMap.put("designerId", map.get("designerId"));
-		for(int i=0; i<=Integer.parseInt(map.get("iMax")); i++) {
+		for (int i = 0; i <= Integer.parseInt(map.get("iMax")); i++) {
 			loopMap.put("i", i);
-			managementDAO.vacationDesignerSchedule(loopMap);			
+			managementDAO.vacationDesignerSchedule(loopMap);
 		}
 		mav.setViewName("jsonView");
 		return mav;
 	}
-	
+
 	// 추가 근무 등록
 	@RequestMapping(value = "overworkDesignerSchedule", method = RequestMethod.POST)
 	public ModelAndView overworkDesignerSchedule(@RequestParam Map<String, String> map) {
@@ -440,20 +449,20 @@ public class CompanyPageController {
 		loopMap.put("overworkStartDate", map.get("overworkStartDate"));
 		loopMap.put("designerId", map.get("designerId"));
 		loopMap.put("hairShopId", map.get("hairShopId"));
-		
+
 		for (Iterator<String> iterator = loopMap.keySet().iterator(); iterator.hasNext();) {
 			String keyName = (String) iterator.next();
 			Object valueName = loopMap.get(keyName);
 			System.out.println(keyName + " = " + valueName);
 		}
-		for(int i=0; i<=Integer.parseInt(map.get("iMax")); i++) {
+		for (int i = 0; i <= Integer.parseInt(map.get("iMax")); i++) {
 			loopMap.put("i", i);
-			managementDAO.overworkDesignerSchedule(loopMap);			
+			managementDAO.overworkDesignerSchedule(loopMap);
 		}
 		mav.setViewName("jsonView");
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "getHairShopInfo", method = RequestMethod.POST)
 	public ModelAndView getHairShopInfo(HttpSession session) {
 		Map<String, String> map = managementDAO.getHairShopInfo((String) session.getAttribute("memEmail"));
@@ -579,7 +588,7 @@ public class CompanyPageController {
 
 		MultipartFile hairImage = insertImage;
 		String filePath = new FileUploadRealPath().styleImagePath;
-		String fileName = hairImage.getOriginalFilename();
+		String fileName = hairshopId + "_" + hairImage.getOriginalFilename();
 		File file = new File(filePath, fileName);
 		FileCopyUtils.copy(hairImage.getInputStream(), new FileOutputStream(file));
 
@@ -632,7 +641,5 @@ public class CompanyPageController {
 
 		return "success";
 	}
-	
-	
-	
+
 }

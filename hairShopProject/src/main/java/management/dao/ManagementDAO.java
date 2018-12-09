@@ -45,10 +45,10 @@ public interface ManagementDAO {
 	public List<ReservationDTO> getReservation(String designername);
 	public List<DesignerDTO> getDesignerInfo(String hairshopId);
 	public String getDesignerReserve(String designerId);
-	public void designerDelete(String seq);
-	public void designerCheckedDelete(List<Integer> list);
-	public void designerAdd(DesignerDTO designerDTO);
-	public void designerModify(DesignerDTO designerDTO);
+	public void designerCheckedDelete(List<String> list);
+	public void designerAdd(Map<String, String> map);
+	public void designerModify(Map<String, String> map);
+	public void designerModifyExceptImg(Map<String, String> map);
 	public List<MemberDTO> getMemberInfo(String hairshopId);
 	public List<String> getHairShopDesigner(String hairshopId);
   

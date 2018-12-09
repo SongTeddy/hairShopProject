@@ -4,12 +4,11 @@
 }
 
 #designerTable {
+	width: 90%;
 }
 
 #designerTable td {
-	text-align: center;
-	color : #242424;
-	border: 1px solid #909090;
+	text-align: center!important;
 	vertical-align: middle;
 	height: 40px;
 	font-family: 'Nanum Gothic', sans-serif;
@@ -24,8 +23,6 @@
 	text-align: center;
 	color : black;
 	padding: 5px;
-	border: 1px solid black;
-	border-spacing: 1;
 	overflow: scroll;
 }
 
@@ -50,7 +47,7 @@
   width: 500px;
   z-index: 11;
   min-width: 500px;
-  height: 560px;
+  height: 530px;
   border-radius: 5px;
   padding: 30px 0 40px;
   overflow: hidden;
@@ -121,7 +118,7 @@
   z-index: 10;
   width: 60px;
   height: 60px;
-  background: #878787;
+  background: #37c7ce;
   border-radius: 100%;
   box-shadow: none;
   padding: 0;
@@ -131,7 +128,7 @@
 /* 占쎈쑏熬곣뫅�삕�뵓怨뺣쐡占쎄퉰 嶺뚢돦堉먪뵳占� �뵓怨뚯뫓占쎈괏 */
 .designerAddDiv .designerAddToggle {
   position: absolute;
-  background: #878787; /* �뵓怨뚯뫓占쎈괏, 嶺뚢돦堉먪뵳占� �뜝�럥夷� �뛾�룄�쀧몭�엪�삕繹먲옙 */ 
+  background: #37c7ce; /* �뵓怨뚯뫓占쎈괏, 嶺뚢돦堉먪뵳占� �뜝�럥夷� �뛾�룄�쀧몭�엪�삕繹먲옙 */ 
   width: 60px;
   height: 60px;
   border-radius: 100%;
@@ -196,7 +193,7 @@
 }
 
 /* Input, label �뜝�럡�맟�뜝�럩�젧 */
-.designerAddDiv .input-container input {
+.designerAddDiv .input-container input#designername{
   outline: none;
   z-index: 1;
   position: relative;
@@ -206,7 +203,7 @@
   left: 0px;
   border: 0;
   color: #ffffff;
-  font-size: 20px;
+/*   font-size: 20px; */
   font-weight: 400;
 }
 

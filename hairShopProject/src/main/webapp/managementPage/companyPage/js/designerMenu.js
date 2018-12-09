@@ -1,127 +1,76 @@
 $(document).ready(function(){
 	$('.designerAddToggle').on('click', function() {
+		$('input[name=dayoff]').val("");
+		$('#thisIsTitle').text("디자이너 등록");
+		$('#designername').val("");
+		$('#positioncode').val("");
+		$('input[name=insertOrUpdate]').val("insert");
+		for(var i=1; i<=7; i++){
+	       		$('#' + i).attr("checked", true);
+	    }
+       	$('#doIt').html("등&emsp;&emsp;록");
+		$('.dayOptionDiv').css('visibility', 'visible');
+		$('.positioncode').css('visibility', 'visible');
+		$('.fileUpload').css('visibility', 'visible');
 		$('.designerMenu').stop().addClass('designerAdd');
 	});
 	
 	$('.close').on('click', function() {
+		$('.dayOptionDiv').css('visibility', 'hidden');
+		$('.positioncode').css('visibility', 'hidden');
+		$('.fileUpload').css('visibility', 'hidden');
 		$('.designerMenu').stop().removeClass('designerAdd');
 	});
 	
-	$("#checkAll").on('click', function() {
-		if($("#checkAll").is(":checked")){
-			$("input[id=checkbox]").prop('checked', true);
-        }else{
-        	$("input[id=checkbox]").prop('checked', false);
-        }
-	});
-	
-	/* 추가 */
-	$('#designerAdd').on('click', function() {
-		var designername = $('.addDesignername').val();
-		var designerid = $('.addDesignerid').val();
-		var hairshopId = $('#hairshopId').val();
-		var position = $('.addPosition').val();
-		var dayoff = $('.addDayoff').val();
-		
-		$.ajax({
-			type : 'POST',
-			url : '/hairShopProject/companyPage/designerAdd.do',
-			data : {'designername':designername,
-					'designerid':designerid,
-					'hairshopid':hairshopId,
-					'position':position,
-					'dayoff':dayoff},
-			success : function() {
-				location.reload();
-			}
-		});
-	});
-	
-	/* 수정, 삭제 */
-	
-	// 삭제
-	$('#designerTable').on('click', '.designerDelete', function() {
-		if (confirm("정말 삭제하시겠습니까?")==true){
-		    $.ajax({
-		    	type : 'POST',
-		    	url : '/hairShopProject/companyPage/designerDelete.do',
-		    	data : {'seq':$(this).parent().prev().prev().prev().prev().prev().prev().children().val()},
-		    	success : function() {
-		    		location.reload();
-		    	}
-		    });
-		}else{
-		    return;
+	$('#selectAll').on('change', function(){
+		if($('input#selectAll').prop("checked")){
+			$('input:checkbox[class="selectOne"]').prop('checked', true);
+		}else {
+			$('.selectOne:checked').each(function(index, item){
+				item.checked=false;
+			});
 		}
 	});
+	
+
+	$("#designerTable").on('change', '.selectOne', function(){
+		var length = $(".selectOne").length;
+		var c =0;
+		$(".selectOne:checked").each(function (index, item) {
+			c+=1;
+		});
+		if(!$(this).is(":checked")){
+			$("#selectAll").prop("checked", false);
+		} else if(c==length){
+			$("#selectAll").prop("checked", true);
+		}
+	 });
+	
+	
+	/* 수정, 삭제 */
 	
 	// 선택 삭제
 	$('#checkAllDelete').on('click', function() {
 		var count = 0;
-		var ar = [];
-		
-		$('input[id=checkbox]:checked').each(function(i) {
-			ar.push($(this).val());
+		var designerIds = [];
+		$('input[class=selectOne]:checked').each(function(i) {
+			designerIds.push($(this).val());
 			count++
 		});
-		
 		if(count>0) {
-			$.ajax({
-				type : 'POST',
-				url : '/hairShopProject/companyPage/designerCheckedDelete.do',
-				data : {ar:ar},
-				success : function() {
-					alert("삭제되었습니다");
-					location.reload();
-				}
-			});
+			if (confirm("정말 삭제하시겠습니까?")==true){
+				$.ajax({
+					type : 'POST',
+					url : '/hairShopProject/companyPage/designerCheckedDelete.do',
+					data : {designerIds:designerIds},
+					success : function() {
+						alert("삭제가 완료되었습니다.");
+						location.reload();
+					}
+				});
+			}
 		}else
-			alert("디자이너를 선택해주세요");
-	});
-	
-	// 수정
-	
-	// 수정완료 버튼
-	$('#designerTable').on('click', '.designerModify', function() {
-		if (confirm("수정하시겠습니까?")==true){
-			var seq = $(this).parent().prev().prev().prev().prev().prev().prev().children().val();
-			var designerimage = $(this).parent().prev().prev().prev().prev().prev().children().val();
-			var designername = $(this).parent().prev().prev().prev().prev().children().val();
-			var designerid = $(this).parent().prev().prev().prev().children().val();
-			var position = $(this).parent().prev().prev().children().val();
-			var dayoff = ($(this).parent().prev().children().val()).replace('월 ', '1')
-											 .replace('화 ', '2')
-											 .replace('수 ', '3')
-											 .replace('목 ', '4')
-											 .replace('금 ', '5')
-											 .replace('토 ', '6')
-											 .replace('일 ', '7');
-			
-			$.ajax({
-				type : 'POST',
-				url : '/hairShopProject/companyPage/designerModify.do',
-				data : {'designerimage':designerimage,
-						'designername':designername,
-						'designerid':designerid,
-						'position':position,
-						'dayoff':dayoff,
-						'seq':seq},
-				success : function() {
-					location.reload();
-				}
-			});
-		}else{
-		    return;
-		}
-	});
-	
-	// 수정 버튼
-	$('#designerTable').on('click', '#designerModify', function() {
-		var seq = $(this).attr('class');
-		
-		$('input[id='+seq+']').removeAttr('readonly').css('border', '1px solid #ABABAB');
-		$('input[id=seq]').addClass('seq'); // seq 값을 가지고 있는 hidden에 클래스 추가
-		$('input[class='+seq+']').val('수정완료');
-		$('input[class='+seq+']').addClass('designerModify');
+			alert("디자이너를 선택해주세요.");
 	});
 });
+
