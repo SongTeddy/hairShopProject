@@ -1,5 +1,6 @@
 package management.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,41 @@ public class ManagementDAOMybatis implements ManagementDAO {
 		map.put("modifyPwd", modifyPwd);
 
 		sqlSession.update("managementSQL.memberPwdModify", map);
+	}
+	
+	//------------------------------- 예약 관리 메뉴 -------------------------------//
+	
+	// 모든 예약 조회
+	@Override
+	public List<ReservationDTO> getAllReservation() {
+		return sqlSession.selectList("managementSQL.getAllReservation");
+	}
+	
+	// 예약 리스트 페이징 조회
+	@Override
+	public List<ReservationDTO> getReservationList(int startNum, int endNum) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+
+		return sqlSession.selectList("managementSQL.getReservationPaging", map);
+	}
+	
+	// 예약 전체 카운트
+	@Override
+	public int getListTotalA() {
+		return sqlSession.selectOne("managementSQL.getListTotalA");
+	}
+	
+	// 예약 검색
+	@Override
+	public List<ReservationDTO> reservationSearch(Map<String, String> map) {
+		return sqlSession.selectList("managementSQL.reservationSearch", map);
+	}
+	
+	@Override
+	public int getSearchReservationTotalA(Map<String, String> map) {
+		return sqlSession.selectOne("managementSQL.getSearchReservationTotalA", map);
 	}
 
 // 마이페이지(개인)=================================================================================
@@ -285,6 +321,20 @@ public class ManagementDAOMybatis implements ManagementDAO {
 		return sqlSession.selectOne("managementSQL.getEndEventImageName", seq);
 	}
 	
+	//----------------------- 배너 DAO
+	
+	@Override
+	public void bannerResister(String bannerOption) {
+		sqlSession.insert("managementSQL.bannerResister", bannerOption);
+	}
+
+	@Override
+	public List<Map<String, Object>> getBannerList() {
+		return sqlSession.selectList("managementSQL.getBannerList");
+	}
+
+	
+}
 	@Override
 	public Map<String, String> getCoupon(int seq) {
 		return sqlSession.selectOne("managementSQL.getCoupon",seq);
@@ -337,6 +387,11 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public void couponDownTerm(Map<String, String> map) {
 		sqlSession.insert("managementSQL.couponDownTerm",map);
 	}
+	
+	@Override
+	public void usedCoupon(Map<String, String> map) {
+		sqlSession.update("managementSQL.usedCoupon", map);
+	}
 
 	@Override
 	public int couponCheckDuplication(Map<String, String> map) {
@@ -351,5 +406,39 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	@Override
 	public List<Map<String, Object>> getEndCouponList(String memEmail) {
 		return sqlSession.selectList("managementSQL.getEndCouponList", memEmail);
+	}
+	
+	@Override
+	public List<Map<String, String>> getInfoForScheduling(String memEmail){
+		return sqlSession.selectList("managementSQL.getInfoForScheduling", memEmail);
+	}
+	
+	@Override
+	public void totalHairShopSchedule(Map<String, Object> map) {
+		sqlSession.insert("managementSQL.totalHairShopSchedule", map);
+	}
+	
+	@Override
+	public void vacationDesignerSchedule(Map<String, Object> map) {
+		sqlSession.delete("managementSQL.vacationDesignerSchedule", map);
+	}
+	
+	@Override
+	public void overworkDesignerSchedule(Map<String, Object> map) {
+		sqlSession.insert("managementSQL.overworkDesignerSchedule", map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getServices(Map<String, String> map){
+		return sqlSession.selectList("managementSQL.getServices", map);
+	}
+		
+	@Override
+	public void deleteService(Map<String, String> map) {
+		sqlSession.delete("managementSQL.deleteService", map);
+	}
+
+	public void serviceRegister(Map<String, String> map) {
+		sqlSession.delete("managementSQL.serviceRegister", map);		
 	}
 }

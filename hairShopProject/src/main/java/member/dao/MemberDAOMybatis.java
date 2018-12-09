@@ -138,6 +138,7 @@ public class MemberDAOMybatis implements MemberDAO {
 	// DB에서 이메일 체크
 	@Override
 	public MemberDTO isCheckEmail(String email) {
+		System.out.println(email);
 		MemberDTO memberDTO = sqlSession.selectOne("memberSQL.checkEmail", email);
 
 		return memberDTO;
@@ -181,5 +182,11 @@ public class MemberDAOMybatis implements MemberDAO {
 	@Override
 	public MemberDTO changeUserInfo(String email) {
 		return sqlSession.selectOne("memberSQL.changeUserInfo", email);
+	}
+	
+	// 아이디로 하나의 헤어샵 정보 조회
+	@Override
+	public MemberDTO getHairShopInfoById(String hairShopId) {
+		return sqlSession.selectOne("memberSQL.getHairShopInfoById", hairShopId);
 	}
 }

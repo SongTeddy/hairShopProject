@@ -6,5 +6,5 @@
 		alert("정보 수정 완료");		
 	else
 		alert("정보 수정 실패");
-	location.href = "/hairShopProject/adminPage/eventManagement.do";
+	location.href = "/hairShopProject/companyPage/hairShopInfoInput.do";
 </script>

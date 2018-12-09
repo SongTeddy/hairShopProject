@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link rel="shortcut icon" href="https://cdn-main.123contactform.com/images3/logos/123-favicon@2x.png">
 
@@ -216,11 +217,57 @@
                 <div data-role="container" data-type="virtual-form-table-row" data-hash="00000011" data-type-id="0" data-colspan="20" data-num-children="1">
                     <div data-role="control" data-type="name" data-hash="00000012" data-type-id="12" data-colspan="20" data-label-is-bold="1" aria-labelledby="name-00000012-acc name-00000012-error-acc name-00000012-instr-acc" data-is-required="1" data-renderer-type="lln" data-label-width="5" data-id="47855856">
                         <div data-role="label-column" data-colspan="7">
-                        <label>결제 금액</label>
-                        <dt data-role="instructions" id="name-00000012-instr-acc" data-is-empty="1" data-i18n-text="control_instructions_47855856"></dt></div>
+                        	<label>주문 금액</label>
+	                        <dt data-role="instructions" id="name-00000012-instr-acc" data-is-empty="1" data-i18n-text="control_instructions_47855856">
+	                        </dt>
+                        </div>
                         <div data-role="input-column" data-colspan="11">
                             <div data-role="input-row" data-is-first-row="1" data-is-last-row="1" data-fill-colspan="8" align="right">
-                            <span id="chosenServicePriceSpan" style="color: red; font-size: 24pt;"></span>
+                            <span id="chosenServicePriceSpan" style="color: black; font-size: 20pt;"></span>
+                            </div>
+                            <label data-role="error" id="name-00000012-error-acc" data-is-empty="1"></label>
+                        </div>
+                     <hr>
+                    </div>
+                </div>
+                <div data-role="container" data-type="virtual-form-table-row" data-hash="00000011" data-type-id="0" data-colspan="20" data-num-children="1">
+                    <div data-role="control" data-type="name" data-hash="00000012" data-type-id="12" data-colspan="20" data-label-is-bold="1" aria-labelledby="name-00000012-acc name-00000012-error-acc name-00000012-instr-acc" data-is-required="1" data-renderer-type="lln" data-label-width="5" data-id="47855856">
+                        <div data-role="label-column" data-colspan="7">
+                        	<label>쿠폰 사용 </label>
+	                        <dt data-role="instructions" id="name-00000012-instr-acc" data-is-empty="1" data-i18n-text="control_instructions_47855856">
+	                        </dt>
+                        </div>
+                        <div data-role="input-column" data-colspan="11">
+                            <div data-role="input-row" data-is-first-row="1" data-is-last-row="1" data-fill-colspan="8" align="right">
+                            <span id="chosenServicePriceSpan" style="color: red; font-size: 20pt;"></span>
+                            <select class="selectCoupon" id="couponList" >
+                            	<option class="notCoupon" value="${map.chosenServicePrice }" selected="selected">쿠폰을 선택해 주세요</option>
+                            	<c:forEach items="${memCouponList}" var="coupon"> 
+									<c:if test="${coupon.DISCOUNTOPTION ==1}">
+							            <option class="${coupon.SEQ }" value="${map.chosenServicePrice - coupon.DISCOUNTAMOUNT }" >${coupon.COUPONNAME } </option>
+									</c:if>
+									<c:if test="${coupon.DISCOUNTOPTION ==0}">
+							            <option class="${coupon.SEQ }" value="${map.chosenServicePrice*(100 - coupon.DISCOUNTAMOUNT)/100 }" >${coupon.COUPONNAME }</option>
+									</c:if>
+						        </c:forEach>
+                            </select>
+                            </div>
+                            <label data-role="error" id="name-00000012-error-acc" data-is-empty="1"></label>
+                        </div>
+                     <hr>
+                    </div>
+                </div>
+                <div data-role="container" data-type="virtual-form-table-row" data-hash="00000011" data-type-id="0" data-colspan="20" data-num-children="1">
+                    <div data-role="control" data-type="name" data-hash="00000012" data-type-id="12" data-colspan="20" data-label-is-bold="1" aria-labelledby="name-00000012-acc name-00000012-error-acc name-00000012-instr-acc" data-is-required="1" data-renderer-type="lln" data-label-width="5" data-id="47855856">
+                        <div data-role="label-column" data-colspan="7">
+                        	<label>최종 결제 금액</label>
+	                        <dt data-role="instructions" id="name-00000012-instr-acc" data-is-empty="1" data-i18n-text="control_instructions_47855856">
+	                        </dt>
+                        </div>
+                        <div data-role="input-column" data-colspan="11">
+                            <div data-role="input-row" data-is-first-row="1" data-is-last-row="1" data-fill-colspan="8" align="right">
+                            <span id="chosenDiscountSpan" style="color: black; font-size: 15pt;"></span><br/>
+                            <span id="chosenServiceTotalPriceSpan" style="color: red; font-size: 24pt;"></span>
                             </div>
                             <label data-role="error" id="name-00000012-error-acc" data-is-empty="1"></label>
                         </div>
@@ -265,11 +312,20 @@
     </form>
 
 <script type="text/javascript">
-	
-	var price = ${map.chosenServicePrice };
+	var price = Number(${map.chosenServicePrice });
+	var couponSeq = "";
+	var discountPrice = new Number(0);
 	document.getElementById("chosenServicePriceSpan").innerText = price.toLocaleString() + '원';
-	
-	
+	document.getElementById("chosenServiceTotalPriceSpan").innerHTML = price.toLocaleString() + '원';
+	$('select#couponList').on('change',function(){
+		discountPrice = Number($(this).val());
+		if(price-discountPrice !=0)	document.getElementById("chosenDiscountSpan").innerHTML = '-'+ (price - discountPrice).toLocaleString()+ '원';
+		else document.getElementById("chosenDiscountSpan").innerHTML = '';
+		document.getElementById("chosenServiceTotalPriceSpan").innerHTML = discountPrice.toLocaleString() + '원';
+		$('select#couponList option:selected ').each(function() {
+			couponSeq = $(this).attr('class');
+	    });
+	});
 	$('#tel1').val("${telMap.TEL1}");	
 	
 	$('#confirmedBtn').on('click', function(){
@@ -281,7 +337,7 @@
 					'price' : '${map.chosenServicePrice}',
 					'timeRequired': '${map.chosenServiceRequiredTime }', 
 					'startTime' : '${map.chosenTime }', 
-					'theDay': '${map.theday }'};
+					'theDay': '${map.theday }','couponSeq':couponSeq};
 					
 			var path = "/hairShopProject/hairShop/confirmedReservation.do";
 			var method = 'post';

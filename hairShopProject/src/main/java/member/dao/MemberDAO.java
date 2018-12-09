@@ -21,4 +21,5 @@ public interface MemberDAO {
 	public void find_pw(HttpServletResponse response, MemberDTO memberDTO) throws Exception;
 	public String searchId(MemberDTO memberDTO);
 	public MemberDTO changeUserInfo(String email);
+	public MemberDTO getHairShopInfoById(String hairShopId1);
 }

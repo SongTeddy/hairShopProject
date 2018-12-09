@@ -451,5 +451,31 @@ $(document).ready(function(){
 			});
 		}
     }
+    
+	$(function() {
+		$('input[type=file]').on('change', function() {
+			$(this).next().remove();
+			$('<img/>', {
+				id : 'preview' + this.id,
+				src : '#',
+				style : 'margin-top : 5px; width : 100px;'
+			}).appendTo($(this).parent());
+			readURL(this);
+		});
+	});
+	
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$(input).next().attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+    
+    
 </script>
 </body>

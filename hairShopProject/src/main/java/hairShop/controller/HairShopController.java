@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import hairShop.bean.HairShopReviewDTO;
 import hairShop.dao.HairShopDAO;
 import management.dao.ManagementDAO;
+import member.bean.MemberDTO;
 import member.dao.MemberDAO;
 
 @Controller
@@ -34,7 +35,7 @@ public class HairShopController {
 	private HairShopReviewDTO hairShopReviewDTO;
 
 	@RequestMapping(value = "/hairShop/hairShop_index.do", method = RequestMethod.GET)
-	public ModelAndView input(@RequestParam String hairShopId) { // 사용자가 만든 콜백 메소드
+	public ModelAndView input(@RequestParam String hairShopId, HttpSession session) { // 사용자가 만든 콜백 메소드
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("hairShopId", hairShopId);
 		mav.addObject("display", "/hairShop/hairShop_index.jsp");
@@ -182,18 +183,22 @@ public class HairShopController {
 	}
 
 	@RequestMapping(value = "/hairShop/reserve.do", method = RequestMethod.POST)
-	public ModelAndView reserve(@RequestParam Map<String, String> map) {
+	public ModelAndView reserve(@RequestParam Map<String, String> map, HttpSession session) {
 		System.out.println("선택한 디자이너" + map.get("chosenDesignerId"));
 		ModelAndView mav = new ModelAndView();
+		List<Map<String,Object>> memCouponList = managementDAO.getCouponList((String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
 		mav.addObject("display", "/hairShop/reserve.jsp");
 		mav.addObject("map", map);
+		mav.addObject("memCouponList", memCouponList);
+		mav.addObject("memCouponListSize", memCouponList.size());
 		return mav;
 	}
-
+	
 	@RequestMapping(value = "/hairShop/confirmedReservation.do", method = RequestMethod.POST)
 	public ModelAndView confirmedReservation(@RequestParam Map<String, String> map) {
 		ModelAndView mav = new ModelAndView();
+		
 		for (Iterator<String> iterator = map.keySet().iterator(); iterator.hasNext();) {
 			String keyName = (String) iterator.next();
 			Object valueName = map.get(keyName);
@@ -202,6 +207,7 @@ public class HairShopController {
 		int done = hairShopDAO.confirmedReservation(map);
 		mav.setViewName("/main/index");
 		if (done == 1) {
+			managementDAO.usedCoupon(map);
 			mav.addObject("display", "/hairShop/confirmedReservation.jsp");
 		} else if (done == 0) {
 			mav.addObject("display", "/hairShop/failedReservation.jsp");
@@ -209,7 +215,7 @@ public class HairShopController {
 		mav.addObject("map", map);
 		return mav;
 	}
-
+	
 	@RequestMapping(value = "/hairShop/reviewList.do", method = RequestMethod.POST)
 	public ModelAndView reviewList(@RequestParam String hairShopId) {
 

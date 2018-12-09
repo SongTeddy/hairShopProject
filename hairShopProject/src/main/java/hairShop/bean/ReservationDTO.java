@@ -24,11 +24,12 @@ public class ReservationDTO {
 	private String description;
 	private int price;
 	private int timerequired;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy. MM. dd (HH:mm)")
 	private Date starttime;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private Date endtime;
     private String theday;
     private int didordidnot;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy. MM. dd (HH:mm)")
     private Date logtime;
 }

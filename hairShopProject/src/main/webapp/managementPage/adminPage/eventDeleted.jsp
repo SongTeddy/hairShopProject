@@ -2,5 +2,5 @@
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	alert("이벤트 삭제 완료");		
-	location.href = "/hairShopProject/adminPage/eventList.do";
+	location.href = "/hairShopProject/adminPage/eventManagement.do";
 </script>

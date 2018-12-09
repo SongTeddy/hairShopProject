@@ -2,13 +2,16 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="boardSQL">
+	
 	<insert id="boardWrite" parameterType="java.util.Map">
-		insert into board(seq, email, subject, content, ref)
-		values(seq_board.nextval
+		insert into board
+		values(#{hairShopId},
+			seq_board.nextval
 			,#{email}
 			,#{subject}
 			,#{content}
-			,seq_board.currval)<!-- 원글ref = seq -->
+			,seq_board.currval,
+			sysdate)<!-- 원글ref = seq -->
 	</insert>
 	
 	<!-- 목록 -->
@@ -37,7 +40,6 @@
 	<delete id="boardDelete" parameterType="int">
 		delete board where seq=#{seq}	
 	</delete>
-	
 	
 	<!-- 검색 -->
 	<select id="boardSearch" parameterType="java.util.Map" resultType="board">
