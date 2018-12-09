@@ -306,6 +306,29 @@ public class CompanyPageController {
 		return mav;
 	}
 	
+	
+	
+	// 헤어샵 서비스 리스트 페이지
+	@RequestMapping(value = "serviceManagement")
+	public ModelAndView serviceManagement(HttpSession session, @RequestParam(required=false, defaultValue="")String serviceCategory) {
+		ModelAndView mav = new ModelAndView();
+		if (session.getAttribute("memEmail") != null) {
+			System.out.println(serviceCategory + "선택한 카테고리");
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("memEmail", (String) session.getAttribute("memEmail"));
+			map.put("serviceCategory", serviceCategory);
+			List<Map<String, Object>> list = managementDAO.getServices(map);
+			mav.addObject("list", list);
+			mav.addObject("serviceCategory", serviceCategory);
+			mav.addObject("display", "/managementPage/companyPage/companyPage.jsp");
+			mav.addObject("myPageBody", "/managementPage/companyPage/serviceManagement.jsp");
+		} else {
+			mav.addObject("display", "/main/body.jsp");
+		}
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
 	// 헤어샵 서비스 등록 페이지
 	@RequestMapping(value = "serviceRegister", method = RequestMethod.GET)
 	public ModelAndView serviceRegister(HttpSession session) {
@@ -321,6 +344,38 @@ public class CompanyPageController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
+
+	// 헤어샵 서비스 삭제하기
+	@RequestMapping(value = "serviceDeleted")
+	public ModelAndView serviceDeleted(HttpSession session, @RequestParam String[] hairShopId, @RequestParam String[] descriptions) {
+		ModelAndView mav = new ModelAndView();
+		if (session.getAttribute("memEmail") != null) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("hairShopId", hairShopId[0]);
+			for(int i=0; i<descriptions.length; i++) {
+				map.put("description", descriptions[i]);
+				managementDAO.deleteService(map);
+			}
+			mav.addObject("display", "/managementPage/companyPage/companyPage.jsp");
+			mav.addObject("myPageBody", "/managementPage/companyPage/serviceDeleted.jsp");
+		} else {
+			mav.addObject("display", "/main/body.jsp");
+		}
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
+	// 헤어샵 서비스 등록하기
+	@RequestMapping(value = "serviceRegistered")
+	public ModelAndView serviceRegistered(@RequestParam Map<String, String> map) {
+		ModelAndView mav = new ModelAndView();
+		managementDAO.serviceRegister(map);
+		mav.addObject("display", "/managementPage/companyPage/companyPage.jsp");
+		mav.addObject("myPageBody", "/managementPage/companyPage/serviceRegistered.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
 
 	// 헤어샵 스케줄 등록 페이지 띄우기
 	@RequestMapping(value = "scheduleManagement", method = RequestMethod.GET)

@@ -598,4 +598,27 @@
         where DESIGNERID = #{designerId } and
         theday=to_char(to_date(#{overworkStartDate }, 'mm/dd/yyyy') + ${i },'yyyy-mm-dd'))
 	</insert>
+	
+	<select id="getServices" parameterType="java.util.Map" resultType="java.util.Map">
+		select * from SERVICEINFO where HAIRSHOPID = (select HAIRSHOPID from MEMBERINFO where email=#{memEmail }) 
+		and service like '%'||#{serviceCategory }||'%'
+	</select>
+	
+	<!-- 서비스 삭제하기 -->
+ 	<delete id="deleteService" parameterType="java.util.Map">
+		delete serviceinfo where description = #{description }
+		and hairshopid=#{hairShopId }
+	</delete>
+
+	<!-- 서비스 등록하기 -->
+ 	<insert id="serviceRegister" parameterType="java.util.Map">
+		insert into serviceinfo 
+		values(
+		#{hairShopId }, #{service },
+		#{description },
+		#{price },
+		#{timeRequired }
+		)
+	</insert>
+	
 </mapper>
