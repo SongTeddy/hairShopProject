@@ -34,7 +34,8 @@ public class IndexController {
 	@RequestMapping(value="index", method=RequestMethod.GET)
 	public ModelAndView input(HttpSession session, Model model) throws InvalidKeySpecException {  //사용자가 만든 콜백 메소드
 		ModelAndView mav = new ModelAndView();
-    List<Map<String, Object>> bannerList = managementDAO.getBannerList();
+		List<Map<String, Object>> bannerList = managementDAO.getBannerList();
+		System.out.println(bannerList.size());
 		mav.addObject("display", "/main/body.jsp");
 		mav.addObject("bannerList", bannerList);
 		mav.addObject("memEmail", session.getAttribute("memEmail"));

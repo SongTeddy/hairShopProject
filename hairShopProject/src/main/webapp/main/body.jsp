@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- review swiper start -->
 <!-- 스와이퍼 css -->
 <style>
@@ -80,12 +81,11 @@ i.fa-star {
 				<!-- 슬라이드 추가시 img 만 추가하면 됩니다.-->
 					<img data-u="image" src="/hairShopProject/main/assets/images/welcome-hero/banner.png" />
 				</div>
-				<div>
-					<img data-u="image" src="/hairShopProject/hairShop/img/banner/${bannerList[0].EVENTBANNERIMAGE }" />
-				</div>
-				<div>
-					<img data-u="image" src="/hairShopProject/hairShop/img/banner/${bannerList[1].EVENTBANNERIMAGE }" />
-				</div>
+				<c:forEach var="item" items="${bannerList }">
+					<div>
+						<img data-u="image" src="/hairShopProject/main/assets/images/event/${item.EVENTBANNERIMAGE }" />
+					</div>
+				</c:forEach>
 			</div>
 			<!-- Bullet Navigator -->
 			<div data-u="navigator" class="jssorb032"
