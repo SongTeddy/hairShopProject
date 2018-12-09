@@ -347,7 +347,25 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public List<Map<String, Object>> getCouponList(String memEmail) {
 		return sqlSession.selectList("managementSQL.getCouponList", memEmail);
 	}
-
+	@Override
+	public List<Map<String, String>> getInfoForScheduling(String memEmail){
+		return sqlSession.selectList("managementSQL.getInfoForScheduling", memEmail);
+	}
+	
+	@Override
+	public void totalHairShopSchedule(Map<String, Object> map) {
+		sqlSession.insert("managementSQL.totalHairShopSchedule", map);
+	}
+	
+	@Override
+	public void vacationDesignerSchedule(Map<String, Object> map) {
+		sqlSession.delete("managementSQL.vacationDesignerSchedule", map);
+	}
+	
+	@Override
+	public void overworkDesignerSchedule(Map<String, Object> map) {
+		sqlSession.insert("managementSQL.overworkDesignerSchedule", map);
+	}
 	@Override
 	public List<Map<String, Object>> getEndCouponList(String memEmail) {
 		return sqlSession.selectList("managementSQL.getEndCouponList", memEmail);

@@ -67,14 +67,18 @@ public interface ManagementDAO {
 	public int couponCheckDuplication(Map<String, String> map);
 	public List<Map<String, Object>> getCouponList(String memEmail);
 	public List<Map<String, Object>> getEndCouponList(String memEmail);
-  
-  //스타일 찾기
-  public List<Map<String, String>> getStylebookImage(String hairShopId);
+	public void usedCoupon(Map<String, String> map);
+ 
+	//스타일 찾기
+	public List<Map<String, String>> getStylebookImage(String hairShopId);
 	public void deleteEvent(List<Integer> list);
 	public Map<String, Object> getTargetEvent(String seq);
 	public void updateEvent(Map<String, String> map);
 	public void stylebookManagementModify(Map<String, String> map);
 	public void stylebookDelete(String seq);
 	public void stylebookManagementInsert(Map<String, String> map);
-	public void usedCoupon(Map<String, String> map);
+	public List<Map<String, String>> getInfoForScheduling(String memEmail);
+	public void totalHairShopSchedule(Map<String, Object> map);
+	public void vacationDesignerSchedule(Map<String, Object> map);
+	public void overworkDesignerSchedule(Map<String, Object> map);
 }
