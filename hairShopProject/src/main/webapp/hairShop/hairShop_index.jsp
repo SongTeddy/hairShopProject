@@ -15,7 +15,6 @@
   font-size: 14px;
   line-height: 16px;
   background-color: #fff;
-  color: #DD5D54;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.03);
   transition: border .2s ease-out,box-shadow .1s ease-out,background-color .4s ease-out;
   cursor: pointer;
@@ -873,19 +872,7 @@ button.selectedBtn {
 			});
 		} else {
 			$('button#heartBtn').click(function(){
-				if (confirm("로그인 후 이용 하실수 있습니다.\n로그인 하시겠습니까?") == true){    //확인
-					var maskHeight = $(document).height();
-					var maskWidth = $(window).width();
-					//마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
-					$('#myModal').css({
-						'width' : maskWidth,
-						'height' : maskHeight
-					});
-					//애니메이션 효과
-					$('#myModal').fadeIn(500);
-				}else{   //취소
-				    return;
-				}
+				loginPop();
 			});
 		}
 		
@@ -1201,11 +1188,14 @@ button.selectedBtn {
 		
 		$('body').on('click', '#reserveBtn', function(){
 			//alert(chosenDesignerId);
-			var params = {'chosenHairShopName' : chosenHairShopName, 'pickedService' : pickedService, 'chosenService' : chosenService, 'chosenServicePrice': chosenServicePrice, 'chosenServiceRequiredTime': chosenServiceRequiredTime, 'chosenTime' : chosenTime, 'theday': theday, 'whichDay' : $('#whichDay').val(), 'hairShopId' : '${hairShopId }', 'chosenDesignerId' : chosenDesignerId, 'chosenDesigner' : chosenDesigner };
-			var path = "/hairShopProject/hairShop/reserve.do";
-			var method = 'post';
-			post_to_url(path, params, method);
-			
+			if(memEmail != "null") {
+				var params = {'chosenHairShopName' : chosenHairShopName, 'pickedService' : pickedService, 'chosenService' : chosenService, 'chosenServicePrice': chosenServicePrice, 'chosenServiceRequiredTime': chosenServiceRequiredTime, 'chosenTime' : chosenTime, 'theday': theday, 'whichDay' : $('#whichDay').val(), 'hairShopId' : '${hairShopId }', 'chosenDesignerId' : chosenDesignerId, 'chosenDesigner' : chosenDesigner };
+				var path = "/hairShopProject/hairShop/reserve.do";
+				var method = 'post';
+				post_to_url(path, params, method);
+			} else {
+				loginPop();
+			}
 		});
 		
 		var numItems = $('li.fancyTab').length;

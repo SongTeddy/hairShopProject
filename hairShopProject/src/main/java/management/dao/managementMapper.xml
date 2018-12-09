@@ -180,7 +180,9 @@
 		 where eventenddate < sysdate order by seq desc
 		 ]]>
 	</select>
-
+	<update id="usedCoupon" parameterType="java.util.Map">
+		update coupondownload set used=1 where email=#{bookerEmail } and couponseq=#{couponSeq }
+	</update>
 
 	<!-- 이벤트 정보 가져오기 -->
 	<select id="getEventList" resultType="java.util.Map">

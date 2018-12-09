@@ -76,4 +76,5 @@ public interface ManagementDAO {
 	public void stylebookManagementModify(Map<String, String> map);
 	public void stylebookDelete(String seq);
 	public void stylebookManagementInsert(Map<String, String> map);
+	public void usedCoupon(Map<String, String> map);
 }

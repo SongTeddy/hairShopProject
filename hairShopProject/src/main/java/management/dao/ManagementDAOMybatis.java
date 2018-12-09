@@ -352,4 +352,10 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public List<Map<String, Object>> getEndCouponList(String memEmail) {
 		return sqlSession.selectList("managementSQL.getEndCouponList", memEmail);
 	}
+
+	@Override
+	public void usedCoupon(Map<String, String> map) {
+		sqlSession.update("managementSQL.usedCoupon", map);
+	}
+
 }
