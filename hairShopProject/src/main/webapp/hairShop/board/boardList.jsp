@@ -165,6 +165,7 @@ function modifyT(seq){
 	          modal2.style.display = "none";
 	      }
 	 }
+	 
 	 $.ajax({
 			type : 'POST',
 			url : '/hairShopProject/hairShop/board/boardModifyForm.do',
