@@ -13,6 +13,7 @@ import board.bean.BoardDTO;
 @Component
 @Transactional
 public class BoardDAOMybatis implements BoardDAO {
+	
 	@Autowired
 	private SqlSession sqlSession;
 
