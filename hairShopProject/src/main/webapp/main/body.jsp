@@ -81,10 +81,10 @@ i.fa-star {
 					<img data-u="image" src="/hairShopProject/main/assets/images/welcome-hero/banner.png" />
 				</div>
 				<div>
-					<img data-u="image" src="/hairShopProject/main/assets/images/welcome-hero/hairShop1.png" />
+					<img data-u="image" src="/hairShopProject/hairShop/img/banner/${bannerList[0].EVENTBANNERIMAGE }" />
 				</div>
 				<div>
-					<img data-u="image" src="/hairShopProject/main/assets/images/welcome-hero/hairShop2.png" />
+					<img data-u="image" src="/hairShopProject/hairShop/img/banner/${bannerList[1].EVENTBANNERIMAGE }" />
 				</div>
 			</div>
 			<!-- Bullet Navigator -->

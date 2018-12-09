@@ -494,4 +494,47 @@ public class AdminPageController {
 		mav.setViewName("/main/index");
 		return mav;
 	}
+	
+	///////////////////////// 배너 관리 ////////////////////////////////////////////////////
+	
+	// 배너 관리 메뉴 이동
+	@RequestMapping(value="bannerManagement", method=RequestMethod.GET)
+	public ModelAndView bannerManagement(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		if(session.getAttribute("memEmail")!=null) {
+			mav.addObject("display", "/managementPage/adminPage/adminPage.jsp");
+			mav.addObject("myPageBody", "/managementPage/adminPage/bannerManagement.jsp");
+		}else {
+			mav.addObject("display", "/main/body.jsp");
+		}
+		mav.setViewName("/main/index");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="banner_eventList", method=RequestMethod.POST)
+	public ModelAndView banner_eventList() {
+		List<Map<String, Object>> eventList = managementDAO.getEventList();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("eventList", eventList);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	@RequestMapping(value="bannerRegister", method=RequestMethod.POST)
+	public ModelAndView bannerRegister(@RequestParam String bannerOption) {
+		System.out.println(bannerOption);
+		
+		managementDAO.bannerResister(bannerOption);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/managementPage/adminPage/adminPage.jsp");
+		mav.addObject("myPageBody", "/managementPage/adminPage/bannerRegister.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+
+		
+	}
 }

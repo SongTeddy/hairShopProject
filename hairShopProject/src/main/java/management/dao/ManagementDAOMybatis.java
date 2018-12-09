@@ -244,7 +244,6 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public List<String> getHairShopDesigner(String hairshopId) {
 		return sqlSession.selectList("managementSQL.getHairShopDesigner", hairshopId);
 	}
-	
 	//------------------------------- 헤어샵 정보 등록(수정) 메뉴 -------------------------------//
 	   
 	@Override
@@ -322,6 +321,20 @@ public class ManagementDAOMybatis implements ManagementDAO {
 		return sqlSession.selectOne("managementSQL.getEndEventImageName", seq);
 	}
 	
+	//----------------------- 배너 DAO
+	
+	@Override
+	public void bannerResister(String bannerOption) {
+		sqlSession.insert("managementSQL.bannerResister", bannerOption);
+	}
+
+	@Override
+	public List<Map<String, Object>> getBannerList() {
+		return sqlSession.selectList("managementSQL.getBannerList");
+	}
+
+	
+}
 	@Override
 	public Map<String, String> getCoupon(int seq) {
 		return sqlSession.selectOne("managementSQL.getCoupon",seq);

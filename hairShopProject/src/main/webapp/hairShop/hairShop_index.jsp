@@ -94,16 +94,19 @@
 	font-family: 함초롬돋움; 
 	font-size: 17px;
 	font-weight: bold;
+	margin-left: 13px;
 }
 .reviewcontent_area{
 	line-height: 25px;
 	font-family: 함초롬돋움; 
 	font-size: 17px;
+	margin-left: 13px;
 }
 .star_name_logtime_area{
 	line-height: 25px;
 	font-family: 함초롬돋움; 
 	font-size: 17px;
+	margin-left: 13px;
 }
 
 button.disable {
