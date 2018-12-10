@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import main.dao.MainDAO;
 import management.dao.ManagementDAO;
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
@@ -30,11 +31,16 @@ public class IndexController {
 	private MemberDAO memberDAO;
 	@Autowired
 	private ManagementDAO managementDAO;
+	@Autowired
+	private MainDAO mainDAO;
 	
 	@RequestMapping(value="index", method=RequestMethod.GET)
 	public ModelAndView input(HttpSession session, Model model) throws InvalidKeySpecException {  //사용자가 만든 콜백 메소드
 		ModelAndView mav = new ModelAndView();
+		List<Map<String, Object>> bannerList = managementDAO.getBannerList();
+		System.out.println(bannerList.size());
 		mav.addObject("display", "/main/body.jsp");
+		mav.addObject("bannerList", bannerList);
 		mav.addObject("memEmail", session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
 		return mav;
@@ -77,32 +83,22 @@ public class IndexController {
 		return mav;
 	}
 	
-	// explore 띄우기
-	@RequestMapping(value="setExplore", method=RequestMethod.POST)
-	public ModelAndView setExplore(@RequestParam String hairShopId1,
-								   @RequestParam String hairShopId2,
-								   @RequestParam String hairShopId3,
-								   @RequestParam String hairShopId4,
-								   @RequestParam String hairShopId5,
-								   @RequestParam String hairShopId6) {
-		
-		System.out.println(hairShopId1);
-		System.out.println(hairShopId2);
-		System.out.println(hairShopId3);
-		System.out.println(hairShopId4);
-		System.out.println(hairShopId5);
-		System.out.println(hairShopId6);
-		
-		List<MemberDTO> hairShopInfoList = new ArrayList<MemberDTO>();
-		hairShopInfoList.add(memberDAO.getHairShopInfoById(hairShopId1));
-		hairShopInfoList.add(memberDAO.getHairShopInfoById(hairShopId2));
-		hairShopInfoList.add(memberDAO.getHairShopInfoById(hairShopId3));
-		hairShopInfoList.add(memberDAO.getHairShopInfoById(hairShopId4));
-		hairShopInfoList.add(memberDAO.getHairShopInfoById(hairShopId5));
-		hairShopInfoList.add(memberDAO.getHairShopInfoById(hairShopId6));
-		
+	@RequestMapping(value="getRecommendView", method=RequestMethod.POST)
+	public ModelAndView recommendView() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("hairShopInfoList", hairShopInfoList);
+		List<Map<String, Object>> list = mainDAO.getRecommendView();
+		System.out.println(list);
+		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+  
+	@RequestMapping(value="getHairShopStarScopeAvg", method=RequestMethod.POST)
+	public ModelAndView getHairShopStarScopeAvg() {
+		ModelAndView mav = new ModelAndView();
+		List<Map<String, Object>> list = mainDAO.getHairShopStarScopeAvg();
+		mav.addObject("list", list);
+		mav.addObject("display", "/main/body.jsp");
 		mav.setViewName("jsonView");
 		return mav;
 	}

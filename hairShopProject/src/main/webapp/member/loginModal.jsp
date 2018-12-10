@@ -259,6 +259,13 @@ $(document).ready(function(){
 	}
 	
 	$('#writeBtn').on('click',function(){
+		var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+	    var getName = RegExp(/^[가-힣]+$/);
+	    var getTel = RegExp(/^[0-9]{4}$/);
+	    var num = /[0-9]/;
+        var eng = /[a-zA-Z]/;
+        var spe = /[\~\!\@\#\$\%\<\>\^\&\*\-\_]/;
+        
 		$('#emailDiv, #nameDiv, #pwdDiv, #rePwdDiv, #telDiv').empty();
 		
 		if($('input[name=type]:checked').val()==0){
@@ -267,25 +274,78 @@ $(document).ready(function(){
 					style : 'color:white; font-weight:bold; font-size:9pt;',
 					text : '이메일을 입력해 주세요.'
 				}).appendTo($('#emailDiv'));
+				$('.email').focus();
+			} else if(!getMail.test($('.email').val())) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '이메일 형식에 맞게 입력해 주세요.'
+				}).appendTo($('#emailDiv'));
+				$('.email').val("");
+				$('.email').focus();
+			} else if($('.emailCheckInput').val()=="") {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '이메일을 체크해주세요.'
+				}).appendTo($('#emailDiv'));
 			} else if($('.name').val()=="") {
 				$('<span/>',{
 					style : 'color:white; font-weight:bold; font-size:9pt;',
 					text : '이름을 입력해 주세요.'
 				}).appendTo($('#nameDiv'));
+			} else if(!getName.test($('.name').val())) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '한글로 이름을 입력해 주세요.'
+				}).appendTo($('#nameDiv'));
+				$('.name').val("");
+				$('.name').focus();
 			} else if($('.pwd').val()=="") {
 				$('<span/>',{
 					style : 'color:white; font-weight:bold; font-size:9pt;',
 					text : '비밀번호를 입력해 주세요.'
 				}).appendTo($('#pwdDiv'));
+			} else if($('.pwd').val().length < 8) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '비밀번호는 영문(대소문자구분),숫자,특수문자(~!@#$%^&*()-_? 만 허용)를 혼용하여 8~16자를 입력해주세요.'
+				}).appendTo($('#pwdDiv'));
+				$('.pwd').val("");
+				$('.pwd').focus();
+			} else if(!num.test($('.pwd').val())||!eng.test($('.pwd').val())||!spe.test($('.pwd').val())||$('.pwd').val().length<8||$('.pwd').val().length>16) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '비밀번호는 영문(대소문자구분),숫자,특수문자(~!@#$%^&*()-_? 만 허용)를 혼용하여 8~16자를 입력해주세요.'
+				}).appendTo($('#pwdDiv'));
+				$('.pwd').val("");
+				$('.pwd').focus();
 			} else if($('.rePwd').val()=="") {
 				$('<span/>',{
 					style : 'color:white; font-weight:bold; font-size:9pt;',
 					text : '비밀번호를 재입력해 주세요.'
 				}).appendTo($('#rePwdDiv'));
+			} else if($('.rePwd').val().length < 8) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '비밀번호는 영문(대소문자구분),숫자,특수문자(~!@#$%^&*()-_? 만 허용)를 혼용하여 8~16자를 입력해주세요.'
+				}).appendTo($('#rePwdDiv'));
+				$('.rePwd').val("");
+				$('.rePwd').focus();
+			} else if(!num.test($('.rePwd').val())||!eng.test($('.rePwd').val())||!spe.test($('.rePwd').val())||$('.rePwd').val().length<8||$('.rePwd').val().length>16) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '비밀번호는 영문(대소문자구분),숫자,특수문자(~!@#$%^&*()-_? 만 허용)를 혼용하여 8~16자를 입력해주세요.'
+				}).appendTo($('#rePwdDiv'));
+				$('.rePwd').val("");
+				$('.rePwd').focus();
 			} else if($('.tel2').val()=="" || $('.tel3').val()=="") {
 				$('<span/>',{
 					style : 'color:white; font-weight:bold; font-size:9pt;',
 					text : '나머지번호를 입력해 주세요.'
+				}).appendTo($('#telDiv'));
+			} else if(!getTel.test($('.tel2').val()) || !getTel.test($('.tel3').val())) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '나머지번호에 4자리 숫자를 입력해 주세요.'
 				}).appendTo($('#telDiv'));
 			}else {
 				$.ajax({
@@ -309,25 +369,78 @@ $(document).ready(function(){
 					style : 'color:white; font-weight:bold; font-size:9pt;',
 					text : '이메일을 입력해 주세요.'
 				}).appendTo($('#emailDiv'));
+				$('.email').focus();
+			} else if(!getMail.test($('.email').val())) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '이메일 형식에 맞게 입력해 주세요.'
+				}).appendTo($('#emailDiv'));
+				$('.email').val("");
+				$('.email').focus();
+			} else if($('.emailCheckInput').val()=="") {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '이메일을 체크해주세요.'
+				}).appendTo($('#emailDiv'));
 			} else if($('.name').val()=="") {
 				$('<span/>',{
 					style : 'color:white; font-weight:bold; font-size:9pt;',
 					text : '이름을 입력해 주세요.'
 				}).appendTo($('#nameDiv'));
+			} else if(!getName.test($('.name').val())) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '한글로 이름을 입력해 주세요.'
+				}).appendTo($('#nameDiv'));
+				$('.name').val("");
+				$('.name').focus();
 			} else if($('.pwd').val()=="") {
 				$('<span/>',{
 					style : 'color:white; font-weight:bold; font-size:9pt;',
 					text : '비밀번호를 입력해 주세요.'
 				}).appendTo($('#pwdDiv'));
+			} else if($('.pwd').val().length < 8) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '비밀번호는 영문(대소문자구분),숫자,특수문자(~!@#$%^&*()-_? 만 허용)를 혼용하여 8~16자를 입력해주세요.'
+				}).appendTo($('#pwdDiv'));
+				$('.pwd').val("");
+				$('.pwd').focus();
+			} else if(!num.test($('.pwd').val())||!eng.test($('.pwd').val())||!spe.test($('.pwd').val())||$('.pwd').val().length<8||$('.pwd').val().length>16) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '비밀번호는 영문(대소문자구분),숫자,특수문자(~!@#$%^&*()-_? 만 허용)를 혼용하여 8~16자를 입력해주세요.'
+				}).appendTo($('#pwdDiv'));
+				$('.pwd').val("");
+				$('.pwd').focus();
 			} else if($('.rePwd').val()=="") {
 				$('<span/>',{
 					style : 'color:white; font-weight:bold; font-size:9pt;',
 					text : '비밀번호를 재입력해 주세요.'
 				}).appendTo($('#rePwdDiv'));
+			} else if($('.rePwd').val().length < 8) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '비밀번호는 영문(대소문자구분),숫자,특수문자(~!@#$%^&*()-_? 만 허용)를 혼용하여 8~16자를 입력해주세요.'
+				}).appendTo($('#rePwdDiv'));
+				$('.rePwd').val("");
+				$('.rePwd').focus();
+			} else if(!num.test($('.rePwd').val())||!eng.test($('.rePwd').val())||!spe.test($('.rePwd').val())||$('.rePwd').val().length<8||$('.rePwd').val().length>16) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '비밀번호는 영문(대소문자구분),숫자,특수문자(~!@#$%^&*()-_? 만 허용)를 혼용하여 8~16자를 입력해주세요.'
+				}).appendTo($('#rePwdDiv'));
+				$('.rePwd').val("");
+				$('.rePwd').focus();
 			} else if($('.tel2').val()=="" || $('.tel3').val()=="") {
 				$('<span/>',{
 					style : 'color:white; font-weight:bold; font-size:9pt;',
 					text : '나머지번호를 입력해 주세요.'
+				}).appendTo($('#telDiv'));
+			} else if(!getTel.test($('.tel2').val()) || !getTel.test($('.tel3').val())) {
+				$('<span/>',{
+					style : 'color:white; font-weight:bold; font-size:9pt;',
+					text : '나머지번호에 4자리 숫자를 입력해 주세요.'
 				}).appendTo($('#telDiv'));
 			}else {
 				$.ajax({

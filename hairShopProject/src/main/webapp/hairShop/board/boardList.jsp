@@ -142,7 +142,6 @@ function boardSearch(pg,searchOption,keyword){
 	$('#pg').val(pg);
 	boardSearchList(event, str);
 }
-
 function deleteT(seq){
 	$.ajax({
 		type : 'POST',

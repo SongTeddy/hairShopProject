@@ -95,7 +95,6 @@ public class BoardController {
 	@RequestMapping(value="boardSearch")
 	public ModelAndView boardSearch(@RequestParam(required=false) Map<String,String> map,
 									@RequestParam(required=false, defaultValue="1") String pg) {
-		
 		//1페이지당 5개씩
 		int endNum = Integer.parseInt(pg)*5;
 		int startNum = endNum-4;
@@ -104,7 +103,6 @@ public class BoardController {
 		map.put("endNum", endNum+"");
 		
 		List<BoardDTO> list = boardDAO.boardSearch(map);
-		
 		
 		System.out.println(map);
 		//페이징 처리

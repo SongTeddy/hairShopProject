@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<link rel="stylesheet" type="text/css" href="https://fullcalendar.io/releases/fullcalendar/3.9.0/fullcalendar.min.css" />
+
+
 <style>
 
 .scheduleRegisterTable{
@@ -7,6 +11,11 @@
 	color: black;
 }
 
+
+#calendar {
+  max-width: 900px;
+  margin: 40px auto;
+}
 </style>
 <body>
 	<font size="6pt" style="color: #363636;">디자이너 스케줄 등록 | 변경</font><br>
@@ -51,7 +60,12 @@
 		</tr>
 	</table>
 <input type="hidden" name="hairShopId" value="" />
+
+<div id="calender"></div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://fullcalendar.io/releases/fullcalendar/3.9.0/lib/moment.min.js"></script>
+<script type="text/javascript" src="https://fullcalendar.io/releases/fullcalendar/3.9.0/lib/jquery.min.js"></script>
+<script type="text/javascript" src="https://fullcalendar.io/releases/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$('input[name=totalStartDate]').datepicker({
@@ -222,13 +236,23 @@ $(document).ready(function(){
 			alert("휴가 종료 일자를 입력하세요.");
 		}else{
 			var diffDate = (new Date($('input[name=vacationEndDate]').val()) - new Date($('input[name=vacationStartDate]').val()))/86400000;
-			alert(diffDate);
+// 			alert(diffDate);
 			$.ajax({
 				type : 'POST',
 				data : {'iMax' : diffDate, 'vacationStartDate': $('input[name=vacationStartDate]').val(), 'designerId' : $('#vacationDesigners option:selected').val() },
 				url : '/hairShopProject/companyPage/vacationDesignerSchedule.do',
-				success : function(){
-					alert($('#vacationDesigners option:selected').text() + $('input[name=vacationStartDate]').val() + " ~ " + $('input[name=vacationEndDate]').val() + " 기간의 휴가가 등록되었습니다.");
+				dataType : 'json',
+				success : function(data){
+					var dates = "";
+					if(data.cannotDeleteDay.length > 0){							
+						for(var i=0; i<data.cannotDeleteDay.length; i++){
+							var cannotDeleteDate = new Date($('input[name=vacationStartDate]').val()) + data.cannotDeleteDay[i]*86400000;
+							alert("예약이 잡혀있는 날짜인 " + new Date(cannotDeleteDate).toLocaleDateString("lt-Lt") + "에는 휴가를 신청할 수 없습니다.");
+						}
+					}
+					if(data.deletedDay.length > 0){
+						alert($('#vacationDesigners option:selected').text() + $('input[name=vacationStartDate]').val() + " ~ " + $('input[name=vacationEndDate]').val() + " 기간의 휴가가 등록되었습니다.");
+					}
 				},
 				error : function(){
 					alert("휴가 등록에 실패하였습니다.");
@@ -261,8 +285,15 @@ $(document).ready(function(){
 			});
 		}
 	});
+	$(function() {
+
+		  $('#calendar').fullCalendar({
+		    defaultView: 'month',
+		    events: 'https://fullcalendar.io/demo-events.json'
+		  });
+
+		});
 	
 });
-
 </script>
 </body>

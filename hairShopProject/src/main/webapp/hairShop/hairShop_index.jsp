@@ -336,6 +336,347 @@ li.fancyTab.active a {
 		font-size: 30px;
 	}
 	.nav-tabs>li.fancyTab>a {
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<style type="text/css">
+/* 좋아요 css */
+.btn_like {
+  position: absolute;
+  margin: 26% 95%;
+  display: block;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e8e8e8;
+  border-radius: 44px;
+  font-family: notokr-bold,sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  background-color: #fff;
+  color: #DD5D54;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.03);
+  transition: border .2s ease-out,box-shadow .1s ease-out,background-color .4s ease-out;
+  cursor: pointer;
+}
+
+.btn_like:hover {
+  border: 1px solid rgba(228,89,89,0.3);
+  background-color: rgba(228,89,89,0.02);
+  box-shadow: 0 2px 4px 0 rgba(228,89,89,0.2);
+}
+
+.btn_unlike .img_emoti {
+    background-position: -30px -120px;
+}
+
+.img_emoti {
+    display: inline-block;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    background: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/img_emoti.png?v=20180410) no-repeat;
+    text-indent: -9999px;
+    vertical-align: top;
+    width: 20px;
+    height: 17px;
+    margin-top: 1px;
+    background-position: 0px -120px;
+    text-indent: 0;
+}
+
+.btn_like .ani_heart_m {
+    margin: -63px 0 0 -63px;
+}
+
+.ani_heart_m {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 125px;
+    height: 125px;
+    margin: -63px 0 0 -63px;
+    pointer-events: none;
+}
+
+.ani_heart_m.hi {
+    background-image: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/retina/zzim_on_m.png);
+    -webkit-background-size: 9000px 125px;
+    background-size: 9000px 125px;
+    animation: on_m 1.06s steps(72);
+}
+
+.ani_heart_m.bye {
+    background-image: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/retina/zzim_off_m.png);
+    -webkit-background-size: 8250px 125px;
+    background-size: 8250px 125px;
+    animation: off_m 1.06s steps(66);
+}
+
+@keyframes on_m {
+  from { background-position: 0 }
+  to { background-position: -9000px }
+}
+
+@keyframes off_m {
+  from { background-position: 0 }
+  to { background-position: -8250px }
+}
+/* 좋아요 */
+
+
+/* 리뷰 css */
+/* 리뷰 관련 css */
+.info_area{
+	line-height: 25px;
+	font-family: 함초롬돋움; 
+	font-size: 17px;
+	font-weight: bold;
+	margin-left: 13px;
+}
+.reviewcontent_area{
+	line-height: 25px;
+	font-family: 함초롬돋움; 
+	font-size: 17px;
+	margin-left: 13px;
+}
+.star_name_logtime_area{
+	line-height: 25px;
+	font-family: 함초롬돋움; 
+	font-size: 17px;
+	margin-left: 13px;
+}
+
+button.disable {
+	cursor: not-allowed;
+	background-color: gray;
+}
+
+div.tab-div {
+	padding-bottom: 70px;
+	outline: none;
+}
+
+li.tab {
+	padding-bottom: 30px;
+}
+
+div.tab-div :focus {
+	outline: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Source Sans Pro';
+	font-weight: 700;
+}
+
+.fancyTab {
+	text-align: center;
+	vertical-align: middle;
+	padding: 15px 0;
+	background-color: #eee;
+	box-shadow: 0 0 0 1px #ddd;
+	height: 70px;
+	top: 15px;
+	transition: top .2s;
+}
+
+.fancyTab.active {
+	height: 70px;
+	transition: height .2s;
+	font-weight: bold;
+}
+
+.whiteBlock {
+	display: none;
+}
+
+.fancyTab.active .whiteBlock {
+	display: block;
+	/* 		  height:2px;
+ */
+	bottom: -2px;
+	background-color: #fff;
+	width: 99%;
+	position: absolute;
+	z-index: 1;
+}
+
+.fancyTab a {
+	font-family: 'Source Sans Pro';
+	font-size: 1.65em;
+	font-weight: 300;
+	transition: .2s;
+	color: #333;
+}
+
+/*.fancyTab .hidden-xs {
+		  white-space:nowrap;
+		}*/
+.fancyTabs {
+	border-bottom: 2px solid #ddd;
+	margin: 15px 0 0;
+}
+
+li.fancyTab a {
+	padding-top: 15px;
+	top: -15px;
+	padding-bottom: 0;
+}
+
+li.fancyTab.active a {
+	/* 		  padding-top: inherit; */
+	
+}
+
+.fancyTab .fa {
+	font-size: 40px;
+	width: 100%;
+	padding: 15px 0 5px;
+	color: #666;
+}
+
+.fancyTab.active .fa {
+	color: #cfb87c;
+}
+
+.fancyTab a:focus {
+	outline: none;
+}
+
+.fancyTabContent {
+	border-color: transparent;
+	box-shadow: 0 -2px 0 -1px #fff, 0 0 0 1px #ddd;
+	padding: 30px 15px 15px;
+	position: relative;
+	background-color: #fff;
+	text-align: center;
+}
+
+.nav-tabs>li.fancyTab.active>a, .nav-tabs>li.fancyTab.active>a:focus,
+	.nav-tabs>li.fancyTab.active>a:hover {
+	border-width: 0;
+}
+
+.nav-tabs>li.fancyTab:hover {
+	background-color: #f9f9f9;
+	box-shadow: 0 0 0 1px #ddd;
+}
+
+.nav-tabs>li.fancyTab.active:hover {
+	background-color: #fff;
+	box-shadow: 1px 1px 0 1px #fff, 0 0px 0 1px #ddd, -1px 1px 0 0px #ddd
+		inset;
+}
+
+.nav-tabs>li.fancyTab:hover a {
+	border-color: transparent;
+}
+
+.nav.nav-tabs .fancyTab a[data-toggle="tab"] {
+	background-color: transparent;
+	border-bottom: 0;
+}
+
+.nav-tabs>li.fancyTab:hover a {
+	border-right: 1px solid transparent;
+}
+
+.nav-tabs>li.fancyTab>a {
+	margin-right: 0;
+	border-top: 0;
+	padding-bottom: 30px;
+	margin-bottom: -30px;
+}
+
+.nav-tabs>li.fancyTab {
+	margin-right: 0;
+	margin-bottom: 0;
+}
+
+.nav-tabs>li.fancyTab:last-child a {
+	border-right: 1px solid transparent;
+}
+
+.nav-tabs>li.fancyTab.active:last-child {
+	border-right: 0px solid #ddd;
+	box-shadow: 0px 2px 0 0px #fff, 0px 0px 0 1px #ddd;
+}
+
+.fancyTab:last-child {
+	box-shadow: 0 0 0 1px #ddd;
+}
+
+.tabs .nav-tabs li.fancyTab.active a {
+	box-shadow: none;
+	top: 0;
+}
+
+.fancyTab.active {
+	background: #fff;
+	box-shadow: 1px 1px 0 1px #fff, 0 0px 0 1px #ddd, -1px 1px 0 0px #ddd
+		inset;
+	padding-bottom: 30px;
+}
+
+.arrow-down {
+	display: none;
+	width: 0;
+	height: 0;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-top: 22px solid #ddd;
+	position: absolute;
+	top: -1px;
+	left: calc(10% - 20px);
+}
+
+.arrow-down-inner {
+	width: 0;
+	height: 0;
+	border-left: 18px solid transparent;
+	border-right: 18px solid transparent;
+	border-top: 12px solid #fff;
+	position: absolute;
+	top: -22px;
+	left: -18px;
+}
+
+.fancyTab.active .arrow-down {
+	display: block;
+}
+
+@media ( max-width : 1200px) {
+	.fancyTab .fa {
+		font-size: 36px;
+	}
+	.fancyTab .hidden-xs {
+		font-size: 22px;
+	}
+}
+
+@media ( max-width : 992px) {
+	.fancyTab .fa {
+		font-size: 33px;
+	}
+	.fancyTab .hidden-xs {
+		font-size: 13px;
+		font-weight: normal;
+	}
+}
+
+@media ( max-width : 768px) {
+	.fancyTab>a {
+		font-size: 18px;
+	}
+	.nav>li.fancyTab>a {
+		padding: 15px 0;
+		margin-bottom: inherit;
+	}
+	.fancyTab .fa {
+		font-size: 30px;
+	}
+	.nav-tabs>li.fancyTab>a {
 		border-right: 1px solid transparent;
 		padding-bottom: 0;
 	}
@@ -614,13 +955,13 @@ button.selectedBtn {
 			</a>
 				<div class="whiteBlock"></div>
 			</li>
-			
 		</ul>
 		<div id="myTabContent" class="tab-content fancyTabContent"
 			aria-live="polite">
 			<div class="tab-pane fade active in" id="tabBody0" role="tabpanel"
 				aria-labelledby="tab0" aria-hidden="false" tabindex="0">
 				<section id="spacer1" class="home-section spacer">
+				
 					<!-- 소개글 내 이미지 -->
 					<div class="container" id="homeBackgroundImg">
 						<div class="row">
@@ -913,6 +1254,8 @@ button.selectedBtn {
 	            $('div#index_img1').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE1+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
 	            $('div#index_img2').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE2+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
 	            $('div#index_img3').html("<img data-u='image' src='/hairShopProject/hairShop/img/banner/"+data.map.HAIRSHOPIMAGE3+"' style='top: 0px; left: 0px; width: 1300px; height: 400px; position: absolute; display: block; max-width: 10000px; z-index: 1;' border='0' data-events='auto' data-display='block' />");
+	            $('#').text(data.map.CLOSETIME);
+	               
 	        
 	            /* 미용실 위치 띄우기 */
 	        	var mapContainer = document.getElementById('map'), // 지도의 중심좌표
@@ -956,6 +1299,8 @@ button.selectedBtn {
 	                $('p#designerPosition'+index).text(items.POSITION);
 	                $('span#dayoff'+index).text(changeDayOff(items.DAYOFF));   
 	             });
+	            
+	            
 	          },
 	          error : function(){
 	             alert("소개쪽 정보 에러");
