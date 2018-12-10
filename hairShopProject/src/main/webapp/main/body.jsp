@@ -590,7 +590,7 @@ i.fa-star {
 								'<a id="mainTitleHairShopName'+index+'" class="hairShopLink'+index+'" href="/hairShopProject/hairShop/hairShop_index.do?hairShopId='+items.HAIRSHOPID+'"></a>'+ /* 헤어샵 타이틀 */
 								'</h2>'+
 								'<p class="explore-rating-price">'+
-								'<span class="explore-rating" id="hairShopStarScope'+index+'"></span>'+ /* 평점 */
+								'<span class="explore-rating"><img src="/hairShopProject/hairShop/img/star2.png" style="width:13px; height:13px; padding-right: 2px;" />'+items.AVG+'</span>'+
 								'<span class="explore-price-box"> form <span class="explore-price" id="hairShopPrice'+index+'"></span>'+/* 기본요금 */
 								'</span>'+
 								'</p>'+
@@ -626,7 +626,6 @@ i.fa-star {
 		         		$('div#mainTitleHairShopImage'+index).html("<img src='/hairShopProject/hairShop/img/banner/"+items.HAIRSHOPIMAGE+"' alt='explore image'/>");
 		         		$('div.bg-theme-1 #mainTitleHairShopName'+index).text(items.NAME);
 		         		$('span#hairShopPrice'+index).text(items.MIN.toLocaleString()+" ~ "+items.MAX.toLocaleString()); /* 가격 최대 최소 */
-		         		$('span#hairShopStarScope'+index).text(items.AVG); /* 평점 평균 집계  */
 		         		$('span#hairshopAddr1'+index).text(items.ADDR1);
 			            $('span#hairshopAddr2'+index).text(items.ADDR2);
 			            $('span#hairShopOpTime'+index).text(items.OPENTIME);
