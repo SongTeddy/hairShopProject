@@ -42,13 +42,14 @@ public interface ManagementDAO {
 	public String getCompanyType(String email);
 	public String getTotalReservation(String hairshopid);
 	public List<String> getTotalReservePrice(String hairshopId);
-	public List<ReservationDTO> getReservation(String designername);
+	public List<ReservationDTO> getReservation(String designerid);
+	public List<ReservationDTO> getCommingReservation(String designerid);
 	public List<DesignerDTO> getDesignerInfo(String hairshopId);
 	public String getDesignerReserve(String designerId);
-	public void designerDelete(String seq);
-	public void designerCheckedDelete(List<Integer> list);
-	public void designerAdd(DesignerDTO designerDTO);
-	public void designerModify(DesignerDTO designerDTO);
+	public void designerCheckedDelete(List<String> list);
+	public void designerAdd(Map<String, String> map);
+	public void designerModify(Map<String, String> map);
+	public void designerModifyExceptImg(Map<String, String> map);
 	public List<MemberDTO> getMemberInfo(String hairshopId);
 	public List<String> getHairShopDesigner(String hairshopId);
   
@@ -93,7 +94,7 @@ public interface ManagementDAO {
 	// 스케줄 등록
 	public List<Map<String, String>> getInfoForScheduling(String memEmail);
 	public void totalHairShopSchedule(Map<String, Object> map);
-	public void vacationDesignerSchedule(Map<String, Object> map);
+	public int vacationDesignerSchedule(Map<String, Object> map);
 	public void overworkDesignerSchedule(Map<String, Object> map);
 	
 	// 서비스 관련

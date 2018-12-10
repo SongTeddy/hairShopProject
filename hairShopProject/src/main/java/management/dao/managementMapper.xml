@@ -444,8 +444,7 @@
 	<!-- 총 예약 금액 조회 -->
 	<select id="getTotalReservePrice" parameterType="String"
 		resultType="String">
-		select price from reservation where hairshopid=#{hairshopId
-		}
+		select price from reservation where hairshopid=#{hairshopId }
 	</select>
 
 	<!-- 헤어샵의 디자이너 조회 -->
@@ -464,8 +463,14 @@
 	<!-- 한명의 예약 정보 조회 -->
 	<select id="getReservation" parameterType="String"
 		resultType="reservation">
-		select * from reservation where designername=#{designername
-		}
+		select * from reservation where designerid=#{designerid }
+	</select>
+	
+	<!-- 한명의 아직 안지난 예약 정보 조회 -->
+	<select id="getCommingReservation" parameterType="String"
+		resultType="reservation">
+		select * from reservation where designerid=#{designerid }
+		and STARTTIME > sysdate
 	</select>
 
 	<!-- /////////////////////// 디자이너 관리 메뉴 /////////////////////// -->
@@ -484,35 +489,39 @@
 	</select>
 
 	<!-- 디자이너 삭제 -->
-	<select id="designerDelete" parameterType="String">
-		delete designerinfo
-		where seq=#{seq }
-	</select>
-
-	<!-- 디자이너 삭제 -->
-	<select id="designerCheckedDelete" parameterType="int">
-		delete designerinfo where seq in
-		<foreach collection="list" item="data" open="(" close=")"
+	<select id="designerCheckedDelete" parameterType="String">
+		delete designerinfo where designerid in
+		<foreach collection="list" item="designerId" open="(" close=")"
 			separator=",">
-			#{data}
+			#{designerId }
 		</foreach>
 	</select>
 
 	<!-- 디자이너 추가 -->
-	<insert id="designerAdd" parameterType="designer">
+	<insert id="designerAdd" parameterType="java.util.Map">
 		insert into
 		designerinfo(seq, designerid, hairshopid, designername, positioncode,
-		position, dayoff) values(seq_designerinfo.nextval, #{designerid },
+		position, dayoff, designerimage) values(seq_designerinfo.nextval, #{designerid },
 		#{hairshopid }, #{designername }, #{positioncode }, #{position },
-		#{dayoff })
+		#{dayoff }, #{designerimage })
 	</insert>
 
 	<!-- 디자이너 수정 -->
-	<update id="designerModify" parameterType="designer">
+	<update id="designerModify" parameterType="java.util.Map">
 		update designerinfo
 		set designerid=#{designerid}, designername=#{designername },
 		designerimage=#{designerimage }, positioncode=#{positioncode },
-		position=#{position }, dayoff=#{dayoff } where seq=#{seq }
+		position=#{position }, dayoff=#{dayoff }
+		where designerid=#{previousDesignerId }
+	</update>
+	
+	<!-- 디자이너 수정, 이미지 변경 없음 -->
+	<update id="designerModifyExceptImg" parameterType="java.util.Map">
+		update designerinfo
+		set designerid=#{designerid}, designername=#{designername },
+		positioncode=#{positioncode },
+		position=#{position }, dayoff=#{dayoff } 
+		where designerid=#{previousDesignerId }
 	</update>
 
 	<!-- /////////////////////// 헤어샵 정보 등록(수정) 메뉴 /////////////////////// -->
@@ -580,10 +589,13 @@
 		{ call designerScheduleProcedure(to_date(#{totalStartDate }, 'mm/dd/yyyy'), ${i }, #{hairShopId })}
 	</insert>
 	
-	<!-- 개인 디자이너 휴가 -->
+	<!-- 개인 디자이너 휴가 / 예약이 있으면 휴가를 가지 못함  -->
 	<delete id="vacationDesignerSchedule" parameterType="java.util.Map">
 		delete DESIGNERSCHEDULE where designerid = #{designerId } and
 		theday = to_char(to_date(#{vacationStartDate }, 'mm/dd/yyyy') + ${i }, 'yyyy-mm-dd')
+		and not exists 
+		(select 0 from RESERVATION 
+		where DESIGNERID = #{designerId } and theday = to_char(to_date(#{vacationStartDate }, 'mm/dd/yyyy') + ${i }, 'yyyy-mm-dd'))
 	</delete>
 	
 	<!-- 개인 디자이너 추가 근무 등록 -->

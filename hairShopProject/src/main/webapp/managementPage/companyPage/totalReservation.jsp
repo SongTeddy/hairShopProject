@@ -87,7 +87,7 @@ function showDesignerSchedule() {
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/companyPage/getReserveTime.do',
-		data : {'designername':selectedDesigner, 'cnt':cnt, 'startDay':startDay},
+		data : {'designerid': $('#hairshopId').val()+"_"+selectedDesigner, 'cnt':cnt, 'startDay':startDay},
 		dataType : 'json',
 		success : function(data) {
 			// 예약자 이름 배열 초기화

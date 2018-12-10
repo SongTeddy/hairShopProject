@@ -192,8 +192,12 @@ public class ManagementDAOMybatis implements ManagementDAO {
 
 	// 한명의 예약 정보 조회
 	@Override
-	public List<ReservationDTO> getReservation(String designername) {
-		return sqlSession.selectList("managementSQL.getReservation", designername);
+	public List<ReservationDTO> getReservation(String designerid) {
+		return sqlSession.selectList("managementSQL.getReservation", designerid);
+	}
+	@Override
+	public List<ReservationDTO> getCommingReservation(String designerid) {
+		return sqlSession.selectList("managementSQL.getCommingReservation", designerid);
 	}
 
 	// ------------------------------- 디자이너 관리 메뉴 -------------------------------//
@@ -210,28 +214,28 @@ public class ManagementDAOMybatis implements ManagementDAO {
 		return sqlSession.selectOne("managementSQL.getDesignerReserve", designerId);
 	}
 
-	// 디자이너 삭제
-	@Override
-	public void designerDelete(String seq) {
-		sqlSession.delete("managementSQL.designerDelete", seq);
-	}
-
 	// 선택된 디자이너 삭제
 	@Override
-	public void designerCheckedDelete(List<Integer> list) {
+	public void designerCheckedDelete(List<String> list) {
 		sqlSession.delete("managementSQL.designerCheckedDelete", list);
 	}
 
 	// 디자이너 추가
 	@Override
-	public void designerAdd(DesignerDTO designerDTO) {
-		sqlSession.insert("managementSQL.designerAdd", designerDTO);
+	public void designerAdd(Map<String, String> map) {
+		sqlSession.insert("managementSQL.designerAdd", map);
 	}
 
 	// 디자이너 정보 수정
 	@Override
-	public void designerModify(DesignerDTO designerDTO) {
-		sqlSession.update("managementSQL.designerModify", designerDTO);
+	public void designerModify(Map<String, String> map) {
+		sqlSession.update("managementSQL.designerModify", map);
+	}
+	
+	// 디자이너 정보 수정 사진 안바꿀 때
+	@Override
+	public void designerModifyExceptImg(Map<String, String> map) {
+		sqlSession.update("managementSQL.designerModifyExceptImg", map);
 	}
 
 	// 멤버 정보 조회
@@ -417,8 +421,8 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	}
 	
 	@Override
-	public void vacationDesignerSchedule(Map<String, Object> map) {
-		sqlSession.delete("managementSQL.vacationDesignerSchedule", map);
+	public int vacationDesignerSchedule(Map<String, Object> map) {
+		return sqlSession.delete("managementSQL.vacationDesignerSchedule", map);
 	}
 	
 	@Override
@@ -435,11 +439,11 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public void deleteService(Map<String, String> map) {
 		sqlSession.delete("managementSQL.deleteService", map);
 	}
+
 	@Override
 	public void serviceRegister(Map<String, String> map) {
 		sqlSession.insert("managementSQL.serviceRegister", map);		
-	}
-
+  }
 	@Override
 	public void bannerDelete() {
 		sqlSession.delete("managementSQL.bannerDelete");
