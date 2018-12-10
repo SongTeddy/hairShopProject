@@ -447,10 +447,27 @@ public class CompanyPageController {
 		Map<String, Object> loopMap = new HashMap<String, Object>();
 		loopMap.put("vacationStartDate", map.get("vacationStartDate"));
 		loopMap.put("designerId", map.get("designerId"));
+		System.out.println(map.get("iMax") + "기간이 잘 들어왔나요 ");
+		List<Integer> cannotDeleteDay = new ArrayList<Integer>();
+		List<Integer> deletedDay = new ArrayList<Integer>();
+		int deleted = 0;
 		for (int i = 0; i <= Integer.parseInt(map.get("iMax")); i++) {
+			System.out.println(i + "포문 잘 도니");
 			loopMap.put("i", i);
-			managementDAO.vacationDesignerSchedule(loopMap);
+			System.out.println("삭제 되는중??");
+			deleted = managementDAO.vacationDesignerSchedule(loopMap);
+			if(deleted==0) {
+				cannotDeleteDay.add(i);
+				System.out.println("못지우는 거 있니???");
+			}else if(deleted==1) {
+				System.out.println("지움 지움");
+				deletedDay.add(i);
+			}
+			System.out.println(i + "이프문 뒤에");
 		}
+		System.out.println(cannotDeleteDay.size() + "지울 수 있는 날짜 수");
+		mav.addObject("cannotDeleteDay", cannotDeleteDay);
+		mav.addObject("deletedDay", deletedDay);
 		mav.setViewName("jsonView");
 		return mav;
 	}

@@ -589,10 +589,13 @@
 		{ call designerScheduleProcedure(to_date(#{totalStartDate }, 'mm/dd/yyyy'), ${i }, #{hairShopId })}
 	</insert>
 	
-	<!-- 개인 디자이너 휴가 -->
+	<!-- 개인 디자이너 휴가 / 예약이 있으면 휴가를 가지 못함  -->
 	<delete id="vacationDesignerSchedule" parameterType="java.util.Map">
 		delete DESIGNERSCHEDULE where designerid = #{designerId } and
 		theday = to_char(to_date(#{vacationStartDate }, 'mm/dd/yyyy') + ${i }, 'yyyy-mm-dd')
+		and not exists 
+		(select 0 from RESERVATION 
+		where DESIGNERID = #{designerId } and theday = to_char(to_date(#{vacationStartDate }, 'mm/dd/yyyy') + ${i }, 'yyyy-mm-dd'))
 	</delete>
 	
 	<!-- 개인 디자이너 추가 근무 등록 -->
