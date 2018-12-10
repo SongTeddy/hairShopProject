@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import main.dao.MainDAO;
 import management.dao.ManagementDAO;
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
@@ -30,6 +31,8 @@ public class IndexController {
 	private MemberDAO memberDAO;
 	@Autowired
 	private ManagementDAO managementDAO;
+	@Autowired
+	private MainDAO mainDAO;
 	
 	@RequestMapping(value="index", method=RequestMethod.GET)
 	public ModelAndView input(HttpSession session, Model model) throws InvalidKeySpecException {  //사용자가 만든 콜백 메소드
@@ -80,7 +83,7 @@ public class IndexController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/main/getRecommendView.do", method=RequestMethod.POST)
+	@RequestMapping(value="getRecommendView", method=RequestMethod.POST)
 	public ModelAndView recommendView() {
 		ModelAndView mav = new ModelAndView();
 		List<Map<String, Object>> list = mainDAO.getRecommendView();
@@ -90,7 +93,7 @@ public class IndexController {
 		return mav;
 	}
   
-	@RequestMapping(value="/main/getHairShopStarScopeAvg.do", method=RequestMethod.POST)
+	@RequestMapping(value="getHairShopStarScopeAvg", method=RequestMethod.POST)
 	public ModelAndView getHairShopStarScopeAvg() {
 		ModelAndView mav = new ModelAndView();
 		List<Map<String, Object>> list = mainDAO.getHairShopStarScopeAvg();

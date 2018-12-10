@@ -4,6 +4,7 @@
 <!-- review swiper start -->
 <!-- 스와이퍼 css -->
 <style>
+.bannerDiv{cursor:pointer;}
 .swiper-container{
 	width: 50%;
 	height: 300px;
@@ -82,8 +83,8 @@ i.fa-star {
 					<img data-u="image" src="/hairShopProject/main/assets/images/welcome-hero/banner.png" />
 				</div>
 				<c:forEach var="item" items="${bannerList }">
-					<div>
-						<img data-u="image" src="/hairShopProject/main/assets/images/event/${item.EVENTBANNERIMAGE }" />
+					<div onclick=moveEvent(${item.SEQ }) class="bannerDiv">
+						<img class="bannerImage" data-u="image" src="/hairShopProject/main/assets/images/event/${item.EVENTBANNERIMAGE }" />
 					</div>
 				</c:forEach>
 			</div>
@@ -285,6 +286,10 @@ i.fa-star {
 <!-- main banner slider -->
 <script src="/hairShopProject/main/assets/js/slider.js"></script>
 <script type="text/javascript">
+	function moveEvent(e) {
+		if(typeof e === 'number') location.href='/hairShopProject/main/eventView.do?seq='+e+'&type=0';
+	}
+	
 	$(document).ready(function() {
 		// banner slide start!!
 		jssor_1_slider_init();
@@ -543,9 +548,9 @@ i.fa-star {
 	  		},
 	  	});
 	  }
-		function moveToHair(hairshopid) {
-			location.href="/hairShopProject/hairShop/hairShop_index.do?hairShopId="+hairshopid;
-		}
+	function moveToHair(hairshopid) {
+		location.href="/hairShopProject/hairShop/hairShop_index.do?hairShopId="+hairshopid;
+	}
 	  $(document).ready(function() {
 			$.ajax({
 		         type : 'POST',
