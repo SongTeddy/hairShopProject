@@ -100,6 +100,36 @@ public class AdminPageController {
 		return mav;
 	}
 	
+	// 추천헤어샵관리이동
+	@RequestMapping(value = "recommendManagement", method = RequestMethod.GET)
+	public ModelAndView recommendManagement(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		if (session.getAttribute("memEmail") != null) {
+			
+			List<Map<String,Object>> recommendHairShopList = managementDAO.recommendList();
+			mav.addObject("recommendHairShopList", recommendHairShopList);
+			mav.addObject("display", "/managementPage/adminPage/adminPage.jsp");
+			mav.addObject("myPageBody", "/managementPage/adminPage/recommendManagement.jsp");
+		} else {
+			mav.addObject("display", "/main/body.jsp");
+		}
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	// 추천헤어샵관리이동
+	@RequestMapping(value = "recommendHairShopUpdate", method = RequestMethod.POST)
+	public ModelAndView recommendHairShopUpdate(HttpSession session, @RequestParam String[] recommendHairShopSelect) {
+		ModelAndView mav = new ModelAndView();
+		managementDAO.recommendHairShopDelete();
+		for(String value : recommendHairShopSelect) {
+			managementDAO.recommendHairShopRegist(value);
+		}
+		mav.addObject("display", "/managementPage/adminPage/adminPage.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
 	// 예약 관리 메뉴 이동
 	@RequestMapping(value="reservationManagement", method=RequestMethod.GET)
 	public ModelAndView reservationManagement(HttpSession session,

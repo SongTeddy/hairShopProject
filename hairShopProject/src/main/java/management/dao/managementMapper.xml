@@ -647,4 +647,17 @@
 		select * from banner
 	</select>
 	
+	<!-- 추천 미용실 list -->
+	<select id="recommendList" resultType="java.util.Map">
+		select * from memberinfo where type=1
+	</select>	
+	<!-- 추천 미용실 등록 -->
+	<insert id="recommendHairShopRegist" parameterType="java.lang.String">
+		insert into hairshoprecommend (select hairshopid, hairshopimage1 as hairshopimage, name, '15000' as price , addr1, addr2, opentime, closetime from memberinfo where hairshopid = #{value })
+	</insert>	
+	<!-- 추천미용실 삭제 -->
+	<delete id="recommendHairShopDelete" >
+		delete hairshoprecommend
+	</delete>	
+	
 </mapper>

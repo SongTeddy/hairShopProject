@@ -102,4 +102,7 @@ public interface ManagementDAO {
 	public void deleteService(Map<String, String> map);
 	public void serviceRegister(Map<String, String> map);
 	public void bannerDelete();
+	public List<Map<String, Object>> recommendList();
+	public void recommendHairShopDelete();
+	public void recommendHairShopRegist(String value);
 }

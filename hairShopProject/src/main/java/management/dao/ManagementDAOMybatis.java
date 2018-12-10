@@ -448,4 +448,18 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	public void bannerDelete() {
 		sqlSession.delete("managementSQL.bannerDelete");
 	}
+	@Override
+	public List<Map<String,Object>> recommendList() {
+		return sqlSession.selectList("managementSQL.recommendList");
+	}
+
+	@Override
+	public void recommendHairShopDelete() {
+		sqlSession.delete("managementSQL.recommendHairShopDelete");
+	}
+
+	@Override
+	public void recommendHairShopRegist(String value) {
+		sqlSession.insert("managementSQL.recommendHairShopRegist",value);
+	}
 }
