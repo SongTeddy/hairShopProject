@@ -277,6 +277,10 @@ $(document).ready(function(){
 	var checkedDay = "";
 	// 정보 수정 버튼 누르면, 유효성 검사 후 submit
 	$('#hairShopInfoUpdateBtn').on('click', function(){
+	    var getLicense1 = RegExp(/^[0-9]{3}$/);
+	    var getLicense2 = RegExp(/^[0-9]{2}$/);
+	    var getLicense3 = RegExp(/^[0-9]{5}$/);
+        
 		for(var i=1; i<8; i++){
 			if($('#'+i).is(':checked'))
 				checkedDay = checkedDay + $('#'+i).val();
@@ -291,6 +295,8 @@ $(document).ready(function(){
 			alert("사업자 등록번호를 확인하세요.");
 		else if($('input[name=license1]').val() == "" || $('input[name=license2]').val() == "" || $('input[name=license3]').val() == "")
 			alert("사업자 등록번호를 확인하세요.");
+		else if(!getLicense1.test($('input[name=license1]').val()) || !getLicense2.test($('input[name=license2]').val()) || !getLicense3.test($('input[name=license3]').val()))
+			alert("사업자 등록번호를 형식에 맞게 입력하세요.")
 		else if($('input[name=addr1]').val() == "")
 			alert("주소를 등록하세요.");
 		else if($('input[name=hairShopId]').val() != $('#checkedId').val() || $('input[name=hairShopId]').val()=="")

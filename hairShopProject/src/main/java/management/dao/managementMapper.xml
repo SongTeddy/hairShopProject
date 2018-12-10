@@ -629,5 +629,19 @@
 		#{timeRequired }
 		)
 	</insert>
+  
+  	<!-- 배너 등록 -->
+	<insert id="bannerResister" parameterType="java.lang.String">
+		insert into banner values( (select event.seq from event where EVENT.EVENTBANNERIMAGE = #{value }), #{value })
+	</insert>
+	<!-- 배너 삭제 -->
+	<delete id="bannerDelete" >
+		delete banner
+	</delete>
+	
+	<!-- 배너 select -->
+	<select id="getBannerList" resultType="java.util.Map">
+		select * from banner
+	</select>
 	
 </mapper>

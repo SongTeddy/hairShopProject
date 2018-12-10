@@ -67,6 +67,12 @@ public interface ManagementDAO {
 	public List<Map<String, Object>> getPastEventAndCouponList();
 	public Map<String,String> getEventImageName(int seq);
 	public Map<String, String> getEndEventImageName(int seq);
+	
+	//배너 관련
+	public void bannerResister(String a);
+	public List<Map<String, Object>> getBannerList();
+	
+	
 	public Map<String, String> getCoupon(int seq);
 	public void couponDownExpire(Map<String, String> map);
 	public void couponDownTerm(Map<String, String> map);
@@ -95,4 +101,5 @@ public interface ManagementDAO {
 	public List<Map<String, Object>> getServices(Map<String, String> map);
 	public void deleteService(Map<String, String> map);
 	public void serviceRegister(Map<String, String> map);
+	public void bannerDelete();
 }

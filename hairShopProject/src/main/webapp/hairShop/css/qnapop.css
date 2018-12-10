@@ -18,17 +18,14 @@
     background-color: #fefefe;
     margin: 20% auto; /* 15% from the top and centered */
     padding: 20px;
-    border: 1px solid #888;
     align: center;
-	width: 60%; /* Could be more or less, depending on screen size */
-	height: 50%            
+	width: 30%; /* Could be more or less, depending on screen size */
+	height: 40%            
 }
 .qnamopdel-content .qnatable{
 	align: center!important;
 	margin: 10px auto;
- 	border: 1px solid black;
  	width:90%;
- 	margin:5% auto;
 }
 .qnamopdel-content .qnatable .qna100{
 	margin: 10px auto;
