@@ -1,0 +1,64 @@
+span:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+span:visited {
+	color : #FF0000;
+}
+
+/* 예약 total */
+.reservationTotalIcon {
+	float: left;
+	width: 150px;
+	height: 130px;
+	font-size: 80px;
+	color: #ffffff;
+	background-color: #0AC9FF;
+	margin-left: 16%;
+	padding: 18px 0px 0px 7px;
+}
+
+.reservationTotal,
+.reservationTodayTotal {
+	float: left;
+	border: 1px solid #EDEDED;
+	width: 250px;
+	height: 130px;
+	background-color: #ffffff;
+}
+
+.reservationTotal_top,
+.reservationTotal_bottom,
+.reservationTodayTotal_top,
+.reservationTodayTotal_bottom {
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+}
+
+/* 테이블 */
+.reservationListTable th,
+.reservationListTable td {
+	border: 1px solid #909090;
+	padding-top: 7px;
+	text-align: center;
+	font-size: 15px;
+}
+
+.reservationListTable tr {
+	font-size: 18px;
+	height: 30px;
+}
+
+.reservationListTable th {
+	background-color: #484848;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+.reservationListTable td {
+	background-color: #ffffff;
+	color: #484848;
+}
+
+

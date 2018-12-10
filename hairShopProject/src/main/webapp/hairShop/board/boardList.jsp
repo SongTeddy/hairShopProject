@@ -18,8 +18,12 @@
 
 <!-- 리스트 목록 -->
 
-<input type="hidden" id="pg" value="${param.pg}" />
+<input type="hidden" id="pg" value="${pg }" />
 <input type="hidden" id="emailCheck" value="0" />
+
+<input type="hidden" id="searchOptionVal" value="${searchOption }" />
+<input type="hidden" id="keywordVal" value="${keyword }" />
+
 <div id="boardView_div" class="list_sub">
 <table id="boardListTable" cellpadding="5" frame="hsides" rules="rows">
 	<thead>
@@ -132,9 +136,11 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 function boardSearch(pg,searchOption,keyword){
-	alert(pg+" "+searchOption+" "+keyword);
+	//alert(pg+" "+searchOption+" "+keyword);
+	$('#searchOptionVal').val(searchOption);
+	$('#keywordVal').val(keyword);
 	$('#pg').val(pg);
-	boardList();
+	boardSearchList(event, str);
 }
 function deleteT(seq){
 	$.ajax({
@@ -165,9 +171,6 @@ function modifyT(seq){
 	          modal2.style.display = "none";
 	      }
 	 }
-	 
-	 
-	 
 	 $.ajax({
 			type : 'POST',
 			url : '/hairShopProject/hairShop/board/boardModifyForm.do',

@@ -62,8 +62,6 @@ public class BoardController {
 		return mav;
 	}
 	
-	
-	
 	@RequestMapping(value="getBoardList", method=RequestMethod.POST)
 	public ModelAndView getBoardList(@RequestParam(required=false, defaultValue="1") String pg) {
 		//1페이지당 5개씩
@@ -95,10 +93,10 @@ public class BoardController {
 	
 	
 	@RequestMapping(value="boardSearch")
-	public ModelAndView boardSearch(@RequestParam(required=false) Map<String,String> map, @RequestParam String pg) {
-
+	public ModelAndView boardSearch(@RequestParam(required=false) Map<String,String> map,
+									@RequestParam(required=false, defaultValue="1") String pg) {
 		//1페이지당 5개씩
-		int endNum = Integer.parseInt(map.get("pg"))*5;
+		int endNum = Integer.parseInt(pg)*5;
 		int startNum = endNum-4;
 		
 		map.put("startNum", startNum+"");
@@ -106,12 +104,11 @@ public class BoardController {
 		
 		List<BoardDTO> list = boardDAO.boardSearch(map);
 		
-		
 		System.out.println(map);
 		//페이징 처리
 		int totalA = boardDAO.getBoardSearchTotalA(map);
 		
-		boardPaging.setCurrentPage(Integer.parseInt(map.get("pg")));
+		boardPaging.setCurrentPage(Integer.parseInt(pg));
 		boardPaging.setPageBlock(3);
 		boardPaging.setPageSize(5);
 		boardPaging.setTotalA(totalA);
@@ -120,6 +117,8 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", list);
 		mav.addObject("boardPaging", boardPaging);
+		mav.addObject("searchOption", map.get("searchOption"));
+		mav.addObject("keyword", map.get("keyword"));
 		mav.setViewName("jsonView");
 		return mav;
 	}

@@ -47,7 +47,7 @@
 </div>
 
 <div class="white_content" id="open">
-    <div style="line-height: 25px;">
+    <div class="reservationInfoModal" style="line-height: 25px;">
         <div align="center"><i class="fa fa-info-circle"></i>&nbsp;예약 정보</div>
         <div id="reserveInfoClose"> <a href="#close"><i class="fa fa-times"></i></a></div><br>
         <div id="descriptionPrice" align="center"></div><br>

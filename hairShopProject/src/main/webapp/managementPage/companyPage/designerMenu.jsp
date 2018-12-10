@@ -176,14 +176,12 @@ $(document).ready(function() {
 				}))).append($('<td/>').append($('<img/>', {
 					src : '/hairShopProject/hairShop/img/team/' + items.designerimage,
 					width : '50'
-						
 				}))).append($('<td/>',{
 						text : items.designername,
 					class : 'designername'
 					
 				})).append($('<td/>', {
 					text : items.position,
-					
 				})).append($('<td/>',{
 					text : (items.dayoff)
 								.replace('1', '일 ')
@@ -201,7 +199,6 @@ $(document).ready(function() {
 					value : items.dayoff
 					
 				}))).append($('<td/>', {
-					
 					}).append($('<input/>', {
 						type : 'button',
 						value : '수정',

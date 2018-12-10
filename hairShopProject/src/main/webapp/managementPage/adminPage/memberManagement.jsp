@@ -69,7 +69,7 @@ $(document).ready(function() {
 					
 				}).append($('<td/>', {
 					height : '50px',
-					style : 'font-size: 15px; text-align: center; width: 250px;',
+					style : 'font-size: 15px; text-align: center; width: 250px; background-color: #ffffff;',
 					text : items.email,
 					id : items.seq,
 					class : 'memberEmail' 
@@ -105,31 +105,28 @@ $(document).ready(function() {
 						}).append($('<i/>', {
 							class : 'fa fa-pencil'
 					
-				})))).append($('<td/>').append($('<input/>', {
-					type : 'text',
-					style : 'font-size: 15px; text-align: center; border: none;',
-					value : items.name,
+				})))).append($('<td/>', {
+					text : items.name,
+					height : '50px',
+					style : 'font-size: 15px; text-align: center; background-color: #ffffff;',
 					id : items.seq,
-					class : 'memberName',
-					readonly : 'readonly'
+					class : 'memberName'
 					
-				}))).append($('<td/>').append($('<input/>', {
-					type : 'text',
-					style : 'font-size: 15px; text-align: center; border: none;',
-					value : items.tel1+'-'+items.tel2+'-'+items.tel3,
+				})).append($('<td/>', {
+					text : items.tel1+'-'+items.tel2+'-'+items.tel3,
+					height : '50px',
+					style : 'font-size: 15px; text-align: center; background-color: #ffffff;',
 					id : items.seq,
-					class : 'memberTel',
-					readonly : 'readonly'
+					class : 'memberTel'
 					
-				}))).append($('<td/>').append($('<input/>', {
-					type : 'text',
-					style : 'font-size: 15px; text-align: center; border: none;',
-					value : items.logtime,
+				})).append($('<td/>', {
+					text : items.logtime,
+					height : '50px',
+					style : 'font-size: 15px; text-align: center; background-color: #ffffff;',
 					id : items.seq,
-					class : 'memberLogtime',
-					readonly : 'readonly'
+					class : 'memberLogtime'
 					
-				}))).append($('<td/>', {
+				})).append($('<td/>', {
 					style : 'border: 0px; font-size: 30px; color: #484848; padding-top: 4px;'
 					
 					}).append($('<i/>', {

@@ -144,13 +144,15 @@ $(document).ready(function() {
 										'line-height: 28px;'
 									
 								}).append($('<i/>', {
-									style : 'width: 40px;'+
-											'height: 100%;'+
+									style : 'position: relative;'+
+											'top: 2px;'+
+											'width: 40px;'+
+											'height: 90%;'+
 											'cursor: pointer;'+
 											'font-size: 18px;'+
 											'background-color: #D2D2D2;'+
 											'margin-bottom: 2px;'+
-											'padding-top: 2px;',
+											'padding-top: 4px;',
 									class : 'fa fa-pencil',
 									id : hairShopListAr[j].email
 				

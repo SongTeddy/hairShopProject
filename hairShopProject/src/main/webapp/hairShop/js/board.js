@@ -1,5 +1,6 @@
 //리스트 페이징
-function boardList(){
+function boardList(pg){
+	$('#pg').val(pg);
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/hairShop/board/getBoardList.do',
@@ -33,6 +34,41 @@ function boardList(){
 	});
 }
 
+function boardSearchList(pg,searchOption,keyword) {
+	$.ajax({
+		type : 'POST',
+		url : '/hairShopProject/hairShop/board/boardSearch.do',
+		data : {
+			'pg':$('#pg').val(),
+			'searchOption': $('#searchOptionVal').val(),
+			'keyword': $('#keywordVal').val()
+		},
+		dataType : 'json',
+		success : function(data){
+			$('#boardListTable tr:gt(0)').remove();
+			$.each(data.list, function(index, items){
+				$('<tr/>').append($('<td/>',{
+					align : 'center',
+					text : items.seq
+				})).append($('<td/>',{
+					}).append($('<a/>',{
+						class : 'subjectA',
+						href : 'javascript:void(0)',
+						text : items.subject
+					})
+				)).append($('<td/>',{
+					align : 'center',
+					text : items.email
+				})).append($('<td/>',{
+					align : 'center',
+					text : items.logtime
+				})).appendTo($('#boardListTable'));                            
+			});
+			$('#boardPagingDiv').html(data.boardPaging.pagingHTML);
+		}
+	});
+}
+
 
 $(document).ready(function(){
 	
@@ -41,6 +77,38 @@ $(document).ready(function(){
 	
 	//검색
 	$('#searchBtn').click(function(event, str){
+		$.ajax({
+			type : 'POST',
+			url : '/hairShopProject/hairShop/board/boardSearch.do',
+			data : {
+				'pg':$('#pg').val(),
+				'searchOption': $('#searchOption').val(),
+				'keyword': $('#keyword').val()
+			},
+			dataType : 'json',
+			success : function(data){
+				$('#boardListTable tr:gt(0)').remove();
+				$.each(data.list, function(index, items){
+					$('<tr/>').append($('<td/>',{
+						align : 'center',
+						text : items.seq
+					})).append($('<td/>',{
+						}).append($('<a/>',{
+							class : 'subjectA',
+							href : 'javascript:void(0)',
+							text : items.subject
+						})
+					)).append($('<td/>',{
+						align : 'center',
+						text : items.email
+					})).append($('<td/>',{
+						align : 'center',
+						text : items.logtime
+					})).appendTo($('#boardListTable'));                            
+				});
+				$('#boardPagingDiv').html(data.boardPaging.pagingHTML);
+			}
+		});
 		
 		if(str!='trigger')
 			$('#pg').val(1);
@@ -124,8 +192,6 @@ $(document).ready(function(){
 			error: function(){alert("error");}
 		});
 	});
-    
-	
 	
 	//게시글 작성
 	$('#boardWriteBtn').click(function(){

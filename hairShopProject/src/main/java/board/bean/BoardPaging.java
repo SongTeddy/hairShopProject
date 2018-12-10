@@ -25,17 +25,17 @@ public class BoardPaging {
 		if(endPage > totalP) endPage = totalP;
 		
 		if(startPage > pageBlock)
-			pagingHTML.append("[<a id='paging' href='boardList.do?pg="+(startPage-1)+"'>이전</a>]");
+			pagingHTML.append("<ul class='pagination'><li class='page-item'><a id='paging' class='page-link' tabindex='-1' href='#' onclick='boardList("+(startPage-1)+")'>이전</a></li></ul>");
 		
 		for(int i=startPage; i<=endPage; i++) {
 			if(i==currentPage)
-				pagingHTML.append("[<a id='currentPaging' href='boardList.do?pg="+i+"'>"+i+"</a>]");
+				pagingHTML.append("<ul class='pagination'><li class='page-item active'><a id='currentPaging' class='page-link' href='#' onclick='boardList("+i+")'>"+i+"<span class='sr-only'></span></a></li></ul>");
 			else
-				pagingHTML.append("[<a id='paging' href='boardList.do?pg="+i+"'>"+i+"</a>]");
+				pagingHTML.append("<ul class='pagination'><li class='page-item'><a id='paging' class='page-link' href='#' onclick='boardList("+i+")'>"+i+"</a></li></ul>");
 		}
 		
 		if(endPage < totalP)
-			pagingHTML.append("[<a id='paging' href='boardList.do?pg="+(endPage+1)+"'>다음</a>]");
+			pagingHTML.append("<ul class='pagination'><li class='page-item'><a class='page-link' href='#' id='paging' onclick='boardList("+(endPage+1)+")'>다음</a></li></ul>");
 	}
 
 	
