@@ -255,6 +255,8 @@ public class CompanyPageController {
 			designerDTO.setPositioncode(2);
 		else if ((designerDTO.getPosition()).equals("디자이너"))
 			designerDTO.setPositioncode(4);
+		
+		designerDTO.setDesignerid(designerDTO.getHairshopid()+"_"+designerDTO.getDesignername());
 
 		managementDAO.designerAdd(designerDTO);
 	}

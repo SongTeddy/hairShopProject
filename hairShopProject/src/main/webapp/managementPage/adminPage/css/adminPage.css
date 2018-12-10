@@ -52,4 +52,5 @@ div.myPage {
    z-index : 5;
    min-height: 80%;
    float:left;
+   overflow: auto;
 }

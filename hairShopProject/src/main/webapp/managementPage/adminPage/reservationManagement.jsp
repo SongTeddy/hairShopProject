@@ -11,7 +11,7 @@
 	    	  width: 130px;
 	    	  border-top: 2px solid #5A5A5A;"><br>
 
-<div class="reservationManagement" style="width: 100%; height: 100%; text-align: center;">
+<div class="reservationManagement" style="width: 100%; height: 660px; text-align: center;">
 	<div class="reservationTotalIcon">
 		<i class="fa fa-calendar-check-o"></i>
 	</div>
@@ -49,8 +49,8 @@
 				<th width="150px">고객명</th>
 				<th width="150px">고객 연락처</th>
 				<th width="150px">시술종류</th>
-				<th width="150px">가격</th>
-				<th width="150px">요구시간</th>
+				<th width="140px">가격</th>
+				<th width="100px">요구시간</th>
 				<th width="150px">D-day</th>
 				<th width="150px">예약날</th>
 			</tr>

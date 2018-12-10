@@ -16,8 +16,9 @@
 	font-weight: bold;
 }
 
-#designerTable tr {
+#designerTable tr:not(.designerListTr) {
 	text-align: center;
+	border-bottom: 2px solid #484848;
 }
 
 #designerTable tbody {
@@ -42,11 +43,19 @@
 	height: 15px;
 }
 
+/* 수정 삭제 버튼 */
+#designerTable #designerModify:hover,
+#designerTable .designerDelete:hover,
+#designerTable #designerModifyCancel:hover {
+	background-color: #484848;
+	color: #ffffff;
+}
+
 /* �뵒�옄�씠�꼫 異붽�*/
 .designerMenu.designerAdd .designerAddDiv {
   position: absolute;
   top: 110px;
-  right: 45%;
+  right: 35%;
   width: 500px;
   z-index: 11;
   min-width: 500px;

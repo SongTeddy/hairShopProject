@@ -15,48 +15,6 @@ public class BoardPaging {
 	private StringBuffer pagingHTML;
 	
 	
-	public int getCurrentPage() {
-		return currentPage;
-	}
-
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-	}
-
-	public int getPageBlock() {
-		return pageBlock;
-	}
-
-	public void setPageBlock(int pageBlock) {
-		this.pageBlock = pageBlock;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
-
-	public int getTotalA() {
-		return totalA;
-	}
-
-	public void setTotalA(int totalA) {
-		this.totalA = totalA;
-	}
-
-	public StringBuffer getPagingHTML() {
-		return pagingHTML;
-	}
-
-	public void setPagingHTML(StringBuffer pagingHTML) {
-		this.pagingHTML = pagingHTML;
-	}
-
-	
-	
 	//페이지 제작탭------------------------------------------------------------------------
 	public void makePagingHTML() { 
 		pagingHTML = new StringBuffer();
@@ -67,42 +25,41 @@ public class BoardPaging {
 		if(endPage > totalP) endPage = totalP;
 		
 		if(startPage > pageBlock)
-			pagingHTML.append("[<a id='paging' href='boardList.do?pg="+(startPage-1)+"'>이전</a>]");
+			pagingHTML.append("<ul class='pagination'><li class='page-item'><a id='paging' class='page-link' tabindex='-1' href='#' onclick='boardList("+(startPage-1)+")'>이전</a></li></ul>");
 		
 		for(int i=startPage; i<=endPage; i++) {
 			if(i==currentPage)
-				pagingHTML.append("[<a id='currentPaging' href='boardList.do?pg="+i+"'>"+i+"</a>]");
+				pagingHTML.append("<ul class='pagination'><li class='page-item active'><a id='currentPaging' class='page-link' href='#' onclick='boardList("+i+")'>"+i+"<span class='sr-only'></span></a></li></ul>");
 			else
-				pagingHTML.append("[<a id='paging' href='boardList.do?pg="+i+"'>"+i+"</a>]");
+				pagingHTML.append("<ul class='pagination'><li class='page-item'><a id='paging' class='page-link' href='#' onclick='boardList("+i+")'>"+i+"</a></li></ul>");
 		}
 		
 		if(endPage < totalP)
-			pagingHTML.append("[<a id='paging' href='boardList.do?pg="+(endPage+1)+"'>다음</a>]");
+			pagingHTML.append("<ul class='pagination'><li class='page-item'><a class='page-link' href='#' id='paging' onclick='boardList("+(endPage+1)+")'>다음</a></li></ul>");
 	}
 
 	
 	
 	//검색 페이지 탭------------------------------------------------------------------------
-	public void makeSearchPagingHTML() {
+	public void makeSearchPagingHTML(String searchOption, String keyword) {
 		pagingHTML = new StringBuffer();
 		
 		int totalP = (totalA+pageSize-1)/pageSize;//총페이지수
 		int startPage = (currentPage-1)/pageBlock*pageBlock+1;
-		int endPage = startPage+pageBlock-1;
-		
+		int endPage = startPage+pageBlock-1;		
 		if(endPage > totalP) endPage = totalP;
 		
 		if(startPage > pageBlock)
-			pagingHTML.append("<ul class='pagination'><li class='page-item'><a id='paging' class='page-link' tabindex='-1' href='#' onclick='boardSearch("+(startPage-1)+")'>이전</a></li></ul>");
+			pagingHTML.append("<ul class='pagination'><li class='page-item'><a id='paging' class='page-link' tabindex='-1' href='#' onclick='boardSearch("+(startPage-1)+","+searchOption+","+keyword+")'>이전</a></li></ul>");
 		
 		for(int i=startPage; i<=endPage; i++) {
 			if(i==currentPage)
-				pagingHTML.append("<ul class='pagination'><li class='page-item active'><a id='currentPaging' class='page-link' href='#' onclick='boardSearch("+i+")'>"+i+"<span class='sr-only'></span></a></li></ul>");
+				pagingHTML.append("<ul class='pagination'><li class='page-item active'><a id='currentPaging' class='page-link' href='#' onclick='boardSearch("+i+","+searchOption+","+keyword+")'>"+i+"<span class='sr-only'></span></a></li></ul>");
 			else
-				pagingHTML.append("<ul class='pagination'><li class='page-item'><a id='paging' class='page-link' href='#' onclick='boardSearch("+i+")'>"+i+"</a></li></ul>");
+				pagingHTML.append("<ul class='pagination'><li class='page-item'><a id='paging' class='page-link' href='#' onclick='boardSearch("+i+","+searchOption+","+keyword+")'>"+i+"</a></li></ul>");
 		}
 		
 		if(endPage < totalP)
-			pagingHTML.append("<ul class='pagination'><li class='page-item'><a class='page-link' href='#' id='paging' onclick='boardSearch("+(endPage+1)+")'>다음</a></li></ul>");
+			pagingHTML.append("<ul class='pagination'><li class='page-item'><a class='page-link' href='#' id='paging' onclick='boardSearch("+(endPage+1)+","+searchOption+","+keyword+")'>다음</a></li></ul>");
 	}
 }

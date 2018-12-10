@@ -610,7 +610,7 @@ button.selectedBtn {
 				<div class="arrow-down">
 					<div class="arrow-down-inner"></div>
 				</div> <a id="tab4" href="#tabBody4" role="tab" aria-controls="tabBody3"
-				aria-selected="true" data-toggle="tab" tabindex="0"> <span>Q&A</span>
+				aria-selected="true" data-toggle="tab" tabindex="0"> <span>공지사항</span>
 			</a>
 				<div class="whiteBlock"></div>
 			</li>

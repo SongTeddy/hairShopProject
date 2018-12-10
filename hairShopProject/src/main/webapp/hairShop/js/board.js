@@ -1,13 +1,11 @@
 //리스트 페이징
-function boardSearch(pg){
+function boardList(pg){
 	$('#pg').val(pg);
-	boardList();
-}
-function boardList(){
+
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/hairShop/board/getBoardList.do',
-		data : 'pg='+$('#pg').val(),
+		data : {'pg':$('#pg').val()},
 		dataType : 'json',
 		success : function(data){
 			$('table tbody.tbodyList').empty();
@@ -31,13 +29,41 @@ function boardList(){
 					align : 'center',
 					text : items.logtime
 				})).appendTo($('table tbody.tbodyList'));
+			});
+			$('#boardPagingDiv').html(data.boardPaging.pagingHTML);
+		}
+	});
+}
 
-				//답글 이미지
-				if(items.pseq!=0){
-					for(i=1; i<=items.lev; i++){
-						$('.'+items.seq).before('&emsp;')
-					}
-				}
+function boardSearchList(pg,searchOption,keyword) {
+	$.ajax({
+		type : 'POST',
+		url : '/hairShopProject/hairShop/board/boardSearch.do',
+		data : {
+			'pg':$('#pg').val(),
+			'searchOption': $('#searchOptionVal').val(),
+			'keyword': $('#keywordVal').val()
+		},
+		dataType : 'json',
+		success : function(data){
+			$('#boardListTable tr:gt(0)').remove();
+			$.each(data.list, function(index, items){
+				$('<tr/>').append($('<td/>',{
+					align : 'center',
+					text : items.seq
+				})).append($('<td/>',{
+					}).append($('<a/>',{
+						class : 'subjectA',
+						href : 'javascript:void(0)',
+						text : items.subject
+					})
+				)).append($('<td/>',{
+					align : 'center',
+					text : items.email
+				})).append($('<td/>',{
+					align : 'center',
+					text : items.logtime
+				})).appendTo($('#boardListTable'));                            
 			});
 			$('#boardPagingDiv').html(data.boardPaging.pagingHTML);
 		}
@@ -52,98 +78,82 @@ $(document).ready(function(){
 	
 	//검색
 	$('#searchBtn').click(function(event, str){
-		if(str!='trigger')
-			$('#pg').val(1);
-		if($('#keyword').val()=="")
-			alert("검색어를 입력하세요");
-		else{
-			$.ajax({
-				type : 'POST',
-				url : '/hairShopProject/hairShop/board/boardSearch.do',
-				data : {
-					'pg':$('#pg').val(),
-					'searchOption': $('#searchOption').val(),
-					'keyword': $('#keyword').val()
-				},
-				dataType : 'json',
-				success : function(data){
-					$('#boardListTable tr:gt(0)').remove();
-					$.each(data.list, function(index, items){
-						$('<tr/>').append($('<td/>',{
-							align : 'center',
-							text : items.seq
-						})).append($('<td/>',{
-							}).append($('<a/>',{
-								class : 'subjectA',
-								href : 'javascript:void(0)',
-								text : items.subject
-							})
-						)).append($('<td/>',{
-							align : 'center',
-							text : items.email
-						})).append($('<td/>',{
-							align : 'center',
-							text : items.logtime
-						})).appendTo($('#boardListTable'));                            
-					});
-					$('#boardPagingDiv').html(data.boardPaging.pagingHTML);
-				}
-			});
-		}
+		$.ajax({
+			type : 'POST',
+			url : '/hairShopProject/hairShop/board/boardSearch.do',
+			data : {
+				'pg':$('#pg').val(),
+				'searchOption': $('#searchOption').val(),
+				'keyword': $('#keyword').val()
+			},
+			dataType : 'json',
+			success : function(data){
+				$('#boardListTable tr:gt(0)').remove();
+				$.each(data.list, function(index, items){
+					$('<tr/>').append($('<td/>',{
+						align : 'center',
+						text : items.seq
+					})).append($('<td/>',{
+						}).append($('<a/>',{
+							class : 'subjectA',
+							href : 'javascript:void(0)',
+							text : items.subject
+						})
+					)).append($('<td/>',{
+						align : 'center',
+						text : items.email
+					})).append($('<td/>',{
+						align : 'center',
+						text : items.logtime
+					})).appendTo($('#boardListTable'));                            
+				});
+				$('#boardPagingDiv').html(data.boardPaging.pagingHTML);
+			}
+		});
 	});
-	
-	//Q&A질문 작성 팝업창
-	$('#boardListTable').on('click', '.subjectA', function(){
-		var seq = $(this).parent().prev().text();
-	});
-    var modal =  document.getElementById("qnaWriteForm");
-    var btn = document.getElementById("qnawriteBtn");
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
-   $('#closeQNA').on('click',function(){
-        modal.style.display = "none";
-   });
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-    
     
     //게시물 제목 클릭시(View)
-	$('.tbodyList').on('click','.subjectA',function(){
+	$('table tbody.tbodyList').on('click','a.subjectA',function(){
+		
 		$('#boardListTable .subjectA').addClass('on');
 		$(this).removeClass('on');
 		var seq = $(this).parent().prev().text();
-		var pg = $('#pg').val();
 		var show = $('#showViewArticle').val();
-
+		alert($('#emailCheck').val());
 		$.ajax({
 			type: 'POST',
 			url: '/hairShopProject/hairShop/board/boardView.do',
-			data: {'seq': seq , 'pg' :pg},
+			data: {'seq': seq},
 			dataType : 'json',
 			success: function(data){
 				if(document.getElementsByClassName('viewTr').length > 0) {
 					$('tr.viewTr').remove();
 				}
-				$('tr.tr'+seq).after($('<tr/>',{
-					class : 'viewTr'
-				}).append($('<td/>',{
-					colspan : '4',
-					html : '<br>'+
-						   '<span>'+data.boardDTO.content+'</span>'+
-						   '<br>'+
-						   '<c:if test=""><div style="float:right;"><input type="button" class="qnaButton" value="삭제" onclick="deleteT('+seq+')"/></div></c:if>'+
-						   '<c:if test=""><div style="float:right;"><input type="button" class="qnaButton" value="수정" id="qnaModifyBtn" onclick="modifyT('+seq+')" /></div></c:if>'
-				})));
+				
+				if($('#emailCheck').val()=='1') {
+					$('tr.tr'+seq).after($('<tr/>',{
+						class : 'viewTr'
+					}).append($('<td/>',{
+						colspan : '4',
+						html : '<br>'+
+						'<span>'+data.boardDTO.content+'</span>'+
+						'<br>'+
+						'<div style="float:right;"><input type="button" class="qnaButton" value="삭제" onclick="deleteT('+seq+')"/></div>'+
+						'<div style="float:right;"><input type="button" class="qnaButton" value="수정" id="qnaModifyBtn" onclick="modifyT('+seq+')" /></div>'
+					})));
+				} else {
+					$('tr.tr'+seq).after($('<tr/>',{
+						class : 'viewTr'
+					}).append($('<td/>',{
+						colspan : '4',
+						html : '<br>'+
+						'<span>'+data.boardDTO.content+'</span>'
+					})));
+				}
 			},
 			error: function(){alert("error");}
 		});
 	});
-    
-	
 	
 	//게시글 작성
 	$('#boardWriteBtn').click(function(){
@@ -158,8 +168,16 @@ $(document).ready(function(){
 		
 		else if(content.length==0)
 			$('#contentDiv').html('<span style="color:red;font-size:8pt">내용을 입력하세요</span>')
-		else
-			$('#boardWriteForm').submit();
+		else{
+			$.ajax({
+				type : 'POST',
+				url : '/hairShopProject/hairShop/board/boardWrite.do',
+				data : {'subject' : subject, 'content' : content},
+				success : function(data){
+					window.location.reload(true);
+				}
+			});
+		}
 	});
 	
 	
@@ -175,7 +193,8 @@ $(document).ready(function(){
 	$('#boardModifyBtn').click(function(){
 		var subject = $('#subject2').val();
 		var content = $('#content2').val();
-		
+		var seq = $('.hiddenSeq').val();/*.text();*/
+
 		$('#subjectDiv2').empty();
 		$('#contentDiv2').empty();
 		
@@ -186,7 +205,14 @@ $(document).ready(function(){
 			$('#contentDiv2').html('<span style="color:red;font-size:8pt">내용을 입력하세요</span>')
 		
 		else
-			$('#boardModifyForm').submit();
+			$.ajax({
+				type : 'POST',
+				url : '/hairShopProject/hairShop/board/boardModify.do',
+				data : {'seq' : seq, 'subject' : subject, 'content' : content},
+				success : function(data){
+					window.location.reload(true);
+				}
+			});
 	});
 	
 

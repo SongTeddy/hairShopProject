@@ -16,8 +16,8 @@
 	
 	<table id="designerTable"  frame="hsides" rules="rows" align="center">
 	
-		<tr bgcolor="#484848" style="padding: 5px; border-top: 2px solid #909090; border-bottom: 2px solid #909090; font-weight: bold;">
-			<td width="90px">
+		<tr bgcolor="#484848" class="designerListTr" style="padding: 5px; border-top: 2px solid #909090; border-bottom: 2px solid #909090; font-weight: bold;">
+			<td width="100px">
 				<input type="checkbox" name="checkAll" id="checkAll" value="선택" />
 				<input type="button" name="checkAllDelete" id="checkAllDelete" value="선택삭제" />
 			</td>
@@ -67,13 +67,6 @@
 			</div>
 			
 			<div class="input-container">
-				<input type="text" class="addDesignerid" required autocomplete="off" />
-				<label for="nameL">아이디</label>
-				
-				<div class="bar"></div>
-			</div>
-			
-			<div class="input-container">
 				<input type="text" class="addPosition" required autocomplete="off" />
 				<label for="nameL">포지션</label>
 				
@@ -112,7 +105,7 @@ $(document).ready(function() {
 					style : 'color: #515151;'
 					
 				}).append($('<td/>', {
-					height : '50px',
+					height : '50px'
 					
 					}).append($('<input/>', {
 						type : 'hidden',
@@ -141,15 +134,13 @@ $(document).ready(function() {
 					class : 'designername',
 					readonly : 'readonly'
 					
-				}))).append($('<td/>').append($('<input/>', {
-					type : 'text',
+				}))).append($('<td/>', {
+					text : items.hairshopid+'_'+items.designername,
 					style : 'font-size: 15px; text-align: center; border: none;',
-					value : items.designerid,
 					id : items.seq,
-					class : 'designerid',
-					readonly : 'readonly'
+					class : 'designerid'
 					
-				}))).append($('<td/>').append($('<input/>', {
+				})).append($('<td/>').append($('<input/>', {
 					type : 'text',
 					style : 'font-size: 15px; text-align: center; border: none;',
 					value : items.position,
@@ -174,18 +165,26 @@ $(document).ready(function() {
 					
 				}))).append($('<td/>', {
 					
-					}).append($('<input/>', {
-						type : 'button',
-						value : '수정',
-						id : 'designerModify',
-						class : items.seq
+					}).append($('<div/>', {
+						style: 'float: left; height: 50%; width: 100%;'
 						
-					})).append('<br>').append($('<input/>', {
-					type : 'button',
-					value : '삭제',
-					class : 'designerDelete'
-					
-				}))).appendTo($('#designerTable'));
+						}).append($('<button/>', {
+							type : 'button',
+							text : '수정',
+							id : 'designerModify',
+							class : items.seq,
+							style : 'border-bottom: 1px solid #484848; width: 100%; height: 100%;'
+						
+					}))).append($('<div/>', {
+						style: 'clear: both; height: 50%;'
+						
+						}).append($('<button/>', {
+							type : 'button',
+							text : '삭제',
+							class : 'designerDelete',
+							style : 'width: 100%; height: 100%;'
+							
+				})))).appendTo($('#designerTable'));
 			});
 		}
 	});

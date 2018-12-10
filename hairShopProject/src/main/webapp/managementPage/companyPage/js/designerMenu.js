@@ -18,7 +18,6 @@ $(document).ready(function(){
 	/* 추가 */
 	$('#designerAdd').on('click', function() {
 		var designername = $('.addDesignername').val();
-		var designerid = $('.addDesignerid').val();
 		var hairshopId = $('#hairshopId').val();
 		var position = $('.addPosition').val();
 		var dayoff = $('.addDayoff').val();
@@ -27,7 +26,6 @@ $(document).ready(function(){
 			type : 'POST',
 			url : '/hairShopProject/companyPage/designerAdd.do',
 			data : {'designername':designername,
-					'designerid':designerid,
 					'hairshopid':hairshopId,
 					'position':position,
 					'dayoff':dayoff},
@@ -79,17 +77,15 @@ $(document).ready(function(){
 			alert("디자이너를 선택해주세요");
 	});
 	
-	// 수정
-	
 	// 수정완료 버튼
 	$('#designerTable').on('click', '.designerModify', function() {
 		if (confirm("수정하시겠습니까?")==true){
-			var seq = $(this).parent().prev().prev().prev().prev().prev().prev().children().val();
-			var designerimage = $(this).parent().prev().prev().prev().prev().prev().children().val();
-			var designername = $(this).parent().prev().prev().prev().prev().children().val();
-			var designerid = $(this).parent().prev().prev().prev().children().val();
-			var position = $(this).parent().prev().prev().children().val();
-			var dayoff = ($(this).parent().prev().children().val()).replace('월 ', '1')
+			var seq = $(this).parent().parent().prev().prev().prev().prev().prev().prev().children().val();
+			var designerimage = $(this).parent().parent().prev().prev().prev().prev().prev().children().val();
+			var designername = $(this).parent().parent().prev().prev().prev().prev().children().val();
+			var designerid = $(this).parent().parent().prev().prev().prev().children().val();
+			var position = $(this).parent().parent().prev().prev().children().val();
+			var dayoff = ($(this).parent().parent().prev().children().val()).replace('월 ', '1')
 											 .replace('화 ', '2')
 											 .replace('수 ', '3')
 											 .replace('목 ', '4')
@@ -117,11 +113,45 @@ $(document).ready(function(){
 	
 	// 수정 버튼
 	$('#designerTable').on('click', '#designerModify', function() {
+		//alert($('#designerTable input[type=text]').val());
+		$('#designerTable input[type=text]').attr('readonly', 'readonly');
 		var seq = $(this).attr('class');
 		
+		// 모든 input의 readonly 삭제하고 border 설정
 		$('input[id='+seq+']').removeAttr('readonly').css('border', '1px solid #ABABAB');
 		$('input[id=seq]').addClass('seq'); // seq 값을 가지고 있는 hidden에 클래스 추가
-		$('input[class='+seq+']').val('수정완료');
-		$('input[class='+seq+']').addClass('designerModify');
+		$('button[class='+seq+']') // 수정버튼
+			.text('')
+			.addClass('designerModify')
+			.css('border-right', '1px solid #484848')
+			.append($('<i/>', {
+				class : 'fa fa-check'
+			}));
+		
+		$(this).parent().css('width', '50%').after($('<div/>', {
+			class: 'designerModifyCancelDiv',
+			style: 'float: left; width: 50%; height: 50%; border-bottom: 1px solid #484848;'
+				
+			}).append($('<button/>', {
+				type : 'button',
+				id : 'designerModifyCancel',
+				class : seq,
+				style : 'width: 100%; height: 100%;'
+		
+			}).append($('<i/>', {
+				class : 'fa fa-times'
+					
+		}))));
+	});
+	
+	// 수정 취소 버튼
+	$('#designerTable').on('click', '#designerModifyCancel', function() {
+		var seq = $(this).attr('class');
+		
+		$('input[id='+seq+']').attr('readonly', 'readonly').css('border', '0px');
+		$('button[class='+seq+']').remove('i');
+		$(this).parent().prev().children().text('수정').css('border-right', '0px').removeClass('designerModify');
+		$(this).parent().prev().css('width', '100%');
+		$(this).parent().remove();
 	});
 });
