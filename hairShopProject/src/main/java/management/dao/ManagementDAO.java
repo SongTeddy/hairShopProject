@@ -94,7 +94,7 @@ public interface ManagementDAO {
 	// 스케줄 등록
 	public List<Map<String, String>> getInfoForScheduling(String memEmail);
 	public void totalHairShopSchedule(Map<String, Object> map);
-	public void vacationDesignerSchedule(Map<String, Object> map);
+	public int vacationDesignerSchedule(Map<String, Object> map);
 	public void overworkDesignerSchedule(Map<String, Object> map);
 	
 	// 서비스 관련

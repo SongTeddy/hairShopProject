@@ -421,8 +421,8 @@ public class ManagementDAOMybatis implements ManagementDAO {
 	}
 	
 	@Override
-	public void vacationDesignerSchedule(Map<String, Object> map) {
-		sqlSession.delete("managementSQL.vacationDesignerSchedule", map);
+	public int vacationDesignerSchedule(Map<String, Object> map) {
+		return sqlSession.delete("managementSQL.vacationDesignerSchedule", map);
 	}
 	
 	@Override
