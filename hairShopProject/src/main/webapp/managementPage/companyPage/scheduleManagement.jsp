@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<link rel="stylesheet" type="text/css" href="https://fullcalendar.io/releases/fullcalendar/3.9.0/fullcalendar.min.css" />
+
+
 <style>
 
 .scheduleRegisterTable{
@@ -7,6 +11,11 @@
 	color: black;
 }
 
+
+#calendar {
+  max-width: 900px;
+  margin: 40px auto;
+}
 </style>
 <body>
 	<font size="6pt" style="color: #363636;">디자이너 스케줄 등록 | 변경</font><br>
@@ -51,7 +60,12 @@
 		</tr>
 	</table>
 <input type="hidden" name="hairShopId" value="" />
+
+<div id="calender"></div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://fullcalendar.io/releases/fullcalendar/3.9.0/lib/moment.min.js"></script>
+<script type="text/javascript" src="https://fullcalendar.io/releases/fullcalendar/3.9.0/lib/jquery.min.js"></script>
+<script type="text/javascript" src="https://fullcalendar.io/releases/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$('input[name=totalStartDate]').datepicker({
@@ -261,8 +275,15 @@ $(document).ready(function(){
 			});
 		}
 	});
+	$(function() {
+
+		  $('#calendar').fullCalendar({
+		    defaultView: 'month',
+		    events: 'https://fullcalendar.io/demo-events.json'
+		  });
+
+		});
 	
 });
-
 </script>
 </body>

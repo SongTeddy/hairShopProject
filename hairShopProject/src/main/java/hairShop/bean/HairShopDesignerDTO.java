@@ -12,5 +12,6 @@ public class HairShopDesignerDTO {
 	private String designername;//디자이너 이름
 	private String designerimage;//디자이너이미지
 	private String position;//디자이너 직책
+	private String positioncode;//디자이너 직책
 	private String dayoff;//출근요일
 }
