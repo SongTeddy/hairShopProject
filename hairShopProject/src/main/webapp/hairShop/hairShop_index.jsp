@@ -614,6 +614,7 @@ button.selectedBtn {
 			</a>
 				<div class="whiteBlock"></div>
 			</li>
+			
 		</ul>
 		<div id="myTabContent" class="tab-content fancyTabContent"
 			aria-live="polite">
