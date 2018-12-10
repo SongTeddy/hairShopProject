@@ -145,14 +145,14 @@ public class CompanyPageController {
 
 	// 디자이너 예약 얻기
 	@RequestMapping(value = "getReserveTime", method = RequestMethod.POST)
-	public ModelAndView getReserveTime(@RequestParam String designername, @RequestParam int cnt,
+	public ModelAndView getReserveTime(@RequestParam String designerid, @RequestParam int cnt,
 			@RequestParam int startDay) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("dd");
 
 		// DB
-		List<ReservationDTO> list = managementDAO.getReservation(designername); // 한명의 예약 정보 리스트
+		List<ReservationDTO> list = managementDAO.getReservation(designerid); // 한명의 예약 정보 리스트
 
 		// 리스트 생성
 		List<String> bookerNameList = new ArrayList<String>(); // 예약자 이름 리스트
@@ -289,16 +289,31 @@ public class CompanyPageController {
 
 	// 선택된 디자이너 삭제
 	@RequestMapping(value = "designerCheckedDelete", method = RequestMethod.POST)
-	public @ResponseBody void designerCheckedDelete(@RequestParam(value = "designerIds[]") List<String> designerIds) {
+	public ModelAndView designerCheckedDelete(@RequestParam(value = "designerIds[]") List<String> designerIds) {
 		List<String> list = new ArrayList<String>();
-
-		for (String designerId : designerIds)
-			list.add(designerId);
-
-		// DB
-		managementDAO.designerCheckedDelete(list);
+		List<String> cannotDeletelist = new ArrayList<String>();
+		
+		
+		for (String designerId : designerIds) {
+			List<ReservationDTO> reservationList = managementDAO.getCommingReservation(designerId);
+			//예약이 걸려있으면 디자이너를 지울 수 없음!!!
+			System.out.println("예약 리스트 사이즈 " + reservationList.size());
+			if(reservationList.size()==0) {
+				list.add(designerId);	
+				// DB
+				if(list.size()>0) {
+					managementDAO.designerCheckedDelete(list);			
+				}
+			}else {
+				cannotDeletelist.add(designerId);
+			}
+		}
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);
+		mav.addObject("cannotDeletelist", cannotDeletelist);
+		mav.setViewName("jsonView");
+		return mav;
 	}
-
 
 	// 헤어샵 정보 등록 페이지
 	@RequestMapping(value = "hairShopInfoInput", method = RequestMethod.GET)

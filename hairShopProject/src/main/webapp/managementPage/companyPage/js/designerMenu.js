@@ -63,8 +63,19 @@ $(document).ready(function(){
 					type : 'POST',
 					url : '/hairShopProject/companyPage/designerCheckedDelete.do',
 					data : {designerIds:designerIds},
-					success : function() {
-						alert("삭제가 완료되었습니다.");
+					dataType : 'json',
+					success : function(data) {
+						alert(JSON.stringify(data));
+						var cannotDeleteDesingers ="";
+						if(data.cannotDeletelist.length > 0){							
+							for(var i=0; i<data.cannotDeletelist.length; i++){
+								cannotDeleteDesingers = cannotDeleteDesingers + data.cannotDeletelist[i] + ", ";
+							}
+							alert("예약이 잡혀있는 디자이너인 " + cannotDeleteDesingers + "는 삭제할 수 없습니다.");
+						}
+						if(data.list.length > 0){
+							alert("예약이 없는 디자이너 삭제가 완료되었습니다.");							
+						}
 						location.reload();
 					}
 				});

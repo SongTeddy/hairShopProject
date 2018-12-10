@@ -463,7 +463,14 @@
 	<!-- 한명의 예약 정보 조회 -->
 	<select id="getReservation" parameterType="String"
 		resultType="reservation">
-		select * from reservation where designername=#{designername }
+		select * from reservation where designerid=#{designerid }
+	</select>
+	
+	<!-- 한명의 아직 안지난 예약 정보 조회 -->
+	<select id="getCommingReservation" parameterType="String"
+		resultType="reservation">
+		select * from reservation where designerid=#{designerid }
+		and STARTTIME > sysdate
 	</select>
 
 	<!-- /////////////////////// 디자이너 관리 메뉴 /////////////////////// -->

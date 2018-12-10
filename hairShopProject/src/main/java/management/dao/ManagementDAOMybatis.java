@@ -192,8 +192,12 @@ public class ManagementDAOMybatis implements ManagementDAO {
 
 	// 한명의 예약 정보 조회
 	@Override
-	public List<ReservationDTO> getReservation(String designername) {
-		return sqlSession.selectList("managementSQL.getReservation", designername);
+	public List<ReservationDTO> getReservation(String designerid) {
+		return sqlSession.selectList("managementSQL.getReservation", designerid);
+	}
+	@Override
+	public List<ReservationDTO> getCommingReservation(String designerid) {
+		return sqlSession.selectList("managementSQL.getCommingReservation", designerid);
 	}
 
 	// ------------------------------- 디자이너 관리 메뉴 -------------------------------//

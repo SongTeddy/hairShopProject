@@ -42,7 +42,8 @@ public interface ManagementDAO {
 	public String getCompanyType(String email);
 	public String getTotalReservation(String hairshopid);
 	public List<String> getTotalReservePrice(String hairshopId);
-	public List<ReservationDTO> getReservation(String designername);
+	public List<ReservationDTO> getReservation(String designerid);
+	public List<ReservationDTO> getCommingReservation(String designerid);
 	public List<DesignerDTO> getDesignerInfo(String hairshopId);
 	public String getDesignerReserve(String designerId);
 	public void designerCheckedDelete(List<String> list);
