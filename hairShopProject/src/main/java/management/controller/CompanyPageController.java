@@ -53,7 +53,9 @@ public class CompanyPageController {
 	public ModelAndView designerMenu(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 
-		if (session.getAttribute("memEmail") != null) {
+		if (session.getAttribute("memEmail") != null) {			
+			Map<String, String> map = managementDAO.getHairShopInfo((String) session.getAttribute("memEmail"));
+			mav.addObject("hairShopId", map.get("HAIRSHOPID"));
 			mav.addObject("display", "/managementPage/companyPage/companyPage.jsp");
 			mav.addObject("myPageBody", "/managementPage/companyPage/designerMenu.jsp");
 		} else {
@@ -274,7 +276,7 @@ public class CompanyPageController {
 			managementDAO.designerAdd(map);			
 		}else if(map.get("insertOrUpdate").equals("update")) {
 			if (!designerimageOriginal.isEmpty()) {
-				managementDAO.designerModify(map);				
+				managementDAO.designerModify(map);
 			}else {
 				managementDAO.designerModifyExceptImg(map);			
 			}
@@ -282,7 +284,7 @@ public class CompanyPageController {
 	
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/managementPage/companyPage/companyPage.jsp");
-		mav.addObject("myPageBody", "/managementPage/companyPage/designerMenu.jsp");
+		mav.addObject("myPageBody", "/managementPage/companyPage/designerAdd.jsp");
 		mav.setViewName("/main/index");
 		return mav;
 	}

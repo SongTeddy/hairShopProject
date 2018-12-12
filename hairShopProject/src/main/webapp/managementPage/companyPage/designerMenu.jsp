@@ -32,8 +32,6 @@
 }
 </style>
 
-<input type="hidden" id="hairshopId" value="${hairshopId }">
-
 <div class="designerMenu">
 	<font size="6pt" style="color: #363636;">디자이너 관리</font><br>
 	<hr align="left" style="color: black;
@@ -92,7 +90,7 @@
 			<div class="input-container" style="align-items : baseline; vertical-align : middle !important;">
 				<div class="" style="padding-left : 90px; padding-top: 20px;">
 					<select name="positioncode" id="positioncode" style="color: black;">
-						<option value="">포지션 선택</option>
+						<option value="undefined">포지션 선택</option>
 						<option value="1">원장</option>
 						<option value="1">점장</option>
 						<option value="2">부원장</option>
@@ -140,7 +138,7 @@
 					<span id="doIt">등&emsp;&emsp;록</span>
 				</button>
 			</div>
-			<input type="hidden" name="hairshopid" value="${hairshopId }">
+			<input type="hidden" name="hairshopid" id="hairShopId" value="${hairShopId }">
 			<input type="hidden" name="dayoff" />
 			<input type="hidden" name="position" />
 			<input type="hidden" name="insertOrUpdate" />
@@ -156,7 +154,7 @@ $(document).ready(function() {
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/companyPage/getDesignerInfo.do',
-		data: {'hairshopId':$('#hairshopId').val()},
+		data: {'hairshopId':$('#hairShopId').val()},
 		dataType : 'json',
 		success : function(data) {
 			//alert(JSON.stringify(data));
@@ -222,7 +220,7 @@ $(document).ready(function() {
 			$('input[name=dayoff]').val(dayoff);
 			if($('input[name=designername]').val()=="")
 				alert("이름을 입력하세요.");
-			else if($('select#positioncode').val()=="")
+			else if($('select#positioncode').val()=="undefined")
 				alert("포지션을 선택하세요");
 			else if($("input:checkbox[name=day]:checked").length==0)
 				alert("근무 요일을 선택하세요.");
@@ -254,11 +252,14 @@ $(document).ready(function() {
 		$('.fileUpload').css('visibility', 'visible');
 		$('#thisIsTitle').text("디자이너 수정");
 		$('#designername').val($(this).parent().prev().prev().prev().text());
-         $('select#positioncode option:contains(' + $(this).parent().prev().prev().text() + ')').attr("selected", "selected");
+		if($(this).parent().prev().prev().text()!=""){
+			$('select#positioncode option:contains(' + $(this).parent().prev().prev().text() + ')').prop("selected", "selected");
+			$('input[name=position]').val($('select#positioncode :selected').text());
+		}
 //         var ppp = $(this).parent().prev().prev().text();
 //         alert(ppp);
 //         alert($('#positioncode').find('option[text="' + ppp + '"]').val());
-        
+		
 		$('input[name=previousDesignerId]').val($(this).parent().parent().children(':first').children(':first').val());
         var targetDayoff = $(this).parent().prev().children(':last').val();
         for(var i=1; i<=7; i++){
