@@ -442,7 +442,7 @@ $(document).ready(function(){
 						$('#checkIdSpan').text("사용 불가한 아이디입니다.").css('color', 'red').css('font-weight', 'bold').css('font-size', '8pt');						
 					}else if(data.trim()=='not_exist'){
 						$('#checkIdSpan').text("사용 가능한 아이디입니다.").css('color', 'blue').css('font-weight', 'bold').css('font-size', '8pt');
-						$('#checkedId').val($('#checkIdSpan').val());
+						$('#checkedId').val($('#hairShopId').val());
 					}
 				}
 			});
