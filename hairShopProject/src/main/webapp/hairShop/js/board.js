@@ -1,6 +1,7 @@
 //리스트 페이징
 function boardList(pg){
 	$('#pg').val(pg);
+
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/hairShop/board/getBoardList.do',
@@ -35,11 +36,14 @@ function boardList(pg){
 }
 
 function boardSearchList(pg,searchOption,keyword) {
+	$('#searchOptionVal').val(searchOption);
+	$('#keywordVal').val(keyword);
+	$('#pg').val(pg);
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/hairShop/board/boardSearch.do',
 		data : {
-			'pg':$('#pg').val(),
+			'pg':pg,
 			'searchOption': $('#searchOptionVal').val(),
 			'keyword': $('#keywordVal').val()
 		},
@@ -81,7 +85,7 @@ $(document).ready(function(){
 			type : 'POST',
 			url : '/hairShopProject/hairShop/board/boardSearch.do',
 			data : {
-				'pg':$('#pg').val(),
+				'pg':"1",
 				'searchOption': $('#searchOption').val(),
 				'keyword': $('#keyword').val()
 			},
@@ -109,45 +113,6 @@ $(document).ready(function(){
 				$('#boardPagingDiv').html(data.boardPaging.pagingHTML);
 			}
 		});
-		
-		if(str!='trigger')
-			$('#pg').val(1);
-		if($('#keyword').val()=="")
-			alert("검색어를 입력하세요");
-		else{
-			$.ajax({
-				type : 'POST',
-				url : '/hairShopProject/hairShop/board/boardSearch.do',
-				data : {
-					'pg':$('#pg').val(),
-					'searchOption': $('#searchOption').val(),
-					'keyword': $('#keyword').val()
-				},
-				dataType : 'json',
-				success : function(data){
-					$('#boardListTable tr:gt(0)').remove();
-					$.each(data.list, function(index, items){
-						$('<tr/>').append($('<td/>',{
-							align : 'center',
-							text : items.seq
-						})).append($('<td/>',{
-							}).append($('<a/>',{
-								class : 'subjectA',
-								href : 'javascript:void(0)',
-								text : items.subject
-							})
-						)).append($('<td/>',{
-							align : 'center',
-							text : items.email
-						})).append($('<td/>',{
-							align : 'center',
-							text : items.logtime
-						})).appendTo($('#boardListTable'));                            
-					});
-					$('#boardPagingDiv').html(data.boardPaging.pagingHTML);
-				}
-			});
-		}
 	});
     
     //게시물 제목 클릭시(View)
@@ -157,7 +122,6 @@ $(document).ready(function(){
 		$(this).removeClass('on');
 		var seq = $(this).parent().prev().text();
 		var show = $('#showViewArticle').val();
-		alert($('#emailCheck').val());
 		$.ajax({
 			type: 'POST',
 			url: '/hairShopProject/hairShop/board/boardView.do',

@@ -408,6 +408,7 @@ public class AdminPageController {
 		} else {
 			mav.addObject("success","1");
 		}
+		mav.setViewName("jsonView");
 		return mav;
 	}
 	

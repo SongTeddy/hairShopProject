@@ -10,11 +10,12 @@
 
 .currentEventListTable, .pastEventListTable{
 	width: 90%;
+	min-width : 95%;
 	color: black;
 	margin-top: 10px;
 }
 .btnDiv{
-	width: 90%;
+	width: 80%;
 	color: black;
 	text-align: right;
 }
@@ -108,6 +109,7 @@ $(document).ready(function(){
 				if(item.DISCOUNTOPTION == null) {
 					item.DISCOUNTAMOUNT = "쿠폰 없음";
 					item.COUPONIMAGE = "";
+					item.MINPRICE = "";
 				}else if(item.DISCOUNTOPTION == '0'){
 					item.DISCOUNTAMOUNT = item.DISCOUNTAMOUNT + "% 할인";	
 					item.COUPONIMAGE = '<img src="/hairShopProject/main/assets/images/event/'+ item.COUPONIMAGE + '" width="100"/>';
@@ -115,8 +117,8 @@ $(document).ready(function(){
 					item.DISCOUNTAMOUNT = (item.DISCOUNTAMOUNT).toLocaleString() + "원 할인";						
 					item.COUPONIMAGE = '<img src="/hairShopProject/main/assets/images/event/'+ item.COUPONIMAGE + '" width="100"/>';
 				}
-				if(item.MINPRICE != "0"){
-					item.MINPRICE = (item.MINPRICE).toLocaleString() + "원 이상"
+				if(item.MINPRICE != ""){
+					item.MINPRICE = (item.MINPRICE).toLocaleString()  + "원 이상";
 				}else{
 					item.MINPRICE = "";
 				}
@@ -156,13 +158,17 @@ $(document).ready(function(){
 				if(item.DISCOUNTOPTION == null) {
 					item.DISCOUNTAMOUNT = "쿠폰 없음";
 					item.COUPONIMAGE = "";
+					item.MINPRICE = "";	
 				}else if(item.DISCOUNTOPTION == '0'){
 					item.DISCOUNTAMOUNT = item.DISCOUNTAMOUNT + "% 할인";	
 					item.COUPONIMAGE = '<img src="/hairShopProject/main/assets/images/event/'+ item.COUPONIMAGE + '" width="100"/>';
+					item.MINPRICE = item.MINPRICE + "원 이상";
 				}else if(item.DISCOUNTOPTION == '1'){
-					item.DISCOUNTAMOUNT = (item.DISCOUNTAMOUNT).toLocaleString() + "원 할인";						
+					item.DISCOUNTAMOUNT = (item.DISCOUNTAMOUNT) + "원 할인";						
+					item.MINPRICE = item.MINPRICE + "원 이상";
 					item.COUPONIMAGE = '<img src="/hairShopProject/main/assets/images/event/'+ item.COUPONIMAGE + '" width="100"/>';
 				}
+			
 				
 				$('<tr/>').append($('<td/>', {
 				}).append($('<input/>', {

@@ -41,7 +41,7 @@
 			<span>
 				<select id="recommendHairShopSelect" name="recommendHairShopSelect" multiple style="width:100%;height:300px;">
 					<c:forEach var="list" items="${recommendHairShopList }">
-						<option value=${list.HAIRSHOPID }>${list.NAME }</option>
+						<option value=${list.HAIRSHOPID }>${list.HAIRSHOPID }</option>
 					</c:forEach>
 				</select>
 			</span>

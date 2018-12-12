@@ -187,9 +187,12 @@ public class HairShopController {
 		System.out.println("선택한 디자이너" + map.get("chosenDesignerId"));
 		ModelAndView mav = new ModelAndView();
 		List<Map<String,Object>> memCouponList = managementDAO.getCouponList((String)session.getAttribute("memEmail"));
+		Map<String, Object> telMap = hairShopDAO.getTel((String)session.getAttribute("memEmail"));
 		mav.setViewName("/main/index");
 		mav.addObject("display", "/hairShop/reserve.jsp");
 		mav.addObject("map", map);
+		mav.addObject("telMap", telMap);
+		
 		mav.addObject("memCouponList", memCouponList);
 		mav.addObject("memCouponListSize", memCouponList.size());
 		return mav;

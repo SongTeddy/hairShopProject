@@ -47,9 +47,10 @@ public class IndexController {
 	}
 	
 	@RequestMapping(value="searchHairShop", method=RequestMethod.GET)
-	public ModelAndView searchHairShop() {  //사용자가 만든 콜백 메소드 
+	public ModelAndView searchHairShop(@RequestParam(defaultValue="", required=false) String service) {  //사용자가 만든 콜백 메소드 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/main/searchHairShop.jsp");
+		mav.addObject("service", service);
 		mav.setViewName("/main/index");
 		return mav;
 	}

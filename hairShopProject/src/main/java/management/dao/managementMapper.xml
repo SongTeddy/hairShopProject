@@ -301,10 +301,16 @@
 	
 	<!-- 이벤트 삭제하기 -->
  	<delete id="deleteEvent" parameterType="java.util.List">
+		begin
 		delete event where seq in 
-		<foreach collection="list" item="data" open="(" close=")" separator=",">
+		<foreach collection="list" item="data" open="(" close=");" separator=",">
 			#{data }
 		</foreach>
+		delete coupon where seq in 
+		<foreach collection="list" item="data" open="(" close=");" separator=",">
+			#{data }
+		</foreach>
+		end;
 	</delete>
 	
 	<select id="getTargetEvent" parameterType="java.lang.String" resultType="java.util.Map">
@@ -500,8 +506,8 @@
 	<!-- 디자이너 추가 -->
 	<insert id="designerAdd" parameterType="java.util.Map">
 		insert into
-		designerinfo(seq, designerid, hairshopid, designername, positioncode,
-		position, dayoff, designerimage) values(seq_designerinfo.nextval, #{designerid },
+		designerinfo(designerid, hairshopid, designername, positioncode,
+		position, dayoff, designerimage) values(#{designerid },
 		#{hairshopid }, #{designername }, #{positioncode }, #{position },
 		#{dayoff }, #{designerimage })
 	</insert>
@@ -557,7 +563,9 @@
 		hairshopimage1=#{hairShopImage1 },
 		hairshopimage2=#{hairShopImage2 },
 		hairshopimage3=#{hairShopImage3 },
-		dayoff=#{dayoff }
+		dayoff=#{dayoff },
+		latitud = #{latitud },
+		longitude = #{longitude }
 		where email=#{email }
 	</update>
 
@@ -572,7 +580,9 @@
 		hairshopcontent = #{hairShopContent },
 		opentime=#{openTime }, closetime=#{closeTime },
 		hairshopid=#{hairShopId },
-		dayoff=#{dayoff }
+		dayoff=#{dayoff },
+		latitud = #{latitud },
+		longitude = #{longitude }
 		where email=#{email }
 	</update>
 	

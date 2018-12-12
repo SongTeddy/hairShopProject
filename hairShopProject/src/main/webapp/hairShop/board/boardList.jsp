@@ -135,13 +135,6 @@
 </script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-function boardSearch(pg,searchOption,keyword){
-	//alert(pg+" "+searchOption+" "+keyword);
-	$('#searchOptionVal').val(searchOption);
-	$('#keywordVal').val(keyword);
-	$('#pg').val(pg);
-	boardSearchList(event, str);
-}
 function deleteT(seq){
 	$.ajax({
 		type : 'POST',
@@ -196,7 +189,7 @@ $(document).ready(function(){
 			if(data.isCheckId == 1) {
 				$('#emailCheck').val("1");
 				//alert($('input#emailCheck').val());
-				alert(data.isCheckId);
+
 				$('div#qnawriteDiv').html('<button type="button" id="qnawriteBtn" class="qnaButton">공지 작성</button>');
 			};
 		}

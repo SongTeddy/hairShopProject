@@ -38,6 +38,10 @@ html, body{
 	padding: 10px;
 }
 
+#searchResultTable{
+	min-width: 100%;
+}
+
 #searchResultTableBody span{
 	margin-left: 10px;
 }
@@ -244,7 +248,7 @@ var map;
 	var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 	    mapOption = { 
 	        center: new daum.maps.LatLng('${latitud }', '${longitude }'), // 지도의 중심좌표
-	        level: 3 // 지도의 확대 레벨
+	        level: 5 // 지도의 확대 레벨
 	    };
 
 	map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -278,7 +282,6 @@ var map;
 $(document).ready(function() {
 	
 	$('input[name=sortOption]').on('click', function(){
-		alert("sort 옵션 선택" + $('input[name=sortOption]:checked').val());
 		var params = {'service' : '${service }', 'date' : '${date }', 'day' : '${day }', 'latitud' : '${latitud }', 'longitude': '${longitude }', 'sortOption': $('input[name=sortOption]:checked').val()};
 		var path = "/hairShopProject/hairShop/search.do";
 		var method = 'post';
@@ -483,7 +486,6 @@ $(document).ready(function() {
   	});
 });
 function getSearchList(){
-	alert($('input[name=sortOption]:checked').val());
 	$.ajax({
 		type : 'POST',
 		url : '/hairShopProject/hairShop/getSearchList.do',
