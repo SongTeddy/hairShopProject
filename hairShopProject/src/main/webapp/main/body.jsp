@@ -591,7 +591,7 @@ i.fa-star {
 								'</h2>'+
 								'<p class="explore-rating-price">'+
 								'<span class="explore-rating"><img src="/hairShopProject/hairShop/img/star2.png" style="width:13px; height:13px; padding-right: 2px;" />'+items.AVG+'</span>'+
-								'<span class="explore-price-box"> form <span class="explore-price" id="hairShopPrice'+index+'"></span>'+/* 기본요금 */
+								'<span class="explore-price-box"> Price <span class="explore-price" id="hairShopPrice'+index+'"></span>'+/* 기본요금 */
 								'</span>'+
 								'</p>'+
 								'<div class="explore-person">'+

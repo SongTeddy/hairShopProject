@@ -431,7 +431,12 @@
 
 	<select id="heartList" parameterType="java.lang.String"
 		resultType="java.util.Map">
-		select * from heart where email=#{memEmail }
+		select avg(starscope) as starscope, count(starscope) as reviewcount, 
+			   name, addr1||addr2 as addr, opentime, closetime, hairshopid, hairshopimage1 
+		from memberinfo 
+		join review using(hairshopid) where hairshopid 
+		in (select hairshopid from heart where email = #{memEmail })
+		group by name, addr1, addr2, opentime, closetime, hairshopid, hairshopimage1
 	</select>
 
 
