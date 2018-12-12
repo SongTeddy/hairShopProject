@@ -1393,6 +1393,7 @@ button.selectedBtn {
 				dayOff = dayOff + changeYoil(check) + "  ";
 			}
 		}
+		if(dayOff == "") dayOff="무휴";
 		return dayOff;
 	}
 	

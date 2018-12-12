@@ -62,7 +62,7 @@ $(document).ready(function(){
 					}).append($('<div/>',{
 						
 					}).append($('<img/>',{
-						src:'/hairShopProject/main/assets/images/explore/e1.jpg',
+						src:'/hairShopProject/hairShop/img/banner/'+item.HAIRSHOPIMAGE1,
 						alt:"explore image"
 					})))).append($('<td/>',{
 						
@@ -75,21 +75,21 @@ $(document).ready(function(){
 						html: item.NAME
 					})).append($('<span/>',{
 						class:"explore-rating",
-						text : "별점"
+						html : '<img src="/hairShopProject/hairShop/img/star2.png" style="width:13px; height:13px; padding-right: 2px;" />'+item.STARSCOPE
 					})).append($('<span/>',{
-						text:"리뷰수"
+						text:"Review "+item.REVIEWCOUNT,
 					})).append($('<span/>',{
 						html : "&times;",
 						id : "cancel_heart",
 						onclick : "cancel_heart('"+item.HAIRSHOPID+"');",
-						style : "margin-left:30%"
 					}))).append($('<p/>',{
 						class:"explore-rating-search-price"
+					}).append($('<div/>',{
+						class:"row",
+						html : "<br/>"+item.ADDR+"<br/><br/>",
+						style : "padding-left: 10%; width:100%;font-size:13pt"
 					}).append($('<span/>',{
 						class:"explore-price-box",
-						text: '${service }' + "      "
-					}).append($('<div/>',{
-						class:"row"
 					}).append($('<span/>',{
 						text:"영업시간    "
 					})).append($('<span/>',{
