@@ -90,7 +90,7 @@
 			<div class="input-container" style="align-items : baseline; vertical-align : middle !important;">
 				<div class="" style="padding-left : 90px; padding-top: 20px;">
 					<select name="positioncode" id="positioncode" style="color: black;">
-						<option value="undefined">포지션 선택</option>
+						<option value="0">포지션 선택</option>
 						<option value="1">원장</option>
 						<option value="1">점장</option>
 						<option value="2">부원장</option>
@@ -220,7 +220,7 @@ $(document).ready(function() {
 			$('input[name=dayoff]').val(dayoff);
 			if($('input[name=designername]').val()=="")
 				alert("이름을 입력하세요.");
-			else if($('select#positioncode').val()=="undefined")
+			else if($('select#positioncode').val()=="0")
 				alert("포지션을 선택하세요");
 			else if($("input:checkbox[name=day]:checked").length==0)
 				alert("근무 요일을 선택하세요.");
@@ -236,7 +236,7 @@ $(document).ready(function() {
 			$('input[name=dayoff]').val(dayoff);
 			if($('input[name=designername]').val()==""){
 				alert("수정할 이름을 입력하세요.");			
-			}else if($('select#positioncode').val()==""){
+			}else if($('select#positioncode').val()=="0"){
 				alert("수정할 포지션을 선택하세요");			
 			}else if($("input:checkbox[name=day]:checked").length==0){
 				alert("수정할 근무 요일을 선택하세요.");			
