@@ -529,10 +529,12 @@ public class CompanyPageController {
 			@RequestParam String license3, @RequestParam String addr1, @RequestParam String addr2,
 			@RequestParam String zipcode, @RequestParam String tel1, @RequestParam String tel2,
 			@RequestParam String tel3, @RequestParam String hairShopContent, @RequestParam String dayoff,
-			@RequestParam String openTime, @RequestParam String closeTime) {
+			@RequestParam String openTime, @RequestParam String closeTime,
+			@RequestParam String latitud, @RequestParam String longitude
+			) {
 		System.out.println("hairShopInfoUpdate 컨트롤러    " + imageUpload.size() + "이미지 리스트 사이즈" + imageUpload.get(0));
 		ModelAndView mav = new ModelAndView();
-
+		System.out.println(latitud + longitude + "경도 위도 들어오나요22222????");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("email", (String) session.getAttribute("memEmail"));
 		map.put("name", name);
@@ -550,6 +552,8 @@ public class CompanyPageController {
 		map.put("dayoff", dayoff);
 		map.put("openTime", openTime);
 		map.put("closeTime", closeTime);
+		map.put("latitud", latitud);
+		map.put("longitude", longitude);
 
 		String fileName = "";
 		int su = 0;

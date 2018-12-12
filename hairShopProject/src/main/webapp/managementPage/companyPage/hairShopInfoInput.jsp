@@ -100,7 +100,9 @@
 			<td><input type="text" name="hairShopContent" size="45" maxlength="30" placeholder="30자 이내로 작성해주세요." value="${map.HAIRSHOPCONTENT }" /></td>
 		</tr>
 		<tr>
-			<td style="height: 70px;">헤어샵 아이디</td>
+			<td style="height: 70px;">
+			헤어샵 아이디
+			</td>
 			<td><input type="text" name="hairShopId" id="hairShopId">
 			&nbsp;<input type="button" id="hairShopIdCheckBtn" onclick="checkId()" value=" 중복 확인 " />
 			<br/><span id="checkIdSpan"></span></td>
@@ -263,11 +265,8 @@ $(document).ready(function(){
 		     if (status === daum.maps.services.Status.OK) {
 		    	 var latitud = result[0].y; //위도
 		    	 var longitude = result[0].x; //경도
-		    	 alert(latitud + "  "+longitude);
 		    	 $('input[name=latitud]').val(latitud + "");
 		    	 $('input[name=longitude]').val(longitude + "");
-		    	 alert("인풋에 들어갔나요"+$('input[name=longitude]').val());
-		    	 alert("인풋에 들어갔나요"+$('input[name=latitud]').val());
 		     }else{
 		    	 alert("위도 경도 검색 실패!");
 		     }
@@ -285,18 +284,17 @@ $(document).ready(function(){
 			if($('#'+i).is(':checked'))
 				checkedDay = checkedDay + $('#'+i).val();
 		}
-		alert("붙었니" + checkedDay);
 		$('input[name=dayoff]').val(checkedDay);
 		checkedDay = "";
 		
 		if($('input[name=name]').val()=="") 
 			alert("상호명을 입력하세요.");
-		else if($('input[name=license1]').val() != $('#checkedLicense1').val() || $('input[name=license2]').val() != $('#checkedLicense2').val() || $('input[name=license3]').val() != $('#checkedLicense3').val())
+ 		else if($('input[name=license1]').val() != $('#checkedLicense1').val() || $('input[name=license2]').val() != $('#checkedLicense2').val() || $('input[name=license3]').val() != $('#checkedLicense3').val())
 			alert("사업자 등록번호를 확인하세요.");
 		else if($('input[name=license1]').val() == "" || $('input[name=license2]').val() == "" || $('input[name=license3]').val() == "")
 			alert("사업자 등록번호를 확인하세요.");
 		else if(!getLicense1.test($('input[name=license1]').val()) || !getLicense2.test($('input[name=license2]').val()) || !getLicense3.test($('input[name=license3]').val()))
-			alert("사업자 등록번호를 형식에 맞게 입력하세요.")
+			alert("사업자 등록번호를 형식에 맞게 입력하세요.");
 		else if($('input[name=addr1]').val() == "")
 			alert("주소를 등록하세요.");
 		else if($('input[name=hairShopId]').val() != $('#checkedId').val() || $('input[name=hairShopId]').val()=="")
@@ -307,7 +305,6 @@ $(document).ready(function(){
 			alert("영업 시간을 등록해주세요.");
 		else {
 			if($('#imageUpload').get(0).files.length < 4 ){
-				alert("서밋하러 갑시다");
 				$('form[name=hairShopInfoUpdateForm]').submit();				
 			} else 
 				alert("이미지 파일은 최대 3개까지 업로드 가능합니다.");

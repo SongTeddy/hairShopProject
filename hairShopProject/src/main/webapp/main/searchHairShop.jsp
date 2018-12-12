@@ -11,6 +11,10 @@ html, body{
 	padding: 10px;
 }
 
+#searchResultTable{
+	min-width: 100%;
+}
+
 #searchResultTableBody span{
 	margin-left: 10px;
 }

@@ -302,7 +302,7 @@ i.fa-star {
 	      function getLocation(position) {
 	           latitud = position.coords.latitude; //위도
 	           longitude = position.coords.longitude; //경도
-	           alert(latitud +"    " +longitude);
+//	           alert(latitud +"    " +longitude);
 	       
 	           var geocoder = new daum.maps.services.Geocoder();
 	           var callback = function(result, status) {
@@ -460,7 +460,7 @@ i.fa-star {
 							  class : 'testimonial-img'
 							  }).append($('<img/>',{
 								  class : 'photo',
-								  src : '/hairShopProject/main/assets/images/clients/리나.png',
+								  src : '/hairShopProject/hairShop/img/team/' + items.designerimage,
 								  alt : 'clients'
 							  })).append($('<div/>',{
 								  class : 'name1',
@@ -623,7 +623,7 @@ i.fa-star {
 								'</div>'+
 								'</div>'
 		         		 }).appendTo($('div.recommendHairShopContent'));
-		         		$('div#mainTitleHairShopImage'+index).html("<img src='/hairShopProject/hairShop/img/banner/"+items.HAIRSHOPIMAGE+"' alt='explore image'/>");
+		         		$('div#mainTitleHairShopImage'+index).html("<img src='/hairShopProject/hairShop/img/banner/"+items.HAIRSHOPIMAGE+"' alt='explore image' style='height: 300px;'/>");
 		         		$('div.bg-theme-1 #mainTitleHairShopName'+index).text(items.NAME);
 		         		$('span#hairShopPrice'+index).text(items.MIN.toLocaleString()+" ~ "+items.MAX.toLocaleString()); /* 가격 최대 최소 */
 		         		$('span#hairshopAddr1'+index).text(items.ADDR1);

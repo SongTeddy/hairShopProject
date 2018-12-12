@@ -47,8 +47,8 @@
 	    	  width: 535px;
 	    	  border-top: 1px solid #5A5A5A;">
 		<div class="button-container" align="center">
-			<input type="button" class="stylebookManagementInsertBtn btn btn-success" style="width: 80px; margin-right: 10px; color:black;" value="작성">
-			<input type="reset" class="btn btn-success" style="width: 80px; color:black;" value="다시 작성">
+			<input type="button" class="stylebookManagementInsertBtn btn btn-success" style="width: 80px; margin-right: 10px; font-weight: bold; box-shadow: 1px 1px 1px grey;" value="작성">
+			<input type="reset" class="btn btn-success" style="width: 90px; font-weight: bold; box-shadow: 1px 1px 1px grey;" value="다시 작성">
 			</div>
 		</div>
 	</div>
@@ -90,7 +90,7 @@
 	    	  border-top: 1px solid #5A5A5A;">
 		<div class="button-container" align="center">
 			<input type="button" class="stylebookManagementModifyBtn btn btn-success" style="width: 80px; margin-right: 10px; font-weight: bold; box-shadow: 1px 1px 1px grey;" value="변경">
-			<input type="reset" class="btn btn-success" style="width: 80px; font-weight: bold; box-shadow: 1px 1px 1px grey;" value="다시 작성">
+			<input type="reset" class="btn btn-success" style="width: 90px; font-weight: bold; box-shadow: 1px 1px 1px grey;" value="다시 작성">
 			</div>
 		</div>
 	</div>
