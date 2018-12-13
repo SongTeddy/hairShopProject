@@ -26,7 +26,7 @@
 		DISTANCE_BETWEEN(#{latitud }, #{longitude }, latitud, longitude)
 		)
 	<![CDATA[
-	where DISTANCE < 1000000
+	where DISTANCE < 1000
 	]]>
     ) left join review using(hairshopid)
     group by hairshopid, hairshopimage1, name, 
